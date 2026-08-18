@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0-q1",
   "stage": "Q1",
-  "status": "direct_api_contract_discovered_runtime_probe_pending",
+  "status": "live_probe_runner_ready_network_execution_pending",
   "accepted_q0_commit": "f9ab0aba57be052cccf2323716731602ca028039",
   "seed_universe_source": "docs/architecture/q0/mvp-universe-30-v1.json",
   "seed_assets": 30,
@@ -10,8 +10,10 @@
   "wind_official_skill_repo": "Wind-Information-Co-Ltd/wind-skills",
   "wind_official_skill_commit": "384e95796ad572a2a9402c14084de73a122f0a10",
   "wind_direct_api_contract": "discovered_and_pinned",
+  "wind_runtime_runner": "ready_in_quant_workspace_pr_1",
   "wind_qualification": "not_run",
-  "wind_live_probe": "pending_networked_runtime",
+  "wind_live_probe": "pending_networked_runtime_with_secret",
+  "current_chatgpt_runtime_network": "blocked_dns_resolution_for_wind_hosts",
   "identifier_registry": "started",
   "coverage_matrix": "not_run",
   "point_in_time_audit": "not_run",
@@ -21,5 +23,5 @@
   "a9_operational_canon_switch": "not_run_not_authorized",
   "rsi_frozen_change": "not_run_not_authorized",
   "live_trading": "architecturally_absent",
-  "next_gate": "Q1_HUMAN_REVIEW_AFTER_VENDOR_QUALIFICATION"
+  "next_gate": "Q1_R1_PASS_ONE_ASSET_PROBE_THEN_30_ASSET_VENDOR_QUALIFICATION"
 }
