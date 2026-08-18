@@ -21,6 +21,7 @@
     "mvp_seed_universe": 30,
     "replay_eval_contract": "complete",
     "ci_human_gate": "complete",
+    "human_review_card": "complete",
     "ninety_day_plan": "complete",
     "codex_task_spec": "complete"
   },
