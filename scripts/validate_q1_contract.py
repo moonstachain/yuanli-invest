@@ -41,14 +41,21 @@ if state["wind_qualification"] == "blocked_before_identity_resolution":
     assert state["wind_secret_present"] == "passed"
     assert state["wind_auth_path_reached"] == "passed"
     assert state["wind_official_cli_probe"] == "BLOCKED_BALANCE_ERROR"
-    assert state["wind_live_probe"] == "blocked_vendor_balance"
     assert state["identifier_registry"] == "started_not_verified"
     assert state["coverage_matrix"] == "not_run"
     assert state["point_in_time_audit"] == "not_run"
-    assert state["next_gate"] == "Q1_R1_RETRY_AFTER_WIND_BALANCE_RESTORED"
+    assert state["wind_live_probe"] in {"blocked_vendor_balance", "blocked_balance_error_despite_ui_points"}
+    assert state["next_gate"] in {
+        "Q1_R1_RETRY_AFTER_WIND_BALANCE_RESTORED",
+        "Q1_R1_RESOLVE_WIND_BILLING_SCOPE_OR_ENTITLEMENT_MAPPING",
+    }
+    if state["wind_live_probe"] == "blocked_balance_error_despite_ui_points":
+        assert state["wind_secret_matches_user_supplied_key_fingerprint"] == "passed"
+        assert len(state["wind_key_fingerprint_sha256_prefix"]) == 12
+        assert state["wind_official_cli_latest_run_id"]
+        assert state["wind_billing_scope_interpretation"] == "unresolved_ui_points_vs_api_balance_or_entitlement_mapping"
 
 for key in PROHIBITED:
-    # Mentioning prohibited field names in policy text is allowed, but they must never appear as schema/state properties.
     if f'"{key}"' in STATE.read_text(encoding="utf-8") or f'"{key}"' in SCHEMA.read_text(encoding="utf-8"):
         raise SystemExit(f"prohibited Q1 state/schema field: {key}")
 
