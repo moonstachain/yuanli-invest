@@ -1,0 +1,92 @@
+{
+  "schema_version": "0.1.0",
+  "packet_type": "ForceTriangleGoldReconstruction",
+  "case_id": "FT-GR-PC-1995",
+  "version": "0.1.0",
+  "status": "candidate_reconstruction",
+  "t0": "1995-08-09",
+  "pre_registration_commit": "392e4230493f7e860360defdbda82c0c61c48285",
+  "outcome_locked": true,
+  "subject": "Netscape / browser platform",
+  "evidence_freeze": "a5-evidence-freeze-v0.1.json",
+  "source_ids_used": ["FTSRC-PC-001"],
+  "source_ids_pending_same_day_review": ["FTSRC-PC-002"],
+  "source_ids_discovery_only": ["FTSRC-PC-003"],
+  "paradigm": {
+    "stage": "installation",
+    "confidence": "medium",
+    "drivers": {
+      "technology_breakthrough": "strong",
+      "cost_curve": "mixed",
+      "infrastructure": "mixed",
+      "capital_formation": "strong",
+      "institutional_adaptation": "mixed",
+      "productivity_diffusion": "unknown"
+    },
+    "reason_codes": [
+      "WWW_BROWSER_ADOPTION_VISIBLE",
+      "INTERNET_CAPITAL_FORMATION_VISIBLE",
+      "INFRASTRUCTURE_AND_PRODUCTIVITY_NOT_YET_FROZEN"
+    ]
+  },
+  "narrative": {
+    "stage": "accelerate",
+    "confidence": "medium",
+    "coverage": 0.55,
+    "reason_codes": [
+      "IPO_ATTENTION_VISIBLE_PRE_T0",
+      "INTERNET_NEW_ECONOMY_STORY_VISIBLE",
+      "SAME_DAY_IPO_NARRATIVE_SOURCE_PENDING_TIMESTAMP_REVIEW"
+    ]
+  },
+  "convexity": {
+    "convexity_state": "fragile",
+    "left_tail_state": "watch",
+    "right_tail": {
+      "winner_take_most": "mixed",
+      "network_effects": "mixed",
+      "scale_economics": "strong",
+      "bottleneck_control": "mixed",
+      "platform_optionality": "strong",
+      "market_expansion": "strong",
+      "value_capture": "weak"
+    },
+    "left_tail": {
+      "balance_sheet_fragility": "mixed",
+      "refinancing_dependency": "mixed",
+      "dilution_risk": "mixed",
+      "concentration_risk": "mixed",
+      "regulatory_ruin": "low",
+      "technical_obsolescence": "high",
+      "valuation_cashflow_mismatch": "high"
+    },
+    "reason_codes": [
+      "BROWSER_CONTROL_POINT_POSSIBLE",
+      "PROFITABILITY_NOT_ESTABLISHED",
+      "MICROSOFT_COMPETITION_VISIBLE_AT_T0",
+      "PARADIGM_GROWTH_NOT_EQUAL_COMPANY_VALUE_CAPTURE"
+    ]
+  },
+  "fundamental_gate": "partial",
+  "survival_gate": "partial",
+  "force": {
+    "classification": "unknown",
+    "research_priority": "high",
+    "reason_codes": [
+      "P_AND_N_MORE_VISIBLE_THAN_X",
+      "VALUE_CAPTURE_CHAIN_INCOMPLETE",
+      "PRE_REGISTERED_PARADIGM_BUBBLE_NOT_FORCED_BY_HINDSIGHT"
+    ]
+  },
+  "falsifiers": [
+    "If T0 evidence cannot establish structural Internet/WWW adoption, reduce P.",
+    "If narrative attention is only a single IPO-media pulse rather than cross-carrier diffusion, reduce N.",
+    "If contemporaneous evidence establishes durable browser control, strong cash generation and low substitution risk, the fragile-X hypothesis is falsified."
+  ],
+  "partial_reasons": [
+    "No admitted Evidence Vault snapshot/hash yet.",
+    "Independent T0 Internet user/host/backbone series has not yet been frozen.",
+    "The 1995-08-09 TIME source requires exact same-day timestamp adjudication."
+  ],
+  "notes": "A5 deliberately leaves Force classification unknown. The reconstruction tests whether the framework can separate a visible Internet paradigm from uncertain company-level value capture without using Netscape's later outcome."
+}
