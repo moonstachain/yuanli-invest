@@ -11,17 +11,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIRS = {".git", ".venv", "node_modules", "dist", ".cache", "__pycache__"}
 BLOCKED_SUFFIXES = {".pdf", ".xlsx", ".xls", ".parquet", ".duckdb", ".map"}
-BLOCKED_NAMES = {
-    "Claude.pdf",
-    "AI软件选股_六大细分行业.xlsx",
-    "final_report_ai_software_sectors.md",
-}
+BLOCKED_NAME_PATTERNS = (
+    re.compile(r"(?i)^claude.*\.pdf$"),
+    re.compile(r"^AI.*选股.*\.xlsx$"),
+    re.compile(r"(?i)^final_report.*\.md$"),
+)
 PATTERNS = {
     "absolute_local_path": re.compile(r"/(?:Users|home)/[^/\s]+/"),
     "private_key": re.compile(r"BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY"),
     "github_token": re.compile(r"gh[opusr]_[A-Za-z0-9_]{20,}"),
     "generic_secret": re.compile(r"(?i)(?:password|api[_-]?key|secret)\s*[:=]\s*['\"][^'\"]{8,}"),
-    "legacy_gate_hash": re.compile(r"ODYSSEY_INVEST_(?:CLASSIC_)?GATE"),
+    "legacy_gate_hash": re.compile("ODYSSEY" + r"_INVEST_(?:CLASSIC_)?GATE"),
 }
 
 
@@ -39,7 +39,7 @@ def main() -> int:
         if path.suffix.lower() in BLOCKED_SUFFIXES:
             findings.append(f"blocked_suffix:{relative}")
             continue
-        if path.name in BLOCKED_NAMES:
+        if any(pattern.match(path.name) for pattern in BLOCKED_NAME_PATTERNS):
             findings.append(f"blocked_name:{relative}")
             continue
         try:

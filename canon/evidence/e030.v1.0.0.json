@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "C",
+  "id": "E030",
+  "independent_group": "yahoo_market_data",
+  "interest_position": "data_aggregator",
+  "issuer": "Yahoo Finance",
+  "logical_locator": "adjusted-close series used in exploratory replay",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "yahoo_market_data"
+  },
+  "published_at": "continuous",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E030",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "secondary_market_data",
+  "stance": "method",
+  "status": "partial",
+  "supports": [
+    "exploratory adjusted-close event paths",
+    "not an exchange-grade frozen market-data source"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "Yahoo Finance Chart API adjusted-close series",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://query1.finance.yahoo.com/v8/finance/chart/000300.SS",
+  "valid_from": "2026-08-18",
+  "valid_to": null,
+  "version": "1.0.0"
+}

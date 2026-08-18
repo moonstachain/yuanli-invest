@@ -19,6 +19,12 @@
         "failure_case": {"type": "boolean"},
         "lookahead_check": {"enum": ["passed", "partial", "failed"]},
         "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "measurements": {"type": "object"},
+        "constituents": {"type": "array", "items": {"type": "object"}},
+        "counterevidence": {"type": "array", "items": {"type": "string"}},
+        "falsifier": {"type": "string"},
+        "fundamental_validation": {"type": "string"},
+        "method_limits": {"type": "array", "items": {"type": "string"}},
         "notes": {"type": "string"}
       }
     }

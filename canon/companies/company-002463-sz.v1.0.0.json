@@ -1,0 +1,40 @@
+{
+  "aliases": [],
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "confidence": "unverified",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "disposition_reason": "legacy 公司身份与叙事映射尚未完成官方身份、三独立来源、反证和经营传导审核",
+  "exchange": "SZSE",
+  "id": "company-002463-sz",
+  "identity_evidence_ids": [],
+  "legacy_disposition": "partial",
+  "legacy_names": [
+    "沪电股份"
+  ],
+  "legacy_record_ids": [
+    "T022"
+  ],
+  "listing_status": "unknown",
+  "market": "A",
+  "next_validation_at": "2026-08-21T23:59:59+08:00",
+  "next_validation_metric": "官方身份与公司级映射三来源审查",
+  "object_type": "CompanyMaster",
+  "official_name": "沪电股份",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "legacy_disposition_with_identity_gate_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "risk_flags": [],
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "1c852ddfe4c6df37f62e8f134f4012cbde111565f6f37e2541c2b7c3c457fe7e",
+  "status": "partial",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "ticker": "002463",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2026-08-18",
+  "valid_to": null,
+  "version": "1.0.0"
+}

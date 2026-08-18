@@ -1,0 +1,28 @@
+{
+  "acquired_at": "2026-08-18T23:59:59+08:00",
+  "as_of": "2026-08-18T23:59:59+08:00",
+  "copyright_status": "public",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "id": "SR-E037",
+  "logical_locator": "封面证券简称与证券代码",
+  "media_type": "application/pdf",
+  "object_type": "SourceRecord",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "logical_source_registry_import",
+    "review_state": "vault_snapshot_not_frozen",
+    "source_group": "szse_301043_identity"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+  "source_snapshot_hash": "d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+  "source_url": "https://disc.static.szse.cn/disc/disk03/finalpage/2025-04-24/45ca1efd-fb10-4844-980c-b6c75a3908e0.PDF",
+  "status": "partial",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2025-04-24",
+  "valid_to": null,
+  "vault_hash": null,
+  "vault_status": "not_frozen",
+  "version": "1.0.0"
+}

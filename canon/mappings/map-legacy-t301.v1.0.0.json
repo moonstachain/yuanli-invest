@@ -1,0 +1,38 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "company_id": "company-688008-sh",
+  "counter_evidence_ids": [],
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "edges": [
+    {
+      "claim": "旧记录仅保留为待审研究假说，尚未证明产品、订单、收入与利润的连续传导。",
+      "claim_class": "hypothesis",
+      "evidence_ids": [],
+      "from": "legacy_record:map-legacy-t301",
+      "id": "map-legacy-t301-edge-1",
+      "to": "澜起科技"
+    }
+  ],
+  "evidence_ids": [],
+  "failure_condition": "无法从原始披露建立产品、客户/订单、收入利润的逐边证据链",
+  "id": "map-legacy-t301",
+  "narrative_id": "narrative-edge-device",
+  "next_validation_at": "2026-08-21T23:59:59+08:00",
+  "object_type": "AssetMapping",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "legacy_mapping_disposition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "8b836a423d6ce1acce5e9058ac1a78003fc994fe7caba0f3d66db14fe3cd0cdf",
+  "status": "partial",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2026-08-18",
+  "valid_to": null,
+  "version": "1.0.0",
+  "weakest_edge_id": "map-legacy-t301-edge-1"
+}

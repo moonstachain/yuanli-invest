@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "S",
+  "id": "E019",
+  "independent_group": "meta_orion",
+  "interest_position": "product_issuer",
+  "issuer": "Meta",
+  "logical_locator": "source landing page; exact locator pending independent review",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "meta_orion"
+  },
+  "published_at": "2024-09-25",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E019",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "original_product_release",
+  "stance": "support",
+  "status": "partial",
+  "supports": [
+    "Orion prototype was publicly demonstrated",
+    "prototype evidence is distinct from mass-market shipment"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "Introducing Orion, Our First True Augmented Reality Glasses",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://about.fb.com/news/2024/09/introducing-orion-our-first-true-augmented-reality-glasses/",
+  "valid_from": "2024-09-25",
+  "valid_to": null,
+  "version": "1.0.0"
+}

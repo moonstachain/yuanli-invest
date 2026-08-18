@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "A",
+  "id": "E010",
+  "independent_group": "tetlock_media",
+  "interest_position": "academic",
+  "issuer": "Paul Tetlock / Journal of Finance",
+  "logical_locator": "source landing page; exact locator pending independent review",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "tetlock_media"
+  },
+  "published_at": "2007",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E010",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "peer_reviewed_article",
+  "stance": "method",
+  "status": "partial",
+  "supports": [
+    "media language is associated with market activity",
+    "association alone does not establish causal fundamental impact"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "Giving Content to Investor Sentiment: The Role of Media in the Stock Market",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://doi.org/10.1111/j.1540-6261.2007.01232.x",
+  "valid_from": "2007-01-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

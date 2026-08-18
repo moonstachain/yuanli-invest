@@ -1,0 +1,51 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "definition": "AI 在靶点、分子设计、临床开发、影像和诊断中的效率提升，经可重复科学证据、临床里程碑、授权或可归因收入传导至企业经营。",
+  "excluded": [
+    "只有平台演示而无候选物或临床数据",
+    "用回顾性准确率替代真实临床效用",
+    "把传统 CRO 收入直接视为 AI 收入"
+  ],
+  "falsifiers": [
+    "临床失败率没有改善",
+    "研发周期缩短不转化为收入",
+    "监管和医院采购时滞显著长于市场预期"
+  ],
+  "id": "narrative-ai-health",
+  "included": [
+    "蛋白结构预测与分子设计",
+    "AI 制药 CRO/CDMO",
+    "临床里程碑和授权",
+    "AI 影像/诊断",
+    "生物计算基础设施"
+  ],
+  "name": "AI 制药与医疗 AI",
+  "object_type": "Narrative",
+  "origin": {
+    "date": "2021-07-15",
+    "event": "AlphaFold 2 论文发表于 Nature"
+  },
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "versioned_narrative_definition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "reverse_narrative": "临床失败率没有改善；研发周期缩短不转化为收入；监管和医院采购时滞显著长于市场预期",
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "status": "partial",
+  "synonyms": [
+    "AI 制药",
+    "生物计算",
+    "医疗 AI",
+    "AI 影像"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2021-07-15",
+  "valid_to": null,
+  "version": "1.0.0"
+}

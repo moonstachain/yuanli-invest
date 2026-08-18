@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "S",
+  "id": "E032",
+  "independent_group": "sse_filings",
+  "interest_position": "exchange",
+  "issuer": "上海证券交易所",
+  "logical_locator": "source registry only; company document locator missing",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "sse_filings"
+  },
+  "published_at": "continuous",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E032",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "exchange_disclosure",
+  "stance": "method",
+  "status": "partial",
+  "supports": [
+    "沪市公司点时公告和财报原始入口"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "上海证券交易所信息披露",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/",
+  "valid_from": "2026-08-18",
+  "valid_to": null,
+  "version": "1.0.0"
+}

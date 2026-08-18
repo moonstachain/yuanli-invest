@@ -16,7 +16,13 @@
         "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
         "legacy_disposition": {"enum": ["partial", "rejected", "expired", "approved"]},
         "disposition_reason": {"type": "string"},
-        "identity_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"}
+        "identity_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "legacy_record_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "legacy_names": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "risk_flags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "confidence": {"type": "string"},
+        "next_validation_at": {"type": "string", "format": "date-time"},
+        "next_validation_metric": {"type": "string"}
       }
     }
   ],

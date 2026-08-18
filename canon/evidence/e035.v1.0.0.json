@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "D",
+  "id": "E035",
+  "independent_group": "invest_mock",
+  "interest_position": "internal_product",
+  "issuer": "84K OS",
+  "logical_locator": "source landing page; exact locator pending independent review",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "invest_mock"
+  },
+  "published_at": "2026-07-11",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E035",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "mock_product_surface",
+  "stance": "method",
+  "status": "partial",
+  "supports": [
+    "the audited user interface exists",
+    "its scores and stages require independent validation"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "Invest/index live mock surface",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://os-zk.84000.art/invest/index.html",
+  "valid_from": "2026-07-11",
+  "valid_to": null,
+  "version": "1.0.0"
+}

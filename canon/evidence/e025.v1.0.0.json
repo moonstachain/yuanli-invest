@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "A",
+  "id": "E025",
+  "independent_group": "nature_medicine_commentary",
+  "interest_position": "academic_editorial",
+  "issuer": "Nature Medicine",
+  "logical_locator": "editorial commentary",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "nature_medicine_commentary"
+  },
+  "published_at": "2025-07-01",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E025",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "academic_commentary",
+  "stance": "support",
+  "status": "partial",
+  "supports": [
+    "the phase 2a result is an important but early clinical milestone",
+    "AI drug discovery has long biological and regulatory lags"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "AI-enabled drug discovery reaches clinical milestone",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://www.nature.com/articles/s41591-025-03832-2",
+  "valid_from": "2025-07-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

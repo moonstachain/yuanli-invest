@@ -1,0 +1,50 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "definition": "数据确权、授权运营、治理和训练数据供给，经可核验的交易、合同、收入、复购和合规成本形成商业闭环。",
+  "excluded": [
+    "只宣布入表而无现金流",
+    "把政策发布等同于公司订单",
+    "无法区分项目制收入和可持续平台收入"
+  ],
+  "falsifiers": [
+    "商业化收入显著低于政策预期",
+    "确权和定价机制长期不清晰",
+    "项目收入低毛利且不可复购"
+  ],
+  "id": "narrative-data-infra",
+  "included": [
+    "公共数据授权运营",
+    "数据治理与交易基础设施",
+    "训练数据与标注",
+    "数据资产会计与经营披露"
+  ],
+  "name": "数据基础设施与数据要素",
+  "object_type": "Narrative",
+  "origin": {
+    "date": "2022-12-19",
+    "event": "中共中央、国务院发布数据基础制度二十条"
+  },
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "versioned_narrative_definition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "reverse_narrative": "商业化收入显著低于政策预期；确权和定价机制长期不清晰；项目收入低毛利且不可复购",
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "status": "partial",
+  "synonyms": [
+    "数据要素",
+    "公共数据运营",
+    "数据资产",
+    "训练数据"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2022-12-19",
+  "valid_to": null,
+  "version": "1.0.0"
+}

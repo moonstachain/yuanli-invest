@@ -1,0 +1,154 @@
+{
+  "as_of": "2026-08-17T15:24:25+08:00",
+  "case_name": "算力扩散至CPO、PCB、液冷和电源",
+  "constituents": [
+    {
+      "mdd250_pct": -49.8706,
+      "name": "中际旭创",
+      "returns_pct": {
+        "d120": 11.2934,
+        "d20": 59.0367,
+        "d250": 35.137,
+        "d60": 26.6598
+      },
+      "start": "2023-05-25",
+      "ticker": "300308.SZ"
+    },
+    {
+      "mdd250_pct": -62.425,
+      "name": "新易盛",
+      "returns_pct": {
+        "d120": -5.2747,
+        "d20": 31.5675,
+        "d250": 91.9477,
+        "d60": -2.0407
+      },
+      "start": "2023-05-25",
+      "ticker": "300502.SZ"
+    },
+    {
+      "mdd250_pct": -54.1692,
+      "name": "光迅科技",
+      "returns_pct": {
+        "d120": 13.9764,
+        "d20": 39.4091,
+        "d250": 26.7347,
+        "d60": 7.2311
+      },
+      "start": "2023-05-25",
+      "ticker": "002281.SZ"
+    },
+    {
+      "mdd250_pct": -47.0,
+      "name": "胜宏科技",
+      "returns_pct": {
+        "d120": 2.5411,
+        "d20": 14.5491,
+        "d250": 57.5984,
+        "d60": 0.6477
+      },
+      "start": "2023-05-25",
+      "ticker": "300476.SZ"
+    },
+    {
+      "mdd250_pct": -63.9954,
+      "name": "申菱环境",
+      "returns_pct": {
+        "d120": -16.5529,
+        "d20": 5.0888,
+        "d250": -45.2937,
+        "d60": -23.5232
+      },
+      "start": "2023-05-25",
+      "ticker": "301018.SZ"
+    },
+    {
+      "mdd250_pct": -46.036,
+      "name": "英维克",
+      "returns_pct": {
+        "d120": -0.3687,
+        "d20": 11.6888,
+        "d250": 13.8513,
+        "d60": 3.4292
+      },
+      "start": "2023-05-25",
+      "ticker": "002837.SZ"
+    }
+  ],
+  "counterevidence": [
+    "CPO与液冷收益严重分化",
+    "申菱环境T+250为负",
+    "平均个股回撤超过53%",
+    "海外资本开支不等于每家A股供应商获得相同比例订单"
+  ],
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "evidence_ids": [
+    "E015",
+    "E030",
+    "E031",
+    "E032",
+    "E033"
+  ],
+  "failure_case": false,
+  "falsifier": "若产品代际切换、客户认证、份额或毛利率未形成连续证据，产业链映射降级",
+  "financial_periods": 2,
+  "fundamental_validation": "partial_company_mapping_required",
+  "horizons": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "id": "HR02",
+  "lookahead_check": "partial",
+  "measurements": {
+    "benchmark_returns_pct": {
+      "d120": -6.9973,
+      "d20": -1.0596,
+      "d250": -6.7069,
+      "d60": -3.1409
+    },
+    "excess_pct": {
+      "d120": 7.933,
+      "d20": 27.9496,
+      "d250": 36.7028,
+      "d60": 5.2082
+    },
+    "mean_individual_mdd250_pct": -53.916,
+    "returns_pct": {
+      "d120": 0.9358,
+      "d20": 26.89,
+      "d250": 29.9959,
+      "d60": 2.0673
+    }
+  },
+  "method_limits": [
+    "the representative universes were reconstructed on 2026-08-17 rather than frozen at T0",
+    "industry and style matched controls are not implemented",
+    "delisting and investability screens are not frozen",
+    "raw daily arrays are not embedded in this artifact; source URLs and algorithm are preserved",
+    "company-level subsequent two-report-period fundamental validation remains partial"
+  ],
+  "narrative_id": "narrative-compute",
+  "notes": "仅用于描述性事件路径与反例发现；禁止解释为因果、准入、策略或预期收益。",
+  "object_type": "Replay",
+  "point_in_time_rule": "T0 标的池、当时可得信息与估值必须冻结；当前导入因事后重建标的池而保持 partial。",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "historical_replay_clean_room_import",
+    "review_state": "descriptive_not_causal_not_admitted",
+    "source_group": "ai-narrative-invest-research-20260817"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "source_snapshot_hash": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "status": "partial",
+  "t0": "2023-05-25",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2023-05-25",
+  "valid_to": null,
+  "version": "1.0.0",
+  "window_end": "2024-11-25",
+  "window_start": "2022-11-25"
+}

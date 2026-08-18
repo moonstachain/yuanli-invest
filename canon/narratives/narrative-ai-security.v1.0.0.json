@@ -1,0 +1,50 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "definition": "模型和数据风险经监管义务、企业控制、测评、审计和安全产品预算，传导至可核验的合同、续费和经营收入。",
+  "excluded": [
+    "只有合规宣传而无产品和客户",
+    "把传统网安收入全部视为 AI 安全",
+    "未获监管或客户证实的强制需求"
+  ],
+  "falsifiers": [
+    "合规由云厂和内部团队吸收",
+    "预算只形成一次性咨询",
+    "监管节奏慢于产品收入兑现"
+  ],
+  "id": "narrative-ai-security",
+  "included": [
+    "模型安全评测",
+    "数据安全与隐私计算",
+    "身份与内容真实性",
+    "AI 合规、审计与治理平台"
+  ],
+  "name": "AI 安全、合规与治理",
+  "object_type": "Narrative",
+  "origin": {
+    "date": "2024-08-01",
+    "event": "欧盟 AI 法案生效"
+  },
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "versioned_narrative_definition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "reverse_narrative": "合规由云厂和内部团队吸收；预算只形成一次性咨询；监管节奏慢于产品收入兑现",
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "status": "partial",
+  "synonyms": [
+    "AI 安全",
+    "模型治理",
+    "AI 合规",
+    "可信 AI"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2024-08-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

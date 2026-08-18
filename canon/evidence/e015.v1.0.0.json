@@ -1,0 +1,37 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "S",
+  "id": "E015",
+  "independent_group": "nvidia_fy24q1",
+  "interest_position": "issuer",
+  "issuer": "NVIDIA",
+  "logical_locator": "data-center revenue and Q2 revenue outlook paragraphs",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "nvidia_fy24q1"
+  },
+  "published_at": "2023-05-24",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E015",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "original_financial_release",
+  "stance": "support",
+  "status": "partial",
+  "supports": [
+    "data-center revenue was USD 4.28 billion",
+    "next-quarter revenue outlook was USD 11.0 billion",
+    "AI infrastructure demand inflected visibly"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "NVIDIA Announces Financial Results for First Quarter Fiscal 2024",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2024",
+  "valid_from": "2023-05-24",
+  "valid_to": null,
+  "version": "1.0.0"
+}

@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "A",
+  "id": "E005",
+  "independent_group": "rogers_diffusion",
+  "interest_position": "academic",
+  "issuer": "Everett M. Rogers / Free Press",
+  "logical_locator": "publisher bibliographic record",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "rogers_diffusion"
+  },
+  "published_at": "2003-08-16",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E005",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "academic_book",
+  "stance": "method",
+  "status": "partial",
+  "supports": [
+    "adoption spreads through social systems over time",
+    "relative advantage, compatibility, complexity, trialability and observability shape diffusion"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "Diffusion of Innovations, 5th Edition",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://www.simonandschuster.com/books/Diffusion-of-Innovations-5th-Edition/Everett-M-Rogers/9780743222099",
+  "valid_from": "2003-08-16",
+  "valid_to": null,
+  "version": "1.0.0"
+}

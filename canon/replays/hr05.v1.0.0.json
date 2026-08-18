@@ -1,0 +1,128 @@
+{
+  "as_of": "2026-08-17T15:24:25+08:00",
+  "case_name": "AI眼镜及光学、声学产业链",
+  "constituents": [
+    {
+      "mdd250_pct": -37.6898,
+      "name": "歌尔股份",
+      "returns_pct": {
+        "d120": 38.1301,
+        "d20": 22.3711,
+        "d250": 74.2419,
+        "d60": 40.2002
+      },
+      "start": "2024-09-25",
+      "ticker": "002241.SZ"
+    },
+    {
+      "mdd250_pct": -38.5011,
+      "name": "水晶光电",
+      "returns_pct": {
+        "d120": 36.9114,
+        "d20": 38.2968,
+        "d250": 57.6662,
+        "d60": 34.1407
+      },
+      "start": "2024-09-25",
+      "ticker": "002273.SZ"
+    },
+    {
+      "mdd250_pct": -41.4659,
+      "name": "蓝思科技",
+      "returns_pct": {
+        "d120": 57.8915,
+        "d20": 39.5808,
+        "d250": 89.823,
+        "d60": 36.0666
+      },
+      "start": "2024-09-25",
+      "ticker": "300433.SZ"
+    },
+    {
+      "mdd250_pct": -38.0963,
+      "name": "立讯精密",
+      "returns_pct": {
+        "d120": 7.1503,
+        "d20": 11.7525,
+        "d250": 51.0,
+        "d60": 6.7863
+      },
+      "start": "2024-09-25",
+      "ticker": "002475.SZ"
+    }
+  ],
+  "counterevidence": [
+    "Orion是原型而非规模出货",
+    "同一公司同时受手机、消费电子周期影响",
+    "平均回撤仍接近39%"
+  ],
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "evidence_ids": [
+    "E019",
+    "E030",
+    "E031",
+    "E033"
+  ],
+  "failure_case": false,
+  "falsifier": "终端销量、激活、佩戴时长和供应份额无法验证，或隐私、续航、重量阻碍复购",
+  "financial_periods": 2,
+  "fundamental_validation": "partial_product_mix_confounding",
+  "horizons": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "id": "HR05",
+  "lookahead_check": "partial",
+  "measurements": {
+    "benchmark_returns_pct": {
+      "d120": 15.1003,
+      "d20": 14.3441,
+      "d250": 35.0563,
+      "d60": 17.1717
+    },
+    "excess_pct": {
+      "d120": 19.9206,
+      "d20": 13.6562,
+      "d250": 33.1265,
+      "d60": 12.1267
+    },
+    "mean_individual_mdd250_pct": -38.9383,
+    "returns_pct": {
+      "d120": 35.0208,
+      "d20": 28.0003,
+      "d250": 68.1828,
+      "d60": 29.2984
+    }
+  },
+  "method_limits": [
+    "the representative universes were reconstructed on 2026-08-17 rather than frozen at T0",
+    "industry and style matched controls are not implemented",
+    "delisting and investability screens are not frozen",
+    "raw daily arrays are not embedded in this artifact; source URLs and algorithm are preserved",
+    "company-level subsequent two-report-period fundamental validation remains partial"
+  ],
+  "narrative_id": "narrative-edge-device",
+  "notes": "仅用于描述性事件路径与反例发现；禁止解释为因果、准入、策略或预期收益。",
+  "object_type": "Replay",
+  "point_in_time_rule": "T0 标的池、当时可得信息与估值必须冻结；当前导入因事后重建标的池而保持 partial。",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "historical_replay_clean_room_import",
+    "review_state": "descriptive_not_causal_not_admitted",
+    "source_group": "ai-narrative-invest-research-20260817"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "source_snapshot_hash": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "status": "partial",
+  "t0": "2024-09-25",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2024-09-25",
+  "valid_to": null,
+  "version": "1.0.0",
+  "window_end": "2026-03-25",
+  "window_start": "2024-03-25"
+}

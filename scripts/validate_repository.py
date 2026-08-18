@@ -66,6 +66,8 @@ def iter_object_files():
 def main() -> int:
     schemas, registry = schema_registry()
     seen: set[tuple[str, str]] = set()
+    objects: list[tuple[Path, dict]] = []
+    object_by_id: dict[str, dict] = {}
     validated = 0
     for path in iter_object_files():
         instance = load_json(path)
@@ -85,7 +87,38 @@ def main() -> int:
         if identity in seen:
             raise ValueError(f"duplicate object version: {identity}")
         seen.add(identity)
+        objects.append((path, instance))
+        current = object_by_id.get(instance["id"])
+        if current and current["object_type"] != "ResearchEvent" and instance["object_type"] != "ResearchEvent":
+            raise ValueError(f"duplicate object id across types: {instance['id']}")
+        object_by_id[instance["id"]] = instance
         validated += 1
+
+    evidence_ids = {item["id"] for _, item in objects if item["object_type"] == "Evidence"}
+    narrative_ids = {item["id"] for _, item in objects if item["object_type"] == "Narrative"}
+    company_ids = {item["id"] for _, item in objects if item["object_type"] == "CompanyMaster"}
+    source_record_ids = {item["id"] for _, item in objects if item["object_type"] == "SourceRecord"}
+    subject_ids = {item["id"] for _, item in objects if item["object_type"] != "ResearchEvent"}
+
+    tickers: set[tuple[str, str]] = set()
+    for path, item in objects:
+        for field in ("evidence_ids", "counter_evidence_ids", "identity_evidence_ids"):
+            missing = set(item.get(field, [])) - evidence_ids
+            if missing:
+                raise ValueError(f"{path}: missing {field} references {sorted(missing)}")
+        if "narrative_id" in item and item["narrative_id"] not in narrative_ids:
+            raise ValueError(f"{path}: missing narrative {item['narrative_id']}")
+        if "company_id" in item and item["company_id"] is not None and item["company_id"] not in company_ids:
+            raise ValueError(f"{path}: missing company {item['company_id']}")
+        if "source_record_id" in item and item["source_record_id"] not in source_record_ids:
+            raise ValueError(f"{path}: missing source record {item['source_record_id']}")
+        if item["object_type"] == "ResearchEvent" and item["subject_id"] not in subject_ids:
+            raise ValueError(f"{path}: missing event subject {item['subject_id']}")
+        if item["object_type"] == "CompanyMaster":
+            identity = (item["exchange"], item["ticker"])
+            if identity in tickers:
+                raise ValueError(f"duplicate company identity: {identity}")
+            tickers.add(identity)
     print(f"schemas={len(schemas)} objects={validated} status=valid")
     return 0
 

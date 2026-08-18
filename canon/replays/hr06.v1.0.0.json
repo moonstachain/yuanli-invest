@@ -1,0 +1,129 @@
+{
+  "as_of": "2026-08-17T15:24:25+08:00",
+  "case_name": "AI制药从技术突破到临床兑现",
+  "constituents": [
+    {
+      "mdd250_pct": -56.2845,
+      "name": "泰格医药",
+      "returns_pct": {
+        "d120": -36.6042,
+        "d20": -14.5535,
+        "d250": -40.9868,
+        "d60": -8.3131
+      },
+      "start": "2021-07-15",
+      "ticker": "300347.SZ"
+    },
+    {
+      "mdd250_pct": -66.5918,
+      "name": "药石科技",
+      "returns_pct": {
+        "d120": -24.0279,
+        "d20": 16.6469,
+        "d250": -39.6649,
+        "d60": 24.9637
+      },
+      "start": "2021-07-15",
+      "ticker": "300725.SZ"
+    },
+    {
+      "mdd250_pct": -57.0615,
+      "name": "康龙化成",
+      "returns_pct": {
+        "d120": -43.892,
+        "d20": -11.2216,
+        "d250": -46.754,
+        "d60": -17.4111
+      },
+      "start": "2021-07-15",
+      "ticker": "300759.SZ"
+    },
+    {
+      "mdd250_pct": -50.5094,
+      "name": "药明康德",
+      "returns_pct": {
+        "d120": -29.4,
+        "d20": -15.6364,
+        "d250": -41.3108,
+        "d60": -12.9091
+      },
+      "start": "2021-07-15",
+      "ticker": "603259.SS"
+    }
+  ],
+  "counterevidence": [
+    "四家公司T+250全部为负",
+    "AlphaFold的科学突破不直接等于CRO订单或药物成功率提升",
+    "2025年的Phase IIa里程碑反而显示临床时滞以年计"
+  ],
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "evidence_ids": [
+    "E023",
+    "E024",
+    "E025",
+    "E030",
+    "E031"
+  ],
+  "failure_case": true,
+  "falsifier": "临床入组、主要终点、安全性或授权交易失败；研发周期和成本没有相对基准改善",
+  "financial_periods": 2,
+  "fundamental_validation": "partial_clear_failure_case",
+  "horizons": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "id": "HR06",
+  "lookahead_check": "partial",
+  "measurements": {
+    "benchmark_returns_pct": {
+      "d120": -6.8658,
+      "d20": -3.4575,
+      "d250": -17.9836,
+      "d60": -5.3709
+    },
+    "excess_pct": {
+      "d120": -26.6152,
+      "d20": -2.7337,
+      "d250": -24.1955,
+      "d60": 1.9535
+    },
+    "mean_individual_mdd250_pct": -57.6118,
+    "returns_pct": {
+      "d120": -33.481,
+      "d20": -6.1911,
+      "d250": -42.1791,
+      "d60": -3.4174
+    }
+  },
+  "method_limits": [
+    "the representative universes were reconstructed on 2026-08-17 rather than frozen at T0",
+    "industry and style matched controls are not implemented",
+    "delisting and investability screens are not frozen",
+    "raw daily arrays are not embedded in this artifact; source URLs and algorithm are preserved",
+    "company-level subsequent two-report-period fundamental validation remains partial"
+  ],
+  "narrative_id": "narrative-ai-health",
+  "notes": "仅用于描述性事件路径与反例发现；禁止解释为因果、准入、策略或预期收益。",
+  "object_type": "Replay",
+  "point_in_time_rule": "T0 标的池、当时可得信息与估值必须冻结；当前导入因事后重建标的池而保持 partial。",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "historical_replay_clean_room_import",
+    "review_state": "descriptive_not_causal_not_admitted",
+    "source_group": "ai-narrative-invest-research-20260817"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "source_snapshot_hash": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "status": "partial",
+  "t0": "2021-07-15",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2021-07-15",
+  "valid_to": null,
+  "version": "1.0.0",
+  "window_end": "2023-01-15",
+  "window_start": "2021-01-15"
+}

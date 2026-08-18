@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-08-18T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "S",
+  "id": "E039",
+  "independent_group": "sse_600636_delisting",
+  "interest_position": "交易所监管",
+  "issuer": "上海证券交易所",
+  "logical_locator": "证券代码 600636 与退市处置",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "identity_governance_addition",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "sse_600636_delisting"
+  },
+  "published_at": "2026",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E039",
+  "source_revision": "sha256:d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+  "source_snapshot_hash": "d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+  "source_type": "exchange_supervision",
+  "stance": "counter",
+  "status": "partial",
+  "supports": [
+    "600636 已进入退市状态，不得进入活跃研究优先级"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "退市国化相关监管措施",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://www.sse.com.cn/disclosure/credibility/supervision/measures/criticism/c/10825787/files/b0454f2fb72a4a51a84cb98d60a0e6de.pdf",
+  "valid_from": "2026-01-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

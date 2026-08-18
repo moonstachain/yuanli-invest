@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "B",
+  "id": "E004",
+  "independent_group": "soros_reflexivity",
+  "interest_position": "author_practitioner",
+  "issuer": "George Soros / Wiley",
+  "logical_locator": "source landing page; exact locator pending independent review",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "soros_reflexivity"
+  },
+  "published_at": "2003-08-01",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E004",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "book",
+  "stance": "method",
+  "status": "partial",
+  "supports": [
+    "market participants' perceptions can affect fundamentals and feed back into perceptions"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "The Alchemy of Finance",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://www.wiley.com/en-us/The+Alchemy+of+Finance%2C+2nd+Edition-p-9780471445494",
+  "valid_from": "2003-08-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

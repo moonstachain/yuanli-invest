@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-08-18T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "S",
+  "id": "E037",
+  "independent_group": "szse_301043_identity",
+  "interest_position": "发行人法定披露",
+  "issuer": "深圳证券交易所 / 广东绿岛风空气系统股份有限公司",
+  "logical_locator": "封面证券简称与证券代码",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "identity_governance_addition",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "szse_301043_identity"
+  },
+  "published_at": "2025-04-24",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E037",
+  "source_revision": "sha256:d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+  "source_snapshot_hash": "d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+  "source_type": "exchange_filing",
+  "stance": "counter",
+  "status": "partial",
+  "supports": [
+    "301043 对应绿岛风，不对应多益网络"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "绿岛风 2024 年年度报告",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2025-04-24/45ca1efd-fb10-4844-980c-b6c75a3908e0.PDF",
+  "valid_from": "2025-04-24",
+  "valid_to": null,
+  "version": "1.0.0"
+}

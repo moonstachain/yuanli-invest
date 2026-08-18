@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "S",
+  "id": "E020",
+  "independent_group": "tesla_ai_day",
+  "interest_position": "product_issuer",
+  "issuer": "Tesla",
+  "logical_locator": "source landing page; exact locator pending independent review",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "tesla_ai_day"
+  },
+  "published_at": "2022-09-30",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E020",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "original_product_event",
+  "stance": "support",
+  "status": "partial",
+  "supports": [
+    "Optimus prototype was presented",
+    "prototype presentation is not production-volume evidence"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "Tesla AI Day 2022",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://www.youtube.com/watch?v=ODSJsviD_SU",
+  "valid_from": "2022-09-30",
+  "valid_to": null,
+  "version": "1.0.0"
+}
