@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:thesis:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["title", "hypothesis", "narrative_id", "company_id", "confirmation_metrics", "falsifiers", "evidence_ids", "counter_evidence_ids", "next_validation_at"],
+      "properties": {
+        "object_type": {"const": "Thesis"},
+        "title": {"type": "string"},
+        "hypothesis": {"type": "string"},
+        "narrative_id": {"type": "string"},
+        "company_id": {"type": ["string", "null"]},
+        "confirmation_metrics": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "falsifiers": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "counter_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "next_validation_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

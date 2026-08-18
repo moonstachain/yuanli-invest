@@ -1,0 +1,76 @@
+openapi: 3.1.0
+info:
+  title: Yuanli Invest Internal API
+  version: 1.0.0
+  description: Internal read-only research API. Research admission and trading actions are out of scope.
+servers:
+  - url: /api/v1
+paths:
+  /status:
+    get:
+      operationId: getStatus
+      responses:
+        "200": { $ref: "#/components/responses/Envelope" }
+  /narratives:
+    get:
+      operationId: listNarratives
+      responses:
+        "200": { $ref: "#/components/responses/Envelope" }
+  /companies/{id}:
+    get:
+      operationId: getCompany
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { $ref: "#/components/responses/Envelope" }
+  /evidence/{id}:
+    get:
+      operationId: getEvidence
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { $ref: "#/components/responses/Envelope" }
+  /theses:
+    get:
+      operationId: listTheses
+      responses:
+        "200": { $ref: "#/components/responses/Envelope" }
+  /replays/{id}:
+    get:
+      operationId: getReplay
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { $ref: "#/components/responses/Envelope" }
+  /copilot/query:
+    post:
+      operationId: queryCopilot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string, minLength: 1 }
+              additionalProperties: false
+      responses:
+        "200": { $ref: "#/components/responses/Envelope" }
+components:
+  responses:
+    Envelope:
+      description: Versioned deterministic response envelope
+      content:
+        application/json:
+          schema:
+            $ref: "../packages/contracts/schemas/api-envelope.schema.json"

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:release-manifest:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["source_sha", "object_versions", "calculation_version", "projection_profile", "projection_hash", "approval_status", "deployment_status"],
+      "properties": {
+        "object_type": {"const": "ReleaseManifest"},
+        "source_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+        "object_versions": {"type": "object", "additionalProperties": {"type": "string"}},
+        "calculation_version": {"type": "string"},
+        "projection_profile": {"enum": ["internal_full", "public_safe"]},
+        "projection_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "approval_status": {"enum": ["not_requested", "approved", "rejected"]},
+        "deployment_status": {"enum": ["not_deployed", "canary", "deployed_verified", "rolled_back", "blocked"]}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

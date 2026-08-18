@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:learning-candidate:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["outcome_ids", "proposal_type", "proposal", "rationale", "automatic_application", "review_state"],
+      "properties": {
+        "object_type": {"const": "LearningCandidate"},
+        "outcome_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+        "proposal_type": {"enum": ["rule", "weight", "schema", "workflow", "research_question"]},
+        "proposal": {"type": "string"},
+        "rationale": {"type": "string"},
+        "automatic_application": {"const": false},
+        "review_state": {"enum": ["candidate", "under_review", "rejected", "accepted_for_future_pr"]}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

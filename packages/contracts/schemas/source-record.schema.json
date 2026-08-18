@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:source-record:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["source_url", "logical_locator", "vault_hash", "copyright_status", "acquired_at", "media_type"],
+      "properties": {
+        "object_type": {"const": "SourceRecord"},
+        "source_url": {"type": "string", "format": "uri"},
+        "logical_locator": {"type": "string", "minLength": 1},
+        "vault_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "copyright_status": {"enum": ["public", "licensed", "restricted", "unknown"]},
+        "acquired_at": {"type": "string", "format": "date-time"},
+        "media_type": {"type": "string"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

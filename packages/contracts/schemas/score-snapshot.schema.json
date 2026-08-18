@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:score-snapshot:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["subject_id", "research_priority", "components", "calculation_version", "input_hash", "partial_reasons"],
+      "properties": {
+        "object_type": {"const": "ScoreSnapshot"},
+        "subject_id": {"type": "string"},
+        "research_priority": {"enum": ["high", "medium", "low", "unknown"]},
+        "components": {"type": "object", "additionalProperties": {"type": ["number", "null"]}},
+        "calculation_version": {"type": "string"},
+        "input_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "partial_reasons": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/partial_reasons"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

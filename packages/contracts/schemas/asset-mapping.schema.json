@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:asset-mapping:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["narrative_id", "company_id", "edges", "weakest_edge_id", "evidence_ids", "counter_evidence_ids"],
+      "properties": {
+        "object_type": {"const": "AssetMapping"},
+        "narrative_id": {"type": "string"},
+        "company_id": {"type": "string"},
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "from", "to", "claim_class", "evidence_ids"],
+            "properties": {
+              "id": {"type": "string"}, "from": {"type": "string"}, "to": {"type": "string"},
+              "claim_class": {"enum": ["fact", "inference", "hypothesis"]},
+              "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"}
+            },
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "weakest_edge_id": {"type": "string"},
+        "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "counter_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

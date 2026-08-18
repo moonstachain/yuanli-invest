@@ -1,0 +1,7 @@
+* @moonstachain
+
+/packages/contracts/ @moonstachain
+/canon/ @moonstachain
+/events/ @moonstachain
+/receipts/ @moonstachain
+/.github/ @moonstachain

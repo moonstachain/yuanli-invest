@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:narrative:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["name", "definition", "included", "excluded", "synonyms", "reverse_narrative", "origin", "falsifiers"],
+      "properties": {
+        "object_type": {"const": "Narrative"},
+        "name": {"type": "string", "minLength": 1},
+        "definition": {"type": "string", "minLength": 1},
+        "included": {"type": "array", "items": {"type": "string"}},
+        "excluded": {"type": "array", "items": {"type": "string"}},
+        "synonyms": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "reverse_narrative": {"type": "string", "minLength": 1},
+        "origin": {"type": "object", "required": ["date", "event"], "properties": {"date": {"type": "string", "format": "date"}, "event": {"type": "string"}}},
+        "falsifiers": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

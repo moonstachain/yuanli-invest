@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:brief-snapshot:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["title", "judgments", "counter_evidence_changes", "validation_calendar", "admission_note"],
+      "properties": {
+        "object_type": {"const": "BriefSnapshot"},
+        "title": {"type": "string"},
+        "judgments": {"type": "array", "items": {"type": "object"}},
+        "counter_evidence_changes": {"type": "array", "items": {"type": "object"}},
+        "validation_calendar": {"type": "array", "items": {"type": "object"}},
+        "admission_note": {"type": "string"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}
