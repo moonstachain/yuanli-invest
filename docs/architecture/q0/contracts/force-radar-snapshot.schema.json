@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:q0:force-radar-snapshot:1.0.0",
+  "title": "ForceRadarSnapshotCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "asset_id",
+    "as_of",
+    "value_chain_nodes",
+    "paradigm",
+    "narrative",
+    "convexity",
+    "fundamental_gate",
+    "survival_gate",
+    "classification",
+    "research_priority",
+    "evidence_ids",
+    "counter_evidence_ids",
+    "falsifiers",
+    "unknowns",
+    "lookahead_check",
+    "admission_state",
+    "generated_by"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0-q0"},
+    "snapshot_id": {"type": "string", "minLength": 1},
+    "asset_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "value_chain_nodes": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "paradigm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage", "confidence", "surfaces"],
+      "properties": {
+        "stage": {"enum": ["emergence", "installation", "frenzy", "turning_point", "deployment", "maturity", "unknown"]},
+        "confidence": {"enum": ["high", "medium", "low", "unknown"]},
+        "surfaces": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["technology_breakthrough", "cost_curve", "infrastructure", "capital_formation", "institutional_adaptation", "productivity_diffusion"],
+          "properties": {
+            "technology_breakthrough": {"$ref": "#/$defs/strength"},
+            "cost_curve": {"$ref": "#/$defs/strength"},
+            "infrastructure": {"$ref": "#/$defs/strength"},
+            "capital_formation": {"$ref": "#/$defs/strength"},
+            "institutional_adaptation": {"$ref": "#/$defs/strength"},
+            "productivity_diffusion": {"$ref": "#/$defs/strength"}
+          }
+        }
+      }
+    },
+    "narrative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stage", "confidence", "velocity_state", "acceleration_state", "crowding_state", "reverse_narrative_state"],
+      "properties": {
+        "stage": {"enum": ["discover", "accelerate", "consensus", "decay", "residual", "unknown"]},
+        "confidence": {"enum": ["high", "medium", "low", "unknown"]},
+        "velocity_state": {"enum": ["rising", "flat", "falling", "unknown"]},
+        "acceleration_state": {"enum": ["accelerating", "steady", "decelerating", "unknown"]},
+        "crowding_state": {"enum": ["low", "medium", "high", "unknown"]},
+        "reverse_narrative_state": {"enum": ["weak", "mixed", "strong", "unknown"]}
+      }
+    },
+    "convexity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["convexity_state", "left_tail_state", "right_tail", "left_tail"],
+      "properties": {
+        "convexity_state": {"enum": ["fragile", "balanced", "convex", "unknown"]},
+        "left_tail_state": {"enum": ["survivable", "watch", "fragile", "unknown"]},
+        "right_tail": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["winner_take_most", "network_effects", "scale_economics", "bottleneck_control", "platform_optionality", "market_expansion", "value_capture"],
+          "properties": {
+            "winner_take_most": {"$ref": "#/$defs/strength"},
+            "network_effects": {"$ref": "#/$defs/strength"},
+            "scale_economics": {"$ref": "#/$defs/strength"},
+            "bottleneck_control": {"$ref": "#/$defs/strength"},
+            "platform_optionality": {"$ref": "#/$defs/strength"},
+            "market_expansion": {"$ref": "#/$defs/strength"},
+            "value_capture": {"$ref": "#/$defs/strength"}
+          }
+        },
+        "left_tail": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["balance_sheet_fragility", "refinancing_dependency", "dilution_risk", "concentration_risk", "regulatory_ruin", "technical_obsolescence", "valuation_cashflow_mismatch"],
+          "properties": {
+            "balance_sheet_fragility": {"$ref": "#/$defs/risk"},
+            "refinancing_dependency": {"$ref": "#/$defs/risk"},
+            "dilution_risk": {"$ref": "#/$defs/risk"},
+            "concentration_risk": {"$ref": "#/$defs/risk"},
+            "regulatory_ruin": {"$ref": "#/$defs/risk"},
+            "technical_obsolescence": {"$ref": "#/$defs/risk"},
+            "valuation_cashflow_mismatch": {"$ref": "#/$defs/risk"}
+          }
+        }
+      }
+    },
+    "fundamental_gate": {"enum": ["passed", "partial", "failed", "unknown"]},
+    "survival_gate": {"enum": ["passed", "partial", "failed", "unknown"]},
+    "classification": {"enum": ["golden_extreme", "latent_dragon", "paradigm_bubble", "meme_extreme", "ordinary_asset", "unknown"]},
+    "research_priority": {"enum": ["high", "medium", "low", "unknown"]},
+    "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "counter_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "falsifiers": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "unknowns": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "lookahead_check": {"enum": ["passed", "failed", "not_run"]},
+    "admission_state": {"enum": ["candidate", "reviewed", "approved", "rejected"]},
+    "generated_by": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "runtime_profile", "input_manifest_hash"],
+      "properties": {
+        "run_id": {"type": "string"},
+        "runtime_profile": {"type": "string"},
+        "input_manifest_hash": {"type": "string"}
+      }
+    },
+    "scalar_score_prohibited": {"const": true}
+  },
+  "$defs": {
+    "strength": {"enum": ["strong", "mixed", "weak", "unknown"]},
+    "risk": {"enum": ["low", "mixed", "high", "unknown"]}
+  }
+}
