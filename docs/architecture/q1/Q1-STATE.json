@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.1.0-q1",
+  "schema_version": "1.2.0-q1",
   "stage": "Q1",
-  "status": "live_probe_blocked_vendor_balance",
+  "status": "live_probe_blocked_wind_billing_scope_mismatch",
   "accepted_q0_commit": "f9ab0aba57be052cccf2323716731602ca028039",
   "seed_universe_source": "docs/architecture/q0/mvp-universe-30-v1.json",
   "seed_assets": 30,
@@ -14,10 +14,16 @@
   "wind_network_from_github_actions": "passed",
   "wind_secret_present": "passed",
   "wind_auth_path_reached": "passed",
+  "wind_secret_matches_user_supplied_key_fingerprint": "passed",
+  "wind_key_fingerprint_sha256_prefix": "d78348e31f92",
   "wind_official_cli_probe": "BLOCKED_BALANCE_ERROR",
+  "wind_official_cli_latest_run_id": "32133370264",
+  "wind_official_cli_latest_observed_at_utc": "2026-08-18T11:46:26.187890+00:00",
   "wind_official_cli_receipt_sha256": "c673e0e8b7cfd523d62c6834c12a1f07780a59ecab8ef0ca4784795aa3c70e83",
+  "wind_ui_points_observation": "user_screenshot_shows_total_points_14461_daily_refresh_0",
+  "wind_billing_scope_interpretation": "unresolved_ui_points_vs_api_balance_or_entitlement_mapping",
   "wind_qualification": "blocked_before_identity_resolution",
-  "wind_live_probe": "blocked_vendor_balance",
+  "wind_live_probe": "blocked_balance_error_despite_ui_points",
   "identifier_registry": "started_not_verified",
   "coverage_matrix": "not_run",
   "point_in_time_audit": "not_run",
@@ -27,5 +33,5 @@
   "a9_operational_canon_switch": "not_run_not_authorized",
   "rsi_frozen_change": "not_run_not_authorized",
   "live_trading": "architecturally_absent",
-  "next_gate": "Q1_R1_RETRY_AFTER_WIND_BALANCE_RESTORED"
+  "next_gate": "Q1_R1_RESOLVE_WIND_BILLING_SCOPE_OR_ENTITLEMENT_MAPPING"
 }
