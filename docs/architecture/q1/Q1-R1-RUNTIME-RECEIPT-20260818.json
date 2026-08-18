@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0-q1-r1-env",
+  "stage": "Q1-R1",
+  "status": "BLOCKED_NETWORK",
+  "execution_runtime": "current_chatgpt_execution_container",
+  "authentication_attempted": false,
+  "dns_resolution": {
+    "mcp.wind.com.cn": "failed",
+    "alice.wind.com.cn": "failed",
+    "aifinmarket.wind.com.cn": "failed"
+  },
+  "wind_contract_state": "discovered_and_pinned",
+  "wind_runner_state": "ready_in_quant_workspace_pr_1",
+  "vendor_qualification": "not_run",
+  "force_state": "unknown",
+  "production_ingestion": "not_authorized",
+  "next_gate": "PASS_ONE_ASSET_PROBE_IN_NETWORKED_RUNTIME"
+}
