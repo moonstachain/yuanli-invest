@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_type": "repository_bootstrap",
+  "portfolio_id": "A9",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "repository": "moonstachain/yuanli-invest",
+  "bootstrap_source_sha": "e14a64c9c69761966500d37a605d0cace91c10a1",
+  "bootstrap_pr": 1,
+  "bootstrap_state": "completed",
+  "governance_registry_activation": "not_authorized",
+  "operational_canon_after_receipt": "moonstachain/quant-workspace",
+  "research_admission": "blocked_unassigned_evidence_reviewer",
+  "evidence_reviewer": "UNASSIGNED_HUMAN",
+  "activation_claim": false,
+  "notes": "This receipt proves the clean-room bootstrap merge SHA only. It does not activate yuanli-invest as A9 operational canon and does not authorize research admission, evidence promotion, Outcome acceptance, Canary, Production, Gitee or Nginx changes."
+}
