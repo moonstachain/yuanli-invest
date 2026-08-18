@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "A5",
+  "name": "Force Triangle Gold Reconstruction",
+  "state": "candidate_reconstruction_ready_for_human_review",
+  "pre_registration_commit": "392e4230493f7e860360defdbda82c0c61c48285",
+  "cases": 3,
+  "source_freeze": "source_set_and_t0_eligibility_only",
+  "evidence_vault_freeze": "not_run",
+  "evidence_reviewer": "UNASSIGNED_HUMAN",
+  "evidence_admission": "blocked",
+  "outcome_acceptance": "blocked",
+  "rsi_frozen_change": "not_run_not_authorized",
+  "a9_operational_canon_switch": "not_run_not_authorized",
+  "next_stage": "A6_EVIDENCE_VAULT_FREEZE_AND_GOLD_ADJUDICATION"
+}
