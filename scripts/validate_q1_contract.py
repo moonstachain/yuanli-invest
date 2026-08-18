@@ -32,7 +32,20 @@ assert state["live_trading"] == "architecturally_absent"
 assert state["wind_official_skill_repo"] == "Wind-Information-Co-Ltd/wind-skills"
 assert state["wind_official_skill_commit"] == "384e95796ad572a2a9402c14084de73a122f0a10"
 assert state["wind_direct_api_contract"] == "discovered_and_pinned"
-assert state["wind_qualification"] == "not_run"
+
+allowed_wind_qualification = {"not_run", "blocked_before_identity_resolution"}
+assert state["wind_qualification"] in allowed_wind_qualification
+
+if state["wind_qualification"] == "blocked_before_identity_resolution":
+    assert state["wind_network_from_github_actions"] == "passed"
+    assert state["wind_secret_present"] == "passed"
+    assert state["wind_auth_path_reached"] == "passed"
+    assert state["wind_official_cli_probe"] == "BLOCKED_BALANCE_ERROR"
+    assert state["wind_live_probe"] == "blocked_vendor_balance"
+    assert state["identifier_registry"] == "started_not_verified"
+    assert state["coverage_matrix"] == "not_run"
+    assert state["point_in_time_audit"] == "not_run"
+    assert state["next_gate"] == "Q1_R1_RETRY_AFTER_WIND_BALANCE_RESTORED"
 
 for key in PROHIBITED:
     # Mentioning prohibited field names in policy text is allowed, but they must never appear as schema/state properties.
