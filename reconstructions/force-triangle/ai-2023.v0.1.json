@@ -1,0 +1,97 @@
+{
+  "schema_version": "0.1.0",
+  "packet_type": "ForceTriangleGoldReconstruction",
+  "case_id": "FT-GR-AI-2023",
+  "version": "0.1.0",
+  "status": "candidate_reconstruction",
+  "t0": "2023-02-01",
+  "pre_registration_commit": "392e4230493f7e860360defdbda82c0c61c48285",
+  "outcome_locked": true,
+  "subject": "AI compute infrastructure / NVIDIA ecosystem",
+  "evidence_freeze": "a5-evidence-freeze-v0.1.json",
+  "source_ids_used": ["FTSRC-AI-001", "FTSRC-AI-002", "FTSRC-AI-003"],
+  "source_ids_pending_same_day_review": [],
+  "source_ids_excluded_post_t0": ["FTSRC-AI-004"],
+  "source_ids_discovery_only": ["FTSRC-AI-005"],
+  "paradigm": {
+    "stage": "installation",
+    "confidence": "high",
+    "drivers": {
+      "technology_breakthrough": "strong",
+      "cost_curve": "mixed",
+      "infrastructure": "strong",
+      "capital_formation": "strong",
+      "institutional_adaptation": "mixed",
+      "productivity_diffusion": "unknown"
+    },
+    "reason_codes": [
+      "PUBLIC_GENERATIVE_AI_CAPABILITY_VISIBLE",
+      "AI_SUPERCOMPUTING_AND_AZURE_INFRASTRUCTURE_COMMITMENT_VISIBLE",
+      "NVIDIA_DATA_CENTER_AI_REVENUE_ALREADY_REAL",
+      "PRODUCTIVITY_DIFFUSION_NOT_YET_FROZEN"
+    ]
+  },
+  "narrative": {
+    "stage": "accelerate",
+    "confidence": "medium",
+    "coverage": 0.6,
+    "reason_codes": [
+      "CHATGPT_PUBLIC_PREVIEW_VISIBLE",
+      "MICROSOFT_CAPITAL_AND_PRODUCT_FOLLOW_THROUGH_VISIBLE",
+      "100M_USER_CLAIM_EXCLUDED_AS_POST_T0",
+      "T0_USER_ADOPTION_SERIES_NOT_YET_FROZEN"
+    ]
+  },
+  "convexity": {
+    "convexity_state": "convex",
+    "left_tail_state": "watch",
+    "right_tail": {
+      "winner_take_most": "mixed",
+      "network_effects": "strong",
+      "scale_economics": "strong",
+      "bottleneck_control": "strong",
+      "platform_optionality": "strong",
+      "market_expansion": "strong",
+      "value_capture": "strong"
+    },
+    "left_tail": {
+      "balance_sheet_fragility": "low",
+      "refinancing_dependency": "low",
+      "dilution_risk": "low",
+      "concentration_risk": "mixed",
+      "regulatory_ruin": "high",
+      "technical_obsolescence": "mixed",
+      "valuation_cashflow_mismatch": "mixed"
+    },
+    "reason_codes": [
+      "CUDA_ACCELERATED_COMPUTING_PLATFORM_AND_H100_VISIBLE",
+      "DATA_CENTER_REVENUE_SUPPORTS_REAL_VALUE_CAPTURE",
+      "STRONG_LIQUIDITY_SUPPORTS_SURVIVAL",
+      "CHINA_EXPORT_RESTRICTIONS_INVENTORY_AND_PRODUCT_CYCLE_RISKS_VISIBLE"
+    ]
+  },
+  "fundamental_gate": "passed",
+  "survival_gate": "partial",
+  "force": {
+    "classification": "unknown",
+    "research_priority": "high",
+    "reason_codes": [
+      "P_AND_X_VISIBLE_BUT_NARRATIVE_ADOPTION_CHAIN_PARTIAL",
+      "CHATGPT_TO_CAPEX_TO_NVIDIA_CHAIN_NOT_FULLY_CLOSED_AT_T0",
+      "LATER_NVIDIA_RESULTS_PROHIBITED_FROM_T0_CLASSIFICATION"
+    ]
+  },
+  "falsifiers": [
+    "If T0 demand is primarily non-scalable free experimentation, reduce P/N confidence.",
+    "If GPU bottleneck control is rapidly substitutable or CUDA lock-in is weak, reduce X.",
+    "If infrastructure capital formation does not translate into revenue/productivity, the paradigm-to-asset chain is falsified.",
+    "If narrative acceleration is far ahead of operating evidence, N strength cannot upgrade the Fundamental Gate."
+  ],
+  "partial_reasons": [
+    "No admitted Evidence Vault snapshot/hash yet.",
+    "A point-in-time ChatGPT user-adoption sequence through 2023-02-01 has not yet been frozen.",
+    "The widely cited 100 million user report is dated after T0 and is explicitly excluded.",
+    "Survival remains partial because export restrictions, cyclicality and product-transition risks are visible at T0."
+  ],
+  "notes": "A5 intentionally keeps Force classification unknown. The T0 record supports an AI installation phase and a real NVIDIA infrastructure/value-capture candidate, but does not yet close the full ChatGPT adoption-to-capex-to-NVIDIA transmission chain without hindsight."
+}
