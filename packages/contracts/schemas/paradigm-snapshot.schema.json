@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:paradigm-snapshot:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": [
+        "paradigm_id", "stage", "drivers", "confidence", "scientific_status",
+        "evidence_ids", "counter_evidence_ids", "partial_reasons"
+      ],
+      "properties": {
+        "object_type": {"const": "ParadigmSnapshot"},
+        "paradigm_id": {"type": "string", "minLength": 1},
+        "stage": {"enum": ["emergence", "installation", "frenzy", "turning_point", "deployment", "maturity", "unknown"]},
+        "drivers": {
+          "type": "object",
+          "required": [
+            "technology_breakthrough", "cost_curve", "infrastructure", "capital_formation",
+            "institutional_adaptation", "productivity_diffusion"
+          ],
+          "properties": {
+            "technology_breakthrough": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "cost_curve": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "infrastructure": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "capital_formation": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "institutional_adaptation": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "productivity_diffusion": {"enum": ["weak", "mixed", "strong", "unknown"]}
+          },
+          "additionalProperties": false
+        },
+        "confidence": {"enum": ["low", "medium", "high", "unknown"]},
+        "scientific_status": {"const": "interpretive_framework_not_timing_model"},
+        "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "counter_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "partial_reasons": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/partial_reasons"},
+        "notes": {"type": "string"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}
