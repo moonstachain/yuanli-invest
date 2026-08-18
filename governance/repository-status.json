@@ -3,11 +3,11 @@
   "portfolio_id": "A9",
   "decision_id": "YL-DEC-A9-20260818-0001",
   "repository": "moonstachain/yuanli-invest",
-  "repository_state": "bootstrap_in_progress",
+  "repository_state": "bootstrap_complete_pending_registry_activation",
   "canon_role": "designated_target_canon",
   "operational_canon": "moonstachain/quant-workspace",
   "evidence_reviewer": "UNASSIGNED_HUMAN",
   "research_admission": "blocked_unassigned_evidence_reviewer",
-  "registry_activation": "not_authorized",
+  "registry_activation": "pending_human_gate",
   "deployment": "not_authorized"
 }

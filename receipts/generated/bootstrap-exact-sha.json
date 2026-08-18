@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "A9-BOOTSTRAP-20260818-0001",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "portfolio_id": "A9",
+  "generated_at": "2026-08-18T08:38:16Z",
+  "repository": "moonstachain/yuanli-invest",
+  "source_commit": "1e9fd7636341e34274fe95dac1ee041def743c96",
+  "source_tree": "5b44c59a34a3b53206529cb41662e0f34154e4c4",
+  "artifact_hash": "2d3149636d8f408f1a99b1ba84cc0a691a61c76554216f38d1e4db4ec7e6995d",
+  "artifact_file_count": 488,
+  "genesis_commit": "52d1bd1",
+  "bootstrap_merge_commit": "e14a64c9c69761966500d37a605d0cace91c10a1",
+  "canon_import_merge_commit": "1e9fd7636341e34274fe95dac1ee041def743c96",
+  "counts": {
+    "schemas": 19,
+    "versioned_objects": 438,
+    "narratives": 8,
+    "research_evidence": 36,
+    "identity_governance_evidence": 4,
+    "source_records": 40,
+    "companies": 57,
+    "legacy_mappings": 58,
+    "replays": 8,
+    "explicit_failure_or_decay_replays": 4,
+    "append_only_import_events": 219,
+    "approved_research_objects": 0
+  },
+  "verification": {
+    "local_unit_tests": "12_passed",
+    "github_required_checks": ["contracts", "governance"],
+    "schema_and_reference_validation": "passed",
+    "deterministic_rebuild": "passed_exact_hash",
+    "repository_leak_guard": "passed_zero_findings",
+    "github_secret_scanning": "partial_unavailable_http_422",
+    "branch_protection": {
+      "pull_request_required": true,
+      "strict_status_checks": true,
+      "enforce_admins": true,
+      "linear_history": true,
+      "force_push_allowed": false,
+      "branch_deletion_allowed": false,
+      "conversation_resolution_required": true
+    }
+  },
+  "surfaces": {
+    "code": "merged",
+    "canon": "bootstrap_complete",
+    "data": "partial_vault_snapshots_not_frozen",
+    "research_admission": "blocked_unassigned_evidence_reviewer",
+    "deployment": "not_run_not_authorized",
+    "runtime": "not_run",
+    "outcome": "not_run",
+    "learning": "not_run"
+  },
+  "canon_transition": {
+    "state": "pending_registry_activation",
+    "current_operational_canon": "moonstachain/quant-workspace",
+    "designated_target_canon": "moonstachain/yuanli-invest",
+    "current_single_canon_preserved": true,
+    "activation_receipt": "not_run_requires_separate_human_gate"
+  }
+}
