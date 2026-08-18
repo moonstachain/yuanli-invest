@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:convexity-profile:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["subject_id", "right_tail", "left_tail", "convexity_state", "left_tail_state", "evidence_ids", "counter_evidence_ids", "partial_reasons"],
+      "properties": {
+        "object_type": {"const": "ConvexityProfile"},
+        "subject_id": {"type": "string", "minLength": 1},
+        "right_tail": {
+          "type": "object",
+          "required": ["winner_take_most", "network_effects", "scale_economics", "bottleneck_control", "platform_optionality", "market_expansion", "value_capture"],
+          "properties": {
+            "winner_take_most": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "network_effects": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "scale_economics": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "bottleneck_control": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "platform_optionality": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "market_expansion": {"enum": ["weak", "mixed", "strong", "unknown"]},
+            "value_capture": {"enum": ["weak", "mixed", "strong", "unknown"]}
+          },
+          "additionalProperties": false
+        },
+        "left_tail": {
+          "type": "object",
+          "required": ["balance_sheet_fragility", "refinancing_dependency", "dilution_risk", "concentration_risk", "regulatory_ruin", "technical_obsolescence", "valuation_cashflow_mismatch"],
+          "properties": {
+            "balance_sheet_fragility": {"enum": ["low", "mixed", "high", "unknown"]},
+            "refinancing_dependency": {"enum": ["low", "mixed", "high", "unknown"]},
+            "dilution_risk": {"enum": ["low", "mixed", "high", "unknown"]},
+            "concentration_risk": {"enum": ["low", "mixed", "high", "unknown"]},
+            "regulatory_ruin": {"enum": ["low", "mixed", "high", "unknown"]},
+            "technical_obsolescence": {"enum": ["low", "mixed", "high", "unknown"]},
+            "valuation_cashflow_mismatch": {"enum": ["low", "mixed", "high", "unknown"]}
+          },
+          "additionalProperties": false
+        },
+        "convexity_state": {"enum": ["fragile", "balanced", "convex", "unknown"]},
+        "left_tail_state": {"enum": ["survivable", "watch", "fragile", "unknown"]},
+        "tail_risk_plugin_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "counter_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "partial_reasons": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/partial_reasons"},
+        "notes": {"type": "string"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

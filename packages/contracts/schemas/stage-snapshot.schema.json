@@ -9,7 +9,7 @@
       "properties": {
         "object_type": {"const": "StageSnapshot"},
         "narrative_id": {"type": "string"},
-        "stage": {"enum": ["discover", "accelerate", "consensus", "decay", "unknown"]},
+        "stage": {"enum": ["discover", "accelerate", "consensus", "decay", "residual", "unknown"]},
         "calculation_version": {"type": "string"},
         "input_observation_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
         "coverage": {"type": "number", "minimum": 0, "maximum": 1},
