@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0-q0",
+  "status": "candidate_seed_universe_not_investment_recommendation",
+  "purpose": "Q1 data-contract qualification and Q2-Q6 Force Radar shadow research",
+  "selection_rule": "coverage-first across AI value chain; no ranking and no implied buy/sell view",
+  "listing_validation": "Q1 must revalidate ticker/exchange/listing state and point-in-time identifiers before ingestion",
+  "assets": [
+    {"asset_id":"US-NVDA","market":"US","ticker":"NVDA","exchange":"NASDAQ","company":"NVIDIA","primary_nodes":["compute.gpu","datacenter.accelerated_compute"],"initial_force_state":"unknown"},
+    {"asset_id":"US-AMD","market":"US","ticker":"AMD","exchange":"NASDAQ","company":"Advanced Micro Devices","primary_nodes":["compute.gpu","compute.cpu"],"initial_force_state":"unknown"},
+    {"asset_id":"US-AVGO","market":"US","ticker":"AVGO","exchange":"NASDAQ","company":"Broadcom","primary_nodes":["compute.custom_asic","datacenter.networking"],"initial_force_state":"unknown"},
+    {"asset_id":"US-MRVL","market":"US","ticker":"MRVL","exchange":"NASDAQ","company":"Marvell Technology","primary_nodes":["compute.custom_asic","datacenter.networking"],"initial_force_state":"unknown"},
+    {"asset_id":"US-MU","market":"US","ticker":"MU","exchange":"NASDAQ","company":"Micron Technology","primary_nodes":["memory.hbm","memory.dram"],"initial_force_state":"unknown"},
+    {"asset_id":"US-AMAT","market":"US","ticker":"AMAT","exchange":"NASDAQ","company":"Applied Materials","primary_nodes":["semiconductor.equipment"],"initial_force_state":"unknown"},
+    {"asset_id":"US-LRCX","market":"US","ticker":"LRCX","exchange":"NASDAQ","company":"Lam Research","primary_nodes":["semiconductor.equipment"],"initial_force_state":"unknown"},
+    {"asset_id":"US-KLAC","market":"US","ticker":"KLAC","exchange":"NASDAQ","company":"KLA","primary_nodes":["semiconductor.equipment"],"initial_force_state":"unknown"},
+    {"asset_id":"US-ANET","market":"US","ticker":"ANET","exchange":"NYSE","company":"Arista Networks","primary_nodes":["datacenter.networking"],"initial_force_state":"unknown"},
+    {"asset_id":"US-VRT","market":"US","ticker":"VRT","exchange":"NYSE","company":"Vertiv","primary_nodes":["datacenter.power","datacenter.cooling"],"initial_force_state":"unknown"},
+    {"asset_id":"US-MSFT","market":"US","ticker":"MSFT","exchange":"NASDAQ","company":"Microsoft","primary_nodes":["cloud","foundation_models","ai_software.agent"],"initial_force_state":"unknown"},
+    {"asset_id":"US-GOOGL","market":"US","ticker":"GOOGL","exchange":"NASDAQ","company":"Alphabet","primary_nodes":["cloud","foundation_models","consumer_ai","compute.custom_asic"],"initial_force_state":"unknown"},
+    {"asset_id":"US-AMZN","market":"US","ticker":"AMZN","exchange":"NASDAQ","company":"Amazon","primary_nodes":["cloud","compute.custom_asic","ai_software.agent"],"initial_force_state":"unknown"},
+    {"asset_id":"US-META","market":"US","ticker":"META","exchange":"NASDAQ","company":"Meta Platforms","primary_nodes":["foundation_models","consumer_ai","ai_infrastructure"],"initial_force_state":"unknown"},
+    {"asset_id":"US-ORCL","market":"US","ticker":"ORCL","exchange":"NYSE","company":"Oracle","primary_nodes":["cloud","datacenter.ai_infrastructure"],"initial_force_state":"unknown"},
+
+    {"asset_id":"CN-688256","market":"CN","ticker":"688256","exchange":"SSE STAR","company":"Cambricon Technologies","primary_nodes":["compute.ai_accelerator","sovereign_china_substitution"],"initial_force_state":"unknown"},
+    {"asset_id":"CN-688041","market":"CN","ticker":"688041","exchange":"SSE STAR","company":"Hygon Information Technology","primary_nodes":["compute.cpu","compute.ai_accelerator","sovereign_china_substitution"],"initial_force_state":"unknown"},
+    {"asset_id":"CN-688047","market":"CN","ticker":"688047","exchange":"SSE STAR","company":"Loongson Technology","primary_nodes":["compute.cpu","sovereign_china_substitution"],"initial_force_state":"unknown"},
+    {"asset_id":"CN-002230","market":"CN","ticker":"002230","exchange":"SZSE","company":"iFLYTEK","primary_nodes":["foundation_models","ai_software","consumer_ai"],"initial_force_state":"unknown"},
+    {"asset_id":"CN-603019","market":"CN","ticker":"603019","exchange":"SSE","company":"Sugon","primary_nodes":["datacenter.compute","sovereign_china_substitution"],"initial_force_state":"unknown"},
+    {"asset_id":"CN-300308","market":"CN","ticker":"300308","exchange":"SZSE ChiNext","company":"Zhongji Innolight","primary_nodes":["datacenter.optical"],"initial_force_state":"unknown"},
+    {"asset_id":"CN-300502","market":"CN","ticker":"300502","exchange":"SZSE ChiNext","company":"Eoptolink Technology","primary_nodes":["datacenter.optical"],"initial_force_state":"unknown"},
+    {"asset_id":"HK-9988","market":"HK","ticker":"9988","exchange":"HKEX","company":"Alibaba Group","primary_nodes":["cloud","foundation_models","ai_software.agent"],"initial_force_state":"unknown"},
+    {"asset_id":"HK-0700","market":"HK","ticker":"0700","exchange":"HKEX","company":"Tencent Holdings","primary_nodes":["cloud","foundation_models","consumer_ai"],"initial_force_state":"unknown"},
+    {"asset_id":"HK-9888","market":"HK","ticker":"9888","exchange":"HKEX","company":"Baidu","primary_nodes":["foundation_models","cloud","autonomous_driving","consumer_ai"],"initial_force_state":"unknown"},
+    {"asset_id":"HK-0981","market":"HK","ticker":"0981","exchange":"HKEX","company":"Semiconductor Manufacturing International Corporation","primary_nodes":["semiconductor.foundry","sovereign_china_substitution"],"initial_force_state":"unknown"},
+    {"asset_id":"HK-1347","market":"HK","ticker":"1347","exchange":"HKEX","company":"Hua Hong Semiconductor","primary_nodes":["semiconductor.foundry","sovereign_china_substitution"],"initial_force_state":"unknown"},
+    {"asset_id":"HK-1810","market":"HK","ticker":"1810","exchange":"HKEX","company":"Xiaomi","primary_nodes":["consumer_ai","edge_ai","robotics_physical_ai"],"initial_force_state":"unknown"},
+    {"asset_id":"HK-0992","market":"HK","ticker":"0992","exchange":"HKEX","company":"Lenovo Group","primary_nodes":["edge_ai","ai_pc","datacenter.infrastructure"],"initial_force_state":"unknown"},
+    {"asset_id":"HK-0020","market":"HK","ticker":"0020","exchange":"HKEX","company":"SenseTime Group","primary_nodes":["foundation_models","computer_vision","ai_software"],"initial_force_state":"unknown"}
+  ],
+  "required_q1_checks": [
+    "verify_current_listing_state_and_exchange_identifiers",
+    "map_vendor_symbols_for_Wind_and_US_data_sources",
+    "freeze corporate_action_identifier_history",
+    "verify data coverage for market_fundamental_estimates_news",
+    "assign value_chain mappings with evidence",
+    "add counterexample/control assets before any predictive evaluation"
+  ]
+}
