@@ -102,6 +102,10 @@ def main() -> int:
     company_ids = {item["id"] for _, item in objects if item["object_type"] == "CompanyMaster"}
     source_record_ids = {item["id"] for _, item in objects if item["object_type"] == "SourceRecord"}
     subject_ids = {item["id"] for _, item in objects if item["object_type"] != "ResearchEvent"}
+    paradigm_ids = {item["id"] for _, item in objects if item["object_type"] == "ParadigmSnapshot"}
+    stage_ids = {item["id"] for _, item in objects if item["object_type"] == "StageSnapshot"}
+    convexity_ids = {item["id"] for _, item in objects if item["object_type"] == "ConvexityProfile"}
+    force_triangle_ids = {item["id"] for _, item in objects if item["object_type"] == "ForceTriangleSnapshot"}
 
     tickers: set[tuple[str, str]] = set()
     for path, item in objects:
@@ -117,6 +121,16 @@ def main() -> int:
             raise ValueError(f"{path}: missing source record {item['source_record_id']}")
         if item["object_type"] == "ResearchEvent" and item["subject_id"] not in subject_ids:
             raise ValueError(f"{path}: missing event subject {item['subject_id']}")
+        if item["object_type"] == "Replay":
+            refs = {
+                "paradigm_snapshot_id": paradigm_ids,
+                "stage_snapshot_id": stage_ids,
+                "convexity_profile_id": convexity_ids,
+                "force_triangle_snapshot_id": force_triangle_ids,
+            }
+            for field, valid_ids in refs.items():
+                if field in item and item[field] not in valid_ids:
+                    raise ValueError(f"{path}: missing {field} reference {item[field]}")
         if item["object_type"] == "CompanyMaster":
             identity = (item["exchange"], item["ticker"])
             if identity in tickers:
