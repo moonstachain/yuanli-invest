@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "A",
+  "id": "E024",
+  "independent_group": "rentosertib_trial",
+  "interest_position": "academic_clinical",
+  "issuer": "Xu et al. / Nature Medicine",
+  "logical_locator": "abstract, trial design and limitations",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "rentosertib_trial"
+  },
+  "published_at": "2025-06-03",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E024",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "peer_reviewed_clinical_trial",
+  "stance": "support",
+  "status": "partial",
+  "supports": [
+    "an AI-discovered molecule reached randomized phase 2a evidence",
+    "clinical milestone does not remove efficacy, safety and approval risk"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "A generative AI-discovered TNIK inhibitor for idiopathic pulmonary fibrosis: a randomized phase 2a trial",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://doi.org/10.1038/s41591-025-03743-2",
+  "valid_from": "2025-06-03",
+  "valid_to": null,
+  "version": "1.0.0"
+}

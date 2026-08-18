@@ -1,0 +1,130 @@
+{
+  "as_of": "2026-08-17T15:24:25+08:00",
+  "case_name": "AI PC与Copilot+ PC",
+  "constituents": [
+    {
+      "mdd250_pct": -37.4768,
+      "name": "领益智造",
+      "returns_pct": {
+        "d120": 82.7078,
+        "d20": 15.749,
+        "d250": 64.9414,
+        "d60": 38.613
+      },
+      "start": "2024-05-20",
+      "ticker": "002600.SZ"
+    },
+    {
+      "mdd250_pct": -41.4659,
+      "name": "蓝思科技",
+      "returns_pct": {
+        "d120": 55.6577,
+        "d20": 17.7474,
+        "d250": 40.8563,
+        "d60": 19.1059
+      },
+      "start": "2024-05-20",
+      "ticker": "300433.SZ"
+    },
+    {
+      "mdd250_pct": -38.0963,
+      "name": "立讯精密",
+      "returns_pct": {
+        "d120": 27.7481,
+        "d20": 20.1455,
+        "d250": -3.1535,
+        "d60": 17.8723
+      },
+      "start": "2024-05-20",
+      "ticker": "002475.SZ"
+    },
+    {
+      "mdd250_pct": -32.2503,
+      "name": "汇顶科技",
+      "returns_pct": {
+        "d120": 44.5354,
+        "d20": 12.3622,
+        "d250": 12.8396,
+        "d60": -2.6997
+      },
+      "start": "2024-05-20",
+      "ticker": "603160.SS"
+    }
+  ],
+  "counterevidence": [
+    "样本公司同时暴露于手机和消费电子复苏，无法归因给AI PC",
+    "立讯精密T+250为负",
+    "预测渗透率不等于实际付费应用、换机或利润传导"
+  ],
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "evidence_ids": [
+    "E018",
+    "E028",
+    "E029",
+    "E030",
+    "E031",
+    "E033"
+  ],
+  "failure_case": true,
+  "falsifier": "AI功能激活率、日活、付费率或ASP/BOM价值量没有改善，OEM库存和换机周期未缩短",
+  "financial_periods": 2,
+  "fundamental_validation": "partial_high_confounding_clear_method_case",
+  "horizons": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "id": "HR08",
+  "lookahead_check": "partial",
+  "measurements": {
+    "benchmark_returns_pct": {
+      "d120": 9.4463,
+      "d20": -3.9385,
+      "d250": 4.0442,
+      "d60": -9.6606
+    },
+    "excess_pct": {
+      "d120": 43.2159,
+      "d20": 20.4396,
+      "d250": 24.8267,
+      "d60": 27.8835
+    },
+    "mean_individual_mdd250_pct": -37.3223,
+    "returns_pct": {
+      "d120": 52.6622,
+      "d20": 16.501,
+      "d250": 28.8709,
+      "d60": 18.2229
+    }
+  },
+  "method_limits": [
+    "the representative universes were reconstructed on 2026-08-17 rather than frozen at T0",
+    "industry and style matched controls are not implemented",
+    "delisting and investability screens are not frozen",
+    "raw daily arrays are not embedded in this artifact; source URLs and algorithm are preserved",
+    "company-level subsequent two-report-period fundamental validation remains partial"
+  ],
+  "narrative_id": "narrative-edge-device",
+  "notes": "仅用于描述性事件路径与反例发现；禁止解释为因果、准入、策略或预期收益。",
+  "object_type": "Replay",
+  "point_in_time_rule": "T0 标的池、当时可得信息与估值必须冻结；当前导入因事后重建标的池而保持 partial。",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "historical_replay_clean_room_import",
+    "review_state": "descriptive_not_causal_not_admitted",
+    "source_group": "ai-narrative-invest-research-20260817"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "source_snapshot_hash": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "status": "partial",
+  "t0": "2024-05-20",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2024-05-20",
+  "valid_to": null,
+  "version": "1.0.0",
+  "window_end": "2025-11-20",
+  "window_start": "2023-11-20"
+}

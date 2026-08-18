@@ -1,0 +1,50 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "definition": "基础模型能力经席位、调用量、工作流和结果付费进入企业或消费者产品，并由留存、单位经济和可归因收入验证商业化。",
+  "excluded": [
+    "只统计注册用户或发布会功能",
+    "无法拆分 AI 收入的传统软件增长",
+    "未核验的模型排名和营销口径"
+  ],
+  "falsifiers": [
+    "推理成本吞噬毛利",
+    "使用增长不转化为付费和留存",
+    "通用模型挤压应用层差异化"
+  ],
+  "id": "narrative-app-agent",
+  "included": [
+    "通用与垂类 Agent",
+    "办公/营销/内容生成应用",
+    "模型调用与结果付费",
+    "ARR/NRR/Rule of 40 等经营验证"
+  ],
+  "name": "AI 应用与 Agent",
+  "object_type": "Narrative",
+  "origin": {
+    "date": "2022-11-30",
+    "event": "OpenAI 发布 ChatGPT"
+  },
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "versioned_narrative_definition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "reverse_narrative": "推理成本吞噬毛利；使用增长不转化为付费和留存；通用模型挤压应用层差异化",
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "status": "partial",
+  "synonyms": [
+    "AI 应用",
+    "Agent 经济",
+    "AI SaaS",
+    "大模型应用"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2022-11-30",
+  "valid_to": null,
+  "version": "1.0.0"
+}

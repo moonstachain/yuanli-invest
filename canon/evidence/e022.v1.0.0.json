@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "S",
+  "id": "E022",
+  "independent_group": "unitree_g1",
+  "interest_position": "product_issuer",
+  "issuer": "Unitree Robotics",
+  "logical_locator": "source landing page; exact locator pending independent review",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "unitree_g1"
+  },
+  "published_at": "2024",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E022",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "original_product_page",
+  "stance": "support",
+  "status": "partial",
+  "supports": [
+    "commercial product specifications and stated capabilities",
+    "vendor specifications require independent shipment validation"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "Unitree G1 Humanoid Agent",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://www.unitree.com/g1/",
+  "valid_from": "2024-01-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

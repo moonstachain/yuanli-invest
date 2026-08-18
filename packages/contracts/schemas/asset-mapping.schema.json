@@ -5,7 +5,7 @@
     {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
     {
       "type": "object",
-      "required": ["narrative_id", "company_id", "edges", "weakest_edge_id", "evidence_ids", "counter_evidence_ids"],
+      "required": ["narrative_id", "company_id", "edges", "weakest_edge_id", "evidence_ids", "counter_evidence_ids", "failure_condition", "next_validation_at"],
       "properties": {
         "object_type": {"const": "AssetMapping"},
         "narrative_id": {"type": "string"},
@@ -18,6 +18,7 @@
             "properties": {
               "id": {"type": "string"}, "from": {"type": "string"}, "to": {"type": "string"},
               "claim_class": {"enum": ["fact", "inference", "hypothesis"]},
+              "claim": {"type": "string"},
               "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"}
             },
             "additionalProperties": false
@@ -26,7 +27,9 @@
         },
         "weakest_edge_id": {"type": "string"},
         "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
-        "counter_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"}
+        "counter_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "failure_condition": {"type": "string", "minLength": 1},
+        "next_validation_at": {"type": "string", "format": "date-time"}
       }
     }
   ],

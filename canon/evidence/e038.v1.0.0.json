@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-08-18T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "S",
+  "id": "E038",
+  "independent_group": "szse_300446_identity",
+  "interest_position": "发行人法定披露",
+  "issuer": "深圳证券交易所 / 航天智造科技股份有限公司",
+  "logical_locator": "证券代码 300446 与证券简称",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "identity_governance_addition",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "szse_300446_identity"
+  },
+  "published_at": "2023-11-10",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E038",
+  "source_revision": "sha256:d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+  "source_snapshot_hash": "d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+  "source_type": "exchange_filing",
+  "stance": "counter",
+  "status": "partial",
+  "supports": [
+    "300446 对应航天智造，不对应科思创"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "航天智造证券简称变更相关公告",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2023-11-10/e5c9adfc-a10a-4440-9866-2a08a3489682.PDF",
+  "valid_from": "2023-11-10",
+  "valid_to": null,
+  "version": "1.0.0"
+}

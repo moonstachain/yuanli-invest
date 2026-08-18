@@ -1,0 +1,51 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "definition": "端侧 NPU、模型压缩和系统级 AI 能力，通过设备出货、功能激活、换机、ASP 和 BOM 价值量传导至芯片、ODM、声学和光学环节。",
+  "excluded": [
+    "只有 NPU 标签但没有使用数据",
+    "将普通消费电子复苏全部归因于 AI",
+    "没有确认供应关系的终端概念"
+  ],
+  "falsifiers": [
+    "缺少杀手应用",
+    "端侧功能不促进换机或付费",
+    "BOM 升级被价格竞争抵消"
+  ],
+  "id": "narrative-edge-device",
+  "included": [
+    "AI PC 与端侧 NPU",
+    "AI 手机",
+    "AI/AR 眼镜",
+    "端侧光学与声学",
+    "功能激活和使用强度"
+  ],
+  "name": "端侧 AI、AI PC 与 AI 眼镜",
+  "object_type": "Narrative",
+  "origin": {
+    "date": "2024-05-20",
+    "event": "Microsoft 发布 Copilot+ PC 类别"
+  },
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "versioned_narrative_definition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "reverse_narrative": "缺少杀手应用；端侧功能不促进换机或付费；BOM 升级被价格竞争抵消",
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "status": "partial",
+  "synonyms": [
+    "端侧 AI",
+    "AI PC",
+    "Copilot+ PC",
+    "AI 眼镜"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2024-05-20",
+  "valid_to": null,
+  "version": "1.0.0"
+}

@@ -1,0 +1,51 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "definition": "通用具身模型、整机工程化与量产节奏，经执行器、减速器、电机、传感器和 Tier-1 BOM 价值量传导至上市公司经营。",
+  "excluded": [
+    "仅有送样传闻",
+    "将汽车零部件收入全部归因为机器人",
+    "没有客户或量产节点的概念合作"
+  ],
+  "falsifiers": [
+    "量产时间持续后移",
+    "BOM 降本快于出货增长",
+    "潜在供应关系未形成定点和收入"
+  ],
+  "id": "narrative-robotics",
+  "included": [
+    "人形机器人整机工程化",
+    "灵巧手与执行器",
+    "减速器与电机",
+    "力觉/触觉/视觉传感",
+    "量产供应链"
+  ],
+  "name": "具身智能与机器人 BOM",
+  "object_type": "Narrative",
+  "origin": {
+    "date": "2022-09-30",
+    "event": "Tesla AI Day 2022 展示 Optimus 原型"
+  },
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "versioned_narrative_definition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "reverse_narrative": "量产时间持续后移；BOM 降本快于出货增长；潜在供应关系未形成定点和收入",
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "status": "partial",
+  "synonyms": [
+    "人形机器人",
+    "具身智能",
+    "Optimus 产业链",
+    "机器人 BOM"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2022-09-30",
+  "valid_to": null,
+  "version": "1.0.0"
+}

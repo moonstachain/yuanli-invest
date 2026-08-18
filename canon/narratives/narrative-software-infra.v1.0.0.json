@@ -1,0 +1,51 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "definition": "模型开发、部署、推理、可观测、数据管线和 Agent 中间件，经开发者采用、调用量、留存和可归因收入验证基础设施价值。",
+  "excluded": [
+    "仅换名为 AI 的传统中间件",
+    "没有使用量或收入证据的开源热度",
+    "把云收入整体视为 AI 软件收入"
+  ],
+  "falsifiers": [
+    "开源和云厂内建功能压缩独立厂商价值",
+    "Token 单价下降快于调用量增长",
+    "开发者采用不形成商业付费"
+  ],
+  "id": "narrative-software-infra",
+  "included": [
+    "模型服务/MaaS",
+    "推理与模型优化",
+    "向量/检索与数据管线",
+    "Agent 中间件",
+    "AI 开发与可观测工具"
+  ],
+  "name": "AI 软件基础设施、中间件与开发工具",
+  "object_type": "Narrative",
+  "origin": {
+    "date": "2022-11-30",
+    "event": "生成式 AI 应用扩散推动模型服务、推理、可观测和开发工具需求"
+  },
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "versioned_narrative_definition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "reverse_narrative": "开源和云厂内建功能压缩独立厂商价值；Token 单价下降快于调用量增长；开发者采用不形成商业付费",
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "status": "partial",
+  "synonyms": [
+    "AI Infra Software",
+    "MaaS",
+    "LLMOps",
+    "Agent 工具链"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2022-11-30",
+  "valid_to": null,
+  "version": "1.0.0"
+}

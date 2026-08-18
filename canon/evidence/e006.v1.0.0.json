@@ -1,0 +1,35 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "A",
+  "id": "E006",
+  "independent_group": "bass_diffusion",
+  "interest_position": "academic",
+  "issuer": "Frank M. Bass / Management Science",
+  "logical_locator": "source landing page; exact locator pending independent review",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "bass_diffusion"
+  },
+  "published_at": "1969-01",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E006",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "peer_reviewed_article",
+  "stance": "method",
+  "status": "partial",
+  "supports": [
+    "innovation and imitation can be modelled as distinct adoption forces"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "A New Product Growth for Model Consumer Durables",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://doi.org/10.1287/mnsc.15.5.215",
+  "valid_from": "1969-01-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

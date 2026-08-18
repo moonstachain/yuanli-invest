@@ -1,0 +1,29 @@
+{
+  "counts": {
+    "companies": 57,
+    "evidence": 40,
+    "mappings": 58,
+    "narratives": 8,
+    "replays": 8,
+    "source-records": 40,
+    "stages": 8
+  },
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "events": 219,
+  "explicit_failure_or_decay_replays": 4,
+  "generated_at": "2026-08-18T16:20:00+08:00",
+  "identity_governance_evidence_count": 4,
+  "research_admission": "blocked_unassigned_evidence_reviewer",
+  "research_evidence_count": 36,
+  "schema_version": "1.0.0",
+  "source_hashes": {
+    "classic_evidence": "856c1c44d0ec213af782b57f5e38684954fd017f1d6843d961da8d253e330acf",
+    "companies": "1c852ddfe4c6df37f62e8f134f4012cbde111565f6f37e2541c2b7c3c457fe7e",
+    "evidence_ledger": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+    "historical_replay": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+    "identity_additions": "d4011e4e8d0c7af02d83b6cd0310366d97f637edca2654a1db1a8a707f3b8264",
+    "mappings": "8b836a423d6ce1acce5e9058ac1a78003fc994fe7caba0f3d66db14fe3cd0cdf",
+    "narratives": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07"
+  },
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818"
+}

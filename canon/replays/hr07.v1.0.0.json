@@ -1,0 +1,131 @@
+{
+  "as_of": "2026-08-17T15:24:25+08:00",
+  "case_name": "数据要素叙事与商业化落差",
+  "constituents": [
+    {
+      "mdd250_pct": -41.9355,
+      "name": "易华录",
+      "returns_pct": {
+        "d120": 67.1734,
+        "d20": -1.3558,
+        "d250": 25.5546,
+        "d60": 23.0485
+      },
+      "start": "2022-12-19",
+      "ticker": "300212.SZ"
+    },
+    {
+      "mdd250_pct": -53.806,
+      "name": "深桑达A",
+      "returns_pct": {
+        "d120": 50.9328,
+        "d20": -7.7076,
+        "d250": -19.7547,
+        "d60": 36.6706
+      },
+      "start": "2022-12-19",
+      "ticker": "000032.SZ"
+    },
+    {
+      "mdd250_pct": -37.6127,
+      "name": "人民网",
+      "returns_pct": {
+        "d120": 150.0,
+        "d20": 15.3631,
+        "d250": 89.2113,
+        "d60": 22.9749
+      },
+      "start": "2022-12-19",
+      "ticker": "603000.SS"
+    },
+    {
+      "mdd250_pct": -40.724,
+      "name": "浙数文化",
+      "returns_pct": {
+        "d120": 95.9709,
+        "d20": -0.4505,
+        "d250": 21.2074,
+        "d60": 29.2793
+      },
+      "start": "2022-12-19",
+      "ticker": "600633.SS"
+    }
+  ],
+  "counterevidence": [
+    "T+20跑输基准",
+    "深桑达A在T+250为负",
+    "会计处理规定强调确认与披露边界，并非允许无条件资产化",
+    "政策热度不能替代交易量、付费率和利润"
+  ],
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "evidence_ids": [
+    "E026",
+    "E027",
+    "E030",
+    "E031",
+    "E032",
+    "E033"
+  ],
+  "failure_case": true,
+  "falsifier": "数据产品交易额、复购、毛利和现金回款没有形成，或合规成本超过商业价值",
+  "financial_periods": 2,
+  "fundamental_validation": "partial_narrative_commercialization_gap",
+  "horizons": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "id": "HR07",
+  "lookahead_check": "partial",
+  "measurements": {
+    "benchmark_returns_pct": {
+      "d120": 0.9681,
+      "d20": 6.2678,
+      "d250": -12.2952,
+      "d60": 2.2901
+    },
+    "excess_pct": {
+      "d120": 90.0512,
+      "d20": -4.8055,
+      "d250": 41.3499,
+      "d60": 25.7032
+    },
+    "mean_individual_mdd250_pct": -43.5196,
+    "returns_pct": {
+      "d120": 91.0193,
+      "d20": 1.4623,
+      "d250": 29.0547,
+      "d60": 27.9933
+    }
+  },
+  "method_limits": [
+    "the representative universes were reconstructed on 2026-08-17 rather than frozen at T0",
+    "industry and style matched controls are not implemented",
+    "delisting and investability screens are not frozen",
+    "raw daily arrays are not embedded in this artifact; source URLs and algorithm are preserved",
+    "company-level subsequent two-report-period fundamental validation remains partial"
+  ],
+  "narrative_id": "narrative-data-infra",
+  "notes": "仅用于描述性事件路径与反例发现；禁止解释为因果、准入、策略或预期收益。",
+  "object_type": "Replay",
+  "point_in_time_rule": "T0 标的池、当时可得信息与估值必须冻结；当前导入因事后重建标的池而保持 partial。",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "historical_replay_clean_room_import",
+    "review_state": "descriptive_not_causal_not_admitted",
+    "source_group": "ai-narrative-invest-research-20260817"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "source_snapshot_hash": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "status": "partial",
+  "t0": "2022-12-19",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2022-12-19",
+  "valid_to": null,
+  "version": "1.0.0",
+  "window_end": "2024-06-19",
+  "window_start": "2022-06-19"
+}

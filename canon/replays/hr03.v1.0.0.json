@@ -1,0 +1,129 @@
+{
+  "as_of": "2026-08-17T15:24:25+08:00",
+  "case_name": "DeepSeek冲击后的应用、算力和国产化重估",
+  "constituents": [
+    {
+      "mdd250_pct": -56.8608,
+      "name": "每日互动",
+      "returns_pct": {
+        "d120": 111.8273,
+        "d20": 211.3542,
+        "d250": 149.9704,
+        "d60": 113.3649
+      },
+      "start": "2025-01-20",
+      "ticker": "300766.SZ"
+    },
+    {
+      "mdd250_pct": -41.1617,
+      "name": "万兴科技",
+      "returns_pct": {
+        "d120": 11.9328,
+        "d20": 24.8022,
+        "d250": 50.7347,
+        "d60": -11.2869
+      },
+      "start": "2025-01-20",
+      "ticker": "300624.SZ"
+    },
+    {
+      "mdd250_pct": -43.2442,
+      "name": "拓尔思",
+      "returns_pct": {
+        "d120": 12.9759,
+        "d20": 40.3753,
+        "d250": 22.8418,
+        "d60": -0.1072
+      },
+      "start": "2025-01-20",
+      "ticker": "300229.SZ"
+    },
+    {
+      "mdd250_pct": -37.4167,
+      "name": "昆仑万维",
+      "returns_pct": {
+        "d120": -5.5647,
+        "d20": 13.1405,
+        "d250": 53.719,
+        "d60": -15.4821
+      },
+      "start": "2025-01-20",
+      "ticker": "300418.SZ"
+    }
+  ],
+  "counterevidence": [
+    "一个极端样本显著抬高等权均值",
+    "除每日互动外其余样本T+60均为负或接近零",
+    "低成本模型可能利好应用也可能压缩模型服务定价"
+  ],
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "evidence_ids": [
+    "E016",
+    "E017",
+    "E030",
+    "E031",
+    "E033"
+  ],
+  "failure_case": false,
+  "falsifier": "若调用量增长没有转化为付费收入、留存或单位经济改善，应用重估不成立",
+  "financial_periods": 2,
+  "fundamental_validation": "partial_high_selection_sensitivity",
+  "horizons": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "id": "HR03",
+  "lookahead_check": "partial",
+  "measurements": {
+    "benchmark_returns_pct": {
+      "d120": 7.5536,
+      "d20": 2.506,
+      "d250": 22.8912,
+      "d60": -1.1176
+    },
+    "excess_pct": {
+      "d120": 25.2392,
+      "d20": 69.9121,
+      "d250": 46.4253,
+      "d60": 22.7397
+    },
+    "mean_individual_mdd250_pct": -44.6708,
+    "returns_pct": {
+      "d120": 32.7928,
+      "d20": 72.4181,
+      "d250": 69.3165,
+      "d60": 21.6222
+    }
+  },
+  "method_limits": [
+    "the representative universes were reconstructed on 2026-08-17 rather than frozen at T0",
+    "industry and style matched controls are not implemented",
+    "delisting and investability screens are not frozen",
+    "raw daily arrays are not embedded in this artifact; source URLs and algorithm are preserved",
+    "company-level subsequent two-report-period fundamental validation remains partial"
+  ],
+  "narrative_id": "narrative-compute",
+  "notes": "仅用于描述性事件路径与反例发现；禁止解释为因果、准入、策略或预期收益。",
+  "object_type": "Replay",
+  "point_in_time_rule": "T0 标的池、当时可得信息与估值必须冻结；当前导入因事后重建标的池而保持 partial。",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "historical_replay_clean_room_import",
+    "review_state": "descriptive_not_causal_not_admitted",
+    "source_group": "ai-narrative-invest-research-20260817"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "source_snapshot_hash": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "status": "partial",
+  "t0": "2025-01-20",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2025-01-20",
+  "valid_to": null,
+  "version": "1.0.0",
+  "window_end": "2026-07-20",
+  "window_start": "2024-07-20"
+}

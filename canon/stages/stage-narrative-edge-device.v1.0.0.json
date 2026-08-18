@@ -1,0 +1,30 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "calculation_version": "narrative-stage-v1.0.0",
+  "coverage": 0,
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "id": "stage-narrative-edge-device",
+  "input_observation_ids": [],
+  "narrative_id": "narrative-edge-device",
+  "object_type": "StageSnapshot",
+  "partial_reasons": [
+    "narrative_observations_not_frozen",
+    "evidence_reviewer_unassigned"
+  ],
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "deterministic_unknown_without_frozen_observations",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "stage": "unknown",
+  "status": "partial",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2024-05-20",
+  "valid_to": null,
+  "version": "1.0.0"
+}

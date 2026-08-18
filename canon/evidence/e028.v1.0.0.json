@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "B",
+  "id": "E028",
+  "independent_group": "idc_ai_pc",
+  "interest_position": "industry_research",
+  "issuer": "IDC",
+  "logical_locator": "forecast definition and penetration statement",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "idc_ai_pc"
+  },
+  "published_at": "2024",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E028",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "industry_forecast",
+  "stance": "support",
+  "status": "partial",
+  "supports": [
+    "industry expected rapid AI-PC penetration",
+    "forecast is not observed shipment or application value"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "IDC Forecasts Artificial Intelligence PCs to Account for Nearly 60% of All PC Shipments by 2027",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://www.idc.com/getdoc.jsp?containerId=prUS51923024",
+  "valid_from": "2024-01-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

@@ -1,0 +1,128 @@
+{
+  "as_of": "2026-08-17T15:24:25+08:00",
+  "case_name": "ChatGPT引发的A股AI应用行情",
+  "constituents": [
+    {
+      "mdd250_pct": -44.9792,
+      "name": "科大讯飞",
+      "returns_pct": {
+        "d120": 85.2713,
+        "d20": 1.1783,
+        "d250": 54.2163,
+        "d60": 57.8295
+      },
+      "start": "2022-11-30",
+      "ticker": "002230.SZ"
+    },
+    {
+      "mdd250_pct": -57.0934,
+      "name": "昆仑万维",
+      "returns_pct": {
+        "d120": 306.3031,
+        "d20": -0.3541,
+        "d250": 193.7677,
+        "d60": 79.745
+      },
+      "start": "2022-11-30",
+      "ticker": "300418.SZ"
+    },
+    {
+      "mdd250_pct": -54.7134,
+      "name": "中文在线",
+      "returns_pct": {
+        "d120": 112.513,
+        "d20": -3.7539,
+        "d250": 248.2795,
+        "d60": 31.3869
+      },
+      "start": "2022-11-30",
+      "ticker": "300364.SZ"
+    },
+    {
+      "mdd250_pct": -52.4625,
+      "name": "汤姆猫",
+      "returns_pct": {
+        "d120": 108.4849,
+        "d20": -7.2727,
+        "d250": 84.2424,
+        "d60": 81.2121
+      },
+      "start": "2022-11-30",
+      "ticker": "300459.SZ"
+    }
+  ],
+  "counterevidence": [
+    "T+20篮子跑输基准",
+    "所有样本在250日内均经历44%以上回撤",
+    "应用收入、付费率和推理成本并未由发布事件自动验证"
+  ],
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "evidence_ids": [
+    "E014",
+    "E030",
+    "E031",
+    "E033"
+  ],
+  "failure_case": false,
+  "falsifier": "若两个后续财报期没有AI相关收入或利润传导，应用叙事只能停留在注意力阶段",
+  "financial_periods": 2,
+  "fundamental_validation": "partial",
+  "horizons": [
+    20,
+    60,
+    120,
+    250
+  ],
+  "id": "HR01",
+  "lookahead_check": "partial",
+  "measurements": {
+    "benchmark_returns_pct": {
+      "d120": -1.4145,
+      "d20": 0.4729,
+      "d250": -11.2532,
+      "d60": 6.8699
+    },
+    "excess_pct": {
+      "d120": 154.5575,
+      "d20": -3.0235,
+      "d250": 156.3797,
+      "d60": 55.6735
+    },
+    "mean_individual_mdd250_pct": -52.3121,
+    "returns_pct": {
+      "d120": 153.1431,
+      "d20": -2.5506,
+      "d250": 145.1265,
+      "d60": 62.5434
+    }
+  },
+  "method_limits": [
+    "the representative universes were reconstructed on 2026-08-17 rather than frozen at T0",
+    "industry and style matched controls are not implemented",
+    "delisting and investability screens are not frozen",
+    "raw daily arrays are not embedded in this artifact; source URLs and algorithm are preserved",
+    "company-level subsequent two-report-period fundamental validation remains partial"
+  ],
+  "narrative_id": "narrative-app-agent",
+  "notes": "仅用于描述性事件路径与反例发现；禁止解释为因果、准入、策略或预期收益。",
+  "object_type": "Replay",
+  "point_in_time_rule": "T0 标的池、当时可得信息与估值必须冻结；当前导入因事后重建标的池而保持 partial。",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "historical_replay_clean_room_import",
+    "review_state": "descriptive_not_causal_not_admitted",
+    "source_group": "ai-narrative-invest-research-20260817"
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "source_snapshot_hash": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+  "status": "partial",
+  "t0": "2022-11-30",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2022-11-30",
+  "valid_to": null,
+  "version": "1.0.0",
+  "window_end": "2024-05-30",
+  "window_start": "2022-05-30"
+}

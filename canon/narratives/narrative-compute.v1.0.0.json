@@ -1,0 +1,51 @@
+{
+  "as_of": "2026-08-18T10:30:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "definition": "全球模型训练与推理需求，经云厂资本开支、加速器集群互联和数据中心供配电/散热规格，传导至可核验的产品、订单、收入与利润。",
+  "excluded": [
+    "只有 AI 概念命名的业务",
+    "没有客户、规格或订单证据的泛算力映射",
+    "将海外资本开支等同于全部 A 股供应商收入"
+  ],
+  "falsifiers": [
+    "资本开支无法传导至目标公司",
+    "代际切换导致份额或毛利下降",
+    "推理降本使硬件需求增速显著低于预期"
+  ],
+  "id": "narrative-compute",
+  "included": [
+    "AI 加速器集群资本开支",
+    "高速光互联与 CPO",
+    "高阶 PCB/CCL",
+    "数据中心电源与液冷",
+    "高带宽内存与接口芯片"
+  ],
+  "name": "AI 算力、光互联、电源与液冷",
+  "object_type": "Narrative",
+  "origin": {
+    "date": "2023-05-25",
+    "event": "NVIDIA FY2024 Q1 指引发布后的首个 A 股交易日"
+  },
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "versioned_narrative_definition_clean_room",
+    "review_state": "candidate_not_human_approved",
+    "source_group": "classic-research-ledger-20260818"
+  },
+  "reverse_narrative": "资本开支无法传导至目标公司；代际切换导致份额或毛利下降；推理降本使硬件需求增速显著低于预期",
+  "schema_version": "1.0.0",
+  "source_revision": "local-invest-candidate@bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+  "source_snapshot_hash": "ba6ccc718f2714c8cfe3695f0054c6a40241f2bb735f7f6c8cf9f287eaba4d07",
+  "status": "partial",
+  "synonyms": [
+    "AI 算力链",
+    "光模块",
+    "CPO",
+    "数据中心基础设施"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2023-05-25",
+  "valid_to": null,
+  "version": "1.0.0"
+}

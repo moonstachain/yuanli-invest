@@ -1,0 +1,36 @@
+{
+  "as_of": "2026-08-17T23:59:59+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "grade": "B",
+  "id": "E029",
+  "independent_group": "canalys_ai_pc",
+  "interest_position": "industry_research",
+  "issuer": "Canalys",
+  "logical_locator": "forecast definition",
+  "object_type": "Evidence",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "evidence_ledger_clean_room_import",
+    "review_state": "grade_imported_not_reapproved",
+    "source_group": "canalys_ai_pc"
+  },
+  "published_at": "2024",
+  "schema_version": "1.0.0",
+  "source_record_id": "SR-E029",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_type": "industry_forecast",
+  "stance": "support",
+  "status": "partial",
+  "supports": [
+    "AI-capable PC adoption forecasts differ by definition",
+    "device capability must be separated from paid application adoption"
+  ],
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "title": "AI-capable PCs forecast",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "url": "https://canalys.com/insights/ai-capable-pcs-forecast-2024",
+  "valid_from": "2024-01-01",
+  "valid_to": null,
+  "version": "1.0.0"
+}

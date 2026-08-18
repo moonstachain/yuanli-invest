@@ -1,0 +1,28 @@
+{
+  "actor": "codex_clean_room_import",
+  "as_of": "2026-08-18T16:20:00+08:00",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "event_type": "partial",
+  "evidence_ids": [],
+  "id": "event-import-e024",
+  "object_type": "ResearchEvent",
+  "occurred_at": "2026-08-18T16:20:00+08:00",
+  "portfolio_id": "A9",
+  "provenance": {
+    "method": "append_only_clean_room_import_event",
+    "review_state": "not_human_reviewed",
+    "source_group": "yuanli-invest-repository-genesis"
+  },
+  "reason": "Clean-room import only; this event does not grant research admission.",
+  "schema_version": "1.0.0",
+  "source_revision": "sha256:5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "source_snapshot_hash": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+  "status": "candidate",
+  "subject_id": "E024",
+  "subject_version": "1.0.0",
+  "task_id": "yuanli-invest-mvp-bootstrap-20260818",
+  "trace_id": "TRACE-A9-YUANLI-INVEST-20260818-0001",
+  "valid_from": "2026-08-18",
+  "valid_to": null,
+  "version": "1.0.0"
+}
