@@ -18,7 +18,8 @@ def main() -> int:
     assert status["operational_canon"] == "moonstachain/quant-workspace"
     assert status["evidence_reviewer"] == "UNASSIGNED_HUMAN"
     assert status["research_admission"] == "blocked_unassigned_evidence_reviewer"
-    assert status["registry_activation"] == "not_authorized"
+    assert status["repository_state"] == "bootstrap_complete_pending_registry_activation"
+    assert status["registry_activation"] == "pending_human_gate"
     assert status["deployment"] == "not_authorized"
 
     approved = []
