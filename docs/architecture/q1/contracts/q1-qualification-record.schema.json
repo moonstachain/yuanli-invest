@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "q1-qualification-record.schema.json",
+  "title": "Q1 Asset Qualification Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "asset_id",
+    "legal_name",
+    "market",
+    "exchange",
+    "current_ticker",
+    "listing_intervals",
+    "vendor_symbols",
+    "coverage",
+    "point_in_time_state",
+    "value_chain_evidence_state",
+    "qualification_state",
+    "force_state"
+  ],
+  "properties": {
+    "asset_id": {"type": "string", "minLength": 1},
+    "legal_name": {"type": "string", "minLength": 1},
+    "market": {"enum": ["US", "CN", "HK"]},
+    "exchange": {"type": "string", "minLength": 1},
+    "current_ticker": {"type": "string", "minLength": 1},
+    "listing_intervals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ticker", "exchange", "valid_from", "valid_to"],
+        "properties": {
+          "ticker": {"type": "string"},
+          "exchange": {"type": "string"},
+          "valid_from": {"type": ["string", "null"], "format": "date"},
+          "valid_to": {"type": ["string", "null"], "format": "date"}
+        }
+      }
+    },
+    "vendor_symbols": {
+      "type": "object",
+      "additionalProperties": {"type": ["string", "null"]}
+    },
+    "regulator_ids": {
+      "type": "object",
+      "additionalProperties": {"type": ["string", "null"]}
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": {
+        "enum": ["pending", "verified", "partial", "missing", "ambiguous_identifier_history", "vendor_unavailable", "license_blocked", "timestamp_unqualified"]
+      }
+    },
+    "point_in_time_state": {
+      "enum": ["pending", "verified", "partial", "timestamp_unqualified", "missing"]
+    },
+    "value_chain_evidence_state": {
+      "enum": ["pending", "verified", "partial", "missing"]
+    },
+    "qualification_state": {
+      "enum": ["pending", "verified", "partial", "missing", "ambiguous_identifier_history", "vendor_unavailable", "license_blocked", "timestamp_unqualified"]
+    },
+    "verification_refs": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "force_state": {"const": "unknown"}
+  }
+}
