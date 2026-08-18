@@ -23,7 +23,8 @@
     "unknowns",
     "lookahead_check",
     "admission_state",
-    "generated_by"
+    "generated_by",
+    "scalar_score_prohibited"
   ],
   "properties": {
     "schema_version": {"const": "1.0.0-q0"},
