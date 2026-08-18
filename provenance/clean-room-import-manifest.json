@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "YL-DEC-A9-20260818-0001",
+  "portfolio_id": "A9",
+  "generated_for": "repository_bootstrap",
+  "source_revisions": {
+    "local_invest_candidate": "bf140ac2efa1ba3d532f1da5d1ec663be7e0ac3a",
+    "pmo_merge": "2b458318af97d5bc2b323e84289df32178e10d80",
+    "live_classic_html_sha256": "a8d7d1e59eb96a5cf54a06d8a33e058ea761620433b96c5b98dae7b809c236ac"
+  },
+  "source_artifact_hashes": {
+    "research_design_spec": "9bdc6e72e32a201e6dc0c1faf533ad3cd006a2f55ff6493d8bb8df2fbcba3372",
+    "deep_research_report": "eb5ffc583914654b6144b02e2a86e91969989d6ef495c8468e14801342ce0917",
+    "method_handbook": "c43b9d050ebc36a8fc3a37e48a433dbef65c646e5b8d251a916cc36c19f7d31b",
+    "site_upgrade_blueprint": "66bfd50d113e950b050554e98b1ea5b71fcf934356d12d4a3180e49649ed404e",
+    "qa_report": "8ca38f63bd0631b5615502d7be21a7c570210a9db762cf6b647cd3cee288cdcb",
+    "evidence_ledger": "5681e65e902c0f025d24021ba2d8608df872d51c158e5e347af6e06a6e517bb2",
+    "historical_replay": "330459073123b4fe75369f52926e8edf38c39894939567a9dedb0b7f4f3622c1",
+    "live_classic_data_js": "ca939b54420426545a407b13d3c46cbdfd2e180c06a95f38f496205b141796db",
+    "live_classic_styles_css": "c59216ffa8e1da40b14d5b12aa6963d946bc59ca72dbf8df5d0168baf99a1728",
+    "live_classic_app_jsx": "3f6090f36939879a17bb218083d62ee9c792adb4102c0453c3d34e4ac389bf3a"
+  },
+  "accepted": [
+    {"source": "research methodology documents", "destination": "docs/methodology", "mode": "content_only_clean_room"},
+    {"source": "reviewed research contracts", "destination": "packages/contracts", "mode": "transformed_to_urn_and_a9_audit_fields"},
+    {"source": "deterministic validation concepts", "destination": "scripts", "mode": "reimplemented_clean_room"}
+  ],
+  "transformed": [
+    {"source": "legacy research snapshots", "destination": "canon", "rule": "candidate_partial_rejected_only_until_evidence_reviewer_assignment"},
+    {"source": "legacy company rows", "destination": "canon/company-master", "rule": "58_rows_to_57_unique_company_entities"}
+  ],
+  "rejected": [
+    "local git history",
+    "absolute local paths",
+    "raw PDF Excel and webpage snapshots",
+    "large market files",
+    "access passwords or hashes",
+    "old deployment receipts",
+    "source maps",
+    "legacy black-box scores rankings and R0",
+    "simulated market and agent runtime state",
+    "Claude source filenames and trading conclusions"
+  ]
+}

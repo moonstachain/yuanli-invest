@@ -1,0 +1,14 @@
+[project]
+name = "yuanli-invest"
+version = "0.1.0"
+description = "Evidence-first research canon and deterministic projection contracts"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["jsonschema==4.25.1"]
+
+[tool.yuanli-invest]
+portfolio = "A9"
+decision = "YL-DEC-A9-20260818-0001"
+operational-canon-before-activation = "moonstachain/quant-workspace"

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:common:1.0.0",
+  "$defs": {
+    "base": {
+      "type": "object",
+      "required": [
+        "id", "object_type", "version", "schema_version", "status", "as_of",
+        "valid_from", "valid_to", "provenance", "source_snapshot_hash",
+        "portfolio_id", "decision_id", "task_id", "trace_id", "source_revision"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "object_type": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "pattern": "^[0-9]+(?:\\.[0-9]+){0,2}$"},
+        "schema_version": {"const": "1.0.0"},
+        "status": {
+          "enum": ["candidate", "under_review", "approved", "partial", "rejected", "expired", "superseded", "confirmed", "falsified"]
+        },
+        "as_of": {"type": "string", "format": "date-time"},
+        "valid_from": {"type": "string", "format": "date"},
+        "valid_to": {"type": ["string", "null"], "format": "date"},
+        "provenance": {
+          "type": "object",
+          "required": ["source_group", "method", "review_state"],
+          "properties": {
+            "source_group": {"type": "string", "minLength": 1},
+            "method": {"type": "string", "minLength": 1},
+            "review_state": {"type": "string", "minLength": 1}
+          },
+          "additionalProperties": true
+        },
+        "source_snapshot_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "portfolio_id": {"const": "A9"},
+        "decision_id": {"const": "YL-DEC-A9-20260818-0001"},
+        "task_id": {"type": "string", "minLength": 1},
+        "trace_id": {"type": "string", "minLength": 1},
+        "source_revision": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^E[0-9]{3,}$"},
+      "uniqueItems": true
+    },
+    "partial_reasons": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  }
+}

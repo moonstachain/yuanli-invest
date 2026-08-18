@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:analyst-observation:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["analyst", "institution", "published_at", "quote", "url", "logical_locator", "evidence_id"],
+      "properties": {
+        "object_type": {"const": "AnalystObservation"},
+        "analyst": {"type": "string"},
+        "institution": {"type": "string"},
+        "published_at": {"type": "string"},
+        "quote": {"type": "string"},
+        "url": {"type": "string", "format": "uri"},
+        "logical_locator": {"type": "string"},
+        "evidence_id": {"type": "string", "pattern": "^E[0-9]{3,}$"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

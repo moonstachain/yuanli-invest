@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:evidence:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["title", "issuer", "published_at", "grade", "source_type", "url", "logical_locator", "independent_group", "interest_position", "stance", "supports", "source_record_id"],
+      "properties": {
+        "object_type": {"const": "Evidence"},
+        "title": {"type": "string"},
+        "issuer": {"type": "string"},
+        "published_at": {"type": "string"},
+        "grade": {"enum": ["S", "A", "B", "C", "D"]},
+        "source_type": {"type": "string"},
+        "url": {"type": "string", "format": "uri"},
+        "logical_locator": {"type": "string", "minLength": 1},
+        "independent_group": {"type": "string", "minLength": 1},
+        "interest_position": {"type": "string"},
+        "stance": {"enum": ["support", "counter", "mixed", "method"]},
+        "supports": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "source_record_id": {"type": "string"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

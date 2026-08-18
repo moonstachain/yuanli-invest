@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:company-master:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["exchange", "ticker", "official_name", "market", "listing_status", "aliases", "legacy_disposition", "identity_evidence_ids"],
+      "properties": {
+        "object_type": {"const": "CompanyMaster"},
+        "exchange": {"enum": ["SSE", "SZSE", "BSE", "HKEX", "NASDAQ", "NYSE", "OTHER"]},
+        "ticker": {"type": "string", "minLength": 1},
+        "official_name": {"type": "string", "minLength": 1},
+        "market": {"type": "string"},
+        "listing_status": {"enum": ["active", "risk_warning", "suspended", "delisted", "private", "unknown"]},
+        "aliases": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "legacy_disposition": {"enum": ["partial", "rejected", "expired", "approved"]},
+        "disposition_reason": {"type": "string"},
+        "identity_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

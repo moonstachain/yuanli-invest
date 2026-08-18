@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:api-envelope:1.0.0",
+  "type": "object",
+  "required": ["data_as_of", "generated_at", "schema_version", "calculation_version", "source_revision", "coverage", "partial_reasons", "payload_hash", "payload"],
+  "properties": {
+    "data_as_of": {"type": "string", "format": "date-time"},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "schema_version": {"const": "1.0.0"},
+    "calculation_version": {"type": "string"},
+    "source_revision": {"type": "string"},
+    "coverage": {"type": "number", "minimum": 0, "maximum": 1},
+    "partial_reasons": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "payload_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "payload": {}
+  },
+  "additionalProperties": false
+}

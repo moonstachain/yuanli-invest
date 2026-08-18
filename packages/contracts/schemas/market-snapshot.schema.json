@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:market-snapshot:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["company_id", "trade_date", "currency", "adjustment", "close", "return_5d", "return_ytd", "source_checks", "market_data_status", "missing_reason"],
+      "properties": {
+        "object_type": {"const": "MarketSnapshot"},
+        "company_id": {"type": "string"},
+        "trade_date": {"type": "string", "format": "date"},
+        "currency": {"type": "string"},
+        "adjustment": {"enum": ["forward", "backward", "none"]},
+        "close": {"type": ["number", "null"]},
+        "return_5d": {"type": ["number", "null"]},
+        "return_ytd": {"type": ["number", "null"]},
+        "market_cap": {"type": ["number", "null"]},
+        "pe_ttm": {"type": ["number", "null"]},
+        "source_checks": {"type": "array", "items": {"type": "object"}},
+        "market_data_status": {"enum": ["dual_source_matched", "partial_single_source", "conflict", "unavailable"]},
+        "missing_reason": {"type": ["string", "null"]}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

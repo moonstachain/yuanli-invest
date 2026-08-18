@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:stage-snapshot:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["narrative_id", "stage", "calculation_version", "input_observation_ids", "coverage", "partial_reasons"],
+      "properties": {
+        "object_type": {"const": "StageSnapshot"},
+        "narrative_id": {"type": "string"},
+        "stage": {"enum": ["discover", "accelerate", "consensus", "decay", "unknown"]},
+        "calculation_version": {"type": "string"},
+        "input_observation_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "partial_reasons": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/partial_reasons"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:observation:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["narrative_id", "metric", "value", "unit", "window", "observed_at", "deduplication_method", "coverage"],
+      "properties": {
+        "object_type": {"const": "Observation"},
+        "narrative_id": {"type": "string"},
+        "metric": {"type": "string"},
+        "value": {"type": ["number", "integer", "string", "null"]},
+        "unit": {"type": "string"},
+        "window": {"type": "string"},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "deduplication_method": {"type": "string"},
+        "coverage": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

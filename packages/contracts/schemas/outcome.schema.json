@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:outcome:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["thesis_id", "validation_node", "expected", "actual", "judgment", "evidence_ids", "reviewer"],
+      "properties": {
+        "object_type": {"const": "Outcome"},
+        "thesis_id": {"type": "string"},
+        "validation_node": {"type": "string"},
+        "expected": {},
+        "actual": {},
+        "judgment": {"enum": ["confirmed", "falsified", "mixed", "not_observable"]},
+        "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "reviewer": {"type": "string"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}

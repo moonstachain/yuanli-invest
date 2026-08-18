@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:research-event:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": ["subject_id", "subject_version", "event_type", "actor", "occurred_at", "reason", "evidence_ids"],
+      "properties": {
+        "object_type": {"const": "ResearchEvent"},
+        "subject_id": {"type": "string"},
+        "subject_version": {"type": "string"},
+        "event_type": {"enum": ["candidate_created", "review_requested", "approved", "rejected", "partial", "expired", "superseded", "confirmed", "falsified"]},
+        "actor": {"type": "string"},
+        "occurred_at": {"type": "string", "format": "date-time"},
+        "reason": {"type": "string"},
+        "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}
