@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:force-triangle-snapshot:1.0.0",
+  "allOf": [
+    {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/base"},
+    {
+      "type": "object",
+      "required": [
+        "subject_id", "paradigm_snapshot_id", "stage_snapshot_id", "convexity_profile_id",
+        "classification", "fundamental_gate", "survival_gate", "research_priority",
+        "reason_codes", "falsifiers", "evidence_ids", "counter_evidence_ids",
+        "scalar_score_prohibited", "partial_reasons"
+      ],
+      "properties": {
+        "object_type": {"const": "ForceTriangleSnapshot"},
+        "subject_id": {"type": "string", "minLength": 1},
+        "paradigm_snapshot_id": {"type": "string", "minLength": 1},
+        "stage_snapshot_id": {"type": "string", "minLength": 1},
+        "convexity_profile_id": {"type": "string", "minLength": 1},
+        "classification": {"enum": [
+          "golden_extreme", "latent_dragon", "paradigm_bubble", "meme_extreme",
+          "ordinary_asset", "unknown"
+        ]},
+        "fundamental_gate": {"enum": ["passed", "partial", "failed", "unknown"]},
+        "survival_gate": {"enum": ["passed", "partial", "failed", "unknown"]},
+        "research_priority": {"enum": ["high", "medium", "low", "unknown"]},
+        "reason_codes": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "falsifiers": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+        "evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "counter_evidence_ids": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/evidence_ids"},
+        "scalar_score_prohibited": {"const": true},
+        "partial_reasons": {"$ref": "urn:yuanli-invest:schema:common:1.0.0#/$defs/partial_reasons"},
+        "notes": {"type": "string"}
+      }
+    }
+  ],
+  "unevaluatedProperties": false
+}
