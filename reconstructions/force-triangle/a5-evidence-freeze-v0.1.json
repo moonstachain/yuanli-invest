@@ -1,0 +1,212 @@
+{
+  "schema_version": "0.1.0",
+  "reconstruction_id": "FT-A5-GOLD-RECONSTRUCTION-20260818",
+  "status": "candidate_reconstruction",
+  "pre_registration_commit": "392e4230493f7e860360defdbda82c0c61c48285",
+  "outcome_locked": true,
+  "evidence_admission": "blocked_unassigned_evidence_reviewer",
+  "freeze_semantics": "source_set_and_t0_eligibility_only_pending_real_evidence_vault_capture",
+  "eligibility_states": [
+    "eligible_pending_vault_capture",
+    "same_day_timestamp_review",
+    "excluded_post_t0",
+    "discovery_only"
+  ],
+  "cases": [
+    {
+      "case_id": "FT-GR-PC-1995",
+      "t0": "1995-08-09",
+      "sources": [
+        {
+          "source_id": "FTSRC-PC-001",
+          "title": "If History Is a Guide, Don't Jump at Netscape's Initial Public Offering",
+          "url": "https://www.washingtonpost.com/archive/business/1995/08/06/if-history-is-a-guide-dont-jump-at-netscapes-initial-public-offering/ab46308e-30dc-4624-a0ef-b26f69906da3/",
+          "published_at": "1995-08-06",
+          "source_class": "contemporaneous_secondary",
+          "eligibility": "eligible_pending_vault_capture",
+          "claim_coverage": [
+            "browser_market_position",
+            "revenue_and_profitability",
+            "microsoft_competition",
+            "ecommerce_uncertainty"
+          ]
+        },
+        {
+          "source_id": "FTSRC-PC-002",
+          "title": "Netscape with a Bullet",
+          "url": "https://time.com/archive/6925840/netscape-with-a-bullet/",
+          "published_at": "1995-08-09",
+          "source_class": "contemporaneous_secondary",
+          "eligibility": "same_day_timestamp_review",
+          "claim_coverage": [
+            "ipo_attention",
+            "internet_capital_market_narrative"
+          ]
+        },
+        {
+          "source_id": "FTSRC-PC-003",
+          "title": "叙事经济-AI标的（2026 derived three-cycle research）",
+          "url": "vault://derived/叙事经济-AI标的.md",
+          "published_at": "2026-08-18",
+          "source_class": "derived_research",
+          "eligibility": "discovery_only",
+          "claim_coverage": [
+            "source_discovery",
+            "historical_case_index"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "FT-GR-MOBILE-2008",
+      "t0": "2008-07-10",
+      "sources": [
+        {
+          "source_id": "FTSRC-MOB-001",
+          "title": "Apple Announces iPhone 2.0 Software Beta",
+          "url": "https://www.apple.com/newsroom/2008/03/06Apple-Announces-iPhone-2-0-Software-Beta/",
+          "published_at": "2008-03-06",
+          "source_class": "contemporaneous_primary",
+          "eligibility": "eligible_pending_vault_capture",
+          "claim_coverage": [
+            "sdk",
+            "developer_program",
+            "app_store_distribution_control"
+          ]
+        },
+        {
+          "source_id": "FTSRC-MOB-002",
+          "title": "iPhone SDK Downloads Top 100,000",
+          "url": "https://www.apple.com/newsroom/2008/03/12iPhone-SDK-Downloads-Top-100-000/",
+          "published_at": "2008-03-12",
+          "source_class": "contemporaneous_primary",
+          "eligibility": "eligible_pending_vault_capture",
+          "claim_coverage": [
+            "developer_adoption",
+            "sdk_interest",
+            "app_store_preview"
+          ]
+        },
+        {
+          "source_id": "FTSRC-MOB-003",
+          "title": "Apple Inc. Form 10-Q for quarter ended March 29, 2008",
+          "url": "https://www.sec.gov/Archives/edgar/data/320193/000119312508097759/d10q.htm",
+          "published_at": "2008-05-01",
+          "source_class": "contemporaneous_primary",
+          "eligibility": "eligible_pending_vault_capture",
+          "claim_coverage": [
+            "iphone_units",
+            "iphone_sales",
+            "cash_and_investments",
+            "integration_strategy",
+            "carrier_and_competition_risks"
+          ]
+        },
+        {
+          "source_id": "FTSRC-MOB-004",
+          "title": "Apple Introduces the New iPhone 3G",
+          "url": "https://www.apple.com/newsroom/2008/06/09Apple-Introduces-the-New-iPhone-3G/",
+          "published_at": "2008-06-09",
+          "source_class": "contemporaneous_primary",
+          "eligibility": "eligible_pending_vault_capture",
+          "claim_coverage": [
+            "3g",
+            "gps",
+            "iphone_2_0",
+            "third_party_apps",
+            "international_distribution"
+          ]
+        },
+        {
+          "source_id": "FTSRC-MOB-005",
+          "title": "iPhone 3G on Sale Tomorrow",
+          "url": "https://www.apple.com/uk/newsroom/2008/07/10iPhone-3G-on-Sale-Tomorrow/",
+          "published_at": "2008-07-10",
+          "source_class": "contemporaneous_primary",
+          "eligibility": "same_day_timestamp_review",
+          "claim_coverage": [
+            "app_store_launch",
+            "500_plus_apps",
+            "hundreds_of_companies",
+            "wireless_distribution",
+            "itunes_account_settlement"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "FT-GR-AI-2023",
+      "t0": "2023-02-01",
+      "sources": [
+        {
+          "source_id": "FTSRC-AI-001",
+          "title": "Introducing ChatGPT",
+          "url": "https://openai.com/index/chatgpt/",
+          "published_at": "2022-11-30",
+          "source_class": "contemporaneous_primary",
+          "eligibility": "eligible_pending_vault_capture",
+          "claim_coverage": [
+            "chatgpt_public_research_preview",
+            "conversational_capability",
+            "free_preview"
+          ]
+        },
+        {
+          "source_id": "FTSRC-AI-002",
+          "title": "NVIDIA Corporation Form 10-Q for quarter ended October 30, 2022",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000166/nvda-20221030.htm",
+          "published_at": "2022-11-18",
+          "source_class": "contemporaneous_primary",
+          "eligibility": "eligible_pending_vault_capture",
+          "claim_coverage": [
+            "data_center_revenue",
+            "h100_shipping",
+            "ai_platform",
+            "microsoft_ai_supercomputer_collaboration",
+            "cash_and_marketables",
+            "inventory_charges",
+            "china_export_restrictions",
+            "product_cycle_risk"
+          ]
+        },
+        {
+          "source_id": "FTSRC-AI-003",
+          "title": "Microsoft and OpenAI extend partnership",
+          "url": "https://blogs.microsoft.com/blog/2023/01/23/microsoftandopenaiextendpartnership/",
+          "published_at": "2023-01-23",
+          "source_class": "contemporaneous_primary",
+          "eligibility": "eligible_pending_vault_capture",
+          "claim_coverage": [
+            "multiyear_multibillion_investment",
+            "ai_supercomputing",
+            "azure_ai_infrastructure",
+            "product_deployment"
+          ]
+        },
+        {
+          "source_id": "FTSRC-AI-004",
+          "title": "ChatGPT reaches 100 million users reporting",
+          "url": "https://www.reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-02-01/",
+          "published_at": "2023-02-02",
+          "source_class": "post_t0_secondary",
+          "eligibility": "excluded_post_t0",
+          "claim_coverage": [
+            "100m_user_claim"
+          ]
+        },
+        {
+          "source_id": "FTSRC-AI-005",
+          "title": "叙事经济-AI标的（2026 derived three-cycle research）",
+          "url": "vault://derived/叙事经济-AI标的.md",
+          "published_at": "2026-08-18",
+          "source_class": "derived_research",
+          "eligibility": "discovery_only",
+          "claim_coverage": [
+            "source_discovery",
+            "historical_case_index"
+          ]
+        }
+      ]
+    }
+  ]
+}

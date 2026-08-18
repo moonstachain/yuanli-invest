@@ -1,0 +1,95 @@
+{
+  "schema_version": "0.1.0",
+  "packet_type": "ForceTriangleGoldReconstruction",
+  "case_id": "FT-GR-MOBILE-2008",
+  "version": "0.1.0",
+  "status": "candidate_reconstruction",
+  "t0": "2008-07-10",
+  "pre_registration_commit": "392e4230493f7e860360defdbda82c0c61c48285",
+  "outcome_locked": true,
+  "subject": "Apple mobile platform / App Store ecosystem",
+  "evidence_freeze": "a5-evidence-freeze-v0.1.json",
+  "source_ids_used": ["FTSRC-MOB-001", "FTSRC-MOB-002", "FTSRC-MOB-003", "FTSRC-MOB-004"],
+  "source_ids_pending_same_day_review": ["FTSRC-MOB-005"],
+  "source_ids_discovery_only": [],
+  "paradigm": {
+    "stage": "installation",
+    "confidence": "high",
+    "drivers": {
+      "technology_breakthrough": "strong",
+      "cost_curve": "mixed",
+      "infrastructure": "strong",
+      "capital_formation": "strong",
+      "institutional_adaptation": "mixed",
+      "productivity_diffusion": "mixed"
+    },
+    "reason_codes": [
+      "SMARTPHONE_3G_GPS_OS_SDK_SYSTEM_VISIBLE",
+      "THIRD_PARTY_DEVELOPER_ECOSYSTEM_PRE_T0",
+      "GLOBAL_DISTRIBUTION_INFRASTRUCTURE_EXPANDING",
+      "NOT_YET_MATURE_PRODUCTIVITY_DIFFUSION"
+    ]
+  },
+  "narrative": {
+    "stage": "accelerate",
+    "confidence": "high",
+    "coverage": 0.85,
+    "reason_codes": [
+      "SDK_DOWNLOADS_SHOW_DEVELOPER_ADOPTION",
+      "HUNDREDS_OF_THIRD_PARTY_APPS_PRE_T0",
+      "APP_DISTRIBUTION_STORY_CROSSES_DEVELOPER_CONSUMER_ENTERPRISE_CARRIERS",
+      "SAME_DAY_500_PLUS_APP_COUNT_NOT_REQUIRED_FOR_HIGH_CLASSIFICATION"
+    ]
+  },
+  "convexity": {
+    "convexity_state": "convex",
+    "left_tail_state": "survivable",
+    "right_tail": {
+      "winner_take_most": "strong",
+      "network_effects": "strong",
+      "scale_economics": "strong",
+      "bottleneck_control": "strong",
+      "platform_optionality": "strong",
+      "market_expansion": "strong",
+      "value_capture": "strong"
+    },
+    "left_tail": {
+      "balance_sheet_fragility": "low",
+      "refinancing_dependency": "low",
+      "dilution_risk": "low",
+      "concentration_risk": "mixed",
+      "regulatory_ruin": "mixed",
+      "technical_obsolescence": "mixed",
+      "valuation_cashflow_mismatch": "mixed"
+    },
+    "reason_codes": [
+      "HARDWARE_OS_SDK_DISTRIBUTION_SETTLEMENT_CONTROL_STACK",
+      "DEVELOPER_AND_USER_FEEDBACK_LOOP_VISIBLE",
+      "LARGE_CASH_AND_SHORT_TERM_INVESTMENT_BUFFER",
+      "CARRIER_DEPENDENCY_AND_COMPETITION_REMAIN_REAL"
+    ]
+  },
+  "fundamental_gate": "passed",
+  "survival_gate": "passed",
+  "force": {
+    "classification": "golden_extreme",
+    "research_priority": "high",
+    "reason_codes": [
+      "P_N_X_JOINTLY_VISIBLE_AT_T0",
+      "PLATFORM_CONTROL_AND_OPTIONALITY_VISIBLE_PRE_OUTCOME",
+      "SURVIVAL_CAPACITY_SUPPORTS_LONG_VALIDATION_HORIZON"
+    ]
+  },
+  "falsifiers": [
+    "If the App Store fails to become a scalable developer/user ecosystem, reduce X.",
+    "If mobile network/device economics cannot support mass adoption, P must not advance toward deployment.",
+    "If Apple captures value only from one-time hardware margin and not from platform control or ecosystem lock-in, reduce X.",
+    "If narrative diffusion is only a release-event pulse rather than persistent cross-carrier adoption, reduce N."
+  ],
+  "partial_reasons": [
+    "No admitted Evidence Vault snapshot/hash yet.",
+    "The 2008-07-10 Apple launch release remains under exact same-day timestamp review and is not required for the core candidate classification.",
+    "Long-run platform outcomes remain locked and are not used."
+  ],
+  "notes": "Candidate golden_extreme is based on pre-T0 evidence for a coordinated device/network/developer/distribution system plus visible value-capture control and strong balance-sheet survival, not on later iPhone sales or Apple returns."
+}
