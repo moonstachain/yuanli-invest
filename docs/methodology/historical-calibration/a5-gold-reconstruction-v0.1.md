@@ -75,15 +75,15 @@ A4 预注册了 `paradigm_bubble` 候选，但 A5 不因最终历史结果而强
 
 **P：`installation / high`。**
 
-T0 前 Apple 已经卖出约 400 万部 iPhone（截至 2008 财年上半年），并且 iPhone 3G、3G 网络、GPS、iPhone 2.0、开发工具和 App Store 同时成为一个互相强化的系统。这里已经不是单一硬件事件。
+T0 前 Apple 已经卖出约 400 万部 iPhone（截至 2008 财年上半年），并且 iPhone 3G、3G 网络、GPS、iPhone 2.0、开发工具和已宣布的 App Store 分发机制开始形成一个互相强化的系统。这里已经不是单一硬件事件。
 
 **N：`accelerate / high`。**
 
-App Store 上线即有 500+ 原生应用、来自数百家公司，且 Apple 在 T0 直接给出了无线购买、下载、更新和 iTunes 账户结算的传播/分发机制。开发者、消费者、媒体与企业应用载体已经跨群体出现。
+这个判断只使用 **T0 前** 的核心证据：3 月 SDK 发布后四天下载已超过 10 万次；6 月 Apple 已公开称有数百个第三方应用使用 iPhone SDK 构建，并已预告通过 App Store 进行分发。这已经表明故事从消费者硬件扩散到开发者、企业应用与全球运营商。7 月 10 日发布稿中的“500+ apps”和 iTunes 账户结算细节仅列为 `same_day_timestamp_review`，**不作为 `accelerate/high` 成立的必要证据**。
 
 **X：`convex / survivable`。**
 
-右尾价值捕获链在 T0 已经可见：硬件 + OS + 开发工具 + App Store 分发 + iTunes 账户 + 运营商渠道。Apple 同时拥有约 194 亿美元现金、现金等价物和短期投资，左尾生存能力显著强于早期单产品公司。反面是运营商依赖、强竞争和移动监管风险仍真实存在。
+右尾价值捕获链在 T0 前已经可见：硬件 + OS + 开发工具 + 已宣布的 App Store 集中分发 + 运营商渠道共同形成控制栈；同日发布稿中的 iTunes 账户结算细节仍待时间戳复核，不作为 X 成立的必要条件。Apple 同时拥有约 194 亿美元现金、现金等价物和短期投资，左尾生存能力显著强于早期单产品公司。反面是运营商依赖、强竞争和移动监管风险仍真实存在。
 
 **Force：`golden_extreme / high research priority`（Candidate）。**
 
