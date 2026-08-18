@@ -4,13 +4,14 @@
 
 ## 当前状态
 
-- Repository state: `genesis_initialized_pending_bootstrap`
+- Repository state: `bootstrap_completed_pending_activation`
 - Canon role: `designated_target_canon`
 - Current A9 operational canon: `moonstachain/quant-workspace`
 - Research admission: `blocked_unassigned_evidence_reviewer`
+- Governance Registry activation: `not_authorized`
 - Production deployment: `not_authorized`
 
-完成 clean-room bootstrap、exact-SHA receipt 与 Governance Registry 人工激活前，本仓不得宣称已经成为 A9 operational canon。
+clean-room bootstrap 已完成并记录 exact-SHA bootstrap receipt；但在 Governance Registry 经独立 Human Review 激活前，本仓仍不得宣称已经成为 A9 operational canon。研究准入、证据升级和 Outcome 接受继续被 `UNASSIGNED_HUMAN` Evidence Reviewer 阻塞。
 
 ## 数据边界
 
