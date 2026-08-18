@@ -7,6 +7,15 @@
 - [原力投研黄金三角 v0.1](force-investing-triangle-v0.1.md) — `Paradigm Potential × Narrative Momentum × Extreme Convexity`
 - [黄金三角认识论边界 v0.1](epistemic-boundaries-force-triangle-v0.1.md) — 解释框架、因果边界、评分禁令与治理边界
 
+## Historical calibration
+
+- [三轮 Gold Replay Set v0.1](historical-calibration/gold-replay-set-v0.1.md) — PC × Mobile × AI 点时回放总协议
+- [PC Internet 1995](historical-calibration/pc-internet-1995-replay-v0.1.md) — Netscape IPO，检验“范式正确 ≠ 资产正确”
+- [Mobile Internet 2008](historical-calibration/mobile-internet-2008-replay-v0.1.md) — App Store，检验平台生态的 P/N/X 同向结构
+- [AI 2023](historical-calibration/ai-2023-replay-v0.1.md) — ChatGPT 扩散后的算力基础设施，检验早期 N 与 X 的独立性
+
+上述 Gold Replay 当前均为 `pre_registered_reconstruction`：冻结 T0、允许/禁止信息和 falsifier，不宣称 Outcome 已被接受。
+
 ## Existing baseline
 
 - [叙事投研方法手册](叙事投研方法手册.md) — Narrative / Observation / StageSnapshot / AssetMapping / Thesis / Replay 协议
