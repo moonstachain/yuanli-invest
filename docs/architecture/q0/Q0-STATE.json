@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0.0-q0",
+  "stage": "Q0_ARCHITECTURE_FREEZE",
+  "status": "candidate_ready_for_human_review",
+  "base_commit": "f37f1127d49981d6ece81b6000d494d87a1214f1",
+  "branch": "architecture/q0-yuanli-quant-ai-v1",
+  "authority": {
+    "yuanli_invest": "target_business_canon_not_operational",
+    "quant_workspace": "current_a9_operational_canon",
+    "yuanli_invest_rsi": "isolated_challenger_frozen_rules_unchanged",
+    "yiru_macro_cockpit": "macro_snapshot_provider_only",
+    "evidence_vault": "local_nas_raw_source_truth"
+  },
+  "deliverables": {
+    "architecture_spec": "complete",
+    "repository_layout": "complete",
+    "duckdb_logical_schema": "complete",
+    "json_schema_candidates": 2,
+    "agent_contracts": "complete",
+    "mcp_tool_contract": "complete",
+    "mvp_seed_universe": 30,
+    "replay_eval_contract": "complete",
+    "ci_human_gate": "complete",
+    "ninety_day_plan": "complete",
+    "codex_task_spec": "complete"
+  },
+  "implementation_authorization": "blocked_pending_hg_q0",
+  "production_ingestion": "not_run_not_authorized",
+  "a9_operational_canon_switch": "not_run_not_authorized",
+  "evidence_admission": "not_run_not_authorized",
+  "outcome_acceptance": "not_run_not_authorized",
+  "rsi_frozen_change": "not_run_not_authorized",
+  "live_trading": "unavailable_by_design",
+  "next_gate": "HG_Q0_ARCHITECTURE_ACCEPTANCE",
+  "next_stage_after_acceptance": "Q1_CHINA_US_AI_UNIVERSE_AND_DATA_CONTRACT_QUALIFICATION"
+}
