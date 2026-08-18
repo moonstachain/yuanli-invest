@@ -94,3 +94,18 @@ Outcome 至少分三面：
 - 至少一个明确失败案例；
 - Outcome 接受仍需独立 Evidence Reviewer / Human Gate；
 - 禁止因 Replay 表现好自动修改方法论或 RSI FROZEN。
+
+## 8. A5 Reconstruction 状态
+
+A4 的预注册内容由 merge commit `392e4230493f7e860360defdbda82c0c61c48285` 锁定；A5 不回写或重解释其 T0、允许/禁止信息与预注册假说。
+
+A5 的候选重建入口：
+
+- [A5｜Force Triangle Gold Reconstruction v0.1](a5-gold-reconstruction-v0.1.md)
+- machine-readable source freeze: `reconstructions/force-triangle/a5-evidence-freeze-v0.1.json`
+- machine-readable reconstruction packets:
+  - `reconstructions/force-triangle/pc-internet-1995.v0.1.json`
+  - `reconstructions/force-triangle/mobile-internet-2008.v0.1.json`
+  - `reconstructions/force-triangle/ai-2023.v0.1.json`
+
+A5 仍然不是 Gold Outcome。它只推进到 `candidate_reconstruction`：冻结来源集合与 T0 资格、形成可审查的 P/N/X 暂定判断，并把缺失 Evidence Vault SHA/locator 与 Reviewer adjudication 显式留给 A6。
