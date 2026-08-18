@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0-q1",
+  "stage": "Q1",
+  "status": "started_pending_vendor_qualification",
+  "accepted_q0_commit": "f9ab0aba57be052cccf2323716731602ca028039",
+  "seed_universe_source": "docs/architecture/q0/mvp-universe-30-v1.json",
+  "seed_assets": 30,
+  "force_states_required": "unknown",
+  "quant_workspace_base": "ce7a960d78c6f302b2ffa0ab9483797240d2e1a6",
+  "wind_qualification": "not_run",
+  "identifier_registry": "started",
+  "coverage_matrix": "not_run",
+  "point_in_time_audit": "not_run",
+  "value_chain_evidence": "not_run",
+  "control_registry": "not_run",
+  "production_ingestion": "not_authorized",
+  "a9_operational_canon_switch": "not_run_not_authorized",
+  "rsi_frozen_change": "not_run_not_authorized",
+  "live_trading": "architecturally_absent",
+  "next_gate": "Q1_HUMAN_REVIEW_AFTER_VENDOR_QUALIFICATION"
+}
