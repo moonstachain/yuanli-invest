@@ -27,6 +27,7 @@ REQUIRED_FILES = [
     UNIVERSE,
     Q0 / "replay-eval-contract-v1.md",
     Q0 / "ci-human-gate-v1.md",
+    Q0 / "Q0-HUMAN-REVIEW-CARD-v1.md",
     Q0 / "90-day-implementation-plan-v1.md",
     Q0 / "CODEX-TASK-SPEC-v1.md",
     STATE,
@@ -69,6 +70,12 @@ def main() -> None:
         assert schema.get("$schema") == "https://json-schema.org/draft/2020-12/schema"
         assert schema.get("type") == "object"
 
+    radar_schema = load_json(SCHEMAS[0])
+    assert "scalar_score_prohibited" in radar_schema.get("required", []), (
+        "Force Radar schema must require scalar_score_prohibited"
+    )
+    assert radar_schema["properties"]["scalar_score_prohibited"] == {"const": True}
+
     universe = load_json(UNIVERSE)
     assert universe["status"] == "candidate_seed_universe_not_investment_recommendation"
     assets = universe["assets"]
@@ -83,7 +90,6 @@ def main() -> None:
     assert all(a.get("initial_force_state") == "unknown" for a in assets), (
         "Q0 seed universe must not preload Force conclusions"
     )
-
     assert all(a.get("primary_nodes") for a in assets), "every seed asset needs value-chain coverage"
 
     banned_found = sorted(BANNED_KEYS.intersection(set(walk_keys(universe))))
@@ -97,6 +103,7 @@ def main() -> None:
     assert state["authority"]["yuanli_invest"] == "target_business_canon_not_operational"
     assert state["rsi_frozen_change"] == "not_run_not_authorized"
     assert state["live_trading"] == "unavailable_by_design"
+    assert state["deliverables"]["human_review_card"] == "complete"
 
     print("Q0 architecture validation: PASS")
 
