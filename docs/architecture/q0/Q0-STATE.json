@@ -1,9 +1,16 @@
 {
-  "schema_version": "1.0.0-q0",
+  "schema_version": "1.0.1-q0-reconciled",
   "stage": "Q0_ARCHITECTURE_FREEZE",
-  "status": "candidate_ready_for_human_review",
+  "status": "accepted_merged",
   "base_commit": "f37f1127d49981d6ece81b6000d494d87a1214f1",
   "branch": "architecture/q0-yuanli-quant-ai-v1",
+  "human_review": {
+    "decision": "ACCEPT_Q0_ARCHITECTURE_FREEZE",
+    "pr_number": 11,
+    "accepted_candidate_head": "38986cc6962d8158ed54c9fdc5530f9ce33d0fb9",
+    "merge_commit": "f9ab0aba57be052cccf2323716731602ca028039",
+    "merged_at": "2026-08-18T10:03:58Z"
+  },
   "authority": {
     "yuanli_invest": "target_business_canon_not_operational",
     "quant_workspace": "current_a9_operational_canon",
@@ -25,13 +32,19 @@
     "ninety_day_plan": "complete",
     "codex_task_spec": "complete"
   },
-  "implementation_authorization": "blocked_pending_hg_q0",
+  "implementation_authorization": "q1_qualification_only_authorized",
   "production_ingestion": "not_run_not_authorized",
   "a9_operational_canon_switch": "not_run_not_authorized",
   "evidence_admission": "not_run_not_authorized",
   "outcome_acceptance": "not_run_not_authorized",
   "rsi_frozen_change": "not_run_not_authorized",
   "live_trading": "unavailable_by_design",
-  "next_gate": "HG_Q0_ARCHITECTURE_ACCEPTANCE",
-  "next_stage_after_acceptance": "Q1_CHINA_US_AI_UNIVERSE_AND_DATA_CONTRACT_QUALIFICATION"
+  "follow_on": {
+    "stage": "Q1_CHINA_US_AI_UNIVERSE_AND_DATA_CONTRACT_QUALIFICATION",
+    "pr_number": 12,
+    "state_at_reconciliation": "draft_in_progress",
+    "force_state_generation": "prohibited_until_q1_exit"
+  },
+  "next_gate": "Q1_QUALIFICATION_EXIT_AND_HUMAN_REVIEW",
+  "reconciliation_receipt": "docs/architecture/q0/Q0-ACCEPTANCE-RECEIPT-v1.json"
 }
