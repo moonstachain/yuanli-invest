@@ -1,38 +1,31 @@
-# Architecture
+# Architecture | Yuanli Investment Research Intelligence Canon vNext
 
-原力投研采用“GitHub 正典 + Evidence Vault 原文 + 双投影”的边界。
+## Five planes
 
-```text
-公开来源 -> Evidence Vault -> SourceRecord / Evidence PR
-行情双源 -> Raw / Parquet -> Observation / MarketSnapshot
-审核事件 -> approved snapshot
-                         +-> internal_full
-                         +-> public_safe
-Outcome / Replay -> LearningCandidate -> human-reviewed PR
-```
+P0 Constitution Plane：一核 · 三界 · 三门 · 一环。
 
-## Repository responsibilities
+P1 Research State Plane：ResearchTarget / EvidenceClaim / ResearchStateVector。
 
-- `packages/contracts`: JSON Schema、API envelope 与状态机契约。
-- `packages/research-core`: 确定性计算与准入规则；Bootstrap 阶段只冻结接口。
-- `canon`: 版本化研究对象，不允许覆盖历史版本。
-- `events`: 每个审核事件一个不可变 JSON 文件。
-- `projections`: `internal_full` 与 `public_safe` 的确定性生成器。
-- `receipts`: exact-SHA 构建、发布与 Outcome 回执。
-- `docs/methodology`: 研究方法与历史回放规范。
+P2 Capability Plane：Theory → Mechanism → Hypothesis → Observable → Factor / Algorithm → ResearchCapability → Benchmark。
 
-原始 PDF、Excel、网页快照、Parquet 与 DuckDB 不进入 Git。
+P3 Runtime Interface Plane：CapabilityInvocation / CapabilityInputBundle / CapabilityResult / ExecutionReceipt。
 
-## API boundary
+P4 Truth Plane：Replay → Benchmark → Failure → FutureSettlement → CapabilityRevision。
 
-内部 API 固定为只读查询和受约束 Copilot：
+## Canonical semantics
 
-- `GET /api/v1/status`
-- `GET /api/v1/narratives`
-- `GET /api/v1/companies/{id}`
-- `GET /api/v1/evidence/{id}`
-- `GET /api/v1/theses`
-- `GET /api/v1/replays/{id}`
-- `POST /api/v1/copilot/query`
+P = Reality；N = Belief；`X := (Xs, Xa, Xp)`；E = horizontal Evidence Gate；V = Price/Strike；S = Portfolio Survival。No scalar PNX/Force score is canonical.
 
-响应统一使用 `api-envelope` 契约。Copilot 不返回买卖、仓位、目标价或收益承诺。
+Research dependency order is `P → Xs → N → V → Xa → Xp → S`; it is a research dependency graph, not a universal causal law.
+
+## Runtime sovereignty
+
+Wind AI resolves evidence/data; Codex compiles/orchestrates/tests; `quant-workspace` executes deterministic reference computations. Provider data maps to CanonicalObservation. MCP/HTTP/Skill/CLI/Python are transports, not semantic Canon.
+
+## Ledger
+
+Receipt = Ledger; Status = Projection. `CANON-STATUS.json` is generated and checked, not historical authority.
+
+## Non-authority
+
+This architecture does not authorize trading, target prices, recommended weights, live execution, Evidence/Outcome admission, A9 operational-canon switching, or RSI promotion.

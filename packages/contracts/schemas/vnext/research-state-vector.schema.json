@@ -1,0 +1,5 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"urn:yuanli-invest:schema:vnext-research-state-vector:1.0.0","title":"ResearchStateVector","type":"object","additionalProperties":false,
+  "required":["state_id","target_id","as_of","P","Xs","N","V","Xa","Xp","S","scalar_pnx_score_prohibited","force_classification_is_projection"],
+  "properties":{"state_id":{"type":"string","pattern":"^RSV-[A-Z0-9-]+$"},"target_id":{"type":"string","minLength":1},"as_of":{"type":"string","format":"date-time"},"P":{"type":"object"},"Xs":{"type":"object"},"N":{"type":"object"},"V":{"type":"object"},"Xa":{"type":"object"},"Xp":{"type":"object"},"S":{"type":"object"},"cross_claim_ids":{"type":"array","uniqueItems":true,"items":{"type":"string","pattern":"^CLAIM-"}},"force_projection":{"type":["string","null"]},"scalar_pnx_score_prohibited":{"const":true},"force_classification_is_projection":{"const":true}}
+}

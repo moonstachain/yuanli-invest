@@ -1,0 +1,4 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"urn:yuanli-invest:schema:vnext-capability-invocation:1.0.0","title":"CapabilityInvocation","type":"object","additionalProperties":false,
+  "required":["request_id","capability_id","target_id","as_of","runtime","input_mode","strict_pit"],"properties":{"request_id":{"type":"string","pattern":"^RUN-[A-Z0-9-]+$"},"capability_id":{"type":"string","pattern":"^CAP-"},"capability_version":{"type":["string","null"]},"target_id":{"type":"string","minLength":1},"as_of":{"type":"string","format":"date-time"},"runtime":{"enum":["wind_ai","codex","reference_quant","generic_agent","other"]},"input_mode":{"enum":["resolve","provided","mixed"]},"parameters":{"type":"object"},"strict_pit":{"const":true},"requested_output_schema":{"type":["string","null"]}}
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "0.3.0",
+  "stage": "R2_2_RESEARCH_INTELLIGENCE_CANON_REFOUNDATION",
+  "status": "human_accepted_ready_for_merge",
+  "base_main_commit": "19c2088231edde3bf5f8a4c70051c2f6506625db",
+  "mission_candidate": "Yuanli Investment Research Intelligence Canon",
+  "north_star_candidate": "Compile investment knowledge into reality-tested, machine-callable research intelligence.",
+  "objective_candidate": "Lifetime Right-Tail Capture under Survival Constraints",
+  "semantic_model": "one_core_three_worlds_three_gates_one_loop",
+  "center_object": "ResearchCapability",
+  "canonical_state_candidate": "ResearchStateVector",
+  "force_classification_role": "projection_not_canonical_state",
+  "evidence_role": "horizontal_claim_control_plane",
+  "dependency_graph": "P -> Xs -> N -> V -> Xa -> Xp -> S",
+  "dependency_graph_is_universal_causal_law": false,
+  "ledger_law": {
+    "factual_authority": "immutable_receipts_and_external_facts",
+    "status_files": "deterministic_projection"
+  },
+  "machine_qualification": {
+    "validated_head_sha": "919c983f6ed4b4263e78da996f9bf812b8f4edac",
+    "workflow": "repository-gates",
+    "run_number": 94,
+    "run_id": 32229450450,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success"
+  },
+  "human_review_qualification": {
+    "validated_head_sha": "2c39f5b06c2113d297257309169f957547b64b6c",
+    "workflow": "repository-gates",
+    "run_number": 95,
+    "run_id": 32229806198,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success"
+  },
+  "human_gate_decision": "ACCEPT_R2_2_RESEARCH_INTELLIGENCE_CANON_REFOUNDATION",
+  "human_accepted_at": "2026-08-19T16:04:00+08:00",
+  "human_acceptance_receipt": "docs/architecture/r2_2/R2-2-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+  "migration_boundary": {
+    "existing_gold_ids_mutated": false,
+    "r2_3_successor_migration": "reserved_not_authorized",
+    "r3a_implementation": "paused_until_r2_2_merge_and_r2_3_governed_migration"
+  },
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci_required": true,
+  "r2_3_authority": "not_authorized",
+  "r3a_authority": "paused_not_started",
+  "r4a_authority": "not_authorized",
+  "a9_operational_canon_switch": "not_authorized",
+  "evidence_admission": "not_authorized",
+  "outcome_acceptance": "not_authorized",
+  "rsi_frozen_change": "not_authorized",
+  "live_execution": "unavailable_by_design",
+  "next_gate": "R2_2_MERGE"
+}
