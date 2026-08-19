@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Fail-closed validation for R0 Research Capability Canon candidate.
+"""Fail-closed validation for R0 Research Capability Canon.
 
-R0 is architecture-only. It must preserve the current README mission until Human
-Review and must not register candidate schemas into production contract paths.
+R0 is architecture-only. Human acceptance may be recorded on the candidate
+branch, but the current README mission and production contract paths must remain
+unchanged until R0 is merged and a separately governed follow-on change occurs.
 """
 
 from __future__ import annotations
@@ -18,6 +19,7 @@ R0 = ROOT / "docs" / "architecture" / "r0"
 CONTRACTS = R0 / "contracts"
 STATE = R0 / "R0-STATE.json"
 SEED = R0 / "R0-GOLD-CAPABILITY-SEED-12-v0.1.json"
+RECEIPT = R0 / "R0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 README = ROOT / "README.md"
 
 REQUIRED_FILES = [
@@ -28,6 +30,7 @@ REQUIRED_FILES = [
     R0 / "runtime-authority-map-v0.1.md",
     R0 / "R0-ROADMAP-v0.1.md",
     R0 / "R0-HUMAN-REVIEW-CARD-v0.1.md",
+    RECEIPT,
     SEED,
     STATE,
     CONTRACTS / "research-capability.schema.json",
@@ -71,7 +74,9 @@ def main() -> None:
     missing = [str(p.relative_to(ROOT)) for p in REQUIRED_FILES if not p.exists()]
     assert not missing, f"missing R0 files: {missing}"
 
-    assert git_blob_sha(README) == README_BLOB_SHA, "README mission changed before R0 Human Review"
+    # Human acceptance does not implicitly authorize an in-place README mission
+    # switch on the same candidate branch.
+    assert git_blob_sha(README) == README_BLOB_SHA, "README mission changed before governed post-R0 change"
 
     schemas = []
     for path in (CONTRACTS / "research-capability.schema.json", CONTRACTS / "canonical-data-field.schema.json"):
@@ -106,12 +111,24 @@ def main() -> None:
 
     state = load_json(STATE)
     assert state["stage"] == "R0_RESEARCH_CAPABILITY_CANON_REFRAME"
-    assert state["status"] == "candidate_started"
+    assert state["status"] == "human_accepted_ready_for_merge"
+    assert state["human_gate_decision"] == "ACCEPT_R0_RESEARCH_CAPABILITY_CANON_REFRAME"
     assert state["center_object_candidate"] == "ResearchCapability"
     assert state["provider_independence"] == "canonical_data_field_required"
     assert state["production_schema_change"] == "none"
-    assert state["readme_mission_change"] == "not_authorized_before_human_acceptance"
+    assert state["readme_mission_change"] == "authorized_after_r0_merge_via_separate_change"
     assert state["accepted_follow_on_if_approved"] == "R1_CAPABILITY_OBJECT_MODEL_AND_REGISTRY_BOOTSTRAP"
+    assert state["r1_authority"] == "authorized_after_r0_merge_not_started"
+    assert state["next_gate"] == "R0_MERGE"
+
+    receipt = load_json(RECEIPT)
+    assert receipt["decision"] == "ACCEPT_R0_RESEARCH_CAPABILITY_CANON_REFRAME"
+    assert receipt["reviewed_head_sha"] == "9f1c17990d66b327d080668753387be1f0eb80c3"
+    assert receipt["pre_acceptance_ci"]["run_number"] == 46
+    assert receipt["pre_acceptance_ci"]["conclusion"] == "success"
+    assert receipt["merge_authority"] == "not_implied_by_acceptance"
+    assert receipt["follow_on_authority"] == "R1_CAPABILITY_OBJECT_MODEL_AND_REGISTRY_BOOTSTRAP_AFTER_R0_MERGE"
+    assert all(value is False for value in receipt["boundaries_preserved"].values())
 
     spec = (R0 / "R0-RESEARCH-CAPABILITY-CANON-REFRAME-v0.1.md").read_text(encoding="utf-8")
     for marker in (
