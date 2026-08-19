@@ -28,6 +28,7 @@ jobs:
       - run: python scripts/validate_r0_reframe.py
       - run: python scripts/validate_r1_registry.py
       - run: python scripts/validate_r2_gold_pack.py
+      - run: python scripts/validate_r2_1_status.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
 
   governance:
