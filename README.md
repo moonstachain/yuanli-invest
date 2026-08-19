@@ -70,7 +70,7 @@ Human decision、CI、GitHub merge、Runtime execution、Future Settlement 等�
 - R1：accepted_merged
 - R2：accepted_merged
 - R2.1：accepted_merged
-- R2.2：candidate_started
+- R2.2：candidate_ready_for_human_review
 - R3A：paused_not_started，等待 R2.2 / R2.3 Gate
 - R4A：not_authorized
 

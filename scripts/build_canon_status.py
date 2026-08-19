@@ -1,17 +1,119 @@
 #!/usr/bin/env python3
 import argparse, json
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1]; ARCH=ROOT/'docs'/'architecture'; OUT=ARCH/'CANON-STATUS.json'
-def load(p): return json.loads(p.read_text(encoding='utf-8'))
+
+ROOT = Path(__file__).resolve().parents[1]
+ARCH = ROOT / "docs" / "architecture"
+OUT = ARCH / "CANON-STATUS.json"
+
+
+def load(path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
 def build():
- r0=load(ARCH/'r0'/'R0-STATE.json'); r1=load(ARCH/'r1'/'R1-STATE.json'); r2=load(ARCH/'r2'/'R2-STATE.json'); r21=load(ARCH/'r2_1'/'R2-1-STATE.json'); r21r=load(ARCH/'r2_1'/'R2-1-MERGE-RECEIPT-v0.1.json'); r22=load(ARCH/'r2_2'/'R2-2-STATE.json')
- return {'schema_version':'0.5.0','projection_semantics':'deterministic_non_authoritative_projection','factual_authority':'immutable_receipts_and_external_git_runtime_facts','mission':'Yuanli Investment Research Intelligence Canon','north_star':'Compile investment knowledge into reality-tested, machine-callable research intelligence.','objective':'Lifetime Right-Tail Capture under Survival Constraints','center_object':'ResearchCapability','canonical_state_candidate':'ResearchStateVector','os_model':'one_core_three_worlds_three_gates_one_loop','operational_canon':{'repository':'moonstachain/quant-workspace','authority':'A9','switch_authorized':False},'stages':{'R0':{'status':'accepted_merged','merge_commit':r0['merge_commit_sha']},'R1':{'status':r1['status'],'merge_commit':r1['merge_commit']},'R2':{'status':r2['status'],'merge_commit':r2['merge_commit'],'gold_capabilities':r2['capability_count'],'registry_objects':r2['registry_entry_count'],'canon_entries':r2['canon_entry_count']},'R2_1':{'status':r21['status'],'merge_commit':r21['merge_commit'],'merge_receipt':'docs/architecture/r2_1/R2-1-MERGE-RECEIPT-v0.1.json'},'R2_2':{'status':r22['status'],'purpose':'Research Intelligence Canon Re-foundation'},'R2_3':{'status':'not_authorized','purpose':'vNext Object and Gold Successor Migration'},'R3A':{'status':'paused_not_started','reason':'await_r2_2_and_r2_3_semantic_migration_gates'},'R4A':{'status':'not_authorized','purpose':'Benchmark Closure'}},'constitutional_invariants':{'x_semantics':'X := (Xs, Xa, Xp)','scalar_pnx_score':'prohibited','force_classification':'projection_not_canonical_state','evidence_role':'horizontal_claim_control_plane','provider_independence':True,'claim_authority_cannot_exceed_evidence_authority':True,'dependency_graph':'P -> Xs -> N -> V -> Xa -> Xp -> S','dependency_graph_is_universal_causal_law':False,'ledger_law':'receipt_is_ledger_status_is_projection','live_execution':'unavailable_by_design'},'legacy_lane_reconciliation':{'M1_2':'runtime_state_contract_successor_scope','Q1':'wind_provider_qualification_successor_scope','A6':'audit_historical_replay_lane'},'r2_gold_migration':{'existing_ids_mutated':False,'successor_design_reserved_for':'R2_3'},'admission':{'evidence':'not_authorized','outcome':'not_authorized','rsi_promotion':'not_authorized'},'r2_1_merge_fact':{'pr':r21r['pr_number'],'merge_commit':r21r['merge_commit_sha'],'post_acceptance_ci_run':r21r['post_acceptance_ci']['run_number']},'next_gate':'R2_2_MACHINE_QUALIFICATION'}
-def render(d): return json.dumps(d,ensure_ascii=False,indent=2)+'\n'
+    r0 = load(ARCH / "r0" / "R0-STATE.json")
+    r1 = load(ARCH / "r1" / "R1-STATE.json")
+    r2 = load(ARCH / "r2" / "R2-STATE.json")
+    r21 = load(ARCH / "r2_1" / "R2-1-STATE.json")
+    r21r = load(ARCH / "r2_1" / "R2-1-MERGE-RECEIPT-v0.1.json")
+    r22 = load(ARCH / "r2_2" / "R2-2-STATE.json")
+    return {
+        "schema_version": "0.5.0",
+        "projection_semantics": "deterministic_non_authoritative_projection",
+        "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
+        "mission": "Yuanli Investment Research Intelligence Canon",
+        "north_star": "Compile investment knowledge into reality-tested, machine-callable research intelligence.",
+        "objective": "Lifetime Right-Tail Capture under Survival Constraints",
+        "center_object": "ResearchCapability",
+        "canonical_state_candidate": "ResearchStateVector",
+        "os_model": "one_core_three_worlds_three_gates_one_loop",
+        "operational_canon": {
+            "repository": "moonstachain/quant-workspace",
+            "authority": "A9",
+            "switch_authorized": False,
+        },
+        "stages": {
+            "R0": {"status": "accepted_merged", "merge_commit": r0["merge_commit_sha"]},
+            "R1": {"status": r1["status"], "merge_commit": r1["merge_commit"]},
+            "R2": {
+                "status": r2["status"],
+                "merge_commit": r2["merge_commit"],
+                "gold_capabilities": r2["capability_count"],
+                "registry_objects": r2["registry_entry_count"],
+                "canon_entries": r2["canon_entry_count"],
+            },
+            "R2_1": {
+                "status": r21["status"],
+                "merge_commit": r21["merge_commit"],
+                "merge_receipt": "docs/architecture/r2_1/R2-1-MERGE-RECEIPT-v0.1.json",
+            },
+            "R2_2": {
+                "status": r22["status"],
+                "purpose": "Research Intelligence Canon Re-foundation",
+            },
+            "R2_3": {
+                "status": "not_authorized",
+                "purpose": "vNext Object and Gold Successor Migration",
+            },
+            "R3A": {
+                "status": "paused_not_started",
+                "reason": "await_r2_2_and_r2_3_semantic_migration_gates",
+            },
+            "R4A": {"status": "not_authorized", "purpose": "Benchmark Closure"},
+        },
+        "constitutional_invariants": {
+            "x_semantics": "X := (Xs, Xa, Xp)",
+            "scalar_pnx_score": "prohibited",
+            "force_classification": "projection_not_canonical_state",
+            "evidence_role": "horizontal_claim_control_plane",
+            "provider_independence": True,
+            "claim_authority_cannot_exceed_evidence_authority": True,
+            "dependency_graph": "P -> Xs -> N -> V -> Xa -> Xp -> S",
+            "dependency_graph_is_universal_causal_law": False,
+            "ledger_law": "receipt_is_ledger_status_is_projection",
+            "live_execution": "unavailable_by_design",
+        },
+        "legacy_lane_reconciliation": {
+            "M1_2": "runtime_state_contract_successor_scope",
+            "Q1": "wind_provider_qualification_successor_scope",
+            "A6": "audit_historical_replay_lane",
+        },
+        "r2_gold_migration": {
+            "existing_ids_mutated": False,
+            "successor_design_reserved_for": "R2_3",
+        },
+        "admission": {
+            "evidence": "not_authorized",
+            "outcome": "not_authorized",
+            "rsi_promotion": "not_authorized",
+        },
+        "r2_1_merge_fact": {
+            "pr": r21r["pr_number"],
+            "merge_commit": r21r["merge_commit_sha"],
+            "post_acceptance_ci_run": r21r["post_acceptance_ci"]["run_number"],
+        },
+        "next_gate": r22["next_gate"],
+    }
+
+
+def render(data):
+    return json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+
+
 def main():
- ap=argparse.ArgumentParser(); ap.add_argument('--check',action='store_true'); a=ap.parse_args(); expected=render(build())
- if a.check:
-  actual=OUT.read_text(encoding='utf-8');
-  if actual!=expected: raise SystemExit('CANON-STATUS projection drift: run python scripts/build_canon_status.py')
-  print('CANON-STATUS projection: PASS'); return
- OUT.write_text(expected,encoding='utf-8')
-if __name__=='__main__': main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--check", action="store_true")
+    args = parser.parse_args()
+    expected = render(build())
+    if args.check:
+        actual = OUT.read_text(encoding="utf-8")
+        if actual != expected:
+            raise SystemExit("CANON-STATUS projection drift: run python scripts/build_canon_status.py")
+        print("CANON-STATUS projection: PASS")
+        return
+    OUT.write_text(expected, encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
