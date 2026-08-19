@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:m1:payoff-convexity-context:0.1.0",
+  "title": "PayoffConvexityContextCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_type", "subject_id", "as_of", "state", "price_context", "asymmetry", "costs_considered", "evidence_ids", "unknowns", "action_fields_prohibited"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-m1.2"},
+    "object_type": {"const": "PayoffConvexityContextCandidate"},
+    "subject_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "state": {"enum": ["negative_convexity", "balanced", "positive_convexity", "unknown"]},
+    "price_context": {"enum": ["discounted_optionality", "balanced_optionality", "prepaid_optionality", "unknown"]},
+    "asymmetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["right_tail_openness", "left_tail_boundedness", "path_dependency"],
+      "properties": {
+        "right_tail_openness": {"enum": ["low", "mixed", "high", "unknown"]},
+        "left_tail_boundedness": {"enum": ["low", "mixed", "high", "unknown"]},
+        "path_dependency": {"enum": ["low", "mixed", "high", "unknown"]}
+      }
+    },
+    "instrument_context": {"enum": ["cash_equity", "listed_option", "other_research_instrument", "not_applicable", "unknown"]},
+    "costs_considered": {
+      "type": "array",
+      "items": {"enum": ["price_paid", "premium", "implied_volatility", "skew", "theta", "expiry", "liquidity", "transaction_cost", "not_applicable"]},
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "unknowns": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "action_fields_prohibited": {"const": true}
+  }
+}
