@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:m1:portfolio-survival-policy:0.1.0",
+  "title": "PortfolioSurvivalPolicyCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_type", "policy_id", "effective_as_of", "objective", "ruin_boundary", "risk_constraints", "sizing_method_policy", "stress_requirements", "personalized_allocation_prohibited"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-m1.2"},
+    "object_type": {"const": "PortfolioSurvivalPolicyCandidate"},
+    "policy_id": {"type": "string", "minLength": 1},
+    "effective_as_of": {"type": "string", "format": "date-time"},
+    "objective": {"const": "maximize_long_term_geometric_growth_subject_to_survival"},
+    "ruin_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["definition", "max_probability_state"],
+      "properties": {
+        "definition": {"type": "string", "minLength": 1},
+        "max_probability_state": {"enum": ["strict", "moderate", "research_only", "unknown"]}
+      }
+    },
+    "risk_constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["drawdown", "expected_shortfall", "liquidity", "leverage", "crisis_correlation"],
+      "properties": {
+        "drawdown": {"$ref": "#/$defs/constraint"},
+        "expected_shortfall": {"$ref": "#/$defs/constraint"},
+        "liquidity": {"$ref": "#/$defs/constraint"},
+        "leverage": {"$ref": "#/$defs/constraint"},
+        "crisis_correlation": {"$ref": "#/$defs/constraint"}
+      }
+    },
+    "sizing_method_policy": {
+      "type": "array",
+      "items": {"enum": ["fractional_kelly", "risk_budget", "constrained_growth_optimal", "fixed_research_budget", "not_specified"]},
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "model_uncertainty_policy": {"enum": ["required_discount", "scenario_bound", "robust_optimization", "manual_review", "unknown"]},
+    "stress_requirements": {
+      "type": "array",
+      "items": {"enum": ["liquidity_stress", "correlation_spike", "volatility_jump", "gap_risk", "funding_stress", "regulatory_shock", "custom_scenario"]},
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "personalized_allocation_prohibited": {"const": true}
+  },
+  "$defs": {
+    "constraint": {"enum": ["required", "optional", "not_applicable", "unknown"]}
+  }
+}
