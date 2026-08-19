@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:canonical-data-field:v0.1.0",
+  "title": "CanonicalDataField",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["field_id", "canonical_name", "economic_definition", "unit", "frequency", "point_in_time_semantics", "revision_semantics", "allowed_transformations", "provider_neutral"],
+  "properties": {
+    "field_id": {"type": "string", "pattern": "^FIELD-[A-Z0-9]+-[A-Z0-9-]+$"},
+    "canonical_name": {"type": "string", "minLength": 1},
+    "economic_definition": {"type": "string", "minLength": 1},
+    "unit": {"type": "string", "minLength": 1},
+    "frequency": {"type": "string", "minLength": 1},
+    "point_in_time_semantics": {"type": "string", "minLength": 1},
+    "revision_semantics": {"type": "string", "minLength": 1},
+    "allowed_transformations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "provider_neutral": {"const": true}
+  }
+}
