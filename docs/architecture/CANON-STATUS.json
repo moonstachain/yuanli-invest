@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.1.1",
   "as_of": "2026-08-19T14:18:00+08:00",
   "project": "yuanli-invest",
   "mission": "Research Capability Canon",
@@ -13,7 +13,7 @@
   },
   "stages": {
     "R0": {"status": "accepted_merged"},
-    "R1": {"status": "accepted_merged_handoff_complete", "merge_commit": "bfd1576e08dc836869b359773b09b3a169d09512"},
+    "R1": {"status": "accepted_merged", "handoff_status": "complete", "merge_commit": "bfd1576e08dc836869b359773b09b3a169d09512"},
     "R2": {"status": "accepted_merged", "merge_commit": "e3f14d2a603b34d39b51a521dc0f47f2b555669b", "gold_capabilities": 12, "registry_objects": 99, "canon_entries": 0},
     "R2_1": {"status": "candidate_started", "purpose": "Canon Status Reconciliation"},
     "R3A": {"status": "not_started", "authority": "after_r2_1_merge"},
