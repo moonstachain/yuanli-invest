@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_1_CANON_STATUS_RECONCILIATION",
+  "status": "candidate_started",
+  "base_commit": "e3f14d2a603b34d39b51a521dc0f47f2b555669b",
+  "r2_decision": "ACCEPT_R2_PNXS_GOLD_CAPABILITY_PACK",
+  "r2_merge_pr": 19,
+  "r2_merge_commit": "e3f14d2a603b34d39b51a521dc0f47f2b555669b",
+  "objectives": [
+    "readme_status_drift_closed",
+    "r1_receipt_handoff_closed",
+    "single_canonical_state_projection_installed",
+    "m1_2_reclassified_as_runtime_state_contract",
+    "q1_absorbed_as_wind_provider_qualification"
+  ],
+  "canonical_state_projection": "docs/architecture/CANON-STATUS.json",
+  "legacy_prs": {
+    "m1_2_pr": 16,
+    "m1_2_target_state": "closed_superseded_runtime_state_contract",
+    "q1_pr": 12,
+    "q1_target_state": "closed_superseded_wind_provider_qualification"
+  },
+  "r3a_vertical_slice": [
+    "CAP-P-001-TECHNOLOGY-COST-CURVE",
+    "CAP-N-001-NARRATIVE-VELOCITY",
+    "CAP-XA-001-CONDITIONAL-TAIL-ACTIVATION",
+    "CAP-V-001-REVERSE-DCF-EXPECTATIONS"
+  ],
+  "r3a_authority": "authorized_after_r2_1_merge_not_started",
+  "r4a_authority": "not_authorized",
+  "a9_operational_canon_switch": "not_authorized",
+  "evidence_admission": "not_authorized",
+  "outcome_acceptance": "not_authorized",
+  "rsi_frozen_change": "not_authorized",
+  "live_execution": "unavailable_by_design",
+  "next_gate": "R2_1_CI_THEN_HUMAN_REVIEW"
+}
