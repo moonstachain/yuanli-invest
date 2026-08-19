@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:yuanli-invest:algorithm-object:v0.1.0",
+  "$id": "urn:yuanli-invest:schema:algorithm-object:1.0.0",
   "title": "AlgorithmObject",
   "type": "object",
   "additionalProperties": false,
