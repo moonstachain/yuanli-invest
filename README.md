@@ -20,7 +20,9 @@
 
 ## Canon 编译链
 
-`Research Question → Theory → Mechanism → Hypothesis → Observable → Factor / Algorithm → ResearchCapability → Benchmark`
+vNext：`Research Question → Theory → Mechanism → Hypothesis → Observable → Factor / Algorithm → ResearchCapability → Benchmark`
+
+R0/R1 compatibility chain：`Theory → Mechanism → Hypothesis → Factor → Algorithm → Benchmark → Skill`
 
 R2.2 新增 Observable 语义层，但不修改现有 R1/R2 对象历史；Gold successor migration 留到 R2.3，并必须显式 supersede，禁止静默 rename。
 
@@ -41,12 +43,13 @@ R2.2 新增 Observable 语义层，但不修改现有 R1/R2 对象历史；Gold 
 - Evidence Vault：Audit / Historical Replay Evidence Layer
 - `yuanli-invest-rsi`：Capability Challenger Lane；仍受 FROZEN 治理
 
-## R0 兼容法权标记
+## R0/R1 兼容法权标记
 
-R2.2 是对既有 R0 法权的上位语义升级，不抹除历史。以下 R0 invariants 保留为兼容标记：
+R2.2 是对既有 R0/R1 法权的上位语义升级，不抹除历史：
 
 - Research Capability Canon
 - Compile investment knowledge into machine-callable research intelligence.
+- Theory → Mechanism → Hypothesis → Factor → Algorithm → Benchmark → Skill
 - Wind AI：Market Reality Runtime
 - Codex：Research Engineering Runtime
 - Current A9 operational canon：`moonstachain/quant-workspace`
