@@ -74,7 +74,7 @@ def main() -> None:
 
     # M1.1 is theory-only; these explicit boundaries must remain visible.
     assert "不修改 Q0 已冻结的生产合同" in system
-    assert "不改变 Q1 数据资格验证" in system
+    assert "不修改 Q1 Data Qualification" in system
     assert "不授权仓位、交易、目标价或 live execution" in system
 
     print("M1.1 PNX-S theory validation: PASS")
