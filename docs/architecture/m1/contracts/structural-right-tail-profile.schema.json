@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:m1:structural-right-tail-profile:0.1.0",
+  "title": "StructuralRightTailProfileCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_type", "subject_id", "as_of", "state", "surfaces", "evidence_ids", "counter_evidence_ids", "falsifiers", "unknowns"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-m1.2"},
+    "object_type": {"const": "StructuralRightTailProfileCandidate"},
+    "subject_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "state": {"enum": ["weak", "mixed", "strong", "unknown"]},
+    "surfaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["winner_take_most", "network_effects", "scale_economics", "bottleneck_control", "platform_optionality", "market_expansion", "value_capture"],
+      "properties": {
+        "winner_take_most": {"$ref": "#/$defs/strength"},
+        "network_effects": {"$ref": "#/$defs/strength"},
+        "scale_economics": {"$ref": "#/$defs/strength"},
+        "bottleneck_control": {"$ref": "#/$defs/strength"},
+        "platform_optionality": {"$ref": "#/$defs/strength"},
+        "market_expansion": {"$ref": "#/$defs/strength"},
+        "value_capture": {"$ref": "#/$defs/strength"}
+      }
+    },
+    "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "counter_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "falsifiers": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "unknowns": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "strength": {"enum": ["weak", "mixed", "strong", "unknown"]}
+  }
+}
