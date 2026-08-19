@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Fail-closed checks for Q0 architecture freeze candidate.
+"""Fail-closed checks for the accepted Q0 architecture freeze package.
 
-This validator checks only architecture-package invariants. It does not authorize
-implementation, research admission, operational-canon activation or production.
+The validator verifies both the frozen architecture invariants and the post-merge
+Human Gate reconciliation. It does not authorize production ingestion, research
+admission, operational-canon activation, RSI FROZEN changes or live execution.
 """
 
 from __future__ import annotations
@@ -14,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 Q0 = ROOT / "docs" / "architecture" / "q0"
 UNIVERSE = Q0 / "mvp-universe-30-v1.json"
 STATE = Q0 / "Q0-STATE.json"
+ACCEPTANCE_RECEIPT = Q0 / "Q0-ACCEPTANCE-RECEIPT-v1.json"
 SCHEMAS = [
     Q0 / "contracts" / "force-radar-snapshot.schema.json",
     Q0 / "contracts" / "agent-run-artifact.schema.json",
@@ -31,6 +33,7 @@ REQUIRED_FILES = [
     Q0 / "90-day-implementation-plan-v1.md",
     Q0 / "CODEX-TASK-SPEC-v1.md",
     STATE,
+    ACCEPTANCE_RECEIPT,
     *SCHEMAS,
 ]
 
@@ -44,6 +47,10 @@ BANNED_KEYS = {
     "force_score",
     "pnx_score",
 }
+
+Q0_MERGE_COMMIT = "f9ab0aba57be052cccf2323716731602ca028039"
+Q0_ACCEPTED_HEAD = "38986cc6962d8158ed54c9fdc5530f9ce33d0fb9"
+Q0_DECISION = "ACCEPT_Q0_ARCHITECTURE_FREEZE"
 
 
 def load_json(path: Path):
@@ -96,16 +103,33 @@ def main() -> None:
     assert not banned_found, f"prohibited investment-action keys found: {banned_found}"
 
     state = load_json(STATE)
+    receipt = load_json(ACCEPTANCE_RECEIPT)
+
     assert state["stage"] == "Q0_ARCHITECTURE_FREEZE"
-    assert state["status"] == "candidate_ready_for_human_review"
-    assert state["implementation_authorization"] == "blocked_pending_hg_q0"
+    assert state["status"] == "accepted_merged"
+    assert state["human_review"]["decision"] == Q0_DECISION
+    assert state["human_review"]["accepted_candidate_head"] == Q0_ACCEPTED_HEAD
+    assert state["human_review"]["merge_commit"] == Q0_MERGE_COMMIT
+    assert state["implementation_authorization"] == "q1_qualification_only_authorized"
+
+    assert receipt["decision"] == Q0_DECISION
+    assert receipt["candidate_head"] == Q0_ACCEPTED_HEAD
+    assert receipt["merge_commit"] == Q0_MERGE_COMMIT
+    assert receipt["authorized_follow_on"] == (
+        "Q1_CHINA_US_AI_UNIVERSE_AND_DATA_CONTRACT_QUALIFICATION_ONLY"
+    )
+
     assert state["authority"]["quant_workspace"] == "current_a9_operational_canon"
     assert state["authority"]["yuanli_invest"] == "target_business_canon_not_operational"
+    assert state["production_ingestion"] == "not_run_not_authorized"
+    assert state["evidence_admission"] == "not_run_not_authorized"
+    assert state["outcome_acceptance"] == "not_run_not_authorized"
+    assert state["a9_operational_canon_switch"] == "not_run_not_authorized"
     assert state["rsi_frozen_change"] == "not_run_not_authorized"
     assert state["live_trading"] == "unavailable_by_design"
     assert state["deliverables"]["human_review_card"] == "complete"
 
-    print("Q0 architecture validation: PASS")
+    print("Q0 architecture + acceptance reconciliation validation: PASS")
 
 
 if __name__ == "__main__":
