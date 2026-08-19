@@ -40,20 +40,27 @@ if state["wind_qualification"] == "blocked_before_identity_resolution":
     assert state["wind_network_from_github_actions"] == "passed"
     assert state["wind_secret_present"] == "passed"
     assert state["wind_auth_path_reached"] == "passed"
-    assert state["wind_official_cli_probe"] == "BLOCKED_BALANCE_ERROR"
     assert state["identifier_registry"] == "started_not_verified"
     assert state["coverage_matrix"] == "not_run"
     assert state["point_in_time_audit"] == "not_run"
-    assert state["wind_live_probe"] in {"blocked_vendor_balance", "blocked_balance_error_despite_ui_points"}
-    assert state["next_gate"] in {
-        "Q1_R1_RETRY_AFTER_WIND_BALANCE_RESTORED",
-        "Q1_R1_RESOLVE_WIND_BILLING_SCOPE_OR_ENTITLEMENT_MAPPING",
-    }
-    if state["wind_live_probe"] == "blocked_balance_error_despite_ui_points":
+
+    if state["wind_live_probe"] == "blocked_balance_error_on_alice_and_structured_mcp":
         assert state["wind_secret_matches_user_supplied_key_fingerprint"] == "passed"
         assert len(state["wind_key_fingerprint_sha256_prefix"]) == 12
-        assert state["wind_official_cli_latest_run_id"]
-        assert state["wind_billing_scope_interpretation"] == "unresolved_ui_points_vs_api_balance_or_entitlement_mapping"
+        assert state["wind_ui_points_observation"] == "user_screenshot_shows_total_points_14461_daily_refresh_0"
+        assert state["wind_r1b_same_key_dual_channel"] == "completed"
+        assert state["wind_r1b_latest_run_id"] == "32204006299"
+        assert state["wind_r1b_alice_status"] == "BLOCKED_BALANCE_ERROR"
+        assert state["wind_r1b_structured_mcp_status"] == "BLOCKED_BALANCE_ERROR"
+        assert state["wind_r1b_comparison"] == "SHARED_API_BALANCE_NOT_MAPPED_FROM_UI_POINTS"
+        assert state["wind_billing_scope_interpretation"] == "both_api_channels_return_balance_error_despite_visible_ui_points; ui_points_do_not_establish_api_spendable_balance_or_entitlement"
+        assert state["next_gate"] == "Q1_R1B_RESOLVE_VENDOR_API_BILLING_MAPPING_OR_USE_FUNDED_API_KEY"
+    else:
+        assert state["wind_live_probe"] in {"blocked_vendor_balance", "blocked_balance_error_despite_ui_points"}
+        assert state["next_gate"] in {
+            "Q1_R1_RETRY_AFTER_WIND_BALANCE_RESTORED",
+            "Q1_R1_RESOLVE_WIND_BILLING_SCOPE_OR_ENTITLEMENT_MAPPING",
+        }
 
 for key in PROHIBITED:
     if f'"{key}"' in STATE.read_text(encoding="utf-8") or f'"{key}"' in SCHEMA.read_text(encoding="utf-8"):
