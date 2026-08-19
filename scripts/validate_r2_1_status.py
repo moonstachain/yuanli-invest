@@ -68,11 +68,11 @@ def main() -> None:
     assert canon["stages"]["R1"]["handoff_status"] == "complete"
     assert canon["stages"]["R2"]["status"] == "accepted_merged"
     assert canon["stages"]["R2"]["canon_entries"] == 0
-    assert canon["stages"]["R2_1"]["status"] == "candidate_started"
+    assert canon["stages"]["R2_1"]["status"] == "candidate_ready_for_human_review"
     assert canon["stages"]["R3A"]["status"] == "not_started"
     assert canon["r3a_vertical_slice"] == EXPECTED_SLICE
-    assert canon["legacy_lane_reconciliation"]["M1_2"] == "supersede_semantic_authority_rebase_as_runtime_state_contract"
-    assert canon["legacy_lane_reconciliation"]["Q1"] == "absorb_as_wind_provider_qualification"
+    assert canon["legacy_lane_reconciliation"]["M1_2"] == "closed_superseded_semantic_authority_rebase_as_runtime_state_contract"
+    assert canon["legacy_lane_reconciliation"]["Q1"] == "closed_absorbed_as_wind_provider_qualification"
     assert canon["constitutional_invariants"]["x_semantics"] == "X := (Xs, Xa, Xp)"
     assert canon["constitutional_invariants"]["scalar_pnx_score"] == "prohibited"
     assert canon["constitutional_invariants"]["provider_independence"] is True
@@ -80,25 +80,32 @@ def main() -> None:
     assert canon["admission"]["evidence"] == "not_authorized"
     assert canon["admission"]["outcome"] == "not_authorized"
     assert canon["admission"]["rsi_promotion"] == "not_authorized"
+    assert canon["next_gate"] == "R2_1_HUMAN_REVIEW"
 
     r21 = load(R21_STATE)
     assert r21["stage"] == "R2_1_CANON_STATUS_RECONCILIATION"
-    assert r21["status"] == "candidate_started"
+    assert r21["status"] == "candidate_ready_for_human_review"
     assert r21["base_commit"] == R2_MERGE
+    assert r21["qualification_ci"]["validated_head_sha"] == "c2ff1682e5b0257db65bb100b97545b92a70da1c"
+    assert r21["qualification_ci"]["run_number"] == 80
+    assert r21["qualification_ci"]["conclusion"] == "success"
+    assert r21["legacy_prs"]["m1_2_actual_state"] == "closed_superseded_runtime_state_contract"
+    assert r21["legacy_prs"]["q1_actual_state"] == "closed_superseded_wind_provider_qualification"
     assert r21["r3a_vertical_slice"] == EXPECTED_SLICE
     assert r21["r3a_authority"] == "authorized_after_r2_1_merge_not_started"
     assert r21["r4a_authority"] == "not_authorized"
     assert r21["live_execution"] == "unavailable_by_design"
+    assert r21["next_gate"] == "R2_1_HUMAN_REVIEW"
 
     readme = README.read_text(encoding="utf-8")
     for token in (
         "R1 Capability Object Model & Registry Bootstrap：`accepted_merged`",
         "R2 PNX-S Gold Capability Pack：`accepted_merged`",
-        "R2.1 Canon Status Reconciliation：`candidate_started`",
+        "R2.1 Canon Status Reconciliation：`candidate_ready_for_human_review`",
         "R3A Gold Vertical Slice：`not_started`",
         "README 只做人类导航，不再作为状态真源",
-        "M1.2 的语义法权已被 R2 Constitution 吸收",
-        "Q1 从数据基础设施主阻塞轨收口为 **Wind Provider Qualification**",
+        "旧 PR #16 已关闭为 superseded",
+        "旧 PR #12 已关闭为 absorbed/superseded",
     ):
         assert token in readme, f"README status projection drift: {token}"
 
