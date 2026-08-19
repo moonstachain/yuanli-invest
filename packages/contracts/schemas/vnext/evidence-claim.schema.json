@@ -1,0 +1,5 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"urn:yuanli-invest:schema:vnext-evidence-claim:1.0.0","title":"EvidenceClaim","type":"object","additionalProperties":false,
+  "required":["claim_id","claim","target_id","node","claim_type","evidence_authority","source_refs","as_of","confidence","falsifiers","revision_rule"],
+  "properties":{"claim_id":{"type":"string","pattern":"^CLAIM-[A-Z0-9-]+$"},"claim":{"type":"string","minLength":1},"target_id":{"type":"string","minLength":1},"node":{"enum":["P","N","XS","XA","XP","V","S","CROSS"]},"claim_type":{"enum":["fact","estimate","inference","hypothesis","practitioner_claim"]},"evidence_authority":{"enum":["primary_evidence","independent_empirical","research_synthesis","practitioner_claim","hypothesis"]},"source_refs":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","minLength":1}},"as_of":{"type":"string","format":"date-time"},"confidence":{"enum":["low","medium","high","unknown"]},"falsifiers":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},"revision_rule":{"type":"string","minLength":1}}
+}

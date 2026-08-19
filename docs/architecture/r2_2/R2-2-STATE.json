@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_2_RESEARCH_INTELLIGENCE_CANON_REFOUNDATION",
+  "status": "candidate_started",
+  "base_main_commit": "19c2088231edde3bf5f8a4c70051c2f6506625db",
+  "mission_candidate": "Yuanli Investment Research Intelligence Canon",
+  "north_star_candidate": "Compile investment knowledge into reality-tested, machine-callable research intelligence.",
+  "objective_candidate": "Lifetime Right-Tail Capture under Survival Constraints",
+  "semantic_model": "one_core_three_worlds_three_gates_one_loop",
+  "center_object": "ResearchCapability",
+  "canonical_state_candidate": "ResearchStateVector",
+  "force_classification_role": "projection_not_canonical_state",
+  "evidence_role": "horizontal_claim_control_plane",
+  "dependency_graph": "P -> Xs -> N -> V -> Xa -> Xp -> S",
+  "dependency_graph_is_universal_causal_law": false,
+  "ledger_law": {
+    "factual_authority": "immutable_receipts_and_external_facts",
+    "status_files": "deterministic_projection"
+  },
+  "migration_boundary": {
+    "existing_gold_ids_mutated": false,
+    "r2_3_successor_migration": "reserved",
+    "r3a_implementation": "paused_until_semantic_migration_decision"
+  },
+  "a9_operational_canon_switch": "not_authorized",
+  "evidence_admission": "not_authorized",
+  "outcome_acceptance": "not_authorized",
+  "rsi_frozen_change": "not_authorized",
+  "live_execution": "unavailable_by_design",
+  "next_gate": "R2_2_MACHINE_QUALIFICATION"
+}

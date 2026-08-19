@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:vnext-research-target:1.0.0",
+  "title": "ResearchTarget",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["target_type","target_id","display_name"],
+  "properties": {
+    "target_type": {"enum":["asset","company","industry","technology","macro_regime","instrument","portfolio","custom"]},
+    "target_id": {"type":"string","minLength":1},
+    "display_name": {"type":"string","minLength":1},
+    "parent_target_ids": {"type":"array","uniqueItems":true,"items":{"type":"string","minLength":1}},
+    "tags": {"type":"array","uniqueItems":true,"items":{"type":"string","minLength":1}}
+  }
+}
