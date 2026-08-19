@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R0_RESEARCH_CAPABILITY_CANON_REFRAME",
+  "validated_predecessor_head_sha": "1e58f06b1c629f6f9cb9c1e0e97bddb7a4f91843",
+  "workflow": "repository-gates",
+  "run_number": 52,
+  "run_id": 32214229155,
+  "conclusion": "success",
+  "human_gate_decision": "ACCEPT_R0_RESEARCH_CAPABILITY_CANON_REFRAME",
+  "note": "This receipt records the predecessor head validated before the receipt update itself. The current PR head is validated separately by the latest repository-gates run and must be checked from GitHub Actions/PR metadata.",
+  "next_gate": "R0_MERGE",
+  "r1_authority": "authorized_after_r0_merge_not_started"
+}

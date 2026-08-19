@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1.0",
+  "status": "candidate_seed_not_canon",
+  "purpose": "Seed the first cross-PNX-S capability pack for R1/R2 compilation.",
+  "capabilities": [
+    {"capability_id": "CAP-P-001-TECHNOLOGY-COST-CURVE", "domain": "P", "name": "Technology Cost Curve", "question": "Is the core technology becoming economically deployable through persistent cost/performance improvement?", "maturity_state": "concept"},
+    {"capability_id": "CAP-P-002-ADOPTION-ACCELERATION", "domain": "P", "name": "Adoption Acceleration", "question": "Is adoption moving from local experimentation toward broad diffusion?", "maturity_state": "concept"},
+    {"capability_id": "CAP-N-001-NARRATIVE-VELOCITY", "domain": "N", "name": "Narrative Velocity", "question": "Is marginal attention and belief diffusion accelerating rather than merely remaining popular?", "maturity_state": "concept"},
+    {"capability_id": "CAP-N-002-NARRATIVE-SATURATION", "domain": "N", "name": "Narrative Saturation", "question": "Is the narrative approaching consensus saturation or reversal risk?", "maturity_state": "concept"},
+    {"capability_id": "CAP-XS-001-MARKET-SHARE-ACCELERATION", "domain": "XS", "name": "Market Share Acceleration", "question": "Is value capture concentrating toward the subject faster than the market grows?", "maturity_state": "concept"},
+    {"capability_id": "CAP-XS-002-BOTTLENECK-SCARCITY", "domain": "XS", "name": "Bottleneck Scarcity", "question": "Does the subject control a scarce bottleneck that can concentrate right-tail value?", "maturity_state": "concept"},
+    {"capability_id": "CAP-XA-001-CONDITIONAL-TAIL-ACTIVATION", "domain": "XA", "name": "Conditional Tail Activation", "question": "Are current state variables materially changing the conditional probability of an extreme outcome?", "maturity_state": "concept"},
+    {"capability_id": "CAP-XA-002-EXTREME-REGIME-SHIFT", "domain": "XA", "name": "Extreme Regime Shift", "question": "Is the return/risk process transitioning into a statistically distinct tail regime?", "maturity_state": "concept"},
+    {"capability_id": "CAP-XP-001-PAYOFF-CONVEXITY-GEOMETRY", "domain": "XP", "name": "Payoff Convexity Geometry", "question": "Does the chosen exposure preserve upside openness while bounding or structurally limiting downside?", "maturity_state": "concept"},
+    {"capability_id": "CAP-V-001-REVERSE-DCF-EXPECTATIONS", "domain": "V", "name": "Reverse DCF Expectations", "question": "What growth, margin and value-capture assumptions are already embedded in price?", "maturity_state": "concept"},
+    {"capability_id": "CAP-S-001-RUIN-AND-EXPECTED-SHORTFALL", "domain": "S", "name": "Ruin and Expected Shortfall Constraint", "question": "Does the portfolio remain inside explicit survival boundaries under adverse distributions?", "maturity_state": "concept"},
+    {"capability_id": "CAP-S-002-ROBUST-FRACTIONAL-KELLY", "domain": "S", "name": "Robust Fractional Kelly", "question": "How should growth-optimal sizing be discounted for model uncertainty and survival constraints?", "maturity_state": "concept"}
+  ],
+  "non_decision": "No seeded capability is admitted to Canon or authorized for production use by R0."
+}

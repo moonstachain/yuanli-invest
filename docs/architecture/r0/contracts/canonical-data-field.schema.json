@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:r0:canonical-data-field:0.1.0",
+  "title": "CanonicalDataField Candidate",
+  "type": "object",
+  "required": [
+    "field_id",
+    "canonical_name",
+    "economic_definition",
+    "unit",
+    "frequency",
+    "point_in_time_semantics",
+    "revision_semantics",
+    "provider_neutral",
+    "provider_mappings"
+  ],
+  "properties": {
+    "field_id": {"type": "string", "pattern": "^FIELD-[A-Z0-9-]+$"},
+    "canonical_name": {"type": "string", "pattern": "^canonical\\.[a-z0-9_.]+$"},
+    "economic_definition": {"type": "string", "minLength": 10},
+    "unit": {"type": "string", "minLength": 1},
+    "frequency": {"enum": ["event", "daily", "weekly", "monthly", "quarterly", "annual", "irregular"]},
+    "point_in_time_semantics": {"type": "string", "minLength": 10},
+    "revision_semantics": {"type": "string", "minLength": 5},
+    "publication_lag_rule": {"type": ["string", "null"]},
+    "allowed_transformations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "provider_neutral": {"const": true},
+    "provider_mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["provider", "mapping_state"],
+        "properties": {
+          "provider": {"type": "string", "minLength": 1},
+          "provider_field": {"type": ["string", "null"]},
+          "mapping_state": {"enum": ["proposed", "qualified", "blocked", "unsupported", "unknown"]},
+          "notes": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
