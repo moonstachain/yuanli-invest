@@ -1,11 +1,18 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "stage": "R2_1_CANON_STATUS_RECONCILIATION",
-  "status": "candidate_started",
+  "status": "candidate_ready_for_human_review",
   "base_commit": "e3f14d2a603b34d39b51a521dc0f47f2b555669b",
   "r2_decision": "ACCEPT_R2_PNXS_GOLD_CAPABILITY_PACK",
   "r2_merge_pr": 19,
   "r2_merge_commit": "e3f14d2a603b34d39b51a521dc0f47f2b555669b",
+  "qualification_ci": {
+    "validated_head_sha": "c2ff1682e5b0257db65bb100b97545b92a70da1c",
+    "workflow": "repository-gates",
+    "run_number": 80,
+    "run_id": 32223327704,
+    "conclusion": "success"
+  },
   "objectives": [
     "readme_status_drift_closed",
     "r1_receipt_handoff_closed",
@@ -16,9 +23,9 @@
   "canonical_state_projection": "docs/architecture/CANON-STATUS.json",
   "legacy_prs": {
     "m1_2_pr": 16,
-    "m1_2_target_state": "closed_superseded_runtime_state_contract",
+    "m1_2_actual_state": "closed_superseded_runtime_state_contract",
     "q1_pr": 12,
-    "q1_target_state": "closed_superseded_wind_provider_qualification"
+    "q1_actual_state": "closed_superseded_wind_provider_qualification"
   },
   "r3a_vertical_slice": [
     "CAP-P-001-TECHNOLOGY-COST-CURVE",
@@ -33,5 +40,5 @@
   "outcome_acceptance": "not_authorized",
   "rsi_frozen_change": "not_authorized",
   "live_execution": "unavailable_by_design",
-  "next_gate": "R2_1_CI_THEN_HUMAN_REVIEW"
+  "next_gate": "R2_1_HUMAN_REVIEW"
 }
