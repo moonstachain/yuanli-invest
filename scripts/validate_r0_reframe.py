@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 R0 = ROOT / "docs" / "architecture" / "r0"
 CONTRACTS = R0 / "contracts"
 STATE = R0 / "R0-STATE.json"
+SEED = R0 / "R0-GOLD-CAPABILITY-SEED-12-v0.1.json"
 README = ROOT / "README.md"
 
 REQUIRED_FILES = [
@@ -27,6 +28,7 @@ REQUIRED_FILES = [
     R0 / "runtime-authority-map-v0.1.md",
     R0 / "R0-ROADMAP-v0.1.md",
     R0 / "R0-HUMAN-REVIEW-CARD-v0.1.md",
+    SEED,
     STATE,
     CONTRACTS / "research-capability.schema.json",
     CONTRACTS / "canonical-data-field.schema.json",
@@ -92,6 +94,15 @@ def main() -> None:
 
     field = load_json(CONTRACTS / "canonical-data-field.schema.json")
     assert field["properties"]["provider_neutral"] == {"const": True}
+
+    seed = load_json(SEED)
+    assert seed["status"] == "candidate_seed_not_canon"
+    seeded = seed["capabilities"]
+    assert len(seeded) == 12, f"expected 12 Gold Capability seeds, got {len(seeded)}"
+    ids = [item["capability_id"] for item in seeded]
+    assert len(ids) == len(set(ids)), "duplicate capability seed id"
+    assert {item["domain"] for item in seeded} == {"P", "N", "XS", "XA", "XP", "V", "S"}
+    assert all(item["maturity_state"] == "concept" for item in seeded)
 
     state = load_json(STATE)
     assert state["stage"] == "R0_RESEARCH_CAPABILITY_CANON_REFRAME"
