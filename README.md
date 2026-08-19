@@ -31,13 +31,15 @@ Theory → Mechanism → Hypothesis → Factor → Algorithm → Benchmark → S
 - R0 Research Capability Canon Reframe：`accepted_merged`
 - R1 Capability Object Model & Registry Bootstrap：`accepted_merged`
 - R2 PNX-S Gold Capability Pack：`accepted_merged`
-- R2.1 Canon Status Reconciliation：`candidate_ready_for_human_review`
+- R2.1 Canon Status Reconciliation：`human_accepted_pending_merge`
 - R3A Gold Vertical Slice：`not_started`；仅在 R2.1 合并后进入
 - Current A9 operational canon：`moonstachain/quant-workspace`
 - Evidence / Outcome admission：未授权；Evidence Reviewer 边界保持不变
 - Production deployment / live execution：`not_authorized`
 
 R2 已编译第一批 12 个 Gold Research Capabilities 与 99 个 Registry Objects；`Gold = strategically selected + specified`，不等于 `canon`、`benchmark_passed` 或交易法权。
+
+R2.1 已通过 Human Review，决策为 `ACCEPT_R2_1_CANON_STATUS_RECONCILIATION`，并已获得 merge PR #20 的显式授权。合并仍以 post-acceptance exact-head `repository-gates` PASS 为机器前置条件。
 
 下一主线不是扩充第二批 Gold，而是先做 **R3A Gold Vertical Slice**：
 
