@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:algorithm-object:v0.1.0",
+  "title": "AlgorithmObject",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["algorithm_id", "domain", "algorithm_family", "research_question", "assumptions", "input_contract", "output_contract", "simpler_baselines", "known_failure_modes", "reference_sources", "reference_implementation", "test_contract", "benchmark_ids", "causal_claim_status"],
+  "properties": {
+    "algorithm_id": {"type": "string", "pattern": "^ALG-(P|N|XS|XA|XP|V|S|E|CROSS)-[A-Z0-9]+-[A-Z0-9-]+$"},
+    "domain": {"enum": ["P", "N", "XS", "XA", "XP", "V", "S", "E", "CROSS"]},
+    "algorithm_family": {"type": "string", "minLength": 1},
+    "research_question": {"type": "string", "minLength": 1},
+    "assumptions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "input_contract": {"type": "string", "minLength": 1},
+    "output_contract": {"type": "string", "minLength": 1},
+    "simpler_baselines": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "known_failure_modes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "reference_sources": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "reference_implementation": {"type": "string", "minLength": 1},
+    "test_contract": {"type": "string", "minLength": 1},
+    "benchmark_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^BENCH-"}},
+    "causal_claim_status": {"enum": ["descriptive", "predictive", "causal_candidate", "causal_identified", "not_applicable"]}
+  }
+}
