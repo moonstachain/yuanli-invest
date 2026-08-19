@@ -31,7 +31,7 @@ Theory → Mechanism → Hypothesis → Factor → Algorithm → Benchmark → S
 - R0 Research Capability Canon Reframe：`accepted_merged`
 - R1 Capability Object Model & Registry Bootstrap：`accepted_merged`
 - R2 PNX-S Gold Capability Pack：`accepted_merged`
-- R2.1 Canon Status Reconciliation：`candidate_started`
+- R2.1 Canon Status Reconciliation：`candidate_ready_for_human_review`
 - R3A Gold Vertical Slice：`not_started`；仅在 R2.1 合并后进入
 - Current A9 operational canon：`moonstachain/quant-workspace`
 - Evidence / Outcome admission：未授权；Evidence Reviewer 边界保持不变
@@ -69,8 +69,8 @@ Provider-specific 字段名不得成为 Factor / Algorithm 的本体；应通过
 
 ## 旧支线治理
 
-- M1.2 的语义法权已被 R2 Constitution 吸收；旧 PR 收口后，其剩余价值重构为 **Runtime State Contract**：资产级 Xs/Xa/Xp/V/IssuerDurability 与组合级 S 的运行态合同。
-- Q1 从数据基础设施主阻塞轨收口为 **Wind Provider Qualification**：验证 CanonicalDataField ↔ Wind 映射、PIT 语义、授权与运行兼容性，不再阻塞 Capability Canon 建设。
+- M1.2 的语义法权已被 R2 Constitution 吸收；旧 PR #16 已关闭为 superseded，其剩余价值重构为 **Runtime State Contract**：资产级 Xs/Xa/Xp/V/IssuerDurability 与组合级 S 的运行态合同。
+- Q1 从数据基础设施主阻塞轨收口为 **Wind Provider Qualification**；旧 PR #12 已关闭为 absorbed/superseded。后续只验证 CanonicalDataField ↔ Wind 映射、PIT 语义、授权与运行兼容性，不再阻塞 Capability Canon 建设。
 
 ## 法权
 
