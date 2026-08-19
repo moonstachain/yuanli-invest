@@ -1,6 +1,6 @@
 {
-  "schema_version": "0.1.1",
-  "as_of": "2026-08-19T14:18:00+08:00",
+  "schema_version": "0.2.0",
+  "as_of": "2026-08-19T14:26:00+08:00",
   "project": "yuanli-invest",
   "mission": "Research Capability Canon",
   "north_star": "Compile investment knowledge into machine-callable research intelligence.",
@@ -15,7 +15,7 @@
     "R0": {"status": "accepted_merged"},
     "R1": {"status": "accepted_merged", "handoff_status": "complete", "merge_commit": "bfd1576e08dc836869b359773b09b3a169d09512"},
     "R2": {"status": "accepted_merged", "merge_commit": "e3f14d2a603b34d39b51a521dc0f47f2b555669b", "gold_capabilities": 12, "registry_objects": 99, "canon_entries": 0},
-    "R2_1": {"status": "candidate_started", "purpose": "Canon Status Reconciliation"},
+    "R2_1": {"status": "candidate_ready_for_human_review", "purpose": "Canon Status Reconciliation"},
     "R3A": {"status": "not_started", "authority": "after_r2_1_merge"},
     "R4A": {"status": "not_authorized", "purpose": "Benchmark Closure"}
   },
@@ -26,8 +26,8 @@
     "CAP-V-001-REVERSE-DCF-EXPECTATIONS"
   ],
   "legacy_lane_reconciliation": {
-    "M1_2": "supersede_semantic_authority_rebase_as_runtime_state_contract",
-    "Q1": "absorb_as_wind_provider_qualification"
+    "M1_2": "closed_superseded_semantic_authority_rebase_as_runtime_state_contract",
+    "Q1": "closed_absorbed_as_wind_provider_qualification"
   },
   "constitutional_invariants": {
     "x_semantics": "X := (Xs, Xa, Xp)",
@@ -42,5 +42,5 @@
     "outcome": "not_authorized",
     "rsi_promotion": "not_authorized"
   },
-  "next_gate": "R2_1_CI_THEN_HUMAN_REVIEW"
+  "next_gate": "R2_1_HUMAN_REVIEW"
 }
