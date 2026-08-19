@@ -1,1 +1,1 @@
-{"registry":"benchmarks","object_type":"BenchmarkObject","status":"bootstrap_empty","entry_count":0,"id_prefix":"BENCH-"}
+{"registry":"benchmarks","object_type":"BenchmarkObject","status":"r2_preregistered_candidate","entry_count":7,"id_prefix":"BENCH-","pack_files":["r2-pnxs-gold-v0.1.json"]}
