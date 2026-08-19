@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:provider-adapter:v0.1.0",
+  "title": "ProviderAdapter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["provider_adapter_id", "provider_name", "provider_class", "license_boundary", "mappings", "canonical_semantics_may_not_be_redefined"],
+  "properties": {
+    "provider_adapter_id": {"type": "string", "pattern": "^PROVIDER-[A-Z0-9]+-[A-Z0-9-]+$"},
+    "provider_name": {"type": "string", "minLength": 1},
+    "provider_class": {"enum": ["licensed_vendor", "exchange", "regulator", "company_filing", "public_source", "internal_derived"]},
+    "license_boundary": {"type": "string", "minLength": 1},
+    "mappings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field_id", "provider_field", "transformation", "point_in_time_compatibility", "revision_handling"],
+        "properties": {
+          "field_id": {"type": "string", "pattern": "^FIELD-"},
+          "provider_field": {"type": "string", "minLength": 1},
+          "transformation": {"type": "string", "minLength": 1},
+          "point_in_time_compatibility": {"enum": ["native", "reconstructed", "not_supported", "unknown"]},
+          "revision_handling": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "canonical_semantics_may_not_be_redefined": {"const": true}
+  }
+}
