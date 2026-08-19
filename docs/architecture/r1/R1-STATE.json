@@ -1,12 +1,12 @@
 {
-  "schema_version": "0.3.2",
+  "schema_version": "0.3.3",
   "stage": "R1_CAPABILITY_OBJECT_MODEL_AND_REGISTRY_BOOTSTRAP",
   "status": "accepted_merged",
   "handoff_status": "complete",
   "base_commit": "cbe943f7251e44703e8a2e4c8a68fce2be1d2ea7",
   "r0_decision": "ACCEPT_R0_RESEARCH_CAPABILITY_CANON_REFRAME",
   "human_gate_decision": "ACCEPT_R1_CAPABILITY_REGISTRY_BOOTSTRAP",
-  "reviewed_head_sha": "247dd734bd6eec8efa8334b1d67a8902c99789a",
+  "reviewed_head_sha": "247dd734bd6eec8a927af1a65f8967130ee2701c",
   "qualification_ci": {
     "validated_head_sha": "247dd734bd6eec8a927af1a65f8967130ee2701c",
     "workflow": "repository-gates",
