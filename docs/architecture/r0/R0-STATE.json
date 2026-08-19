@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R0_RESEARCH_CAPABILITY_CANON_REFRAME",
+  "status": "candidate_started",
+  "base_commit": "04666a1d88183b80ad0186ac829453357d41e62a",
+  "branch": "architecture/r0-research-capability-canon-reframe-v0.1",
+  "mission_candidate": "Compile investment knowledge into machine-callable research intelligence.",
+  "center_object_candidate": "ResearchCapability",
+  "authority_candidate": {
+    "yuanli_invest": "research_capability_canon",
+    "wind_ai": "market_reality_runtime",
+    "codex": "research_engineering_runtime",
+    "quant_workspace": "reference_quant_runtime",
+    "evidence_vault": "audit_replay_evidence_layer",
+    "yuanli_invest_rsi": "capability_challenger_lane"
+  },
+  "value_chain_candidate": ["theory", "mechanism", "hypothesis", "factor", "algorithm", "benchmark", "skill"],
+  "provider_independence": "canonical_data_field_required",
+  "q1_reinterpretation": "provider_integration_qualification_candidate",
+  "a6_reinterpretation": "audit_replay_evidence_lane_candidate",
+  "m1_2_state_change": "none",
+  "production_schema_change": "none",
+  "readme_mission_change": "not_authorized_before_human_acceptance",
+  "a9_operational_canon_switch": "not_authorized",
+  "evidence_admission": "not_authorized",
+  "outcome_acceptance": "not_authorized",
+  "rsi_frozen_change": "not_authorized",
+  "next_gate": "R0_HUMAN_REVIEW",
+  "accepted_follow_on_if_approved": "R1_CAPABILITY_OBJECT_MODEL_AND_REGISTRY_BOOTSTRAP"
+}
