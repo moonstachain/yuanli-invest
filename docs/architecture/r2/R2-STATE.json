@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "stage": "R2_PNXS_GOLD_CAPABILITY_PACK",
-  "status": "candidate_started",
+  "status": "candidate_ready_for_human_review",
   "base_commit": "bfd1576e08dc836869b359773b09b3a169d09512",
   "r1_decision": "ACCEPT_R1_CAPABILITY_REGISTRY_BOOTSTRAP",
   "capability_count": 12,
@@ -25,6 +25,13 @@
   "provider_adapter_count": 0,
   "canon_entry_count": 0,
   "r0_seed_transition": "compiled_to_specified_not_canon",
+  "qualification_ci": {
+    "validated_head_sha": "d96c2006a4762d38bf95bf6b41f6ab7f793278da",
+    "workflow": "repository-gates",
+    "run_number": 73,
+    "run_id": 32216675076,
+    "conclusion": "success"
+  },
   "r3_authority": "not_authorized",
   "q1_state_change": "none",
   "a6_state_change": "none",
@@ -34,6 +41,6 @@
   "outcome_acceptance": "not_authorized",
   "rsi_frozen_change": "not_authorized",
   "live_execution": "unavailable_by_design",
-  "next_gate": "R2_CI_THEN_HUMAN_REVIEW",
+  "next_gate": "R2_HUMAN_REVIEW",
   "accepted_follow_on_if_approved": "R3_WIND_AI_CODEX_SKILL_INTERFACE"
 }
