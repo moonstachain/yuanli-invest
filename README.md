@@ -39,6 +39,19 @@ R0/R1 compatibility chain：`Theory → Mechanism → Hypothesis → Factor → 
 - Evidence Vault：Audit / Historical Replay Evidence Layer
 - `yuanli-invest-rsi`：Capability Challenger Lane；仍受 FROZEN 治理
 
+## R0/R1 兼容法权标记
+
+R2.2 / R2.3 是上位语义演进，不抹除历史 Human-Accepted 法权：
+
+- Research Capability Canon
+- Compile investment knowledge into machine-callable research intelligence.
+- Theory → Mechanism → Hypothesis → Factor → Algorithm → Benchmark → Skill
+- Wind AI：Market Reality Runtime
+- Codex：Research Engineering Runtime
+- Current A9 operational canon：`moonstachain/quant-workspace`
+- GitHub **不是 Data Warehouse**。
+- Research `canon` 不代表可交易。
+
 ## Ledger 与状态
 
 > **Receipt = Ledger; Status = Projection**
