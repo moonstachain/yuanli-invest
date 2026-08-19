@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "M1_2_EXTREME_SURVIVAL_SEMANTIC_CONTRACT_SPLIT",
+  "status": "candidate_started",
+  "base_commit": "04666a1d88183b80ad0186ac829453357d41e62a",
+  "human_authorization": "M1.1_ACCEPTED_FOLLOW_ON_M1.2_ONLY",
+  "legacy_contracts": "unchanged",
+  "candidate_contract_location": "docs/architecture/m1/contracts",
+  "candidate_schemas": [
+    "structural-right-tail-profile.schema.json",
+    "tail-activation-snapshot.schema.json",
+    "payoff-convexity-context.schema.json",
+    "issuer-durability-gate.schema.json",
+    "valuation-context.schema.json",
+    "portfolio-survival-policy.schema.json",
+    "portfolio-survival-snapshot.schema.json",
+    "force-asset-snapshot.schema.json"
+  ],
+  "q1_force_state_generation": "prohibited",
+  "production_ingestion": "not_authorized",
+  "a9_operational_canon_switch": "not_authorized",
+  "evidence_admission": "not_authorized",
+  "outcome_acceptance": "not_authorized",
+  "rsi_frozen_change": "not_authorized",
+  "live_trading": "unavailable_by_design",
+  "next_gate": "M1_2_HUMAN_REVIEW",
+  "follow_on_if_accepted": "M1_3_PNXS_REPLAY_EVAL_V2"
+}
