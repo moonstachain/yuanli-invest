@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:yuanli-invest:canonical-data-field:v0.1.0",
+  "$id": "urn:yuanli-invest:schema:canonical-data-field:1.0.0",
   "title": "CanonicalDataField",
   "type": "object",
   "additionalProperties": false,
