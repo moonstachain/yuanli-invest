@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:yuanli-invest:factor-object:v0.1.0",
+  "$id": "urn:yuanli-invest:schema:factor-object:1.0.0",
   "title": "FactorObject",
   "type": "object",
   "additionalProperties": false,
