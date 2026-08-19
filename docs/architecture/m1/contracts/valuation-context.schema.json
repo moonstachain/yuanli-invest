@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:m1:valuation-context:0.1.0",
+  "title": "ValuationContextCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_type", "subject_id", "as_of", "optionality_price_state", "embedded_expectations", "evidence_ids", "unknowns", "fourth_vertex_prohibited"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-m1.2"},
+    "object_type": {"const": "ValuationContextCandidate"},
+    "subject_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "optionality_price_state": {"enum": ["discounted", "balanced", "prepaid", "unknown"]},
+    "embedded_expectations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["growth", "margin", "market_share", "capital_intensity"],
+      "properties": {
+        "growth": {"enum": ["low", "moderate", "high", "extreme", "unknown"]},
+        "margin": {"enum": ["low", "moderate", "high", "extreme", "unknown"]},
+        "market_share": {"enum": ["low", "moderate", "high", "extreme", "unknown"]},
+        "capital_intensity": {"enum": ["low", "moderate", "high", "extreme", "unknown"]}
+      }
+    },
+    "methods": {
+      "type": "array",
+      "items": {"enum": ["reverse_dcf", "historical_distribution", "peer_context", "scenario_valuation", "expectation_gap", "other"]},
+      "uniqueItems": true
+    },
+    "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "unknowns": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "fourth_vertex_prohibited": {"const": true}
+  }
+}
