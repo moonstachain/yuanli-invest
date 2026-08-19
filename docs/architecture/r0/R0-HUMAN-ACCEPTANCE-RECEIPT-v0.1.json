@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R0_RESEARCH_CAPABILITY_CANON_REFRAME",
+  "decision": "ACCEPT_R0_RESEARCH_CAPABILITY_CANON_REFRAME",
+  "decision_time_local": "2026-08-19T11:57:00+08:00",
+  "reviewed_head_sha": "9f1c17990d66b327d080668753387be1f0eb80c3",
+  "pre_acceptance_ci": {
+    "workflow": "repository-gates",
+    "run_number": 46,
+    "run_id": 32213906598,
+    "conclusion": "success"
+  },
+  "accepted_decisions": [
+    "GitHub = Research Capability Canon",
+    "ResearchCapability is the long-term center object; assets are runtime targets",
+    "Wind AI = Market Reality Runtime",
+    "Codex = Research Engineering Runtime",
+    "quant-workspace = Reference Quant Runtime",
+    "Evidence Vault = Audit / Replay Evidence Layer",
+    "yuanli-invest-rsi = Capability Challenger Lane",
+    "CanonicalDataField is required for provider independence",
+    "Theory -> Mechanism -> Hypothesis -> Factor -> Algorithm -> Benchmark -> Skill is the primary compilation chain",
+    "Q1 is reinterpreted as Provider Integration Qualification candidate",
+    "A6 is reinterpreted as Audit / Replay Evidence Lane candidate",
+    "PNX-S acts as the Research Capability Ontology"
+  ],
+  "boundaries_preserved": {
+    "production_schema_change": false,
+    "a9_operational_canon_switch": false,
+    "evidence_admission": false,
+    "outcome_acceptance": false,
+    "rsi_frozen_change": false,
+    "live_execution": false
+  },
+  "follow_on_authority": "R1_CAPABILITY_OBJECT_MODEL_AND_REGISTRY_BOOTSTRAP_AFTER_R0_MERGE",
+  "merge_authority": "not_implied_by_acceptance"
+}
