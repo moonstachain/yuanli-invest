@@ -1,1 +1,1 @@
-{"registry":"capabilities","object_type":"ResearchCapability","status":"bootstrap_empty","entry_count":0,"id_prefix":"CAP-"}
+{"registry":"capabilities","object_type":"ResearchCapability","status":"r2_specified_candidate","entry_count":12,"id_prefix":"CAP-","pack_files":["r2-pnxs-gold-v0.1.json"],"maturity_state":"specified","canon_entry_count":0}

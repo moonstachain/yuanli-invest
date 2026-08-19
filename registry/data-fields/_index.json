@@ -1,1 +1,1 @@
-{"registry":"data-fields","object_type":"CanonicalDataField","status":"bootstrap_empty","entry_count":0,"id_prefix":"FIELD-"}
+{"registry":"data-fields","object_type":"CanonicalDataField","status":"r2_provider_neutral_candidate","entry_count":25,"id_prefix":"FIELD-","pack_files":["r2-pnxs-gold-v0.1.json"]}

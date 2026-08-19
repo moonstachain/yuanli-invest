@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R1_CAPABILITY_OBJECT_MODEL_AND_REGISTRY_BOOTSTRAP",
+  "pr_number": 18,
+  "decision": "ACCEPT_R1_CAPABILITY_REGISTRY_BOOTSTRAP",
+  "source_head_sha": "247dd734bd6eec8a927af1a65f8967130ee2701c",
+  "merge_method": "squash",
+  "merge_commit_sha": "bfd1576e08dc836869b359773b09b3a169d09512",
+  "merged_at": "2026-08-19T04:29:43Z",
+  "next_authorized_stage": "R2_PNXS_GOLD_CAPABILITY_PACK"
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R1_CAPABILITY_OBJECT_MODEL_AND_REGISTRY_BOOTSTRAP",
+  "decision": "ACCEPT_R1_CAPABILITY_REGISTRY_BOOTSTRAP",
+  "decision_basis": "User explicitly instructed implementation of R2 after R1 exact-head CI PASS; R1 review card states R2 is authorized only by R1 acceptance.",
+  "user_instruction": "非常好，请帮我实现：R2｜PNX-S Gold Capability Pack",
+  "reviewed_head_sha": "247dd734bd6eec8a927af1a65f8967130ee2701c",
+  "reviewed_at": "2026-08-19T04:29:00Z",
+  "pre_acceptance_ci": {
+    "workflow": "repository-gates",
+    "run_number": 70,
+    "run_id": 32215500283,
+    "conclusion": "success"
+  },
+  "accepted_laws": [
+    "formal_r1_object_boundary",
+    "immutable_semantic_ids_no_recycling",
+    "provider_specificity_only_in_provider_adapter",
+    "capability_lifecycle_no_silent_promotion",
+    "canon_requires_human_gate_and_is_not_trading_authority",
+    "r1_empty_bootstrap_r2_first_gold_compilation",
+    "q1_a6_m1_2_state_unchanged"
+  ],
+  "follow_on_authority": "R2_PNXS_GOLD_CAPABILITY_PACK",
+  "merge_authority": "explicitly_exercised_for_pr_18",
+  "boundaries_preserved": {
+    "evidence_admission_authorized": false,
+    "outcome_acceptance_authorized": false,
+    "a9_operational_canon_switch_authorized": false,
+    "rsi_promotion_authorized": false,
+    "target_price_authorized": false,
+    "position_sizing_authorized": false,
+    "live_execution_authorized": false
+  }
+}

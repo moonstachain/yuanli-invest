@@ -1,0 +1,61 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_PNXS_GOLD_CAPABILITY_PACK",
+  "decision": "ACCEPT_R2_PNXS_GOLD_CAPABILITY_PACK",
+  "decision_basis": "User explicitly accepted all seven R2 constitutional questions after exact-head CI qualification.",
+  "reviewed_head_sha": "79c368e4df039558993863c34c5a2bcc3ef8bb6c",
+  "reviewed_at": "2026-08-19T14:04:00+08:00",
+  "pre_acceptance_ci": {
+    "workflow": "repository-gates",
+    "run_number": 74,
+    "run_id": 32216717247,
+    "conclusion": "success"
+  },
+  "accepted_constitutional_questions": [
+    "Q1_CAPABILITY_ONTOLOGY",
+    "Q2_GOLD_PRIMITIVE_SET",
+    "Q3_PNXS_CONSTITUTION",
+    "Q4_EPISTEMIC_CONSTITUTION",
+    "Q5_FALSIFICATION_CONSTITUTION",
+    "Q6_INVESTMENT_BOUNDARY",
+    "Q7_RUNTIME_SOVEREIGNTY"
+  ],
+  "accepted_laws": {
+    "center_asset": "ResearchCapability",
+    "gold_maturity": "strategically_selected_plus_specified_not_canon",
+    "pnxs_semantics": "P=Reality/Direction; N=Belief/Timing; X := (Xs, Xa, Xp); V=Price/Strike; S=Survival Outer Ring",
+    "scalar_pnx_score": "prohibited_as_canon_semantics",
+    "claim_strength_rule": "claim_strength_must_not_exceed_evidence_strength",
+    "falsification_minimum": [
+      "point_in_time",
+      "out_of_sample_or_walk_forward",
+      "calibration_where_applicable",
+      "false_alarm_accounting",
+      "regime_holdout",
+      "simpler_baseline",
+      "multiple_testing_control",
+      "complexity_penalty"
+    ],
+    "investment_boundary": "PNX_finds_opportunity_V_prices_entry_S_preserves_right_to_compound",
+    "provider_rule": "ResearchCapability_and_CanonicalDataField_are_provider_independent"
+  },
+  "machine_verification_not_human_philosophy": [
+    "registry_counts_and_reference_resolution",
+    "provider_registry_empty_in_R2",
+    "Q1_A6_M1_2_A9_Evidence_Outcome_RSI_boundaries_unchanged"
+  ],
+  "follow_on_authority": "R3_WIND_AI_CODEX_SKILL_INTERFACE_AFTER_R2_MERGE",
+  "merge_authority": "not_granted_by_this_acceptance",
+  "boundaries_preserved": {
+    "r4_benchmark_claims_authorized": false,
+    "evidence_admission_authorized": false,
+    "outcome_acceptance_authorized": false,
+    "a9_operational_canon_switch_authorized": false,
+    "rsi_promotion_authorized": false,
+    "target_price_authorized": false,
+    "buy_sell_authorized": false,
+    "position_sizing_authorized": false,
+    "portfolio_weight_authorized": false,
+    "live_execution_authorized": false
+  }
+}

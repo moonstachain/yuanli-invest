@@ -1,18 +1,21 @@
 {
-  "schema_version": "0.1.0",
-  "status": "bootstrap_empty",
-  "entry_count_total": 0,
-  "registries": [
-    {"name": "theories", "object_type": "TheoryObject", "path": "registry/theories", "entry_count": 0},
-    {"name": "hypotheses", "object_type": "HypothesisObject", "path": "registry/hypotheses", "entry_count": 0},
-    {"name": "factors", "object_type": "FactorObject", "path": "registry/factors", "entry_count": 0},
-    {"name": "algorithms", "object_type": "AlgorithmObject", "path": "registry/algorithms", "entry_count": 0},
-    {"name": "benchmarks", "object_type": "BenchmarkObject", "path": "registry/benchmarks", "entry_count": 0},
-    {"name": "skills", "object_type": "SkillContract", "path": "registry/skills", "entry_count": 0},
-    {"name": "data-fields", "object_type": "CanonicalDataField", "path": "registry/data-fields", "entry_count": 0},
-    {"name": "providers", "object_type": "ProviderAdapter", "path": "registry/providers", "entry_count": 0},
-    {"name": "capabilities", "object_type": "ResearchCapability", "path": "registry/capabilities", "entry_count": 0}
+  "schema_version":"0.2.0",
+  "status":"r2_gold_pack_specified_candidate",
+  "entry_count_total":99,
+  "registries":[
+    {"name":"theories","object_type":"TheoryObject","path":"registry/theories","entry_count":19},
+    {"name":"hypotheses","object_type":"HypothesisObject","path":"registry/hypotheses","entry_count":12},
+    {"name":"factors","object_type":"FactorObject","path":"registry/factors","entry_count":6},
+    {"name":"algorithms","object_type":"AlgorithmObject","path":"registry/algorithms","entry_count":6},
+    {"name":"benchmarks","object_type":"BenchmarkObject","path":"registry/benchmarks","entry_count":7},
+    {"name":"skills","object_type":"SkillContract","path":"registry/skills","entry_count":12},
+    {"name":"data-fields","object_type":"CanonicalDataField","path":"registry/data-fields","entry_count":25},
+    {"name":"providers","object_type":"ProviderAdapter","path":"registry/providers","entry_count":0},
+    {"name":"capabilities","object_type":"ResearchCapability","path":"registry/capabilities","entry_count":12}
   ],
-  "silent_promotion_prohibited": true,
-  "r0_gold_seed_pack_promoted": false
+  "silent_promotion_prohibited":true,
+  "r0_gold_seed_pack_promoted":false,
+  "r0_gold_seed_pack_compiled_to_specified":true,
+  "canon_entry_count":0,
+  "provider_adapter_count":0
 }

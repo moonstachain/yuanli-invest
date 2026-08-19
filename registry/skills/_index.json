@@ -1,1 +1,1 @@
-{"registry":"skills","object_type":"SkillContract","status":"bootstrap_empty","entry_count":0,"id_prefix":"SKILL-"}
+{"registry":"skills","object_type":"SkillContract","status":"r2_generic_contract_candidate","entry_count":12,"id_prefix":"SKILL-","pack_files":["r2-pnxs-gold-v0.1.json"]}
