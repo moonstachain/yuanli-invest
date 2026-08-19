@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:m1:force-asset-snapshot:0.1.0",
+  "title": "ForceAssetSnapshotCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_type", "subject_id", "as_of", "paradigm_snapshot_id", "narrative_snapshot_id", "structural_right_tail_profile_id", "tail_activation_snapshot_ids", "payoff_convexity_context_id", "valuation_context_id", "issuer_durability_gate_id", "classification", "research_priority", "evidence_ids", "counter_evidence_ids", "falsifiers", "unknowns", "portfolio_survival_excluded", "scalar_score_prohibited"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-m1.2"},
+    "object_type": {"const": "ForceAssetSnapshotCandidate"},
+    "subject_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "paradigm_snapshot_id": {"type": "string", "minLength": 1},
+    "narrative_snapshot_id": {"type": "string", "minLength": 1},
+    "structural_right_tail_profile_id": {"type": "string", "minLength": 1},
+    "tail_activation_snapshot_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "payoff_convexity_context_id": {"type": "string", "minLength": 1},
+    "valuation_context_id": {"type": "string", "minLength": 1},
+    "issuer_durability_gate_id": {"type": "string", "minLength": 1},
+    "fundamental_gate": {"enum": ["passed", "partial", "failed", "unknown"]},
+    "classification": {"enum": ["golden_extreme", "latent_dragon", "paradigm_bubble", "meme_extreme", "ordinary_asset", "unknown"]},
+    "research_priority": {"enum": ["high", "medium", "low", "unknown"]},
+    "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "counter_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "falsifiers": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "unknowns": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "portfolio_survival_excluded": {"const": true},
+    "scalar_score_prohibited": {"const": true}
+  }
+}
