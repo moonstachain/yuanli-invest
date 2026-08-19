@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:m1:issuer-durability-gate:0.1.0",
+  "title": "IssuerDurabilityGateCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_type", "subject_id", "as_of", "gate_state", "risks", "evidence_ids", "counter_evidence_ids", "falsifiers", "portfolio_survival_semantics_prohibited"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-m1.2"},
+    "object_type": {"const": "IssuerDurabilityGateCandidate"},
+    "subject_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "gate_state": {"enum": ["passed", "partial", "failed", "unknown"]},
+    "risks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["balance_sheet_fragility", "refinancing_dependency", "dilution_risk", "concentration_risk", "regulatory_ruin", "technical_obsolescence"],
+      "properties": {
+        "balance_sheet_fragility": {"$ref": "#/$defs/risk"},
+        "refinancing_dependency": {"$ref": "#/$defs/risk"},
+        "dilution_risk": {"$ref": "#/$defs/risk"},
+        "concentration_risk": {"$ref": "#/$defs/risk"},
+        "regulatory_ruin": {"$ref": "#/$defs/risk"},
+        "technical_obsolescence": {"$ref": "#/$defs/risk"}
+      }
+    },
+    "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "counter_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "falsifiers": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+    "portfolio_survival_semantics_prohibited": {"const": true}
+  },
+  "$defs": {
+    "risk": {"enum": ["low", "mixed", "high", "unknown"]}
+  }
+}
