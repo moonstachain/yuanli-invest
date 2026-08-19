@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "stage": "R2_3_RUNTIME_BLOCKER_CLOSURE",
-  "status": "candidate_started",
+  "status": "candidate_ready_for_human_review",
   "base_main_commit": "3bccf723c301f77364c198b9a7b1282c340f5534",
   "authorized_scope": [
     "post_merge_status_receipt_closure",
@@ -39,8 +39,16 @@
   "effective_gold_count_after_acceptance": 12,
   "retained_r2_gold_identities": 10,
   "successor_candidate_count": 2,
-  "machine_qualification": null,
+  "machine_qualification": {
+    "validated_head_sha": "ffac3788dce1bfed54034b0d83fc645c44776c9f",
+    "workflow": "repository-gates",
+    "run_number": 99,
+    "run_id": 32237317607,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success"
+  },
   "r3a_authority": "paused_until_r2_3_merge",
   "r4a_authority": "not_authorized",
-  "next_gate": "R2_3_MACHINE_QUALIFICATION"
+  "next_gate": "R2_3_HUMAN_REVIEW"
 }
