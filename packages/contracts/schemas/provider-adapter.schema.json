@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:yuanli-invest:provider-adapter:v0.1.0",
+  "$id": "urn:yuanli-invest:schema:provider-adapter:1.0.0",
   "title": "ProviderAdapter",
   "type": "object",
   "additionalProperties": false,
