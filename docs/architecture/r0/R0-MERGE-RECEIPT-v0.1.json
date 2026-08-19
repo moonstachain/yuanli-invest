@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R0_RESEARCH_CAPABILITY_CANON_REFRAME",
+  "human_gate_decision": "ACCEPT_R0_RESEARCH_CAPABILITY_CANON_REFRAME",
+  "pull_request": 17,
+  "accepted_head_sha": "f3ecf6af372e50194f5d511c62061c4c43362556",
+  "merge_commit_sha": "cbe943f7251e44703e8a2e4c8a68fce2be1d2ea7",
+  "merged_at": "2026-08-19T04:09:48Z",
+  "merge_method": "squash",
+  "post_merge_authority": {
+    "readme_mission_alignment": "authorized_via_separate_governed_change",
+    "r1_capability_registry_bootstrap": "authorized",
+    "a9_operational_canon_switch": "not_authorized",
+    "evidence_admission": "not_authorized",
+    "outcome_acceptance": "not_authorized",
+    "rsi_frozen_change": "not_authorized",
+    "live_execution": "not_authorized"
+  }
+}

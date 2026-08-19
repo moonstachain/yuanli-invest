@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:hypothesis-object:1.0.0",
+  "title": "HypothesisObject",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["hypothesis_id", "domain", "statement", "null_hypothesis", "target_variable", "horizon", "eligible_universe", "conditioning_state", "expected_direction", "falsification_rule", "point_in_time_requirement", "status"],
+  "properties": {
+    "hypothesis_id": {"type": "string", "pattern": "^HYP-(P|N|XS|XA|XP|V|S|E|CROSS)-[0-9]{3}-[A-Z0-9-]+$"},
+    "domain": {"enum": ["P", "N", "XS", "XA", "XP", "V", "S", "E", "CROSS"]},
+    "statement": {"type": "string", "minLength": 1},
+    "null_hypothesis": {"type": "string", "minLength": 1},
+    "target_variable": {"type": "string", "minLength": 1},
+    "horizon": {"type": "string", "minLength": 1},
+    "eligible_universe": {"type": "string", "minLength": 1},
+    "conditioning_state": {"type": "string", "minLength": 1},
+    "expected_direction": {"enum": ["positive", "negative", "non_monotonic", "state_dependent", "unknown"]},
+    "falsification_rule": {"type": "string", "minLength": 1},
+    "point_in_time_requirement": {"const": true},
+    "status": {"enum": ["proposed", "preregistered", "tested", "supported", "unsupported", "mixed", "deprecated"]}
+  }
+}

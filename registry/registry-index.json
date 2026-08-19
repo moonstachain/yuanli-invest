@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1.0",
+  "status": "bootstrap_empty",
+  "entry_count_total": 0,
+  "registries": [
+    {"name": "theories", "object_type": "TheoryObject", "path": "registry/theories", "entry_count": 0},
+    {"name": "hypotheses", "object_type": "HypothesisObject", "path": "registry/hypotheses", "entry_count": 0},
+    {"name": "factors", "object_type": "FactorObject", "path": "registry/factors", "entry_count": 0},
+    {"name": "algorithms", "object_type": "AlgorithmObject", "path": "registry/algorithms", "entry_count": 0},
+    {"name": "benchmarks", "object_type": "BenchmarkObject", "path": "registry/benchmarks", "entry_count": 0},
+    {"name": "skills", "object_type": "SkillContract", "path": "registry/skills", "entry_count": 0},
+    {"name": "data-fields", "object_type": "CanonicalDataField", "path": "registry/data-fields", "entry_count": 0},
+    {"name": "providers", "object_type": "ProviderAdapter", "path": "registry/providers", "entry_count": 0},
+    {"name": "capabilities", "object_type": "ResearchCapability", "path": "registry/capabilities", "entry_count": 0}
+  ],
+  "silent_promotion_prohibited": true,
+  "r0_gold_seed_pack_promoted": false
+}
