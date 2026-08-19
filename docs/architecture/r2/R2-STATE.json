@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.4.0",
+  "schema_version": "0.4.1",
   "stage": "R2_PNXS_GOLD_CAPABILITY_PACK",
   "status": "accepted_merged",
   "base_commit": "bfd1576e08dc836869b359773b09b3a169d09512",
@@ -42,14 +42,16 @@
   },
   "roadmap_override": {
     "authorized_by_user_at": "2026-08-19T14:18:00+08:00",
-    "reason": "insert R2.1 Canon Status Reconciliation before R3A and close stale M1.2/Q1 lanes into new runtime/provider roles",
     "next_stage": "R2_1_CANON_STATUS_RECONCILIATION",
     "r3a_after": "R2_1_MERGE"
   },
-  "r3_authority": "not_started_deferred_to_r2_1_gate",
+  "r3_authority": "not_authorized",
+  "r3_follow_on_authority": "superseded_by_r2_1_gate",
   "r3a_follow_on_authority": "authorized_after_r2_1_merge_not_started",
-  "q1_state_change": "governance_reconciliation_authorized_in_r2_1",
-  "m1_2_state_change": "governance_reconciliation_authorized_in_r2_1",
+  "accepted_follow_on_if_approved": "R3_WIND_AI_CODEX_SKILL_INTERFACE",
+  "q1_state_change": "none",
+  "a6_state_change": "none",
+  "m1_2_state_change": "none",
   "a9_operational_canon_switch": "not_authorized",
   "evidence_admission": "not_authorized",
   "outcome_acceptance": "not_authorized",
