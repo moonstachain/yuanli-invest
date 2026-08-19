@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.3.0",
+  "schema_version": "0.3.1",
   "stage": "R2_PNXS_GOLD_CAPABILITY_PACK",
   "status": "human_accepted_pending_merge",
   "base_commit": "bfd1576e08dc836869b359773b09b3a169d09512",
@@ -41,7 +41,9 @@
     "receipt": "docs/architecture/r2/R2-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
     "decision_record": "docs/architecture/r2/R2-CONSTITUTIONAL-DECISIONS-v0.1.md"
   },
-  "r3_authority": "authorized_after_r2_merge_not_started",
+  "r3_authority": "not_authorized",
+  "r3_follow_on_authority": "authorized_after_r2_merge_not_started",
+  "accepted_follow_on_if_approved": "R3_WIND_AI_CODEX_SKILL_INTERFACE",
   "merge_authority": "not_granted",
   "merge_precondition": "exact_head_repository_gates_success",
   "q1_state_change": "none",
