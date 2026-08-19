@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:m1:tail-activation-snapshot:0.1.0",
+  "title": "TailActivationSnapshotCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_type", "subject_id", "as_of", "tail_type", "horizon", "activation_state", "causal_status", "leading_factor_ids", "calibration_state", "evidence_ids", "counter_evidence_ids", "unknowns"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-m1.2"},
+    "object_type": {"const": "TailActivationSnapshotCandidate"},
+    "subject_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "tail_type": {"enum": ["wealth_tail", "event_upside_tail", "event_downside_tail"]},
+    "horizon": {"type": "string", "minLength": 1},
+    "activation_state": {"enum": ["rising", "stable", "falling", "unknown"]},
+    "base_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "conditional_probability": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "probability_delta": {"type": ["number", "null"], "minimum": -1, "maximum": 1},
+    "leading_factor_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "causal_status": {"enum": ["predictive", "causal_candidate", "identified", "unknown"]},
+    "calibration_state": {"enum": ["uncalibrated", "in_sample_only", "walk_forward", "held_out", "future_settled", "unknown"]},
+    "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "counter_evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "unknowns": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  }
+}
