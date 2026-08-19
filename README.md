@@ -67,7 +67,7 @@ Human decision、CI、GitHub merge、Runtime execution、Future Settlement 等�
 - R2：accepted_merged
 - R2.1：accepted_merged
 - R2.2：accepted_merged；merge commit `3bccf723c301f77364c198b9a7b1282c340f5534`
-- R2.3：candidate_started，仅处理三个 Runtime blocker
+- R2.3：candidate_ready_for_human_review；Run #99 machine qualification PASS
 - R3A：paused_not_started，等待 R2.3 Human Gate 与 merge
 - R4A：not_authorized
 
