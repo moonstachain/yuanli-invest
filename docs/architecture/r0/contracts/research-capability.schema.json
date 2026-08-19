@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:r0:research-capability:0.1.0",
+  "title": "ResearchCapability Candidate",
+  "type": "object",
+  "required": [
+    "capability_id",
+    "name",
+    "domain",
+    "purpose",
+    "theory_ids",
+    "hypothesis_ids",
+    "factor_ids",
+    "algorithm_ids",
+    "benchmark_ids",
+    "canonical_input_fields",
+    "output_contract",
+    "known_failure_regimes",
+    "maturity_state",
+    "provider_independent",
+    "scalar_pnx_score_prohibited",
+    "investment_action_fields_prohibited"
+  ],
+  "properties": {
+    "capability_id": {
+      "type": "string",
+      "pattern": "^CAP-(P|N|XS|XA|XP|V|S|E|CROSS)-[0-9]{3}(-[A-Z0-9-]+)?$"
+    },
+    "name": {"type": "string", "minLength": 3},
+    "domain": {"enum": ["P", "N", "XS", "XA", "XP", "V", "S", "E", "CROSS"]},
+    "purpose": {"type": "string", "minLength": 10},
+    "theory_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "hypothesis_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "factor_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "algorithm_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "benchmark_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "canonical_input_fields": {"type": "array", "items": {"type": "string", "pattern": "^canonical\\."}, "uniqueItems": true},
+    "output_contract": {
+      "type": "object",
+      "required": ["schema_ref", "point_in_time_required", "provenance_required"],
+      "properties": {
+        "schema_ref": {"type": "string", "minLength": 1},
+        "point_in_time_required": {"type": "boolean"},
+        "provenance_required": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "skill_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "reference_implementation": {"type": ["string", "null"]},
+    "known_failure_regimes": {"type": "array", "items": {"type": "string", "minLength": 3}, "minItems": 1, "uniqueItems": true},
+    "maturity_state": {
+      "enum": ["concept", "specified", "implemented", "replicated", "benchmark_passed", "shadow_qualified", "canon", "deprecated"]
+    },
+    "provider_independent": {"const": true},
+    "scalar_pnx_score_prohibited": {"const": true},
+    "investment_action_fields_prohibited": {"const": true},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}
