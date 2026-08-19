@@ -54,7 +54,16 @@ if state["wind_qualification"] == "blocked_before_identity_resolution":
         assert state["wind_r1b_structured_mcp_status"] == "BLOCKED_BALANCE_ERROR"
         assert state["wind_r1b_comparison"] == "SHARED_API_BALANCE_NOT_MAPPED_FROM_UI_POINTS"
         assert state["wind_billing_scope_interpretation"] == "both_api_channels_return_balance_error_despite_visible_ui_points; ui_points_do_not_establish_api_spendable_balance_or_entitlement"
-        assert state["next_gate"] == "Q1_R1B_RESOLVE_VENDOR_API_BILLING_MAPPING_OR_USE_FUNDED_API_KEY"
+
+        if state["status"] == "r1c_vendor_billing_entitlement_resolution_in_progress":
+            assert state["wind_r1c_vendor_escalation"] == "sent"
+            assert state["wind_r1c_support_to"] == "AIFinMarket@wind.com.cn"
+            assert state["wind_r1c_support_cc"] == "Service@wind.com.cn"
+            assert state["wind_r1c_gmail_message_id"] == "1a017a4e52576a09"
+            assert state["wind_r1c_tracking_issue"] == "moonstachain/yuanli-invest#13"
+            assert state["next_gate"] == "Q1_R1C_AWAIT_VENDOR_BILLING_OR_ENTITLEMENT_RESOLUTION_THEN_RERUN_US_NVDA"
+        else:
+            assert state["next_gate"] == "Q1_R1B_RESOLVE_VENDOR_API_BILLING_MAPPING_OR_USE_FUNDED_API_KEY"
     else:
         assert state["wind_live_probe"] in {"blocked_vendor_balance", "blocked_balance_error_despite_ui_points"}
         assert state["next_gate"] in {
