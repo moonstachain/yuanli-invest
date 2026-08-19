@@ -35,7 +35,7 @@
       "merge_receipt": "docs/architecture/r2_1/R2-1-MERGE-RECEIPT-v0.1.json"
     },
     "R2_2": {
-      "status": "candidate_ready_for_human_review",
+      "status": "human_accepted_ready_for_merge",
       "purpose": "Research Intelligence Canon Re-foundation"
     },
     "R2_3": {
@@ -82,5 +82,5 @@
     "merge_commit": "19c2088231edde3bf5f8a4c70051c2f6506625db",
     "post_acceptance_ci_run": 89
   },
-  "next_gate": "R2_2_HUMAN_REVIEW"
+  "next_gate": "R2_2_MERGE"
 }

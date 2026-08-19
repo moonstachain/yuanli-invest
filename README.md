@@ -36,7 +36,7 @@ R2.2 新增 Observable 语义层，但不修改现有 R1/R2 对象历史；Gold 
 
 ## Runtime 法权
 
-- `yuanli-invest`：Investment Research Intelligence Canon（R2.2 candidate）
+- `yuanli-invest`：Investment Research Intelligence Canon（R2.2 Human Accepted，待 merge）
 - Wind AI：Market Reality / Evidence & Data Runtime
 - Codex：Research Engineering Runtime
 - `moonstachain/quant-workspace`：Reference Quant Runtime；仍是当前 A9 operational canon
@@ -70,9 +70,13 @@ Human decision、CI、GitHub merge、Runtime execution、Future Settlement 等�
 - R1：accepted_merged
 - R2：accepted_merged
 - R2.1：accepted_merged
-- R2.2：candidate_ready_for_human_review
-- R3A：paused_not_started，等待 R2.2 / R2.3 Gate
+- R2.2：human_accepted_ready_for_merge
+- R2.3：not_authorized
+- R3A：paused_not_started，等待 R2.2 merge 与后续 R2.3 治理
 - R4A：not_authorized
+
+R2.2 Human Gate：`ACCEPT_R2_2_RESEARCH_INTELLIGENCE_CANON_REFOUNDATION`。
+Human Acceptance 不自动授权 merge，不自动启动 R2.3，不自动启动 R3A。
 
 R2 的 12 个 Gold Capabilities 与 99 个 Registry Objects 保持历史身份；`Gold = specified != canon`。
 

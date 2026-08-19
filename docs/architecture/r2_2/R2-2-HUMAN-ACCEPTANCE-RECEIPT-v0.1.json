@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_2_RESEARCH_INTELLIGENCE_CANON_REFOUNDATION",
+  "decision": "ACCEPT_R2_2_RESEARCH_INTELLIGENCE_CANON_REFOUNDATION",
+  "accepted_at": "2026-08-19T16:04:00+08:00",
+  "pr_number": 21,
+  "reviewed_head_sha": "2c39f5b06c2113d297257309169f957547b64b6c",
+  "reviewed_ci": {
+    "workflow": "repository-gates",
+    "run_number": 95,
+    "run_id": 32229806198,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success"
+  },
+  "accepted_constitutional_decisions": {
+    "mission": "Yuanli Investment Research Intelligence Canon",
+    "north_star": "Compile investment knowledge into reality-tested, machine-callable research intelligence.",
+    "objective": "Lifetime Right-Tail Capture under Survival Constraints",
+    "semantic_model": "one_core_three_worlds_three_gates_one_loop",
+    "durable_compounding_unit": "ResearchCapability",
+    "canonical_research_state": "ResearchStateVector",
+    "x_semantics": "X := (Xs, Xa, Xp)",
+    "evidence_role": "horizontal_claim_control_plane",
+    "claim_authority_rule": "Claim Authority <= Evidence Authority",
+    "force_classification_role": "projection_not_canonical_state",
+    "dependency_graph": "P -> Xs -> N -> V -> Xa -> Xp -> S",
+    "dependency_graph_is_universal_causal_law": false,
+    "ledger_law": "Receipt = Ledger; Status = Projection",
+    "learning_loop": "Theory -> Hypothesis -> Capability -> Runtime -> Replay -> Benchmark -> Failure -> Future Settlement -> Capability Revision",
+    "provider_runtime_sovereignty": true,
+    "existing_r2_gold_ids_mutated": false
+  },
+  "boundaries_preserved": {
+    "merge_authorized": false,
+    "r2_3_authorized": false,
+    "r3a_started": false,
+    "r4a_authorized": false,
+    "a9_operational_canon_switch": false,
+    "evidence_admission": false,
+    "outcome_acceptance": false,
+    "rsi_promotion": false,
+    "live_execution": false
+  },
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci": "required_on_acceptance_record_head",
+  "next_gate": "R2_2_MERGE"
+}
