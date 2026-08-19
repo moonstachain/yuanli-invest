@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_type": "q0_architecture_acceptance_reconciliation",
+  "portfolio": "A9",
+  "repository": "moonstachain/yuanli-invest",
+  "decision": "ACCEPT_Q0_ARCHITECTURE_FREEZE",
+  "pull_request": 11,
+  "candidate_head": "38986cc6962d8158ed54c9fdc5530f9ce33d0fb9",
+  "merge_commit": "f9ab0aba57be052cccf2323716731602ca028039",
+  "merged_at": "2026-08-18T10:03:58Z",
+  "reconciled_at": "2026-08-19T10:43:00+08:00",
+  "accepted_scope": [
+    "Q0 architecture freeze",
+    "four-repo authority split",
+    "point-in-time data model",
+    "P/N/X state-machine architecture",
+    "six specialist agent contracts",
+    "MCP access classes",
+    "30-asset research fixture",
+    "replay/eval architecture",
+    "CI and Human Gate contracts",
+    "90-day Q1-Q7 implementation roadmap"
+  ],
+  "explicitly_not_authorized": [
+    "production ingestion",
+    "Evidence admission",
+    "Outcome acceptance",
+    "A9 operational-canon switch",
+    "yuanli-invest-rsi FROZEN change",
+    "broker or live trading execution"
+  ],
+  "authorized_follow_on": "Q1_CHINA_US_AI_UNIVERSE_AND_DATA_CONTRACT_QUALIFICATION_ONLY",
+  "source_of_truth": {
+    "pr": "https://github.com/moonstachain/yuanli-invest/pull/11",
+    "merge_commit": "https://github.com/moonstachain/yuanli-invest/commit/f9ab0aba57be052cccf2323716731602ca028039"
+  },
+  "purpose": "Eliminate post-merge state drift without expanding Q0 authority."
+}
