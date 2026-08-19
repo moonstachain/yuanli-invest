@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:m1:portfolio-survival-snapshot:0.1.0",
+  "title": "PortfolioSurvivalSnapshotCandidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "object_type", "portfolio_id", "as_of", "policy_id", "survival_state", "risk_states", "stress_state", "model_confidence", "breaches", "action_fields_prohibited"],
+  "properties": {
+    "schema_version": {"const": "0.1.0-m1.2"},
+    "object_type": {"const": "PortfolioSurvivalSnapshotCandidate"},
+    "portfolio_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "policy_id": {"type": "string", "minLength": 1},
+    "survival_state": {"enum": ["robust", "acceptable", "fragile", "breached", "unknown"]},
+    "ruin_probability_estimate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "risk_states": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["drawdown", "expected_shortfall", "liquidity", "leverage", "crisis_correlation"],
+      "properties": {
+        "drawdown": {"$ref": "#/$defs/state"},
+        "expected_shortfall": {"$ref": "#/$defs/state"},
+        "liquidity": {"$ref": "#/$defs/state"},
+        "leverage": {"$ref": "#/$defs/state"},
+        "crisis_correlation": {"$ref": "#/$defs/state"}
+      }
+    },
+    "stress_state": {"enum": ["passed", "partial", "failed", "not_run", "unknown"]},
+    "model_confidence": {"enum": ["high", "medium", "low", "unknown"]},
+    "breaches": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "unknowns": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "action_fields_prohibited": {"const": true}
+  },
+  "$defs": {
+    "state": {"enum": ["within_limit", "watch", "breached", "not_modelled", "unknown"]}
+  }
+}
