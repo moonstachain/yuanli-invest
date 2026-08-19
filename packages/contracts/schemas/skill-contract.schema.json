@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:yuanli-invest:skill-contract:v0.1.0",
+  "$id": "urn:yuanli-invest:schema:skill-contract:1.0.0",
   "title": "SkillContract",
   "type": "object",
   "additionalProperties": false,
