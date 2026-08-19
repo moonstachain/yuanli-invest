@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:yuanli-invest:research-capability:v0.1.0",
+  "$id": "urn:yuanli-invest:schema:research-capability:1.0.0",
   "title": "ResearchCapability",
   "type": "object",
   "additionalProperties": false,
