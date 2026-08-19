@@ -1,7 +1,8 @@
 {
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.3",
   "stage": "R1_CAPABILITY_OBJECT_MODEL_AND_REGISTRY_BOOTSTRAP",
   "status": "accepted_merged",
+  "handoff_status": "complete",
   "base_commit": "cbe943f7251e44703e8a2e4c8a68fce2be1d2ea7",
   "r0_decision": "ACCEPT_R0_RESEARCH_CAPABILITY_CANON_REFRAME",
   "human_gate_decision": "ACCEPT_R1_CAPABILITY_REGISTRY_BOOTSTRAP",
@@ -23,6 +24,14 @@
   "provider_independence": "canonical_data_field_plus_provider_adapter",
   "silent_promotion": "prohibited",
   "canon_promotion": "human_gate_required",
+  "accepted_follow_on_if_approved": "R2_PNXS_GOLD_CAPABILITY_PACK",
+  "r2_handoff": {
+    "decision": "ACCEPT_R2_PNXS_GOLD_CAPABILITY_PACK",
+    "merge_pr": 19,
+    "merge_commit": "e3f14d2a603b34d39b51a521dc0f47f2b555669b",
+    "merged_at": "2026-08-19T06:18:39Z",
+    "status": "complete"
+  },
   "q1_state_change": "none",
   "a6_state_change": "none",
   "m1_2_state_change": "none",
@@ -31,7 +40,5 @@
   "outcome_acceptance": "not_authorized",
   "rsi_frozen_change": "not_authorized",
   "live_execution": "unavailable_by_design",
-  "next_gate": "R2_PNXS_GOLD_CAPABILITY_PACK_HUMAN_REVIEW",
-  "accepted_follow_on_if_approved": "R2_PNXS_GOLD_CAPABILITY_PACK",
-  "r2_authority": "authorized_by_r1_human_gate_and_r1_merge"
+  "next_gate": "none_stage_complete"
 }
