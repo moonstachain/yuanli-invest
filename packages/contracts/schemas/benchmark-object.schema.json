@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:yuanli-invest:benchmark-object:v0.1.0",
+  "$id": "urn:yuanli-invest:schema:benchmark-object:1.0.0",
   "title": "BenchmarkObject",
   "type": "object",
   "additionalProperties": false,
