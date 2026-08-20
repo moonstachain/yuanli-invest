@@ -1,0 +1,81 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+  "status": "candidate_profiles_not_implemented",
+  "profiles": [
+    {
+      "capability_id": "CAP-R-01",
+      "name": "Regime Causal Decomposition",
+      "stable_question": "What causal capital regime currently governs discount rates, risk appetite, funding conditions and cross-asset capital allocation?",
+      "semantic_parent": "P.capital",
+      "asset_forms": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"],
+      "pricing_archetypes": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"],
+      "minimum_state": ["growth", "inflation", "liquidity", "risk_appetite", "term_premium", "funding_stress", "policy_reaction_function"],
+      "state_type": "RegimeCausalState",
+      "required_state_annotations": ["direction", "magnitude_band", "persistence_band", "evidence_refs", "competing_mechanisms", "confidence_semantics"],
+      "simpler_baselines": ["single_rate_level", "simple_growth_inflation_quadrant", "risk_asset_momentum"],
+      "hard_boundaries": [
+        "R is not a fourth human world",
+        "No single yield level defines the regime",
+        "Liquidity and risk appetite are distinct",
+        "No scalar macro score",
+        "Regime authority does not erase valid bottom-up truth"
+      ]
+    },
+    {
+      "capability_id": "CAP-V-01",
+      "name": "Price-Implied Expectations",
+      "stable_question": "What future state or operating assumptions are already embedded in current price?",
+      "semantic_parent": "V",
+      "state_type": "PriceImpliedExpectationState",
+      "asset_model_families": {
+        "equity": ["reverse_dcf", "implied_operating_assumptions"],
+        "sovereign_rates": ["implied_policy_path", "inflation_term_premium_decomposition"],
+        "credit": ["implied_default_spread_recovery"],
+        "commodity": ["futures_curve", "scarcity_marginal_cost"],
+        "FX": ["forward_rate_differential", "carry"],
+        "monetary_asset": ["real_rate_monetary_risk", "reserve_demand_interpretation"],
+        "derivative": ["implied_volatility_surface", "skew_term_structure", "implied_distribution"],
+        "crypto": ["network_liquidity_scarcity_scenario"]
+      },
+      "required_outputs": ["model_family", "implied_parameters", "scenario_mapping", "identification_caveats", "evidence_refs", "as_of"],
+      "simpler_baselines": ["historical_multiple", "yield_or_spread_percentile", "simple_forward_carry"],
+      "hard_boundaries": [
+        "Target price is not canonical output",
+        "Canonical upside percentage is prohibited",
+        "Identification ambiguity must be surfaced",
+        "No universal valuation formula across asset forms"
+      ]
+    },
+    {
+      "capability_id": "CAP-XS-01",
+      "name": "Structural Asymmetry Source Mapper",
+      "stable_question": "Why can value, scarcity, duration, carry, volatility or risk become disproportionately concentrated in this research target?",
+      "semantic_parent": "Xs",
+      "state_type": "StructuralAsymmetrySourceState",
+      "asset_implementations": {
+        "equity": "value_control_point",
+        "commodity": "scarcity_supply_elasticity",
+        "sovereign_rates": "duration_convexity_term_premium",
+        "credit": "default_spread_recovery_refinancing",
+        "FX": "policy_divergence_carry_flow",
+        "monetary_asset": "monetary_scarcity_reserve_demand",
+        "derivative": "volatility_mispricing_convexity",
+        "crypto": "network_scarcity_liquidity_reflexivity"
+      },
+      "required_outputs": ["implementation_family", "asymmetry_source", "causal_mechanism", "conditions", "invalidators", "evidence_refs", "as_of"],
+      "simpler_baselines": ["sector_label", "simple_concentration_metric", "simple_inventory_or_duration_metric"],
+      "hard_boundaries": [
+        "Value Control Point is equity-specialized, not universal Xs ontology",
+        "Xs does not manufacture calibrated probability",
+        "Xs does not replace Xa activation",
+        "Xs does not replace Xp payoff geometry",
+        "Xs does not replace V price gate",
+        "Xs does not replace S survival gate"
+      ]
+    }
+  ],
+  "promotion_authority": "none",
+  "implementation_authority": "none",
+  "execution_authority": "none"
+}
