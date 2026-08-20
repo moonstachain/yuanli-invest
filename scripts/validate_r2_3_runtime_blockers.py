@@ -12,6 +12,7 @@ V_OLD = "CAP-V-001-REVERSE-DCF-EXPECTATIONS"
 V_NEW = "CAP-V-002-PRICE-IMPLIED-EXPECTATIONS"
 S_OLD = "CAP-S-002-ROBUST-FRACTIONAL-KELLY"
 S_NEW = "CAP-S-003-GROWTH-OPTIMAL-RISK-BUDGET-UNDER-UNCERTAINTY"
+ACCEPT_TOKEN = "ACCEPT_R2_3_RUNTIME_BLOCKER_CLOSURE"
 
 
 def load(path):
@@ -20,7 +21,11 @@ def load(path):
 
 def main():
     state = load(ARCH / "r2_3" / "R2-3-STATE.json")
-    assert state["status"] in {"candidate_started", "candidate_ready_for_human_review"}
+    assert state["status"] in {
+        "candidate_started",
+        "candidate_ready_for_human_review",
+        "human_accepted_ready_for_merge",
+    }
     assert state["base_main_commit"] == "3bccf723c301f77364c198b9a7b1282c340f5534"
     assert state["authorized_scope"] == [
         "post_merge_status_receipt_closure",
@@ -90,12 +95,30 @@ def main():
     if state["status"] == "candidate_started":
         assert state["machine_qualification"] is None
         assert state["next_gate"] == "R2_3_MACHINE_QUALIFICATION"
-    else:
+    elif state["status"] == "candidate_ready_for_human_review":
         q = state["machine_qualification"]
         assert q["conclusion"] == "success"
         assert q["contracts"] == "success"
         assert q["governance"] == "success"
         assert state["next_gate"] == "R2_3_HUMAN_REVIEW"
+    else:
+        receipt_path = ARCH / "r2_3" / "R2-3-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+        assert receipt_path.exists()
+        receipt = load(receipt_path)
+        assert receipt["stage"] == "R2_3_RUNTIME_BLOCKER_CLOSURE"
+        assert receipt["decision"] == ACCEPT_TOKEN
+        assert receipt["pr_number"] == 22
+        assert receipt["reviewed_head_sha"] == "78849a13dfc29ced99bba95e45e6859ca9c7c66c"
+        assert receipt["reviewed_ci"]["run_number"] == 102
+        assert receipt["reviewed_ci"]["conclusion"] == "success"
+        assert receipt["boundaries_preserved"]["merge_authorized"] is False
+        assert receipt["merge_authority"] == "not_implied_by_acceptance"
+        assert receipt["next_gate"] == "R2_3_MERGE"
+        assert state["human_gate_decision"] == ACCEPT_TOKEN
+        assert state["human_acceptance_receipt"] == "docs/architecture/r2_3/R2-3-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+        assert state["merge_authority"] == "not_implied_by_acceptance"
+        assert state["post_acceptance_ci_required"] is True
+        assert state["next_gate"] == "R2_3_MERGE"
 
     print("R2.3 Runtime Blocker Closure validation: PASS")
 
