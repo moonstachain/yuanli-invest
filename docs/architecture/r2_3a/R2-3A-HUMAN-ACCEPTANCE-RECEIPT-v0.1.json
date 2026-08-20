@@ -1,0 +1,54 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+  "decision": "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+  "accepted_at": "2026-08-20T08:38:00-03:00",
+  "pr_number": 23,
+  "reviewed_head_sha": "2bc27932f9580de9b41ed7a8ed0721bcafafd788",
+  "reviewed_ci": {
+    "workflow": "repository-gates",
+    "run_number": 124,
+    "run_id": 32363617225,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "architecture": "success",
+    "cross_asset_stress": "success",
+    "unit_tests": "success"
+  },
+  "accepted_decisions": {
+    "base_os_model": "one_core_three_worlds_three_gates_one_loop",
+    "human_navigation": "势信极_真价生",
+    "p_human_subspaces": ["P.capital", "P.asset"],
+    "r_role": "typed_machine_decomposition_and_context_for_P.capital_not_fourth_human_world",
+    "x_semantics": "X := (Xs, Xa, Xp)",
+    "xs_mother_concept": "Structural Asymmetry Source",
+    "value_control_point_role": "equity_specialized_implementation",
+    "asset_form_is_not_pricing_model": true,
+    "router": {
+      "A0_asset_form": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"],
+      "A1_pricing_archetype": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"]
+    },
+    "authority_ladder": "L0-L4_cross_asset",
+    "research_portfolio_split_is_governance_only": true,
+    "candidate_capability_ids_frozen": 12,
+    "cap_xs_01_identity": "Structural Asymmetry Source Mapper",
+    "cross_asset_stress_targets": ["NVIDIA", "UST30Y", "COPPER", "GOLD", "USDJPY"]
+  },
+  "boundaries_preserved": {
+    "merge_authorized": false,
+    "gold_promotion_authorized": false,
+    "benchmark_execution_authorized": false,
+    "runtime_implementation_authorized": false,
+    "evidence_or_outcome_admission_authorized": false,
+    "a9_operational_canon_switch": false,
+    "rsi_promotion": false,
+    "trading_action_authorized": false,
+    "target_price_authorized": false,
+    "recommended_weight_or_position_size_authorized": false,
+    "live_execution": false
+  },
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci": "required_on_acceptance_record_head",
+  "next_gate": "R2_3A_POST_ACCEPTANCE_CI"
+}
