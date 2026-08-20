@@ -13,6 +13,7 @@ SCHEMA = B0 / "R2-3B0-CONTRACT-SCHEMA-v0.1.json"
 PROFILES = B0 / "R2-3B0-P0-CONTRACT-PROFILES-v0.1.json"
 REVIEW = B0 / "R2-3B0-HUMAN-REVIEW-CARD-v0.1.md"
 STATE = B0 / "R2-3B0-STATE.json"
+ACCEPT_RECEIPT = B0 / "R2-3B0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 STATUS = ARCH / "CANON-STATUS.json"
 UPSTREAM_STATE = R23A / "R2-3A-STATE.json"
 UPSTREAM_RECEIPT = R23A / "R2-3A-MERGE-RECEIPT-v0.1.json"
@@ -142,8 +143,14 @@ def main():
     assert profiles["execution_authority"] == "none"
 
     state = load(STATE)
+    allowed_states = {
+        "candidate_started",
+        "candidate_ready_for_human_review",
+        "human_accepted_pending_post_acceptance_ci",
+        "human_accepted_ready_for_merge",
+    }
     assert state["stage"] == STAGE
-    assert state["status"] in {"candidate_started", "candidate_ready_for_human_review"}
+    assert state["status"] in allowed_states
     assert state["upstream_dependency"]["required_status"] == "accepted_merged"
     assert state["upstream_dependency"]["merge_commit"] == upstream["merge_commit"]
     assert state["upstream_dependency"]["resolved"] is True
@@ -159,7 +166,6 @@ def main():
     assert state["n02_reunderwrite_policy"]["typed_sla_required"] is True
     assert state["n02_reunderwrite_policy"]["universal_latency_value_frozen"] is False
     assert state["human_gate"]["token"] == HUMAN_TOKEN
-    assert state["human_gate"]["decision"] == "pending"
 
     status = load(STATUS)
     assert status["stages"]["R2_3A"]["status"] == "accepted_merged"
@@ -172,8 +178,9 @@ def main():
 
     if state["status"] == "candidate_started":
         assert state["machine_qualification"] is None
+        assert state["human_gate"]["decision"] == "pending"
         assert state["next_gate"] == "R2_3B0_MACHINE_QUALIFICATION"
-    else:
+    elif state["status"] == "candidate_ready_for_human_review":
         q = state["machine_qualification"]
         assert q["workflow"] == "repository-gates"
         assert q["conclusion"] == "success"
@@ -181,7 +188,46 @@ def main():
         assert q["governance"] == "success"
         assert q["contract_architecture"] == "success"
         assert q["unit_tests"] == "success"
+        assert state["human_gate"]["decision"] == "pending"
         assert state["next_gate"] == "R2_3B0_HUMAN_REVIEW"
+    else:
+        assert ACCEPT_RECEIPT.exists(), ACCEPT_RECEIPT
+        acceptance = load(ACCEPT_RECEIPT)
+        assert acceptance["stage"] == STAGE
+        assert acceptance["decision"] == HUMAN_TOKEN
+        assert acceptance["pr_number"] == 24
+        assert acceptance["reviewed_head_sha"] == "68e0a08ccd728c376a4515c8a880e21fce233ebb"
+        assert acceptance["reviewed_ci"]["run_number"] == 137
+        assert acceptance["reviewed_ci"]["run_id"] == 32367193053
+        assert acceptance["reviewed_ci"]["conclusion"] == "success"
+        assert acceptance["reviewed_ci"]["contract_architecture"] == "success"
+        assert acceptance["boundaries_preserved"]["merge_authorized"] is False
+        assert acceptance["merge_authority"] == "not_implied_by_acceptance"
+        assert acceptance["next_gate"] == "R2_3B0_POST_ACCEPTANCE_CI"
+        assert state["human_gate"]["decision"] == HUMAN_TOKEN
+        assert state["human_gate"]["acceptance_receipt"] == "docs/architecture/r2_3b0/R2-3B0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+        assert state["human_gate"]["reviewed_head_sha"] == acceptance["reviewed_head_sha"]
+        assert state["human_gate"]["reviewed_ci_run"] == 137
+        assert state["human_review_qualification"]["run_number"] == 137
+        assert state["merge_authority"] == "not_implied_by_acceptance"
+        assert state["post_acceptance_ci_required"] is True
+        assert status["r2_3b0_acceptance_fact"]["decision"] == HUMAN_TOKEN
+        assert status["r2_3b0_acceptance_fact"]["reviewed_ci_run"] == 137
+        assert status["r2_3b0_acceptance_fact"]["merge_authority"] == "not_implied_by_acceptance"
+        if state["status"] == "human_accepted_pending_post_acceptance_ci":
+            assert state["post_acceptance_qualification"] is None
+            assert state["post_acceptance_ci_satisfied"] is False
+            assert state["next_gate"] == "R2_3B0_POST_ACCEPTANCE_CI"
+        else:
+            q = state["post_acceptance_qualification"]
+            assert q["workflow"] == "repository-gates"
+            assert q["conclusion"] == "success"
+            assert q["contracts"] == "success"
+            assert q["governance"] == "success"
+            assert q["contract_architecture"] == "success"
+            assert q["unit_tests"] == "success"
+            assert state["post_acceptance_ci_satisfied"] is True
+            assert state["next_gate"] == "R2_3B0_MERGE"
 
     review = REVIEW.read_text(encoding="utf-8")
     require_tokens(review, ["D1 | Universal contract architecture", "D11 | Governance boundary", HUMAN_TOKEN])
