@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1.0",
+  "replay_id": "RCN-REPLAY-20260820-CN-INNOVATIVE-DRUG-MRNA",
+  "status": "frozen_candidate",
+  "as_of_date": "2026-08-20",
+  "scope": {
+    "levels": ["L2", "L3"],
+    "target": "China innovative-drug / vaccine / mRNA / CXO theme"
+  },
+  "t0_discipline": {
+    "future_outcome_leakage_allowed": false,
+    "source_claims_are_primary_evidence": false,
+    "independent_primary_verification": "pending"
+  },
+  "reality": {
+    "state": "mixed",
+    "transition": "mixed_to_unchanged_at_theme_level",
+    "binding_capability": "CAP-P-01"
+  },
+  "capital": {
+    "state": "neutral_to_weak",
+    "transition": "no_broad_risk_on_confirmation",
+    "binding_capability": "CAP-R-01"
+  },
+  "narrative": {
+    "story": "mRNA oncology platform breakthrough -> domestic mRNA/vaccine platform optionality",
+    "phase": "ignition_to_acceleration",
+    "delta": "rising",
+    "delta2": "accelerating_candidate",
+    "counter_narrative": "emerging_fundamental_skepticism",
+    "binding_capability": "CAP-N-01"
+  },
+  "mapping": {
+    "nrg_state": "belief_leads_reality",
+    "narrative_distance_examples": {
+      "vaccine_mrna_chain": "near",
+      "innovative_drug_chain": "medium",
+      "cxo_chain": "farther"
+    },
+    "industrial_distance": "target_specific_pending"
+  },
+  "attribution": {
+    "dominant_driver": "narrative_led",
+    "confidence": "high_candidate"
+  },
+  "valuation": {
+    "state": "not_simple_low_valuation_repair",
+    "binding_capability": "CAP-V-01"
+  },
+  "competing_baselines": [
+    "B0_broad_beta_risk_on",
+    "B1_fundamental_leadership",
+    "B2_low_valuation_repair",
+    "B3_size_beta_momentum_theme_effect"
+  ],
+  "required_falsifiers": [
+    "narrative_distance_no_incremental_relation_after_controls",
+    "strongest_mapping_names_are_direct_economic_beneficiaries",
+    "broad_capital_shock_explains_cross_section",
+    "pre_registered_universe_removes_narrative_gradient",
+    "source_market_facts_fail_independent_verification"
+  ],
+  "non_authorization": "research_only"
+}
