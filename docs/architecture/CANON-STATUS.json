@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "projection_semantics": "deterministic_non_authoritative_projection",
   "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
   "mission": "Yuanli Investment Research Intelligence Canon",
@@ -34,62 +34,28 @@
       "merge_commit": "ef3f470f7ef0ceb2b58f392d4a2bd5a5c4c691bd",
       "merge_receipt": "docs/architecture/r2_3a/R2-3A-MERGE-RECEIPT-v0.1.json",
       "merge_authority": "AUTHORIZE_R2_3A_MERGE",
-      "post_acceptance_ci": {
-        "validated_head_sha": "5635db72301218b08323228311c1db9a8a2ab39b",
-        "workflow": "repository-gates",
-        "run_number": 133,
-        "run_id": 32365409216,
-        "conclusion": "success",
-        "contracts": "success",
-        "governance": "success",
-        "architecture": "success",
-        "cross_asset_stress": "success",
-        "unit_tests": "success"
-      }
+      "post_acceptance_ci": {"validated_head_sha": "5635db72301218b08323228311c1db9a8a2ab39b", "workflow": "repository-gates", "run_number": 133, "run_id": 32365409216, "conclusion": "success", "contracts": "success", "governance": "success", "architecture": "success", "cross_asset_stress": "success", "unit_tests": "success"}
     },
     "R2_3B0": {
-      "status": "human_accepted_ready_for_merge",
+      "status": "accepted_merged",
       "purpose": "Freeze the universal machine-callable ResearchCapability contract architecture and P0 profiles for CAP-R-01, CAP-V-01 and CAP-XS-01 without implementing or promoting them.",
       "human_gate": "ACCEPT_R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
       "human_gate_decision": "ACCEPT_R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
       "human_acceptance_receipt": "docs/architecture/r2_3b0/R2-3B0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
-      "machine_qualification": {
-        "validated_head_sha": "2fcd7b177b68fb6727c14f700a536c6956adbf70",
-        "workflow": "repository-gates",
-        "run_number": 135,
-        "run_id": 32367071813,
-        "conclusion": "success",
-        "contracts": "success",
-        "governance": "success",
-        "contract_architecture": "success",
-        "unit_tests": "success"
-      },
-      "human_review_qualification": {
-        "validated_head_sha": "68e0a08ccd728c376a4515c8a880e21fce233ebb",
-        "workflow": "repository-gates",
-        "run_number": 137,
-        "run_id": 32367193053,
-        "conclusion": "success",
-        "contracts": "success",
-        "governance": "success",
-        "contract_architecture": "success",
-        "unit_tests": "success"
-      },
-      "post_acceptance_ci": {
-        "validated_head_sha": "c90797cc65a24f5a5ba3673177bb61b1a597efbb",
-        "workflow": "repository-gates",
-        "run_number": 142,
-        "run_id": 32367673175,
-        "conclusion": "success",
-        "contracts": "success",
-        "governance": "success",
-        "contract_architecture": "success",
-        "unit_tests": "success"
-      },
-      "merge_authority": "not_implied_by_acceptance",
+      "merge_commit": "cb5ffd0f2e8e377d82c12d716e995c7b5b328e01",
+      "merge_receipt": "docs/architecture/r2_3b0/R2-3B0-MERGE-RECEIPT-v0.1.json",
+      "merge_authority": "AUTHORIZE_R2_3B0_MERGE",
+      "post_acceptance_ci": {"validated_head_sha": "cd91977b994971fbb56b48202c96c652394c2ec4", "workflow": "repository-gates", "run_number": 144, "run_id": 32367791054, "conclusion": "success", "contracts": "success", "governance": "success", "contract_architecture": "success", "unit_tests": "success"}
+    },
+    "R2_3B1": {
+      "status": "candidate_started",
+      "purpose": "Compile the accepted B0 universal ResearchCapability contract into implementation-ready specifications for CAP-R-01, CAP-V-01 and CAP-XS-01 without implementing or promoting them.",
+      "human_gate": "ACCEPT_R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+      "human_gate_decision": "pending",
+      "machine_qualification": null,
       "upstream_dependency_resolved": true
     },
-    "R3A": {"status": "paused_not_started", "reason": "await_r2_3b0_contract_architecture_and_capability_implementation_authorization"},
+    "R3A": {"status": "paused_not_started", "reason": "await_r2_3b1_specification_and_reference_implementation_authorization"},
     "R4A": {"status": "not_authorized", "purpose": "Benchmark Closure"}
   },
   "constitutional_invariants": {
@@ -116,10 +82,7 @@
     "base_os_model": "one_core_three_worlds_three_gates_one_loop",
     "human_navigation": "势信极_真价生",
     "extensions": ["r_as_machine_decomposition_of_p_capital", "L0-L4_cross_asset_authority_ladder", "two_stage_asset_router_A0_A1", "cross_asset_structural_asymmetry_source", "human_navigation_势信极_真价生", "research_portfolio_authority_split"],
-    "router": {
-      "A0_asset_form": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"],
-      "A1_pricing_archetype": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"]
-    },
+    "router": {"A0_asset_form": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"], "A1_pricing_archetype": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"]},
     "capability_priority": {"P0": ["CAP-R-01", "CAP-V-01", "CAP-XS-01"], "P1": ["CAP-N-01", "CAP-N-02", "CAP-XA-01", "CAP-XP-01", "CAP-S-01"], "supporting": ["CAP-R-02", "CAP-A-01", "CAP-P-01", "CAP-E-01"]},
     "cross_asset_stress_check": {"fixture": "docs/architecture/r2_3a/R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json", "required_targets": ["NVIDIA", "UST30Y", "COPPER", "GOLD", "USDJPY"], "purpose": "semantic_and_routing_coverage_only_not_alpha_or_market_claim_validation"},
     "x_semantics_preserved_across_os_split": true,
@@ -139,10 +102,23 @@
     "n02_reunderwrite_policy": {"typed_sla_required": true, "universal_latency_value_frozen": false, "breach_degrade_states": ["research_only", "stale"], "required_modules": ["V", "Xa", "Xp"]}
   },
   "r2_3b0_acceptance_fact": {"pr": 24, "decision": "ACCEPT_R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE", "reviewed_head": "68e0a08ccd728c376a4515c8a880e21fce233ebb", "reviewed_ci_run": 137, "merge_authority": "not_implied_by_acceptance"},
+  "r2_3b0_merge_fact": {"pr": 24, "merge_authorization": "AUTHORIZE_R2_3B0_MERGE", "pre_merge_head": "cd91977b994971fbb56b48202c96c652394c2ec4", "pre_merge_ci_run": 144, "merge_method": "squash", "merge_commit": "cb5ffd0f2e8e377d82c12d716e995c7b5b328e01"},
+  "r2_3b1_specification": {
+    "required_contract_blocks": 11,
+    "p0_capabilities": ["CAP-R-01", "CAP-V-01", "CAP-XS-01"],
+    "specification_artifacts": {
+      "master": "docs/architecture/r2_3b1/R2-3B1-P0-CAPABILITY-CONTRACT-SPECIFICATION-v0.1.md",
+      "CAP-R-01": "docs/architecture/r2_3b1/CAP-R-01-SPEC-v0.1.json",
+      "CAP-V-01": "docs/architecture/r2_3b1/CAP-V-01-SPEC-v0.1.json",
+      "CAP-XS-01": "docs/architecture/r2_3b1/CAP-XS-01-SPEC-v0.1.json"
+    },
+    "implementation_sequence_after_acceptance": ["B2-R", "B2-V", "B2-XS", "joint_cross_asset_shadow", "benchmark_ablation"],
+    "implementation_authorized": false
+  },
   "admission": {"evidence": "not_authorized", "outcome": "not_authorized", "rsi_promotion": "not_authorized"},
   "r2_1_merge_fact": {"pr": 20, "merge_commit": "19c2088231edde3bf5f8a4c70051c2f6506625db", "post_acceptance_ci_run": 89},
   "r2_2_merge_fact": {"pr": 21, "merge_commit": "3bccf723c301f77364c198b9a7b1282c340f5534", "post_acceptance_ci_run": 96},
   "r2_3_merge_fact": {"pr": 22, "merge_commit": "418f06200cde16173743454d506ee946bbc572fc", "merge_method": "squash", "post_acceptance_ci_run": 118},
-  "pending_gate_chain": ["R2_3B0_MERGE"],
-  "next_gate": "R2_3B0_MERGE"
+  "pending_gate_chain": ["R2_3B1_MACHINE_QUALIFICATION"],
+  "next_gate": "R2_3B1_MACHINE_QUALIFICATION"
 }
