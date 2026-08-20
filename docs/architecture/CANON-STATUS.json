@@ -41,7 +41,7 @@
       "purpose": "Research Intelligence Canon Re-foundation"
     },
     "R2_3": {
-      "status": "candidate_ready_for_human_review",
+      "status": "human_accepted_ready_for_merge",
       "purpose": "Runtime Blocker Closure",
       "authorized_scope": [
         "post_merge_status_receipt_closure",
@@ -104,5 +104,5 @@
     "merge_commit": "3bccf723c301f77364c198b9a7b1282c340f5534",
     "post_acceptance_ci_run": 96
   },
-  "next_gate": "R2_3_HUMAN_REVIEW"
+  "next_gate": "R2_3_MERGE"
 }
