@@ -90,10 +90,10 @@
     "unit_tests": "success"
   },
   "post_acceptance_qualification": {
-    "validated_head_sha": "44ec345173dd13642911af344c19238772e02989",
+    "validated_head_sha": "2848f70db7be3d7c68fc7067b189beb6827ffc1e",
     "workflow": "repository-gates",
-    "run_number": 131,
-    "run_id": 32365289516,
+    "run_number": 132,
+    "run_id": 32365349496,
     "conclusion": "success",
     "contracts": "success",
     "governance": "success",
