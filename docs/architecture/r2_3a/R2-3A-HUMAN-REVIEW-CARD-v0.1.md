@@ -1,10 +1,20 @@
 # R2.3-A Human Review Card v0.1
 
-Status: `candidate_started`
+Status: `candidate_ready_for_human_review`
 
 Stage: **R2.3-A | Yuanli Investment OS Architecture Freeze + Cross-Asset Semantic Hardening**
 
 Upstream dependency: PR #22 / R2.3 is accepted and squash-merged at `418f06200cde16173743454d506ee946bbc572fc`.
+
+## Machine qualification history
+
+The clean-refreshed candidate is fail-closed rather than validator-green by construction:
+
+- Run #120 (`32363280612`) on clean-refresh head `23ef33e28ca898838bbc038cada5609cd669a599`: **FAIL** in the new R2.3-A architecture validator because it expected literal `UST30Y` in architecture prose while exact target identifiers were actually owned by the dedicated stress fixture. All prior R0/R1/R2/R2.1/R2.2/R2.3 validators and governance passed.
+- Remediation: separated architecture semantic checks from exact cross-asset fixture checks; no historical validator was weakened.
+- Run #121 (`32363454234`) on head `6fa2fa2a57a60f5fca6c4d4420d6d37b04234640`: **SUCCESS**. Architecture validator, cross-asset stress validator, all prior contracts/unit tests and governance passed.
+
+Because recording machine qualification changes the branch head, the qualification-state commit must itself receive a fresh exact-head CI PASS before the Human Gate handoff is considered complete.
 
 ## Review purpose
 
@@ -138,7 +148,7 @@ These are candidate identities only; no Gold promotion is implied.
 
 ### D10 | Cross-Asset Stress Check
 
-The architecture must route five deliberately different fixtures through the same human grammar without collapsing their physics:
+The architecture routes five deliberately different fixtures through the same human grammar without collapsing their physics:
 
 - NVIDIA
 - UST30Y
@@ -146,7 +156,7 @@ The architecture must route five deliberately different fixtures through the sam
 - Gold
 - USDJPY
 
-The fixture tests semantic/routing coverage only. It does not claim current market attractiveness or historical alpha.
+Run #121 validated the deterministic stress fixture. The fixture tests semantic/routing coverage only; it does not claim current market attractiveness or historical alpha.
 
 Machine fixture:
 
@@ -169,17 +179,9 @@ Reject if any of the following appears:
 - Research OS can output recommended portfolio weights or live actions;
 - cross-asset stress validation is replaced by prose assertion only.
 
-## Machine qualification requirement
+## Human Gate
 
-Before this Human Gate becomes active, exact-head CI must pass:
-
-- deterministic `CANON-STATUS` projection check;
-- R2.3 upstream merge-receipt validation;
-- R2.3-A architecture validator;
-- cross-asset stress validator;
-- existing repository/governance validators.
-
-## Proposed Human Gate token
+After the qualification-state exact-head CI passes, the active Human Gate is:
 
 `ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE`
 
