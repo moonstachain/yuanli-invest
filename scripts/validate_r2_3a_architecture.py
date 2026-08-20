@@ -112,13 +112,16 @@ def main():
         "Two-Stage Asset Router",
         "Asset form is not pricing model",
         "CAP-XS-01 | Structural Asymmetry Source Mapper",
-        "NVIDIA / equity-growth-control-point",
-        "UST30Y",
-        "Copper",
-        "Gold",
-        "USDJPY",
+        "Cross-Asset Stress Check",
+        "R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json",
         "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
     ])
+
+    # Exact target identifiers and routing families belong to the dedicated
+    # cross-asset stress validator, not this architecture-document token check.
+    stress = load(STRESS)
+    assert stress["test_type"] == "architecture_semantic_routing_fixture"
+    assert len(stress["cases"]) == 5
 
     data = load(CANDIDATES)
     assert data["stage"] == "R2.3-A"
