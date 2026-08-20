@@ -1,0 +1,76 @@
+{
+  "schema_version": "0.1.0",
+  "id": "CAP-RCN-01",
+  "name": "Reality-Capital-Narrative Market Driver Attribution",
+  "status": "candidate",
+  "stage": "RCN0",
+  "issue": 26,
+  "stable_question": "What is currently doing the pricing at the market/theme/value-pool level: Reality, Capital, Narrative, or a coupled regime?",
+  "scope": {
+    "primary_levels": ["L0", "L1", "L2", "L3"],
+    "l4_role": "validation_or_falsification_only"
+  },
+  "semantic_bindings": {
+    "reality": {
+      "canonical_parent": "P.asset",
+      "required_capability": "CAP-P-01"
+    },
+    "capital": {
+      "canonical_parent": "P.capital",
+      "required_capability": "CAP-R-01"
+    },
+    "narrative": {
+      "canonical_parent": "N",
+      "required_capability": "CAP-N-01"
+    },
+    "valuation": {
+      "canonical_parent": "V",
+      "required_capability": "CAP-V-01"
+    }
+  },
+  "driver_labels": [
+    "reality_led",
+    "capital_led",
+    "narrative_led",
+    "triple_resonance",
+    "mixed_rotation",
+    "unresolved"
+  ],
+  "mapping_state": {
+    "narrative_distance": ["near", "medium", "far", "unknown"],
+    "industrial_distance": ["near", "medium", "far", "unknown"],
+    "nrg_state": [
+      "reality_leads_belief",
+      "coupled_confirmation",
+      "belief_leads_reality",
+      "divergent_or_unclear"
+    ]
+  },
+  "invariants": [
+    "Narrative strength is not truth.",
+    "Attention and price appreciation do not establish Reality.",
+    "Narrative Mapping != Industrial Validation.",
+    "No scalar RCN score is canonical.",
+    "Lower-level truth does not imply higher-level authorization.",
+    "RCN attribution is research state diagnosis, not trading authority."
+  ],
+  "shadow_dependencies": [
+    "CAP-R-01",
+    "CAP-P-01",
+    "CAP-N-01",
+    "CAP-V-01"
+  ],
+  "supporting_dependencies": [
+    "CAP-R-02",
+    "CAP-E-01",
+    "CAP-N-02"
+  ],
+  "first_replay": {
+    "id": "RCN-REPLAY-20260820-CN-INNOVATIVE-DRUG-MRNA",
+    "status": "gold_replay_candidate_not_promoted",
+    "path": "reconstructions/rcn0/2026-08-20-cn-innovative-drug-mrna/POINT-IN-TIME-REPLAY-v0.1.md"
+  },
+  "benchmark_spec": "benchmarks/rcn0/RCN0-SHADOW-BENCHMARK-SPEC-v0.1.md",
+  "promotion_authority": "none",
+  "execution_authority": "none"
+}
