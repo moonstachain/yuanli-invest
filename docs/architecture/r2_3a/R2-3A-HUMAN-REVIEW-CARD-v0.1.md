@@ -1,26 +1,26 @@
 # R2.3-A Human Review Card v0.1
 
-Status: `candidate_ready_for_human_review`
+Status: `human_accepted_ready_for_merge`
 
 Stage: **R2.3-A | Yuanli Investment OS Architecture Freeze + Cross-Asset Semantic Hardening**
 
 Upstream dependency: PR #22 / R2.3 is accepted and squash-merged at `418f06200cde16173743454d506ee946bbc572fc`.
 
-## Machine qualification history
+Human decision: `ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE`
 
-The clean-refreshed candidate is fail-closed rather than validator-green by construction:
+Reviewed exact head: `2bc27932f9580de9b41ed7a8ed0721bcafafd788`
 
-- Run #120 (`32363280612`) on clean-refresh head `23ef33e28ca898838bbc038cada5609cd669a599`: **FAIL** in the new R2.3-A architecture validator because it expected literal `UST30Y` in architecture prose while exact target identifiers were actually owned by the dedicated stress fixture. All prior R0/R1/R2/R2.1/R2.2/R2.3 validators and governance passed.
-- Remediation: separated architecture semantic checks from exact cross-asset fixture checks; no historical validator was weakened.
-- Run #121 (`32363454234`) on head `6fa2fa2a57a60f5fca6c4d4420d6d37b04234640`: **SUCCESS**. Architecture validator, cross-asset stress validator, all prior contracts/unit tests and governance passed.
+Reviewed exact-head CI: repository-gates Run #124 (`32363617225`) = **SUCCESS**.
 
-Because recording machine qualification changes the branch head, the qualification-state commit must itself receive a fresh exact-head CI PASS before the Human Gate handoff is considered complete.
+Acceptance receipt: `docs/architecture/r2_3a/R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json`.
+
+Human Acceptance does **not** imply merge. Separate merge authorization remains required.
 
 ## Review purpose
 
 Confirm architecture and semantic universality only. This review does **not** accept benchmark results, Evidence/Outcome admission, runtime implementation, trading action, target price, recommended weight, position sizing, A9 switch or RSI promotion.
 
-## Frozen decisions to review
+## Accepted decisions
 
 ### D1 | Preserve base OS identity and freeze human front-end
 
@@ -34,7 +34,7 @@ Human front-end is compressed to:
 
 > **势 · 信 · 极｜真 · 价 · 生**
 
-Machine extensions must remain backstage.
+Machine extensions remain backstage.
 
 ### D2 | Freeze P as capital + asset reality
 
@@ -47,7 +47,7 @@ Human `P | 势` asks:
 
 `R | Regime Causal Decomposition` is a separately typed machine decomposition/context for `P.capital`.
 
-**Reject if R is introduced as a fourth human world or if a hostile regime is allowed to erase valid bottom-up truth.**
+**R is not a fourth human world, and hostile regime state does not erase valid bottom-up research truth.**
 
 ### D3 | Universalize Xs
 
@@ -55,7 +55,7 @@ Canonical X remains:
 
 > `X := (Xs, Xa, Xp)`
 
-`Xs` mother concept becomes **Structural Asymmetry Source**.
+`Xs` mother concept is **Structural Asymmetry Source**.
 
 Asset-specific implementations include:
 
@@ -67,7 +67,7 @@ Asset-specific implementations include:
 - gold/monetary asset -> Monetary Scarcity / Reserve Demand
 - derivatives -> Volatility Mispricing / Convexity
 
-Reject if Value Control Point is treated as universal cross-asset ontology.
+Value Control Point is not universal cross-asset ontology.
 
 ### D4 | Freeze two-stage router A0/A1
 
@@ -156,33 +156,28 @@ The architecture routes five deliberately different fixtures through the same hu
 - Gold
 - USDJPY
 
-Run #121 validated the deterministic stress fixture. The fixture tests semantic/routing coverage only; it does not claim current market attractiveness or historical alpha.
+The fixture tests semantic/routing coverage only. It does not claim current market attractiveness or historical alpha.
 
 Machine fixture:
 
 `docs/architecture/r2_3a/R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json`
 
-## Mandatory rejection conditions
+## Acceptance boundaries
 
-Reject if any of the following appears:
+Acceptance preserves all of the following:
 
-- a fourth human world is created for R;
-- `P.capital` and `P.asset` are collapsed into one scalar;
-- Value Control Point is universalized beyond its equity implementation role;
-- A becomes sector taxonomy instead of pricing-engine routing;
-- N becomes universally binding;
-- V becomes target-price ontology;
-- S becomes issuer quality or a stop-loss rule;
-- P/N/X/E/V/S/R are recombined into a scalar Force score;
-- Research/Portfolio split changes `X := (Xs, Xa, Xp)`;
-- lower-level research is allowed to bypass higher-level authorization;
-- Research OS can output recommended portfolio weights or live actions;
-- cross-asset stress validation is replaced by prose assertion only.
+- no fourth human world for R;
+- no scalar PNX/Force/macro score;
+- no universalization of Value Control Point beyond equity implementation;
+- no universal N binding;
+- no target-price ontology for V;
+- no issuer-quality/stop-loss substitution for S;
+- no X semantic split;
+- no Research OS recommended weights or live actions;
+- no Gold promotion, benchmark acceptance, Evidence/Outcome admission, A9 switch, RSI promotion or live execution.
 
-## Human Gate
+## Post-acceptance qualification
 
-After the qualification-state exact-head CI passes, the active Human Gate is:
+The acceptance record/state/Canon/validator head must pass a fresh exact-head repository-gates run before merge authorization can be exercised.
 
-`ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE`
-
-Human Acceptance does not imply merge.
+Current machine state sets the next governance gate to `R2_3A_MERGE`, but merge remains blocked until the external post-acceptance exact-head CI fact is SUCCESS and the owner separately authorizes merge.
