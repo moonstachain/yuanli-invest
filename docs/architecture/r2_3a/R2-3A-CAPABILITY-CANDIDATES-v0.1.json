@@ -1,0 +1,134 @@
+{
+  "schema_version": "0.2.0",
+  "stage": "R2.3-A",
+  "status": "candidate_started_cross_asset_hardening",
+  "purpose": "Freeze cross-asset stable research-question identities and implementation priority without promoting capabilities.",
+  "base_dependency": {
+    "pr": 22,
+    "status": "accepted_merged",
+    "merge_commit": "418f06200cde16173743454d506ee946bbc572fc"
+  },
+  "invariants": [
+    "Claim Authority <= Evidence Authority",
+    "R is a typed machine decomposition/context for P.capital, not a fourth human world.",
+    "Research state is multidimensional; scalar Force/PNX/macro scores are not canonical.",
+    "Lower-level truth does not imply higher-level authorization.",
+    "Asset form is not pricing model.",
+    "Xs is Structural Asymmetry Source; Value Control Point is an equity-specialized implementation.",
+    "Target price and recommended position size are outside Research OS authority."
+  ],
+  "priorities": {
+    "P0": ["CAP-R-01", "CAP-V-01", "CAP-XS-01"],
+    "P1": ["CAP-N-01", "CAP-N-02", "CAP-XA-01", "CAP-XP-01", "CAP-S-01"],
+    "supporting": ["CAP-R-02", "CAP-A-01", "CAP-P-01", "CAP-E-01"]
+  },
+  "candidates": [
+    {
+      "id": "CAP-R-01",
+      "name": "Regime Causal Decomposition",
+      "priority": "P0",
+      "stable_question": "What causal capital regime currently governs discount rates, risk appetite, funding conditions and cross-asset capital allocation?",
+      "semantic_parent": "P.capital",
+      "minimum_state": ["growth", "inflation", "liquidity", "risk_appetite", "term_premium", "funding_stress", "policy_reaction_function"],
+      "hard_boundary": "R is not a fourth human world; no single yield level or scalar macro score can define the regime."
+    },
+    {
+      "id": "CAP-V-01",
+      "name": "Price-Implied Expectations",
+      "priority": "P0",
+      "stable_question": "What future state or operating assumptions are already embedded in current price?",
+      "algorithm_families": ["reverse_dcf", "implied_policy_path", "futures_curve", "forward_carry", "real_rate_monetary_premium", "implied_volatility_surface", "multiple_sanity_check"],
+      "hard_boundary": "Target price and upside percentage are not canonical outputs."
+    },
+    {
+      "id": "CAP-XS-01",
+      "name": "Structural Asymmetry Source Mapper",
+      "priority": "P0",
+      "stable_question": "Why can value, scarcity, duration, carry, volatility or risk become disproportionately concentrated in this research target?",
+      "asset_implementations": {
+        "equity": "value_control_point",
+        "commodity": "scarcity_supply_elasticity",
+        "sovereign_rates": "duration_convexity_term_premium",
+        "credit": "default_spread_recovery_refinancing",
+        "FX": "policy_divergence_carry_flow",
+        "monetary_asset": "monetary_scarcity_reserve_demand",
+        "derivative": "volatility_mispricing_convexity",
+        "crypto": "network_scarcity_liquidity_reflexivity"
+      },
+      "hard_boundary": "Value Control Point is an equity-specialized implementation, not the universal ontology of Xs."
+    },
+    {
+      "id": "CAP-N-01",
+      "name": "Narrative / Expectation Regime",
+      "priority": "P1",
+      "stable_question": "Which future assumption is the market currently paying for, and how is that expectation diffusing, crowding or weakening?",
+      "chain": ["story", "diffusion", "expectation_translation", "crowding", "regime_break"],
+      "hard_boundary": "Narrative strength is not truth; N authority is routed by pricing archetype."
+    },
+    {
+      "id": "CAP-N-02",
+      "name": "Expectation Regime Break Detector",
+      "priority": "P1",
+      "stable_question": "Has the market's dominant future assumption begun to fracture?",
+      "hard_boundary": "A break triggers bounded V/Xa/Xp re-underwriting; it is not an automatic sell signal."
+    },
+    {
+      "id": "CAP-XA-01",
+      "name": "Conditional Tail State",
+      "priority": "P1",
+      "stable_question": "How are conditional right- and left-tail states changing under the current reality/expectation regime?",
+      "hard_boundary": "Xa is not issuer quality and not a fake precision probability-of-being-right score."
+    },
+    {
+      "id": "CAP-XP-01",
+      "name": "Payoff Geometry",
+      "priority": "P1",
+      "stable_question": "How does the chosen instrument convert the underlying distribution into investor payoff?",
+      "minimum_state": ["right_tail_capture", "left_tail_damage", "premium_or_carry", "liquidity", "path_dependency"],
+      "hard_boundary": "Underlying right-tail potential does not imply attractive instrument payoff."
+    },
+    {
+      "id": "CAP-S-01",
+      "name": "Portfolio Survival Gate",
+      "priority": "P1",
+      "stable_question": "If the thesis is wrong or correlations jump, does the portfolio retain the right to continue compounding?",
+      "minimum_state": ["concentration", "stress_correlation", "liquidity", "leverage", "funding", "gap_risk", "path_dependency"],
+      "hard_boundary": "Issuer durability and stop-loss rules are not definitions of portfolio survival."
+    },
+    {
+      "id": "CAP-R-02",
+      "name": "Internal vs External Rotation Detector",
+      "priority": "supporting",
+      "stable_question": "Is capital rotating within a theme/asset class or leaving the risk complex entirely?",
+      "hard_boundary": "Within-theme diversification is not diversification during external de-risking."
+    },
+    {
+      "id": "CAP-A-01",
+      "name": "Two-Stage Asset / Pricing Router",
+      "priority": "supporting",
+      "stable_question": "What is the asset form, which pricing archetype is binding, and which model family should be called?",
+      "asset_forms": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"],
+      "pricing_archetypes": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"],
+      "hard_boundary": "Asset form is not pricing model; routing follows dominant pricing mechanism, not sector name."
+    },
+    {
+      "id": "CAP-P-01",
+      "name": "Reality State Transition",
+      "priority": "supporting",
+      "stable_question": "Is the relevant capital or asset-specific reality actually changing?",
+      "subspaces": ["P.capital", "P.asset"],
+      "hard_boundary": "Attention and price appreciation do not establish P."
+    },
+    {
+      "id": "CAP-E-01",
+      "name": "Evidence Authority Graph",
+      "priority": "supporting",
+      "stable_question": "What is known, inferred or merely claimed, and what would falsify each material claim?",
+      "minimum_fields": ["source", "as_of", "claim_type", "evidence_authority", "confidence", "falsifier", "revision_rule"],
+      "hard_boundary": "Practitioner claims generate hypotheses but do not self-promote to empirical evidence."
+    }
+  ],
+  "promotion_authority": "none",
+  "execution_authority": "none",
+  "human_gate_token": "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE"
+}

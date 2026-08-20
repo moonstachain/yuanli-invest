@@ -1,0 +1,109 @@
+{
+  "schema_version": "0.4.0",
+  "stage": "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+  "status": "human_accepted_ready_for_merge",
+  "purpose": "Freeze cross-asset Yuanli Golden Triangle semantics, P.capital/P.asset relation, universal Xs, two-stage routing, L0-L4 authority, Research/Portfolio governance split, and 12 candidate capability identities.",
+  "base_os_model": "one_core_three_worlds_three_gates_one_loop",
+  "human_navigation": "势信极_真价生",
+  "architecture_extensions": [
+    "r_as_machine_decomposition_of_p_capital",
+    "L0-L4_cross_asset_authority_ladder",
+    "two_stage_asset_router_A0_A1",
+    "cross_asset_structural_asymmetry_source",
+    "human_navigation_势信极_真价生",
+    "research_portfolio_authority_split"
+  ],
+  "upstream_dependency": {
+    "pr": 22,
+    "required_stage": "R2_3_RUNTIME_BLOCKER_CLOSURE",
+    "required_status": "accepted_merged",
+    "merge_commit": "418f06200cde16173743454d506ee946bbc572fc",
+    "merge_receipt": "docs/architecture/r2_3/R2-3-MERGE-RECEIPT-v0.1.json",
+    "resolved": true
+  },
+  "human_gate": {
+    "token": "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+    "decision": "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+    "accepted_at": "2026-08-20T08:38:00-03:00",
+    "acceptance_receipt": "docs/architecture/r2_3a/R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+    "reviewed_head_sha": "2bc27932f9580de9b41ed7a8ed0721bcafafd788",
+    "reviewed_ci_run": 124,
+    "acceptance_does_not_imply_merge": true
+  },
+  "constitutional_invariants": {
+    "x_semantics": "X := (Xs, Xa, Xp)",
+    "xs_mother_concept": "Structural Asymmetry Source",
+    "value_control_point_role": "equity_specialized_implementation",
+    "r_role": "typed_machine_decomposition_and_context_for_P.capital_not_fourth_human_world",
+    "p_human_subspaces": ["P.capital", "P.asset"],
+    "asset_form_is_not_pricing_model": true,
+    "research_portfolio_split_is_governance_only": true,
+    "research_portfolio_split_does_not_change_x_semantics": true,
+    "authority_ladder_invariant": "Lower-level truth does not imply higher-level authorization",
+    "scalar_score_prohibited": true
+  },
+  "router": {
+    "A0_asset_form": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"],
+    "A1_pricing_archetype": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"]
+  },
+  "capability_priority": {
+    "P0": ["CAP-R-01", "CAP-V-01", "CAP-XS-01"],
+    "P1": ["CAP-N-01", "CAP-N-02", "CAP-XA-01", "CAP-XP-01", "CAP-S-01"],
+    "supporting": ["CAP-R-02", "CAP-A-01", "CAP-P-01", "CAP-E-01"]
+  },
+  "cross_asset_stress_check": {
+    "fixture": "docs/architecture/r2_3a/R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json",
+    "required_targets": ["NVIDIA", "UST30Y", "COPPER", "GOLD", "USDJPY"],
+    "purpose": "semantic_and_routing_coverage_only_not_alpha_or_market_claim_validation"
+  },
+  "r2_3b_contract_requirements": {
+    "n02_reunderwrite_latency_policy_required": true,
+    "n02_latency_breach_default": "research_only_or_stale",
+    "latency_value_not_frozen_in_architecture": true
+  },
+  "machine_qualification": {
+    "validated_head_sha": "6fa2fa2a57a60f5fca6c4d4420d6d37b04234640",
+    "workflow": "repository-gates",
+    "run_number": 121,
+    "run_id": 32363454234,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "cross_asset_stress": "success",
+    "failure_receipt": {
+      "run_number": 120,
+      "run_id": 32363280612,
+      "cause": "architecture validator expected literal UST30Y in prose while the dedicated stress fixture owned exact target identifiers",
+      "remediation": "separated architecture semantic checks from exact cross-asset fixture checks without weakening prior validators"
+    }
+  },
+  "human_review_qualification": {
+    "validated_head_sha": "2bc27932f9580de9b41ed7a8ed0721bcafafd788",
+    "workflow": "repository-gates",
+    "run_number": 124,
+    "run_id": 32363617225,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "architecture": "success",
+    "cross_asset_stress": "success",
+    "unit_tests": "success"
+  },
+  "post_acceptance_qualification": {
+    "validated_head_sha": "2848f70db7be3d7c68fc7067b189beb6827ffc1e",
+    "workflow": "repository-gates",
+    "run_number": 132,
+    "run_id": 32365349496,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "architecture": "success",
+    "cross_asset_stress": "success",
+    "unit_tests": "success"
+  },
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci_required": true,
+  "post_acceptance_ci_satisfied": true,
+  "local_human_gate": "R2_3A_HUMAN_REVIEW",
+  "next_gate": "R2_3A_MERGE"
+}
