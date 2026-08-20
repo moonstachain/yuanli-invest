@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.3.0",
+  "schema_version": "0.4.0",
   "stage": "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
-  "status": "candidate_ready_for_human_review",
+  "status": "human_accepted_ready_for_merge",
   "purpose": "Freeze cross-asset Yuanli Golden Triangle semantics, P.capital/P.asset relation, universal Xs, two-stage routing, L0-L4 authority, Research/Portfolio governance split, and 12 candidate capability identities.",
   "base_os_model": "one_core_three_worlds_three_gates_one_loop",
   "human_navigation": "势信极_真价生",
@@ -23,7 +23,11 @@
   },
   "human_gate": {
     "token": "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
-    "decision": "pending",
+    "decision": "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+    "accepted_at": "2026-08-20T08:38:00-03:00",
+    "acceptance_receipt": "docs/architecture/r2_3a/R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+    "reviewed_head_sha": "2bc27932f9580de9b41ed7a8ed0721bcafafd788",
+    "reviewed_ci_run": 124,
     "acceptance_does_not_imply_merge": true
   },
   "constitutional_invariants": {
@@ -73,6 +77,20 @@
       "remediation": "separated architecture semantic checks from exact cross-asset fixture checks without weakening prior validators"
     }
   },
+  "human_review_qualification": {
+    "validated_head_sha": "2bc27932f9580de9b41ed7a8ed0721bcafafd788",
+    "workflow": "repository-gates",
+    "run_number": 124,
+    "run_id": 32363617225,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "architecture": "success",
+    "cross_asset_stress": "success",
+    "unit_tests": "success"
+  },
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci_required": true,
   "local_human_gate": "R2_3A_HUMAN_REVIEW",
-  "next_gate": "R2_3A_HUMAN_REVIEW"
+  "next_gate": "R2_3A_MERGE"
 }
