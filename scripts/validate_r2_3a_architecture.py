@@ -13,6 +13,7 @@ CANDIDATES = ARCH / "R2-3A-CAPABILITY-CANDIDATES-v0.1.json"
 REVIEW = ARCH / "R2-3A-HUMAN-REVIEW-CARD-v0.1.md"
 STATE = ARCH / "R2-3A-STATE.json"
 STRESS = ARCH / "R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json"
+ACCEPT_RECEIPT = ARCH / "R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 STATUS = ARCH_ROOT / "CANON-STATUS.json"
 R23_STATE = ARCH_ROOT / "r2_3" / "R2-3-STATE.json"
 R23_RECEIPT = ARCH_ROOT / "r2_3" / "R2-3-MERGE-RECEIPT-v0.1.json"
@@ -22,6 +23,7 @@ P1 = ["CAP-N-01", "CAP-N-02", "CAP-XA-01", "CAP-XP-01", "CAP-S-01"]
 SUPPORTING = ["CAP-R-02", "CAP-A-01", "CAP-P-01", "CAP-E-01"]
 ALL = P0 + P1 + SUPPORTING
 BASE_OS_MODEL = "one_core_three_worlds_three_gates_one_loop"
+ACCEPT_TOKEN = "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE"
 EXPECTED_EXTENSIONS = [
     "r_as_machine_decomposition_of_p_capital",
     "L0-L4_cross_asset_authority_ladder",
@@ -52,50 +54,40 @@ def assert_no_scalar_score_regression(corpus: str):
 
 
 def main():
-    for path in [FREEZE, CANDIDATES, REVIEW, STATE, STRESS, STATUS, R23_RECEIPT]:
+    for path in [FREEZE, CANDIDATES, REVIEW, STATE, STRESS, ACCEPT_RECEIPT, STATUS, R23_RECEIPT]:
         assert path.exists(), path
 
     r23 = load(R23_STATE)
-    receipt = load(R23_RECEIPT)
+    upstream_receipt = load(R23_RECEIPT)
     assert r23["status"] == "accepted_merged"
     assert r23["merge_commit"] == "418f06200cde16173743454d506ee946bbc572fc"
-    assert receipt["merge_authorization"] == "AUTHORIZE_R2_3_MERGE"
-    assert receipt["merge_commit_sha"] == r23["merge_commit"]
-    assert receipt["post_acceptance_ci"]["run_number"] == 118
+    assert upstream_receipt["merge_authorization"] == "AUTHORIZE_R2_3_MERGE"
+    assert upstream_receipt["merge_commit_sha"] == r23["merge_commit"]
+    assert upstream_receipt["post_acceptance_ci"]["run_number"] == 118
 
     constitution = (DOCS / "CONSTITUTION.md").read_text(encoding="utf-8")
     require_tokens(constitution, [
         "Lifetime Right-Tail Capture under Survival Constraints",
-        "one_core_three_worlds_three_gates_one_loop",
+        BASE_OS_MODEL,
         "势 · 信 · 极｜真 · 价 · 生",
-        "P.capital",
-        "P.asset",
-        "R is not a fourth human world",
+        "P.capital", "P.asset", "R is not a fourth human world",
         "Structural Asymmetry Source",
         "Value Control Point is an equity-specialized implementation",
         "X := (Xs, Xa, Xp)",
         "Claim Authority <= Evidence Authority",
         "Asset form is not pricing model",
         "Lower-level truth does not imply higher-level authorization",
-        "A0 | asset_form",
-        "A1 | pricing_archetype",
-        "Price-Implied Expectations",
-        "governance-authority split only",
-        "ResearchCapability",
+        "A0 | asset_form", "A1 | pricing_archetype",
+        "Price-Implied Expectations", "governance-authority split only", "ResearchCapability",
     ])
     assert "X := (Xs, Xa)" not in constitution
 
     graph = (DOCS / "RESEARCH-DEPENDENCY-GRAPH.md").read_text(encoding="utf-8")
     require_tokens(graph, [
-        "P.capital(R) + P.asset",
-        "R is not a fourth human world",
-        "L0-L4 | Cross-Asset Authority Ladder",
-        "A0 | asset_form",
-        "A1 | pricing_archetype",
-        "Structural Asymmetry Source",
-        "Value Control Point is therefore an equity implementation",
-        "X := (Xs, Xa, Xp)",
-        "research_only / stale",
+        "P.capital(R) + P.asset", "R is not a fourth human world",
+        "L0-L4 | Cross-Asset Authority Ladder", "A0 | asset_form", "A1 | pricing_archetype",
+        "Structural Asymmetry Source", "Value Control Point is therefore an equity implementation",
+        "X := (Xs, Xa, Xp)", "research_only / stale",
     ])
 
     seven = (DOCS / "SEVEN-QUESTIONS.md").read_text(encoding="utf-8")
@@ -103,22 +95,12 @@ def main():
 
     freeze = FREEZE.read_text(encoding="utf-8")
     require_tokens(freeze, [
-        "candidate_started_cross_asset_hardening",
-        BASE_OS_MODEL,
-        "P.capital",
-        "P.asset",
-        "R is not a fourth human world",
-        "Structural Asymmetry Source",
-        "Two-Stage Asset Router",
-        "Asset form is not pricing model",
-        "CAP-XS-01 | Structural Asymmetry Source Mapper",
-        "Cross-Asset Stress Check",
-        "R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json",
-        "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+        "candidate_started_cross_asset_hardening", BASE_OS_MODEL, "P.capital", "P.asset",
+        "R is not a fourth human world", "Structural Asymmetry Source", "Two-Stage Asset Router",
+        "Asset form is not pricing model", "CAP-XS-01 | Structural Asymmetry Source Mapper",
+        "Cross-Asset Stress Check", "R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json", ACCEPT_TOKEN,
     ])
 
-    # Exact target identifiers and routing families belong to the dedicated
-    # cross-asset stress validator, not this architecture-document token check.
     stress = load(STRESS)
     assert stress["test_type"] == "architecture_semantic_routing_fixture"
     assert len(stress["cases"]) == 5
@@ -141,7 +123,7 @@ def main():
 
     state = load(STATE)
     assert state["stage"] == "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE"
-    assert state["status"] in {"candidate_started", "candidate_ready_for_human_review"}
+    assert state["status"] in {"candidate_started", "candidate_ready_for_human_review", "human_accepted_ready_for_merge"}
     assert state["base_os_model"] == BASE_OS_MODEL
     assert state["human_navigation"] == "势信极_真价生"
     assert state["architecture_extensions"] == EXPECTED_EXTENSIONS
@@ -170,13 +152,38 @@ def main():
     if state["status"] == "candidate_started":
         assert state["machine_qualification"] is None
         assert state["next_gate"] == "R2_3A_MACHINE_QUALIFICATION"
-    else:
+    elif state["status"] == "candidate_ready_for_human_review":
         q = state["machine_qualification"]
         assert q["conclusion"] == "success"
         assert q["contracts"] == "success"
         assert q["governance"] == "success"
         assert q["cross_asset_stress"] == "success"
         assert state["next_gate"] == "R2_3A_HUMAN_REVIEW"
+    else:
+        acceptance = load(ACCEPT_RECEIPT)
+        assert acceptance["stage"] == "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE"
+        assert acceptance["decision"] == ACCEPT_TOKEN
+        assert acceptance["pr_number"] == 23
+        assert acceptance["reviewed_head_sha"] == "2bc27932f9580de9b41ed7a8ed0721bcafafd788"
+        assert acceptance["reviewed_ci"]["run_number"] == 124
+        assert acceptance["reviewed_ci"]["run_id"] == 32363617225
+        assert acceptance["reviewed_ci"]["conclusion"] == "success"
+        assert acceptance["reviewed_ci"]["architecture"] == "success"
+        assert acceptance["reviewed_ci"]["cross_asset_stress"] == "success"
+        assert acceptance["boundaries_preserved"]["merge_authorized"] is False
+        assert acceptance["merge_authority"] == "not_implied_by_acceptance"
+        assert acceptance["next_gate"] == "R2_3A_POST_ACCEPTANCE_CI"
+        assert state["human_gate"]["decision"] == ACCEPT_TOKEN
+        assert state["human_gate"]["acceptance_receipt"] == "docs/architecture/r2_3a/R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+        assert state["human_gate"]["reviewed_head_sha"] == acceptance["reviewed_head_sha"]
+        assert state["human_gate"]["reviewed_ci_run"] == 124
+        assert state["human_review_qualification"]["run_number"] == 124
+        assert state["merge_authority"] == "not_implied_by_acceptance"
+        assert state["post_acceptance_ci_required"] is True
+        assert state["next_gate"] == "R2_3A_MERGE"
+        assert status["r2_3a_acceptance_fact"]["decision"] == ACCEPT_TOKEN
+        assert status["r2_3a_acceptance_fact"]["reviewed_ci_run"] == 124
+        assert status["r2_3a_acceptance_fact"]["merge_authority"] == "not_implied_by_acceptance"
 
     corpus = "\n".join([constitution, graph, seven, freeze, REVIEW.read_text(encoding="utf-8")])
     assert_no_scalar_score_regression(corpus)
