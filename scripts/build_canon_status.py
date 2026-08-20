@@ -164,14 +164,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    expected = render(build())
+    expected = build()
     if args.check:
-        actual = OUT.read_text(encoding="utf-8")
+        actual = load(OUT)
         if actual != expected:
             raise SystemExit("CANON-STATUS projection drift: run python scripts/build_canon_status.py")
         print("CANON-STATUS projection: PASS")
         return
-    OUT.write_text(expected, encoding="utf-8")
+    OUT.write_text(render(expected), encoding="utf-8")
 
 
 if __name__ == "__main__":
