@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.6.0",
+  "schema_version": "0.8.0",
   "projection_semantics": "deterministic_non_authoritative_projection",
   "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
   "mission": "Yuanli Investment Research Intelligence Canon",
@@ -8,6 +8,20 @@
   "center_object": "ResearchCapability",
   "canonical_state": "ResearchStateVector",
   "os_model": "one_core_three_worlds_three_gates_one_loop",
+  "human_navigation": "势信极_真价生",
+  "architecture_extensions": {
+    "P": {
+      "human_subspaces": [
+        "P.capital",
+        "P.asset"
+      ]
+    },
+    "R": "typed_machine_decomposition_and_context_for_P.capital_not_fourth_human_world",
+    "authority_ladder": "L0-L4_cross_asset",
+    "asset_router": "A0_asset_form_plus_A1_pricing_archetype",
+    "Xs": "Structural_Asymmetry_Source_with_asset_specific_implementations",
+    "research_portfolio_split": "governance_authority_split_not_X_semantic_split"
+  },
   "operational_canon": {
     "repository": "moonstachain/quant-workspace",
     "authority": "A9",
@@ -41,17 +55,22 @@
       "purpose": "Research Intelligence Canon Re-foundation"
     },
     "R2_3": {
-      "status": "human_accepted_ready_for_merge",
+      "status": "accepted_merged",
       "purpose": "Runtime Blocker Closure",
-      "authorized_scope": [
-        "post_merge_status_receipt_closure",
-        "v_capability_successor",
-        "s_capability_successor"
-      ]
+      "merge_commit": "418f06200cde16173743454d506ee946bbc572fc",
+      "merge_receipt": "docs/architecture/r2_3/R2-3-MERGE-RECEIPT-v0.1.json"
+    },
+    "R2_3A": {
+      "status": "candidate_started",
+      "purpose": "Freeze cross-asset Yuanli Golden Triangle semantics, P.capital/P.asset relation, universal Xs, two-stage routing, L0-L4 authority, Research/Portfolio governance split, and 12 candidate capability identities.",
+      "human_gate": "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+      "human_gate_decision": "pending",
+      "upstream_dependency_resolved": true,
+      "machine_qualification": null
     },
     "R3A": {
       "status": "paused_not_started",
-      "reason": "await_r2_3_human_gate_and_merge"
+      "reason": "await_r2_3a_human_gate_and_merge"
     },
     "R4A": {
       "status": "not_authorized",
@@ -60,13 +79,15 @@
   },
   "constitutional_invariants": {
     "x_semantics": "X := (Xs, Xa, Xp)",
-    "scalar_pnx_score": "prohibited",
-    "force_classification": "projection_not_canonical_state",
+    "xs_mother_concept": "Structural Asymmetry Source",
+    "value_control_point_role": "equity_specialized_implementation",
+    "r_is_fourth_human_world": false,
+    "asset_form_is_not_pricing_model": true,
+    "scalar_pnx_force_macro_score": "prohibited",
     "evidence_role": "horizontal_claim_control_plane",
-    "provider_independence": true,
     "claim_authority_cannot_exceed_evidence_authority": true,
-    "dependency_graph": "P -> Xs -> N -> V -> Xa -> Xp -> S",
-    "dependency_graph_is_universal_causal_law": false,
+    "lower_level_truth_does_not_imply_higher_level_authorization": true,
+    "research_portfolio_split_changes_x_semantics": false,
     "ledger_law": "receipt_is_ledger_status_is_projection",
     "live_execution": "unavailable_by_design"
   },
@@ -84,10 +105,70 @@
     },
     "other_r2_gold_identities_mutated": false
   },
-  "legacy_lane_reconciliation": {
-    "M1_2": "runtime_state_contract_successor_scope",
-    "Q1": "wind_provider_qualification_successor_scope",
-    "A6": "audit_historical_replay_lane"
+  "r2_3a_architecture": {
+    "base_os_model": "one_core_three_worlds_three_gates_one_loop",
+    "human_navigation": "势信极_真价生",
+    "extensions": [
+      "r_as_machine_decomposition_of_p_capital",
+      "L0-L4_cross_asset_authority_ladder",
+      "two_stage_asset_router_A0_A1",
+      "cross_asset_structural_asymmetry_source",
+      "human_navigation_势信极_真价生",
+      "research_portfolio_authority_split"
+    ],
+    "router": {
+      "A0_asset_form": [
+        "equity",
+        "sovereign_rates",
+        "credit",
+        "commodity",
+        "FX",
+        "monetary_asset",
+        "crypto",
+        "derivative"
+      ],
+      "A1_pricing_archetype": [
+        "growth",
+        "compounder",
+        "cyclical",
+        "duration",
+        "scarcity",
+        "event_optionality"
+      ]
+    },
+    "capability_priority": {
+      "P0": [
+        "CAP-R-01",
+        "CAP-V-01",
+        "CAP-XS-01"
+      ],
+      "P1": [
+        "CAP-N-01",
+        "CAP-N-02",
+        "CAP-XA-01",
+        "CAP-XP-01",
+        "CAP-S-01"
+      ],
+      "supporting": [
+        "CAP-R-02",
+        "CAP-A-01",
+        "CAP-P-01",
+        "CAP-E-01"
+      ]
+    },
+    "cross_asset_stress_check": {
+      "fixture": "docs/architecture/r2_3a/R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json",
+      "required_targets": [
+        "NVIDIA",
+        "UST30Y",
+        "COPPER",
+        "GOLD",
+        "USDJPY"
+      ],
+      "purpose": "semantic_and_routing_coverage_only_not_alpha_or_market_claim_validation"
+    },
+    "x_semantics_preserved_across_os_split": true,
+    "n02_latency_policy_required_in_r2_3b": true
   },
   "admission": {
     "evidence": "not_authorized",
@@ -104,5 +185,14 @@
     "merge_commit": "3bccf723c301f77364c198b9a7b1282c340f5534",
     "post_acceptance_ci_run": 96
   },
-  "next_gate": "R2_3_MERGE"
+  "r2_3_merge_fact": {
+    "pr": 22,
+    "merge_commit": "418f06200cde16173743454d506ee946bbc572fc",
+    "merge_method": "squash",
+    "post_acceptance_ci_run": 118
+  },
+  "pending_gate_chain": [
+    "R2_3A_MACHINE_QUALIFICATION"
+  ],
+  "next_gate": "R2_3A_MACHINE_QUALIFICATION"
 }
