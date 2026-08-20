@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.0",
   "stage": "R2_3_RUNTIME_BLOCKER_CLOSURE",
-  "status": "candidate_ready_for_human_review",
+  "status": "human_accepted_ready_for_merge",
   "base_main_commit": "3bccf723c301f77364c198b9a7b1282c340f5534",
   "authorized_scope": [
     "post_merge_status_receipt_closure",
@@ -48,7 +48,21 @@
     "contracts": "success",
     "governance": "success"
   },
+  "human_review_qualification": {
+    "validated_head_sha": "78849a13dfc29ced99bba95e45e6859ca9c7c66c",
+    "workflow": "repository-gates",
+    "run_number": 102,
+    "run_id": 32237545754,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success"
+  },
+  "human_gate_decision": "ACCEPT_R2_3_RUNTIME_BLOCKER_CLOSURE",
+  "human_accepted_at": "2026-08-20T07:42:00-03:00",
+  "human_acceptance_receipt": "docs/architecture/r2_3/R2-3-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci_required": true,
   "r3a_authority": "paused_until_r2_3_merge",
   "r4a_authority": "not_authorized",
-  "next_gate": "R2_3_HUMAN_REVIEW"
+  "next_gate": "R2_3_MERGE"
 }
