@@ -1,0 +1,53 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+  "decision": "ACCEPT_R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+  "accepted_at": "2026-08-20T09:09:00-03:00",
+  "pr_number": 24,
+  "reviewed_head_sha": "68e0a08ccd728c376a4515c8a880e21fce233ebb",
+  "reviewed_ci": {
+    "workflow": "repository-gates",
+    "run_number": 137,
+    "run_id": 32367193053,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "contract_architecture": "success",
+    "unit_tests": "success"
+  },
+  "accepted_decisions": {
+    "required_contract_blocks": 11,
+    "canonical_output_root": "ResearchState",
+    "invocation_envelope_required": true,
+    "research_receipt_required": true,
+    "p0_capabilities": ["CAP-R-01", "CAP-V-01", "CAP-XS-01"],
+    "claim_authority_lte_evidence_authority": true,
+    "point_in_time_required": true,
+    "provider_independent_identity": true,
+    "asset_form_is_not_pricing_model": true,
+    "x_semantics": "X := (Xs, Xa, Xp)",
+    "scalar_master_score_prohibited": true,
+    "research_pass_implies_capital_pass": false,
+    "n02_typed_sla_required": true,
+    "n02_universal_latency_value_frozen": false,
+    "n02_latency_breach_degrade_states": ["research_only", "stale"],
+    "n02_required_reunderwrite_modules": ["V", "Xa", "Xp"]
+  },
+  "boundaries_preserved": {
+    "merge_authorized": false,
+    "capability_implementation_authorized": false,
+    "capability_promotion_authorized": false,
+    "benchmark_execution_authorized": false,
+    "wind_codex_production_runtime_authorized": false,
+    "evidence_or_outcome_admission_authorized": false,
+    "a9_operational_canon_switch": false,
+    "rsi_promotion": false,
+    "trading_action_authorized": false,
+    "target_price_authorized": false,
+    "recommended_weight_or_position_size_authorized": false,
+    "live_execution": false
+  },
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci": "required_on_acceptance_record_head",
+  "next_gate": "R2_3B0_POST_ACCEPTANCE_CI"
+}

@@ -23,9 +23,12 @@ def build():
     r23r = load(ARCH / "r2_3" / "R2-3-MERGE-RECEIPT-v0.1.json")
     r23a = load(ARCH / "r2_3a" / "R2-3A-STATE.json")
     r23ar = load(ARCH / "r2_3a" / "R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json")
+    r23am = load(ARCH / "r2_3a" / "R2-3A-MERGE-RECEIPT-v0.1.json")
+    r23b0 = load(ARCH / "r2_3b0" / "R2-3B0-STATE.json")
+    r23b0r = load(ARCH / "r2_3b0" / "R2-3B0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json")
 
     return {
-        "schema_version": "0.9.0",
+        "schema_version": "1.1.0",
         "projection_semantics": "deterministic_non_authoritative_projection",
         "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
         "mission": "Yuanli Investment Research Intelligence Canon",
@@ -58,39 +61,33 @@ def build():
                 "registry_objects": r2["registry_entry_count"],
                 "canon_entries": r2["canon_entry_count"],
             },
-            "R2_1": {
-                "status": r21["status"],
-                "merge_commit": r21["merge_commit"],
-                "merge_receipt": "docs/architecture/r2_1/R2-1-MERGE-RECEIPT-v0.1.json",
-            },
-            "R2_2": {
-                "status": r22["status"],
-                "merge_commit": r22["merge_commit"],
-                "merge_receipt": "docs/architecture/r2_2/R2-2-MERGE-RECEIPT-v0.1.json",
-                "purpose": "Research Intelligence Canon Re-foundation",
-            },
-            "R2_3": {
-                "status": r23["status"],
-                "purpose": "Runtime Blocker Closure",
-                "merge_commit": r23["merge_commit"],
-                "merge_receipt": r23["merge_receipt"],
-            },
+            "R2_1": {"status": r21["status"], "merge_commit": r21["merge_commit"], "merge_receipt": "docs/architecture/r2_1/R2-1-MERGE-RECEIPT-v0.1.json"},
+            "R2_2": {"status": r22["status"], "merge_commit": r22["merge_commit"], "merge_receipt": "docs/architecture/r2_2/R2-2-MERGE-RECEIPT-v0.1.json", "purpose": "Research Intelligence Canon Re-foundation"},
+            "R2_3": {"status": r23["status"], "purpose": "Runtime Blocker Closure", "merge_commit": r23["merge_commit"], "merge_receipt": r23["merge_receipt"]},
             "R2_3A": {
                 "status": r23a["status"],
                 "purpose": r23a["purpose"],
                 "human_gate": r23a["human_gate"]["token"],
                 "human_gate_decision": r23a["human_gate"]["decision"],
                 "human_acceptance_receipt": r23a["human_gate"]["acceptance_receipt"],
-                "human_review_qualification": r23a["human_review_qualification"],
-                "upstream_dependency_resolved": r23a["upstream_dependency"]["resolved"],
-                "machine_qualification": r23a["machine_qualification"],
+                "merge_commit": r23a["merge_commit"],
+                "merge_receipt": r23a["merge_receipt"],
                 "merge_authority": r23a["merge_authority"],
-                "post_acceptance_ci_required": r23a["post_acceptance_ci_required"],
+                "post_acceptance_ci": r23a["post_acceptance_qualification"],
             },
-            "R3A": {
-                "status": "paused_not_started",
-                "reason": "await_r2_3a_merge",
+            "R2_3B0": {
+                "status": r23b0["status"],
+                "purpose": r23b0["purpose"],
+                "human_gate": r23b0["human_gate"]["token"],
+                "human_gate_decision": r23b0["human_gate"]["decision"],
+                "human_acceptance_receipt": r23b0["human_gate"].get("acceptance_receipt"),
+                "machine_qualification": r23b0["machine_qualification"],
+                "human_review_qualification": r23b0.get("human_review_qualification"),
+                "post_acceptance_ci": r23b0.get("post_acceptance_qualification"),
+                "merge_authority": r23b0.get("merge_authority", "not_implied_by_acceptance"),
+                "upstream_dependency_resolved": r23b0["upstream_dependency"]["resolved"],
             },
+            "R3A": {"status": "paused_not_started", "reason": "await_r2_3b0_contract_architecture_and_capability_implementation_authorization"},
             "R4A": {"status": "not_authorized", "purpose": "Benchmark Closure"},
         },
         "constitutional_invariants": {
@@ -130,29 +127,38 @@ def build():
             "reviewed_ci_run": r23ar["reviewed_ci"]["run_number"],
             "merge_authority": r23ar["merge_authority"],
         },
-        "admission": {
-            "evidence": "not_authorized",
-            "outcome": "not_authorized",
-            "rsi_promotion": "not_authorized",
+        "r2_3a_merge_fact": {
+            "pr": r23am["pr_number"],
+            "merge_authorization": r23am["merge_authorization"],
+            "pre_merge_head": r23am["pre_merge_head_sha"],
+            "pre_merge_ci_run": r23am["pre_merge_ci"]["run_number"],
+            "merge_method": r23am["merge_method"],
+            "merge_commit": r23am["merge_commit_sha"],
         },
-        "r2_1_merge_fact": {
-            "pr": r21r["pr_number"],
-            "merge_commit": r21r["merge_commit_sha"],
-            "post_acceptance_ci_run": r21r["post_acceptance_ci"]["run_number"],
+        "r2_3b0_contract_architecture": {
+            "required_blocks": r23b0["contract_architecture"]["required_blocks"],
+            "canonical_output_root": r23b0["contract_architecture"]["canonical_output_root"],
+            "invocation_envelope_required": r23b0["contract_architecture"]["invocation_envelope_required"],
+            "research_receipt_required": r23b0["contract_architecture"]["research_receipt_required"],
+            "p0_capabilities": r23b0["p0_capabilities"],
+            "point_in_time_required": r23b0["constitutional_invariants"]["point_in_time_required"],
+            "provider_independent_identity": r23b0["constitutional_invariants"]["provider_independent_identity"],
+            "scalar_master_score_prohibited": r23b0["constitutional_invariants"]["scalar_master_score_prohibited"],
+            "n02_reunderwrite_policy": r23b0["n02_reunderwrite_policy"],
         },
-        "r2_2_merge_fact": {
-            "pr": r22r["pr_number"],
-            "merge_commit": r22r["merge_commit_sha"],
-            "post_acceptance_ci_run": r22r["post_acceptance_ci"]["run_number"],
+        "r2_3b0_acceptance_fact": {
+            "pr": r23b0r["pr_number"],
+            "decision": r23b0r["decision"],
+            "reviewed_head": r23b0r["reviewed_head_sha"],
+            "reviewed_ci_run": r23b0r["reviewed_ci"]["run_number"],
+            "merge_authority": r23b0r["merge_authority"],
         },
-        "r2_3_merge_fact": {
-            "pr": r23r["pr_number"],
-            "merge_commit": r23r["merge_commit_sha"],
-            "merge_method": r23r["merge_method"],
-            "post_acceptance_ci_run": r23r["post_acceptance_ci"]["run_number"],
-        },
-        "pending_gate_chain": [r23a["next_gate"]],
-        "next_gate": r23a["next_gate"],
+        "admission": {"evidence": "not_authorized", "outcome": "not_authorized", "rsi_promotion": "not_authorized"},
+        "r2_1_merge_fact": {"pr": r21r["pr_number"], "merge_commit": r21r["merge_commit_sha"], "post_acceptance_ci_run": r21r["post_acceptance_ci"]["run_number"]},
+        "r2_2_merge_fact": {"pr": r22r["pr_number"], "merge_commit": r22r["merge_commit_sha"], "post_acceptance_ci_run": r22r["post_acceptance_ci"]["run_number"]},
+        "r2_3_merge_fact": {"pr": r23r["pr_number"], "merge_commit": r23r["merge_commit_sha"], "merge_method": r23r["merge_method"], "post_acceptance_ci_run": r23r["post_acceptance_ci"]["run_number"]},
+        "pending_gate_chain": [r23b0["next_gate"]],
+        "next_gate": r23b0["next_gate"],
     }
 
 

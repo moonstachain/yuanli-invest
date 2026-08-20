@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.4.0",
+  "stage": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+  "status": "human_accepted_ready_for_merge",
+  "purpose": "Freeze the universal machine-callable ResearchCapability contract architecture and P0 profiles for CAP-R-01, CAP-V-01 and CAP-XS-01 without implementing or promoting them.",
+  "upstream_dependency": {
+    "stage": "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+    "required_status": "accepted_merged",
+    "merge_commit": "ef3f470f7ef0ceb2b58f392d4a2bd5a5c4c691bd",
+    "merge_receipt": "docs/architecture/r2_3a/R2-3A-MERGE-RECEIPT-v0.1.json",
+    "resolved": true
+  },
+  "base_os_model": "one_core_three_worlds_three_gates_one_loop",
+  "human_navigation": "势信极_真价生",
+  "contract_architecture": {
+    "schema": "docs/architecture/r2_3b0/R2-3B0-CONTRACT-SCHEMA-v0.1.json",
+    "architecture": "docs/architecture/r2_3b0/R2-3B0-CAPABILITY-CONTRACT-ARCHITECTURE-FREEZE-v0.1.md",
+    "p0_profiles": "docs/architecture/r2_3b0/R2-3B0-P0-CONTRACT-PROFILES-v0.1.json",
+    "required_blocks": 11,
+    "canonical_output_root": "ResearchState",
+    "invocation_envelope_required": true,
+    "research_receipt_required": true
+  },
+  "p0_capabilities": ["CAP-R-01", "CAP-V-01", "CAP-XS-01"],
+  "constitutional_invariants": {
+    "claim_authority_lte_evidence_authority": true,
+    "point_in_time_required": true,
+    "provider_independent_identity": true,
+    "asset_form_is_not_pricing_model": true,
+    "x_semantics": "X := (Xs, Xa, Xp)",
+    "scalar_master_score_prohibited": true,
+    "research_pass_implies_capital_pass": false,
+    "target_price_authorized": false,
+    "recommended_weight_authorized": false,
+    "trading_action_authorized": false,
+    "live_execution": false
+  },
+  "n02_reunderwrite_policy": {
+    "typed_sla_required": true,
+    "universal_latency_value_frozen": false,
+    "breach_degrade_states": ["research_only", "stale"],
+    "required_modules": ["V", "Xa", "Xp"]
+  },
+  "machine_qualification": {
+    "validated_head_sha": "2fcd7b177b68fb6727c14f700a536c6956adbf70",
+    "workflow": "repository-gates",
+    "run_number": 135,
+    "run_id": 32367071813,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "contract_architecture": "success",
+    "unit_tests": "success"
+  },
+  "human_review_qualification": {
+    "validated_head_sha": "68e0a08ccd728c376a4515c8a880e21fce233ebb",
+    "workflow": "repository-gates",
+    "run_number": 137,
+    "run_id": 32367193053,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "contract_architecture": "success",
+    "unit_tests": "success"
+  },
+  "human_gate": {
+    "token": "ACCEPT_R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+    "decision": "ACCEPT_R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+    "accepted_at": "2026-08-20T09:09:00-03:00",
+    "acceptance_receipt": "docs/architecture/r2_3b0/R2-3B0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+    "reviewed_head_sha": "68e0a08ccd728c376a4515c8a880e21fce233ebb",
+    "reviewed_ci_run": 137,
+    "acceptance_does_not_imply_merge": true
+  },
+  "post_acceptance_qualification": {
+    "validated_head_sha": "c90797cc65a24f5a5ba3673177bb61b1a597efbb",
+    "workflow": "repository-gates",
+    "run_number": 142,
+    "run_id": 32367673175,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "contract_architecture": "success",
+    "unit_tests": "success"
+  },
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci_required": true,
+  "post_acceptance_ci_satisfied": true,
+  "non_goals": {
+    "capability_implementation": false,
+    "capability_promotion": false,
+    "benchmark_execution": false,
+    "wind_codex_production_runtime": false,
+    "evidence_outcome_admission": false,
+    "a9_switch": false,
+    "rsi_promotion": false,
+    "trading_or_portfolio_action": false
+  },
+  "next_gate": "R2_3B0_MERGE"
+}

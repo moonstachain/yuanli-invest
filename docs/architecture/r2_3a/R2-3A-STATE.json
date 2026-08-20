@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.4.0",
+  "schema_version": "0.5.0",
   "stage": "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
-  "status": "human_accepted_ready_for_merge",
+  "status": "accepted_merged",
   "purpose": "Freeze cross-asset Yuanli Golden Triangle semantics, P.capital/P.asset relation, universal Xs, two-stage routing, L0-L4 authority, Research/Portfolio governance split, and 12 candidate capability identities.",
   "base_os_model": "one_core_three_worlds_three_gates_one_loop",
   "human_navigation": "势信极_真价生",
@@ -90,10 +90,10 @@
     "unit_tests": "success"
   },
   "post_acceptance_qualification": {
-    "validated_head_sha": "2848f70db7be3d7c68fc7067b189beb6827ffc1e",
+    "validated_head_sha": "5635db72301218b08323228311c1db9a8a2ab39b",
     "workflow": "repository-gates",
-    "run_number": 132,
-    "run_id": 32365349496,
+    "run_number": 133,
+    "run_id": 32365409216,
     "conclusion": "success",
     "contracts": "success",
     "governance": "success",
@@ -101,9 +101,13 @@
     "cross_asset_stress": "success",
     "unit_tests": "success"
   },
-  "merge_authority": "not_implied_by_acceptance",
+  "merge_authority": "AUTHORIZE_R2_3A_MERGE",
+  "merge_receipt": "docs/architecture/r2_3a/R2-3A-MERGE-RECEIPT-v0.1.json",
+  "merge_method": "squash",
+  "merge_commit": "ef3f470f7ef0ceb2b58f392d4a2bd5a5c4c691bd",
+  "merged_at": "2026-08-20T11:49:37Z",
   "post_acceptance_ci_required": true,
   "post_acceptance_ci_satisfied": true,
   "local_human_gate": "R2_3A_HUMAN_REVIEW",
-  "next_gate": "R2_3A_MERGE"
+  "next_gate": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE"
 }
