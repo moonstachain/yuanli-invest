@@ -32,6 +32,8 @@ jobs:
       - run: python scripts/build_canon_status.py --check
       - run: python scripts/validate_r2_2_refoundation.py
       - run: python scripts/validate_r2_3_runtime_blockers.py
+      - run: python scripts/validate_r2_3a_architecture.py
+      - run: python scripts/validate_r2_3a_cross_asset_stress.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
 
   governance:
