@@ -1,0 +1,109 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+  "identity": {
+    "capability_id": "CAP-XS-01",
+    "name": "Structural Asymmetry Source Mapper",
+    "contract_version": "0.1.0",
+    "stable_question": "Why can value, scarcity, duration, carry, volatility or risk become disproportionately concentrated in this research target?",
+    "semantic_parent": "Xs",
+    "maturity_state": "specified",
+    "owner_scope": "Research OS"
+  },
+  "scope_routing": {
+    "asset_forms": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"],
+    "pricing_archetypes": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"],
+    "authority_levels": ["L0", "L1", "L2", "L3", "L4"],
+    "router_dependencies": ["A0_asset_form", "A1_pricing_archetype"],
+    "routing_role": "select structural-asymmetry implementation family without changing X ontology"
+  },
+  "theory_causal_mechanism": {
+    "theory_ids": ["INDUSTRIAL_ORGANIZATION_VALUE_CAPTURE", "SCARCITY_SUPPLY_ELASTICITY", "DURATION_CONVEXITY", "CREDIT_LOSS_DISTRIBUTION", "INTERNATIONAL_FINANCE_CARRY_FLOW", "MONETARY_SCARCITY_RESERVES", "OPTION_CONVEXITY", "NETWORK_REFLEXIVITY"],
+    "hypothesis_ids": ["H-XS-EQUITY-CONTROL", "H-XS-COMMODITY-SCARCITY", "H-XS-RATES-DURATION", "H-XS-CREDIT-RECOVERY", "H-XS-FX-DIVERGENCE", "H-XS-GOLD-SCARCITY", "H-XS-DERIVATIVE-CONVEXITY", "H-XS-CRYPTO-NETWORK"],
+    "causal_mechanism": "Structural constraints, control points, low elasticities, contractual payoff geometry or persistent flow regimes can concentrate marginal value or risk into a small part of an asset system, creating non-linear payoff potential conditional on activation and price.",
+    "assumptions": ["asymmetry source is distinct from timing/activation", "structure can be measured or falsified", "asset implementation must match pricing physics"],
+    "competing_mechanisms": ["temporary_narrative_crowding", "pure_momentum", "liquidity_flow_without_structure", "policy_support_without_durability", "measurement_artifact"],
+    "claim_boundary": "Xs establishes a structural source only; it does not establish current activation, attractive price, instrument payoff quality or portfolio survivability."
+  },
+  "evidence": {
+    "evidence_policy": "mechanism-specific evidence graph",
+    "minimum_evidence_authority": "structural claims require auditable primary/empirical evidence appropriate to routed implementation",
+    "claim_types": ["event_fact", "mechanism_hypothesis", "expectation_interpretation", "asset_attribution"],
+    "source_requirements": ["timestamped", "PIT_available", "economic_definition_present", "structural_measure_lineage", "counterevidence_included"],
+    "as_of_required": true,
+    "point_in_time_required": true,
+    "evidence_cutoff_required": true,
+    "falsifier_required": true
+  },
+  "input": {
+    "canonical_input_fields": ["market_structure_state", "value_capture_state", "supply_demand_elasticity_state", "inventory_capacity_state", "duration_convexity_state", "credit_loss_recovery_state", "policy_divergence_state", "carry_flow_state", "monetary_scarcity_reserve_state", "volatility_surface_state", "network_liquidity_state"],
+    "economic_definitions": "routed implementation owns exact canonical fields; provider mappings remain separate adapters",
+    "units": "implementation_specific",
+    "frequency": "implementation_specific_with_PIT_alignment",
+    "publication_lag": "explicit_per_field",
+    "revision_semantics": "retain vintages and structural-definition changes",
+    "missingness_policy": "implementation_degrade_or_fail_closed",
+    "allowed_transformations": ["concentration_metrics", "elasticity_estimation", "cost_curve_mapping", "duration_convexity_decomposition", "flow_decomposition", "reserve_share_mapping", "vol_surface_decomposition", "network_concentration_mapping"]
+  },
+  "inference": {
+    "algorithm_families": ["value_control_point_graph", "scarcity_supply_elasticity_model", "duration_convexity_term_premium_map", "default_spread_recovery_refinancing_map", "policy_divergence_carry_flow_map", "monetary_scarcity_reserve_demand_map", "volatility_mispricing_convexity_map", "network_scarcity_liquidity_reflexivity_map"],
+    "identification_assumptions": ["structural concentration must have mechanism evidence", "correlation or high historical return is insufficient", "temporary flow must not be mislabeled as durable structure"],
+    "state_transition_logic": "map source -> mechanism chain -> concentration location -> conditions -> durability/substitutability -> invalidators",
+    "uncertainty_representation": ["source_strength_band", "durability_band", "substitutability_or_elasticity_band", "mechanism_confidence", "model_disagreement"],
+    "simpler_baselines": ["sector_label", "simple_concentration_metric", "simple_inventory_or_duration_metric"],
+    "known_failure_modes": ["winner_hindsight", "survivorship_bias", "temporary_scarcity", "substitution_response", "policy_reversal", "hidden_capacity", "measurement_boundary_error", "structure_without_investable_expression"]
+  },
+  "asset_implementations": {
+    "equity": "value_control_point",
+    "commodity": "scarcity_supply_elasticity",
+    "sovereign_rates": "duration_convexity_term_premium",
+    "credit": "default_spread_recovery_refinancing",
+    "FX": "policy_divergence_carry_flow",
+    "monetary_asset": "monetary_scarcity_reserve_demand",
+    "derivative": "volatility_mispricing_convexity",
+    "crypto": "network_scarcity_liquidity_reflexivity"
+  },
+  "output": {
+    "state_type": "StructuralAsymmetrySourceState",
+    "state_dimensions": ["implementation_family", "asymmetry_source", "mechanism_chain", "concentration_location", "structural_conditions", "durability_or_persistence", "substitutability_or_elasticity", "invalidators"],
+    "uncertainty_semantics": "typed_source_and_durability_uncertainty_not_probability_of_being_right",
+    "evidence_refs": "required",
+    "as_of": "required",
+    "degrade_state": ["valid", "insufficient_evidence", "research_only", "stale", "unsupported"],
+    "downstream_dependencies": ["N", "V", "Xa", "Xp", "S"],
+    "prohibited_outputs": ["calibrated_thesis_probability_without_calibration", "target_price", "recommended_weight", "position_size", "buy_sell_hold"]
+  },
+  "falsification_failure": {
+    "falsification_rules": ["proposed control/scarcity/flow source loses structural condition", "substitutability or supply response invalidates concentration thesis", "PIT evidence does not support claimed mechanism", "source exists but concentration occurs elsewhere"],
+    "revision_triggers": ["market_structure_change", "new_capacity_or_substitute", "policy_regime_change", "reserve_or_flow_break", "payoff_contract_change", "network_migration"],
+    "known_failure_regimes": ["fast_substitution", "regulatory_reallocation", "temporary_shortage", "forced_flow_reversal", "new_entrant_capacity", "measurement_scope_error"],
+    "degrade_behavior": "degrade specific source/implementation and force re-route if pricing physics changed",
+    "fail_closed_states": ["insufficient_evidence", "research_only", "stale", "unsupported"]
+  },
+  "benchmark_qualification": {
+    "simpler_baselines": ["sector_label", "simple_concentration_metric", "simple_inventory_or_duration_metric"],
+    "point_in_time_split_policy": "mandatory",
+    "oos_policy": "walk_forward_or_predeclared_holdout",
+    "regime_holdout": "mandatory",
+    "false_alarm_accounting": "mandatory_for_asymmetry_source_calls",
+    "calibration_requirement": "not_required_for_nonprobabilistic_source_state_but_required_if_probability_layer_added",
+    "multiple_testing_policy": "required_for_source_feature_selection",
+    "complexity_penalty": "demote if routed structure adds no stable information over simple metrics",
+    "failure_receipts": "mandatory"
+  },
+  "settlement_learning": {
+    "settlement_horizon": ["1m", "3m", "6m", "12m_or_longer_for_structural_assets"],
+    "settlement_observables": ["realized_value_capture_concentration", "realized_inventory_or_supply_elasticity", "realized_duration_convexity_sensitivity", "realized_credit_loss_recovery", "realized_carry_flow_persistence", "realized_reserve_demand", "realized_volatility_convexity", "realized_network_liquidity_concentration"],
+    "settlement_rule": "test whether the proposed structural source manifested in routed observables and whether invalidators emerged; structure without investable asymmetry is recorded as a failure/ambiguous case",
+    "replay_policy": "point_in_time_only_with contemporaneous structure data",
+    "revision_rule": "revise routed mechanism or retire source family when repeated settlement fails"
+  },
+  "runtime_receipt_governance": {
+    "invocation_envelope_required": true,
+    "research_receipt_required": true,
+    "research_pass_implies_capital_pass": false,
+    "implementation_authority": "not_authorized_in_B1",
+    "promotion_authority": "none",
+    "execution_authority": "none"
+  }
+}
