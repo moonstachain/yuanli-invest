@@ -1,0 +1,70 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE",
+  "test_type": "architecture_semantic_routing_fixture",
+  "explicit_non_claim": "This fixture tests whether the same P/N/X/E/V/S grammar can route materially different asset forms. It does not assert current market state, investment attractiveness, historical alpha, or trading action.",
+  "required_human_grammar": ["P_势", "N_信", "X_极", "E_真", "V_价", "S_生"],
+  "required_x_tuple": ["Xs", "Xa", "Xp"],
+  "cases": [
+    {
+      "target": "NVIDIA",
+      "A0_asset_form": "equity",
+      "A1_pricing_archetype": ["growth", "compounder"],
+      "P_asset_example": "AI compute adoption, capex and monetization reality",
+      "N_example": "growth-duration and AI return-on-investment expectations",
+      "Xs_expected_family": "value_control_point",
+      "V_expected_family": "price_implied_operating_expectations",
+      "stress_assertion": "equity analysis must not define universal Xs for other asset forms"
+    },
+    {
+      "target": "UST30Y",
+      "A0_asset_form": "sovereign_rates",
+      "A1_pricing_archetype": ["duration"],
+      "P_asset_example": "growth, inflation, fiscal supply and policy reaction reality",
+      "N_example": "policy-path, inflation and term-premium expectations",
+      "Xs_expected_family": "duration_convexity_term_premium",
+      "V_expected_family": "implied_policy_and_term_premium_path",
+      "stress_assertion": "rates research must work without a corporate value-control-point ontology"
+    },
+    {
+      "target": "COPPER",
+      "A0_asset_form": "commodity",
+      "A1_pricing_archetype": ["cyclical", "scarcity"],
+      "P_asset_example": "supply, demand, inventory, cost curve and capacity reality",
+      "N_example": "shortage, demand-duration and capex expectations",
+      "Xs_expected_family": "scarcity_supply_elasticity",
+      "V_expected_family": "futures_curve_and_implied_scarcity",
+      "stress_assertion": "commodity asymmetry must route through scarcity/inventory elasticity rather than issuer moat"
+    },
+    {
+      "target": "GOLD",
+      "A0_asset_form": "monetary_asset",
+      "A1_pricing_archetype": ["scarcity", "duration"],
+      "P_asset_example": "real-rate, fiscal-monetary, reserve-demand and currency-credibility reality",
+      "N_example": "monetary credibility, reserve diversification and policy-regime expectations",
+      "Xs_expected_family": "monetary_scarcity_reserve_demand",
+      "V_expected_family": "real_rate_and_monetary_risk_premium",
+      "stress_assertion": "gold must not be forced into an industrial commodity-only model"
+    },
+    {
+      "target": "USDJPY",
+      "A0_asset_form": "FX",
+      "A1_pricing_archetype": ["duration", "event_optionality"],
+      "P_asset_example": "relative growth, policy, rate differential, balance-of-payments and intervention reality",
+      "N_example": "policy divergence, carry persistence and intervention expectations",
+      "Xs_expected_family": "policy_divergence_carry_flow",
+      "V_expected_family": "forward_carry_and_relative_policy_path",
+      "stress_assertion": "FX asymmetry must route through relative policy/carry/flow rather than absolute single-country fundamentals"
+    }
+  ],
+  "pass_conditions": [
+    "all five cases use the same human P/N/X/E/V/S grammar",
+    "A0 asset form differs across cases",
+    "A1 pricing archetype can be multi-valued",
+    "Xs family differs by asset form/pricing mechanism",
+    "V uses asset-appropriate implied-expectations family",
+    "R is available as P.capital machine context and is not modeled as a fourth human world",
+    "no case emits buy/sell, target price, recommended weight, live sizing or execution"
+  ],
+  "result": "candidate_fixture_pending_machine_validation"
+}
