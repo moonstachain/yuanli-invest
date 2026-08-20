@@ -1,0 +1,90 @@
+{
+  "pack_version": "0.1.0",
+  "stage": "R2_3_RUNTIME_BLOCKER_CLOSURE",
+  "object_type": "ResearchCapability",
+  "entry_count": 2,
+  "objects": [
+    {
+      "capability_id": "CAP-V-002-PRICE-IMPLIED-EXPECTATIONS",
+      "name": "Price-Implied Expectations",
+      "domain": "V",
+      "purpose": "Infer the operating and value-capture expectations already embedded in current market price while keeping the capability identity independent of any single valuation algorithm.",
+      "theory_ids": [
+        "THEORY-BLACKSCHOLES-1973-OPTION-PRICING",
+        "THEORY-MERTON-1973-CONTINGENT-CLAIMS"
+      ],
+      "hypothesis_ids": [
+        "HYP-V-001-IMPLIED-EXPECTATIONS"
+      ],
+      "factor_ids": [],
+      "algorithm_ids": [
+        "ALG-V-REVERSEDCF-IMPLIED-EXPECTATIONS"
+      ],
+      "benchmark_ids": [
+        "BENCH-V-IMPLIED-EXPECTATIONS-V1"
+      ],
+      "canonical_input_fields": [
+        "FIELD-COMPANY-ENTERPRISE-VALUE",
+        "FIELD-COMPANY-FREE-CASH-FLOW",
+        "FIELD-COMPANY-REVENUE-GROWTH",
+        "FIELD-COMPANY-OPERATING-MARGIN"
+      ],
+      "output_contract": "Price-implied operating expectations, assumption surface, expectation-gap state, uncertainty and falsifiers. Reverse DCF may be one algorithm; target price is prohibited.",
+      "skill_ids": [],
+      "reference_implementation": "spec-only:R2.3 successor identity; R3A/R4 implementation and benchmark execution remain separately governed",
+      "known_failure_regimes": [
+        "terminal-value dominance",
+        "discount-rate sensitivity",
+        "unstable cash flow",
+        "capital-intensity omissions",
+        "algorithm-specific false precision"
+      ],
+      "maturity_state": "specified",
+      "provider_independent": true,
+      "scalar_pnx_score_prohibited": true,
+      "investment_action_fields_prohibited": true
+    },
+    {
+      "capability_id": "CAP-S-003-GROWTH-OPTIMAL-RISK-BUDGET-UNDER-UNCERTAINTY",
+      "name": "Growth-Optimal Risk Budget under Uncertainty",
+      "domain": "S",
+      "purpose": "Evaluate the growth-versus-survival risk-budget problem under estimation uncertainty and explicit survival constraints without binding the capability identity to a single Kelly implementation or issuing recommended position sizes.",
+      "theory_ids": [
+        "THEORY-KELLY-1956-INFORMATION-RATE",
+        "THEORY-BREIMAN-1961-OPTIMAL-GAMBLING",
+        "THEORY-MERTON-1969-LIFETIME-PORTFOLIO"
+      ],
+      "hypothesis_ids": [
+        "HYP-S-002-ROBUST-FRACTIONAL-KELLY"
+      ],
+      "factor_ids": [],
+      "algorithm_ids": [
+        "ALG-S-KELLY-ROBUST-FRACTIONAL"
+      ],
+      "benchmark_ids": [
+        "BENCH-S-SURVIVAL-GROWTH-V1"
+      ],
+      "canonical_input_fields": [
+        "FIELD-PORTFOLIO-NAV",
+        "FIELD-PORTFOLIO-RETURN",
+        "FIELD-PORTFOLIO-GROSS-EXPOSURE",
+        "FIELD-PORTFOLIO-LIQUID-ASSETS"
+      ],
+      "output_contract": "Growth/survival tradeoff diagnostics, uncertainty sensitivity and admissible risk-budget research state under declared constraints; no recommended weight, position size or live sizing action.",
+      "skill_ids": [],
+      "reference_implementation": "spec-only:R2.3 successor identity; deterministic implementation and benchmark execution remain separately governed",
+      "known_failure_regimes": [
+        "probability estimation error",
+        "payoff estimation error",
+        "tail misspecification",
+        "correlation regime shift",
+        "liquidity discontinuity",
+        "algorithm-specific overbetting"
+      ],
+      "maturity_state": "specified",
+      "provider_independent": true,
+      "scalar_pnx_score_prohibited": true,
+      "investment_action_fields_prohibited": true
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 {
-  "schema_version": "0.5.0",
+  "schema_version": "0.6.0",
   "projection_semantics": "deterministic_non_authoritative_projection",
   "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
   "mission": "Yuanli Investment Research Intelligence Canon",
   "north_star": "Compile investment knowledge into reality-tested, machine-callable research intelligence.",
   "objective": "Lifetime Right-Tail Capture under Survival Constraints",
   "center_object": "ResearchCapability",
-  "canonical_state_candidate": "ResearchStateVector",
+  "canonical_state": "ResearchStateVector",
   "os_model": "one_core_three_worlds_three_gates_one_loop",
   "operational_canon": {
     "repository": "moonstachain/quant-workspace",
@@ -25,7 +25,7 @@
     "R2": {
       "status": "accepted_merged",
       "merge_commit": "e3f14d2a603b34d39b51a521dc0f47f2b555669b",
-      "gold_capabilities": 12,
+      "historical_gold_capabilities": 12,
       "registry_objects": 99,
       "canon_entries": 0
     },
@@ -35,16 +35,23 @@
       "merge_receipt": "docs/architecture/r2_1/R2-1-MERGE-RECEIPT-v0.1.json"
     },
     "R2_2": {
-      "status": "human_accepted_ready_for_merge",
+      "status": "accepted_merged",
+      "merge_commit": "3bccf723c301f77364c198b9a7b1282c340f5534",
+      "merge_receipt": "docs/architecture/r2_2/R2-2-MERGE-RECEIPT-v0.1.json",
       "purpose": "Research Intelligence Canon Re-foundation"
     },
     "R2_3": {
-      "status": "not_authorized",
-      "purpose": "vNext Object and Gold Successor Migration"
+      "status": "human_accepted_ready_for_merge",
+      "purpose": "Runtime Blocker Closure",
+      "authorized_scope": [
+        "post_merge_status_receipt_closure",
+        "v_capability_successor",
+        "s_capability_successor"
+      ]
     },
     "R3A": {
       "status": "paused_not_started",
-      "reason": "await_r2_2_and_r2_3_semantic_migration_gates"
+      "reason": "await_r2_3_human_gate_and_merge"
     },
     "R4A": {
       "status": "not_authorized",
@@ -63,14 +70,24 @@
     "ledger_law": "receipt_is_ledger_status_is_projection",
     "live_execution": "unavailable_by_design"
   },
+  "r2_3_successor_candidates": {
+    "effective_vnext_gold_count_after_acceptance": 12,
+    "V": {
+      "predecessor": "CAP-V-001-REVERSE-DCF-EXPECTATIONS",
+      "successor": "CAP-V-002-PRICE-IMPLIED-EXPECTATIONS",
+      "retained_algorithm": "ALG-V-REVERSEDCF-IMPLIED-EXPECTATIONS"
+    },
+    "S": {
+      "predecessor": "CAP-S-002-ROBUST-FRACTIONAL-KELLY",
+      "successor": "CAP-S-003-GROWTH-OPTIMAL-RISK-BUDGET-UNDER-UNCERTAINTY",
+      "retained_algorithm": "ALG-S-KELLY-ROBUST-FRACTIONAL"
+    },
+    "other_r2_gold_identities_mutated": false
+  },
   "legacy_lane_reconciliation": {
     "M1_2": "runtime_state_contract_successor_scope",
     "Q1": "wind_provider_qualification_successor_scope",
     "A6": "audit_historical_replay_lane"
-  },
-  "r2_gold_migration": {
-    "existing_ids_mutated": false,
-    "successor_design_reserved_for": "R2_3"
   },
   "admission": {
     "evidence": "not_authorized",
@@ -82,5 +99,10 @@
     "merge_commit": "19c2088231edde3bf5f8a4c70051c2f6506625db",
     "post_acceptance_ci_run": 89
   },
-  "next_gate": "R2_2_MERGE"
+  "r2_2_merge_fact": {
+    "pr": 21,
+    "merge_commit": "3bccf723c301f77364c198b9a7b1282c340f5534",
+    "post_acceptance_ci_run": 96
+  },
+  "next_gate": "R2_3_MERGE"
 }

@@ -18,15 +18,17 @@ def build():
     r21 = load(ARCH / "r2_1" / "R2-1-STATE.json")
     r21r = load(ARCH / "r2_1" / "R2-1-MERGE-RECEIPT-v0.1.json")
     r22 = load(ARCH / "r2_2" / "R2-2-STATE.json")
+    r22r = load(ARCH / "r2_2" / "R2-2-MERGE-RECEIPT-v0.1.json")
+    r23 = load(ARCH / "r2_3" / "R2-3-STATE.json")
     return {
-        "schema_version": "0.5.0",
+        "schema_version": "0.6.0",
         "projection_semantics": "deterministic_non_authoritative_projection",
         "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
         "mission": "Yuanli Investment Research Intelligence Canon",
         "north_star": "Compile investment knowledge into reality-tested, machine-callable research intelligence.",
         "objective": "Lifetime Right-Tail Capture under Survival Constraints",
         "center_object": "ResearchCapability",
-        "canonical_state_candidate": "ResearchStateVector",
+        "canonical_state": "ResearchStateVector",
         "os_model": "one_core_three_worlds_three_gates_one_loop",
         "operational_canon": {
             "repository": "moonstachain/quant-workspace",
@@ -39,7 +41,7 @@ def build():
             "R2": {
                 "status": r2["status"],
                 "merge_commit": r2["merge_commit"],
-                "gold_capabilities": r2["capability_count"],
+                "historical_gold_capabilities": r2["capability_count"],
                 "registry_objects": r2["registry_entry_count"],
                 "canon_entries": r2["canon_entry_count"],
             },
@@ -50,15 +52,18 @@ def build():
             },
             "R2_2": {
                 "status": r22["status"],
+                "merge_commit": r22["merge_commit"],
+                "merge_receipt": "docs/architecture/r2_2/R2-2-MERGE-RECEIPT-v0.1.json",
                 "purpose": "Research Intelligence Canon Re-foundation",
             },
             "R2_3": {
-                "status": "not_authorized",
-                "purpose": "vNext Object and Gold Successor Migration",
+                "status": r23["status"],
+                "purpose": "Runtime Blocker Closure",
+                "authorized_scope": r23["authorized_scope"],
             },
             "R3A": {
                 "status": "paused_not_started",
-                "reason": "await_r2_2_and_r2_3_semantic_migration_gates",
+                "reason": "await_r2_3_human_gate_and_merge",
             },
             "R4A": {"status": "not_authorized", "purpose": "Benchmark Closure"},
         },
@@ -74,14 +79,16 @@ def build():
             "ledger_law": "receipt_is_ledger_status_is_projection",
             "live_execution": "unavailable_by_design",
         },
+        "r2_3_successor_candidates": {
+            "effective_vnext_gold_count_after_acceptance": r23["effective_gold_count_after_acceptance"],
+            "V": r23["successors"]["V"],
+            "S": r23["successors"]["S"],
+            "other_r2_gold_identities_mutated": r23["scope_guard"]["other_r2_gold_identities_mutated"],
+        },
         "legacy_lane_reconciliation": {
             "M1_2": "runtime_state_contract_successor_scope",
             "Q1": "wind_provider_qualification_successor_scope",
             "A6": "audit_historical_replay_lane",
-        },
-        "r2_gold_migration": {
-            "existing_ids_mutated": False,
-            "successor_design_reserved_for": "R2_3",
         },
         "admission": {
             "evidence": "not_authorized",
@@ -93,7 +100,12 @@ def build():
             "merge_commit": r21r["merge_commit_sha"],
             "post_acceptance_ci_run": r21r["post_acceptance_ci"]["run_number"],
         },
-        "next_gate": r22["next_gate"],
+        "r2_2_merge_fact": {
+            "pr": r22r["pr_number"],
+            "merge_commit": r22r["merge_commit_sha"],
+            "post_acceptance_ci_run": r22r["post_acceptance_ci"]["run_number"],
+        },
+        "next_gate": r23["next_gate"],
     }
 
 

@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3_RUNTIME_BLOCKER_CLOSURE",
+  "historical_gold_pack": "registry/capabilities/r2-pnxs-gold-v0.1.json",
+  "successor_pack": "registry/capabilities/r2-3-vnext-successors-v0.1.json",
+  "historical_gold_count": 12,
+  "effective_vnext_gold_count_after_acceptance": 12,
+  "retained_historical_identities": 10,
+  "successions": [
+    {
+      "domain": "V",
+      "predecessor_capability_id": "CAP-V-001-REVERSE-DCF-EXPECTATIONS",
+      "successor_capability_id": "CAP-V-002-PRICE-IMPLIED-EXPECTATIONS",
+      "reason": "Capability identity should bind the stable research question; Reverse DCF remains an algorithm implementation.",
+      "predecessor_mutated": false,
+      "predecessor_deleted": false,
+      "retained_algorithm_id": "ALG-V-REVERSEDCF-IMPLIED-EXPECTATIONS",
+      "activation": "only_after_r2_3_human_acceptance_and_merge"
+    },
+    {
+      "domain": "S",
+      "predecessor_capability_id": "CAP-S-002-ROBUST-FRACTIONAL-KELLY",
+      "successor_capability_id": "CAP-S-003-GROWTH-OPTIMAL-RISK-BUDGET-UNDER-UNCERTAINTY",
+      "reason": "Capability identity should bind the stable growth-survival research problem; robust fractional Kelly remains an algorithm implementation.",
+      "predecessor_mutated": false,
+      "predecessor_deleted": false,
+      "retained_algorithm_id": "ALG-S-KELLY-ROBUST-FRACTIONAL",
+      "activation": "only_after_r2_3_human_acceptance_and_merge"
+    }
+  ],
+  "other_r2_gold_identities_mutated": false,
+  "runtime_binding_authorized": false,
+  "benchmark_result_implied": false
+}
