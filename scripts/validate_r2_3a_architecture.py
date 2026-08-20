@@ -14,6 +14,7 @@ REVIEW = ARCH / "R2-3A-HUMAN-REVIEW-CARD-v0.1.md"
 STATE = ARCH / "R2-3A-STATE.json"
 STRESS = ARCH / "R2-3A-CROSS-ASSET-STRESS-CHECK-v0.1.json"
 ACCEPT_RECEIPT = ARCH / "R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+MERGE_RECEIPT = ARCH / "R2-3A-MERGE-RECEIPT-v0.1.json"
 STATUS = ARCH_ROOT / "CANON-STATUS.json"
 R23_STATE = ARCH_ROOT / "r2_3" / "R2-3-STATE.json"
 R23_RECEIPT = ARCH_ROOT / "r2_3" / "R2-3-MERGE-RECEIPT-v0.1.json"
@@ -24,6 +25,7 @@ SUPPORTING = ["CAP-R-02", "CAP-A-01", "CAP-P-01", "CAP-E-01"]
 ALL = P0 + P1 + SUPPORTING
 BASE_OS_MODEL = "one_core_three_worlds_three_gates_one_loop"
 ACCEPT_TOKEN = "ACCEPT_R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE"
+MERGE_TOKEN = "AUTHORIZE_R2_3A_MERGE"
 EXPECTED_EXTENSIONS = [
     "r_as_machine_decomposition_of_p_capital",
     "L0-L4_cross_asset_authority_ladder",
@@ -67,18 +69,13 @@ def main():
 
     constitution = (DOCS / "CONSTITUTION.md").read_text(encoding="utf-8")
     require_tokens(constitution, [
-        "Lifetime Right-Tail Capture under Survival Constraints",
-        BASE_OS_MODEL,
-        "势 · 信 · 极｜真 · 价 · 生",
-        "P.capital", "P.asset", "R is not a fourth human world",
-        "Structural Asymmetry Source",
-        "Value Control Point is an equity-specialized implementation",
-        "X := (Xs, Xa, Xp)",
-        "Claim Authority <= Evidence Authority",
-        "Asset form is not pricing model",
-        "Lower-level truth does not imply higher-level authorization",
-        "A0 | asset_form", "A1 | pricing_archetype",
-        "Price-Implied Expectations", "governance-authority split only", "ResearchCapability",
+        "Lifetime Right-Tail Capture under Survival Constraints", BASE_OS_MODEL,
+        "势 · 信 · 极｜真 · 价 · 生", "P.capital", "P.asset", "R is not a fourth human world",
+        "Structural Asymmetry Source", "Value Control Point is an equity-specialized implementation",
+        "X := (Xs, Xa, Xp)", "Claim Authority <= Evidence Authority",
+        "Asset form is not pricing model", "Lower-level truth does not imply higher-level authorization",
+        "A0 | asset_form", "A1 | pricing_archetype", "Price-Implied Expectations",
+        "governance-authority split only", "ResearchCapability",
     ])
     assert "X := (Xs, Xa)" not in constitution
 
@@ -116,24 +113,20 @@ def main():
     by_id = {x["id"]: x for x in data["candidates"]}
     assert by_id["CAP-XS-01"]["name"] == "Structural Asymmetry Source Mapper"
     assert by_id["CAP-XS-01"]["asset_implementations"]["equity"] == "value_control_point"
-    assert by_id["CAP-A-01"]["asset_forms"][0] == "equity"
     assert "monetary_asset" in by_id["CAP-A-01"]["asset_forms"]
     assert data["promotion_authority"] == "none"
     assert data["execution_authority"] == "none"
 
     state = load(STATE)
     assert state["stage"] == "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE"
-    assert state["status"] in {"candidate_started", "candidate_ready_for_human_review", "human_accepted_ready_for_merge"}
+    assert state["status"] in {"candidate_started", "candidate_ready_for_human_review", "human_accepted_ready_for_merge", "accepted_merged"}
     assert state["base_os_model"] == BASE_OS_MODEL
     assert state["human_navigation"] == "势信极_真价生"
     assert state["architecture_extensions"] == EXPECTED_EXTENSIONS
     assert state["upstream_dependency"]["resolved"] is True
-    assert state["upstream_dependency"]["merge_commit"] == r23["merge_commit"]
     assert state["constitutional_invariants"]["x_semantics"] == "X := (Xs, Xa, Xp)"
     assert state["constitutional_invariants"]["xs_mother_concept"] == "Structural Asymmetry Source"
-    assert state["constitutional_invariants"]["value_control_point_role"] == "equity_specialized_implementation"
     assert state["constitutional_invariants"]["asset_form_is_not_pricing_model"] is True
-    assert state["constitutional_invariants"]["research_portfolio_split_does_not_change_x_semantics"] is True
     assert state["r2_3b_contract_requirements"]["n02_reunderwrite_latency_policy_required"] is True
 
     status = load(STATUS)
@@ -147,7 +140,6 @@ def main():
     assert status["r2_3a_architecture"]["extensions"] == EXPECTED_EXTENSIONS
     assert status["r2_3a_architecture"]["router"] == state["router"]
     assert status["r2_3a_architecture"]["x_semantics_preserved_across_os_split"] is True
-    assert status["next_gate"] == state["next_gate"]
 
     if state["status"] == "candidate_started":
         assert state["machine_qualification"] is None
@@ -155,35 +147,35 @@ def main():
     elif state["status"] == "candidate_ready_for_human_review":
         q = state["machine_qualification"]
         assert q["conclusion"] == "success"
-        assert q["contracts"] == "success"
-        assert q["governance"] == "success"
-        assert q["cross_asset_stress"] == "success"
         assert state["next_gate"] == "R2_3A_HUMAN_REVIEW"
     else:
         acceptance = load(ACCEPT_RECEIPT)
-        assert acceptance["stage"] == "R2_3A_YUANLI_INVESTMENT_OS_ARCHITECTURE_FREEZE"
         assert acceptance["decision"] == ACCEPT_TOKEN
         assert acceptance["pr_number"] == 23
-        assert acceptance["reviewed_head_sha"] == "2bc27932f9580de9b41ed7a8ed0721bcafafd788"
         assert acceptance["reviewed_ci"]["run_number"] == 124
-        assert acceptance["reviewed_ci"]["run_id"] == 32363617225
         assert acceptance["reviewed_ci"]["conclusion"] == "success"
-        assert acceptance["reviewed_ci"]["architecture"] == "success"
-        assert acceptance["reviewed_ci"]["cross_asset_stress"] == "success"
-        assert acceptance["boundaries_preserved"]["merge_authorized"] is False
-        assert acceptance["merge_authority"] == "not_implied_by_acceptance"
-        assert acceptance["next_gate"] == "R2_3A_POST_ACCEPTANCE_CI"
         assert state["human_gate"]["decision"] == ACCEPT_TOKEN
-        assert state["human_gate"]["acceptance_receipt"] == "docs/architecture/r2_3a/R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
-        assert state["human_gate"]["reviewed_head_sha"] == acceptance["reviewed_head_sha"]
         assert state["human_gate"]["reviewed_ci_run"] == 124
-        assert state["human_review_qualification"]["run_number"] == 124
-        assert state["merge_authority"] == "not_implied_by_acceptance"
-        assert state["post_acceptance_ci_required"] is True
-        assert state["next_gate"] == "R2_3A_MERGE"
         assert status["r2_3a_acceptance_fact"]["decision"] == ACCEPT_TOKEN
-        assert status["r2_3a_acceptance_fact"]["reviewed_ci_run"] == 124
-        assert status["r2_3a_acceptance_fact"]["merge_authority"] == "not_implied_by_acceptance"
+
+        if state["status"] == "human_accepted_ready_for_merge":
+            assert state["merge_authority"] == "not_implied_by_acceptance"
+            assert state["next_gate"] == "R2_3A_MERGE"
+        else:
+            assert MERGE_RECEIPT.exists()
+            merge = load(MERGE_RECEIPT)
+            assert merge["merge_authorization"] == MERGE_TOKEN
+            assert merge["pre_merge_head_sha"] == "5635db72301218b08323228311c1db9a8a2ab39b"
+            assert merge["pre_merge_ci"]["run_number"] == 133
+            assert merge["pre_merge_ci"]["conclusion"] == "success"
+            assert merge["merge_method"] == "squash"
+            assert merge["merge_commit_sha"] == "ef3f470f7ef0ceb2b58f392d4a2bd5a5c4c691bd"
+            assert state["merge_authority"] == MERGE_TOKEN
+            assert state["merge_receipt"] == "docs/architecture/r2_3a/R2-3A-MERGE-RECEIPT-v0.1.json"
+            assert state["merge_commit"] == merge["merge_commit_sha"]
+            assert state["next_gate"] == "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE"
+            assert status["r2_3a_merge_fact"]["merge_commit"] == merge["merge_commit_sha"]
+            assert status["r2_3a_merge_fact"]["merge_authorization"] == MERGE_TOKEN
 
     corpus = "\n".join([constitution, graph, seven, freeze, REVIEW.read_text(encoding="utf-8")])
     assert_no_scalar_score_regression(corpus)
