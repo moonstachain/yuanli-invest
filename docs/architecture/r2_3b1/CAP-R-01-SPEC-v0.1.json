@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+  "identity": {
+    "capability_id": "CAP-R-01",
+    "name": "Regime Causal Decomposition",
+    "contract_version": "0.1.0",
+    "stable_question": "What causal capital regime currently governs discount rates, risk appetite, funding conditions and cross-asset capital allocation?",
+    "semantic_parent": "P.capital",
+    "maturity_state": "specified",
+    "owner_scope": "Research OS"
+  },
+  "scope_routing": {
+    "asset_forms": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"],
+    "pricing_archetypes": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"],
+    "authority_levels": ["L0", "L1", "L2", "L3", "L4"],
+    "router_dependencies": ["A0_asset_form", "A1_pricing_archetype"],
+    "routing_role": "contextual_binding_strength_not_fourth_world"
+  },
+  "theory_causal_mechanism": {
+    "theory_ids": ["TERM_STRUCTURE_TRANSMISSION", "MONETARY_TRANSMISSION", "LIQUIDITY_RISK_APPETITE", "FISCAL_DURATION_SUPPLY", "FUNDING_STRESS"],
+    "hypothesis_ids": ["H-R-GROWTH", "H-R-INFLATION", "H-R-LIQUIDITY", "H-R-RISK-APPETITE", "H-R-TERM-PREMIUM", "H-R-FUNDING", "H-R-POLICY-REACTION"],
+    "causal_mechanism": "Capital conditions alter discount rates, financing constraints, required risk premia and cross-asset allocation through distinct but interacting growth, inflation, liquidity, risk-appetite, term-premium, funding and policy-reaction channels.",
+    "assumptions": ["state variables are not interchangeable", "policy and market variables may be endogenous", "causal authority depends on identification quality"],
+    "competing_mechanisms": ["growth_shock", "inflation_shock", "policy_path_repricing", "term_premium_shock", "liquidity_shock", "funding_shock", "risk_appetite_shock", "fiscal_supply_shock"],
+    "claim_boundary": "No single yield, liquidity proxy, risk-asset move or latent regime label is sufficient to establish causal regime authority."
+  },
+  "evidence": {
+    "evidence_policy": "horizontal_claim_control_plane",
+    "minimum_evidence_authority": "mechanism claims require primary or independently reproducible empirical support appropriate to the claim",
+    "claim_types": ["event_fact", "mechanism_hypothesis", "expectation_interpretation", "asset_attribution"],
+    "source_requirements": ["timestamped", "point_in_time_available", "revision_metadata_when_applicable", "economic_definition_present"],
+    "as_of_required": true,
+    "point_in_time_required": true,
+    "evidence_cutoff_required": true,
+    "falsifier_required": true
+  },
+  "input": {
+    "canonical_input_fields": ["real_activity_state", "inflation_state", "policy_rate_path", "real_rate_state", "yield_curve_state", "term_premium_state", "system_liquidity_state", "credit_creation_state", "funding_spread_state", "risk_appetite_state", "fiscal_duration_supply_state", "policy_reaction_observables"],
+    "economic_definitions": "provider-independent canonical fields defined by economic meaning; provider mappings live in adapters",
+    "units": "field_specific",
+    "frequency": "mixed_frequency_with_PIT_alignment",
+    "publication_lag": "explicit_per_field",
+    "revision_semantics": "retain vintage/revision lineage",
+    "missingness_policy": "fail_closed_or_dimension_degrade",
+    "allowed_transformations": ["levels", "changes", "zscore_with_PIT_history", "rolling_percentiles_with_PIT_history", "curve_decomposition", "real_nominal_decomposition"]
+  },
+  "inference": {
+    "algorithm_families": ["causal_state_machine", "dynamic_factor_model", "regime_switching_descriptive", "change_point_detection", "structural_var", "local_projection", "policy_scenario_tree"],
+    "identification_assumptions": ["causal labels require explicit identification", "descriptive latent states remain descriptive", "endogeneity must be surfaced"],
+    "state_transition_logic": "dimension-level transitions first; aggregate regime narrative is a typed synthesis, not a scalar score",
+    "uncertainty_representation": ["confidence_semantics", "model_disagreement", "identification_status", "data_staleness"],
+    "simpler_baselines": ["single_rate_level", "simple_growth_inflation_quadrant", "risk_asset_momentum"],
+    "known_failure_modes": ["policy_endogeneity", "revision_bias", "mixed_frequency_misalignment", "single_proxy_overreach", "structural_break", "liquidity_risk_appetite_conflation"]
+  },
+  "output": {
+    "state_type": "RegimeCausalState",
+    "state_dimensions": ["growth", "inflation", "liquidity", "risk_appetite", "term_premium", "funding_stress", "policy_reaction_function"],
+    "required_dimension_annotations": ["direction", "magnitude_band", "persistence_band", "evidence_refs", "competing_mechanisms", "uncertainty_semantics"],
+    "uncertainty_semantics": "typed_not_scalar",
+    "evidence_refs": "required",
+    "as_of": "required",
+    "degrade_state": ["valid", "insufficient_evidence", "research_only", "stale", "unsupported"],
+    "downstream_dependencies": ["P.asset", "N", "V", "Xa", "Xp", "S"],
+    "prohibited_outputs": ["scalar_macro_score", "target_price", "recommended_weight", "buy_sell_hold"]
+  },
+  "falsification_failure": {
+    "falsification_rules": ["dimension direction contradicted by stronger PIT evidence", "claimed causal channel fails identified empirical test", "state synthesis depends on stale or revised-only data unavailable at as_of"],
+    "revision_triggers": ["material data revision", "policy reaction break", "funding discontinuity", "cross-model disagreement beyond tolerance"],
+    "known_failure_regimes": ["crisis_discontinuity", "policy_regime_change", "measurement_break", "rapid_intraday_liquidity_event"],
+    "degrade_behavior": "degrade affected dimensions and dependent claims rather than force full-state certainty",
+    "fail_closed_states": ["insufficient_evidence", "research_only", "stale", "unsupported"]
+  },
+  "benchmark_qualification": {
+    "simpler_baselines": ["single_rate_level", "simple_growth_inflation_quadrant", "risk_asset_momentum"],
+    "point_in_time_split_policy": "mandatory",
+    "oos_policy": "walk_forward_or_predeclared_holdout",
+    "regime_holdout": "mandatory",
+    "false_alarm_accounting": "mandatory_for_state_changes",
+    "calibration_requirement": "required_when_probabilistic_submodel_used",
+    "multiple_testing_policy": "required_for_model_selection",
+    "complexity_penalty": "demote if no incremental stable information",
+    "failure_receipts": "mandatory"
+  },
+  "settlement_learning": {
+    "settlement_horizon": ["1m", "3m", "6m"],
+    "settlement_observables": ["subsequent_growth_state", "subsequent_inflation_state", "subsequent_real_rate_term_premium_state", "subsequent_funding_state", "subsequent_cross_asset_risk_premium_behavior"],
+    "settlement_rule": "judge state discrimination and downstream calibration versus PIT baselines, not one-asset return prediction",
+    "replay_policy": "point_in_time_only_with_original_vintages",
+    "revision_rule": "revise mechanism, routing, thresholds or retire complexity when settlement repeatedly fails"
+  },
+  "runtime_receipt_governance": {
+    "invocation_envelope_required": true,
+    "research_receipt_required": true,
+    "research_pass_implies_capital_pass": false,
+    "implementation_authority": "not_authorized_in_B1",
+    "promotion_authority": "none",
+    "execution_authority": "none"
+  }
+}
