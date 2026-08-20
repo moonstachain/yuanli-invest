@@ -1,16 +1,20 @@
 # RCN0 Human Review Card v0.1
 
-Status: `pending_human_review`
+Status: `accepted_shadow_replay_ready`
 
 Issue: #26
 
-## Decision requested
+Acceptance token received:
 
-Should RCN0 proceed from `candidate` to `shadow_replay_ready`?
+`ACCEPT_RCN0_SHADOW_REPLAY_READY`
 
-This review does **not** promote RCN0 to Canon and does **not** accept Replay #1 as Gold.
+## Decision
 
-## What is being frozen
+RCN0 may proceed from `candidate` to `shadow_replay_ready`.
+
+This decision does **not** promote RCN0 to Canon and does **not** accept Replay #1 as Gold.
+
+## Frozen semantics
 
 ### A. Stable research question
 
@@ -35,7 +39,7 @@ RCN0 adds composition/attribution, not a fourth human world.
 
 ### D. First point-in-time case
 
-2026-08-20 China innovative-drug/mRNA session is frozen as:
+2026-08-20 China innovative-drug/mRNA session remains:
 
 `gold_replay_candidate_not_promoted`
 
@@ -45,36 +49,29 @@ Initial candidate label:
 
 The label remains falsifiable and may be revised after Shadow Benchmark.
 
-## Reviewer questions
+## Human-review resolution
 
-1. Does RCN0 preserve the accepted `一核 · 三界 · 三门 · 一环` ontology rather than creating a competing framework?
-2. Is Narrative clearly separated from sentiment and from Reality?
-3. Is Narrative Mapping clearly separated from Industrial Validation?
-4. Are `D_N`, `D_R` and `NRG` states defined without fake numerical precision?
-5. Is `narrative_led` falsifiable rather than a post-hoc story label?
-6. Are simpler baselines explicitly preserved?
-7. Does the first replay preserve T0 discipline and prohibit future leakage?
-8. Is the non-authorization boundary explicit?
-9. Is Shadow Benchmark against CAP-R-01 / CAP-P-01 / CAP-N-01 / CAP-V-01 the right next gate?
+The reviewer accepted that:
 
-## Known P1 concerns to resolve in Shadow phase
+1. RCN0 preserves `一核 · 三界 · 三门 · 一环` and composes existing P/N/V capability semantics.
+2. Narrative is distinct from raw sentiment and distinct from Reality.
+3. Narrative Mapping is distinct from Industrial Validation.
+4. `D_N`, `D_R`, and `NRG` are state/ordering objects rather than fake-precision scalar scores.
+5. `narrative_led` must remain falsifiable against simpler baselines.
+6. T0 evidence discipline and no-future-leakage remain mandatory.
+7. No trading authority is created.
+8. Shadow Benchmark against CAP-R-01 / CAP-P-01 / CAP-N-01 / CAP-V-01 is authorized as the next gate.
 
-- The supplied source report is a synthesis; its external catalyst and market facts require independent primary-source admission.
-- Narrative Distance must be frozen before reading ex-post returns.
-- Small-cap/beta/momentum/price-limit microstructure are strong competing explanations and must be controlled.
-- `D_R` requires target-level IP/economic-right and commercialization mapping, not generic concept tags.
-- No causal claim is authorized from cross-sectional association alone.
+## P1 concerns carried forward
 
-## Acceptance tokens
+- Independent primary-source admission remains incomplete for several China-market datapoints.
+- Narrative Distance must not be tuned to ex-post returns.
+- Small-cap/beta/momentum/price-limit microstructure remains a live competing baseline.
+- `D_R` requires target-level rights/pipeline/commercialization mapping.
+- Cross-sectional association does not establish causality.
 
-Proceed to Shadow Replay:
+## Next gate
 
-`ACCEPT_RCN0_SHADOW_REPLAY_READY`
+`shadow_replay_ready -> shadow_replay_passed`
 
-Request changes:
-
-`REVISE_RCN0_MARKET_DRIVER_CANON`
-
-Reject:
-
-`REJECT_RCN0_MARKET_DRIVER_CANON`
+Only after evidence review, controls, baseline comparison, falsifier evaluation and a second Human Review may Replay #1 be considered for Gold admission.
