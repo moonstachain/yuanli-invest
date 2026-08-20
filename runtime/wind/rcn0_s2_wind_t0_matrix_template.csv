@@ -1,0 +1,30 @@
+ticker,company,chain,D_N_bucket,return_t0,benchmark_return_t0,abnormal_return_t0,market_cap_t0,beta,beta_lookback,momentum_5d,momentum_20d,momentum_60d,turnover_t0,turnover_20d,liquidity_proxy,board,price_limit_pct,one_price_limit_dummy,tradability_dummy,prior_theme_member,source_locator,as_of
+,百克生物,vaccine_mrna,near,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,沃森生物,vaccine_mrna,near,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,康华生物,vaccine_mrna,near,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,悦康药业,vaccine_mrna,near,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,康泰生物,vaccine_mrna,near,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,智飞生物,vaccine_mrna,near,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,康辰药业,vaccine_mrna,near,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,泽璟制药,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,神州细胞,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,贝达药业,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,迈威生物,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,迪哲医药,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,复星医药,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,益方生物,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,科伦药业,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,荣昌生物,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,百济神州,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,微芯生物,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,恒瑞医药,innovative_drug,medium,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,innovative_drug_member_unresolved_01,innovative_drug,medium,,,,,,,,,,,,,,,,,,unresolved_from_T0_source,2026-08-20
+,innovative_drug_member_unresolved_02,innovative_drug,medium,,,,,,,,,,,,,,,,,,unresolved_from_T0_source,2026-08-20
+,innovative_drug_member_unresolved_03,innovative_drug,medium,,,,,,,,,,,,,,,,,,unresolved_from_T0_source,2026-08-20
+,innovative_drug_member_unresolved_04,innovative_drug,medium,,,,,,,,,,,,,,,,,,unresolved_from_T0_source,2026-08-20
+,innovative_drug_member_unresolved_05,innovative_drug,medium,,,,,,,,,,,,,,,,,,unresolved_from_T0_source,2026-08-20
+,泰格医药,cxo,farther,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,凯莱英,cxo,farther,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,昭衍新药,cxo,farther,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,康龙化成,cxo,farther,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
+,药明康德,cxo,farther,,,,,,,,,,,,,,,,,,T0 source PDF,2026-08-20
