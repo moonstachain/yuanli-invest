@@ -48,11 +48,11 @@
       "post_acceptance_ci": {"validated_head_sha": "cd91977b994971fbb56b48202c96c652394c2ec4", "workflow": "repository-gates", "run_number": 144, "run_id": 32367791054, "conclusion": "success", "contracts": "success", "governance": "success", "contract_architecture": "success", "unit_tests": "success"}
     },
     "R2_3B1": {
-      "status": "candidate_started",
+      "status": "candidate_ready_for_human_review",
       "purpose": "Compile the accepted B0 universal ResearchCapability contract into implementation-ready specifications for CAP-R-01, CAP-V-01 and CAP-XS-01 without implementing or promoting them.",
       "human_gate": "ACCEPT_R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
       "human_gate_decision": "pending",
-      "machine_qualification": null,
+      "machine_qualification": {"validated_head_sha": "4bcb99ae6ad92f0f5892b1a081fbe7fd81852a70", "workflow": "repository-gates", "run_number": 146, "run_id": 32368693980, "conclusion": "success", "contracts": "success", "governance": "success", "p0_specification": "success", "unit_tests": "success"},
       "upstream_dependency_resolved": true
     },
     "R3A": {"status": "paused_not_started", "reason": "await_r2_3b1_specification_and_reference_implementation_authorization"},
@@ -119,6 +119,6 @@
   "r2_1_merge_fact": {"pr": 20, "merge_commit": "19c2088231edde3bf5f8a4c70051c2f6506625db", "post_acceptance_ci_run": 89},
   "r2_2_merge_fact": {"pr": 21, "merge_commit": "3bccf723c301f77364c198b9a7b1282c340f5534", "post_acceptance_ci_run": 96},
   "r2_3_merge_fact": {"pr": 22, "merge_commit": "418f06200cde16173743454d506ee946bbc572fc", "merge_method": "squash", "post_acceptance_ci_run": 118},
-  "pending_gate_chain": ["R2_3B1_MACHINE_QUALIFICATION"],
-  "next_gate": "R2_3B1_MACHINE_QUALIFICATION"
+  "pending_gate_chain": ["R2_3B1_HUMAN_REVIEW"],
+  "next_gate": "R2_3B1_HUMAN_REVIEW"
 }
