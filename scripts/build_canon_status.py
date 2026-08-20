@@ -25,9 +25,10 @@ def build():
     r23ar = load(ARCH / "r2_3a" / "R2-3A-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json")
     r23am = load(ARCH / "r2_3a" / "R2-3A-MERGE-RECEIPT-v0.1.json")
     r23b0 = load(ARCH / "r2_3b0" / "R2-3B0-STATE.json")
+    r23b0r = load(ARCH / "r2_3b0" / "R2-3B0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json")
 
     return {
-        "schema_version": "1.0.0",
+        "schema_version": "1.1.0",
         "projection_semantics": "deterministic_non_authoritative_projection",
         "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
         "mission": "Yuanli Investment Research Intelligence Canon",
@@ -79,7 +80,11 @@ def build():
                 "purpose": r23b0["purpose"],
                 "human_gate": r23b0["human_gate"]["token"],
                 "human_gate_decision": r23b0["human_gate"]["decision"],
+                "human_acceptance_receipt": r23b0["human_gate"].get("acceptance_receipt"),
                 "machine_qualification": r23b0["machine_qualification"],
+                "human_review_qualification": r23b0.get("human_review_qualification"),
+                "post_acceptance_ci": r23b0.get("post_acceptance_qualification"),
+                "merge_authority": r23b0.get("merge_authority", "not_implied_by_acceptance"),
                 "upstream_dependency_resolved": r23b0["upstream_dependency"]["resolved"],
             },
             "R3A": {"status": "paused_not_started", "reason": "await_r2_3b0_contract_architecture_and_capability_implementation_authorization"},
@@ -140,6 +145,13 @@ def build():
             "provider_independent_identity": r23b0["constitutional_invariants"]["provider_independent_identity"],
             "scalar_master_score_prohibited": r23b0["constitutional_invariants"]["scalar_master_score_prohibited"],
             "n02_reunderwrite_policy": r23b0["n02_reunderwrite_policy"],
+        },
+        "r2_3b0_acceptance_fact": {
+            "pr": r23b0r["pr_number"],
+            "decision": r23b0r["decision"],
+            "reviewed_head": r23b0r["reviewed_head_sha"],
+            "reviewed_ci_run": r23b0r["reviewed_ci"]["run_number"],
+            "merge_authority": r23b0r["merge_authority"],
         },
         "admission": {"evidence": "not_authorized", "outcome": "not_authorized", "rsi_promotion": "not_authorized"},
         "r2_1_merge_fact": {"pr": r21r["pr_number"], "merge_commit": r21r["merge_commit_sha"], "post_acceptance_ci_run": r21r["post_acceptance_ci"]["run_number"]},
