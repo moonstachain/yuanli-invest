@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+  "pr_number": 24,
+  "human_acceptance": "ACCEPT_R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+  "merge_authorization": "AUTHORIZE_R2_3B0_MERGE",
+  "pre_merge_head_sha": "cd91977b994971fbb56b48202c96c652394c2ec4",
+  "pre_merge_ci": {
+    "workflow": "repository-gates",
+    "run_number": 144,
+    "run_id": 32367791054,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "contract_architecture": "success",
+    "unit_tests": "success"
+  },
+  "merge_method": "squash",
+  "merge_commit_sha": "cb5ffd0f2e8e377d82c12d716e995c7b5b328e01",
+  "merged_at": "2026-08-20T12:16:36Z",
+  "accepted_contract_architecture": {
+    "required_blocks": 11,
+    "canonical_output_root": "ResearchState",
+    "invocation_envelope_required": true,
+    "research_receipt_required": true,
+    "p0_profiles": ["CAP-R-01", "CAP-V-01", "CAP-XS-01"],
+    "point_in_time_required": true,
+    "provider_independent_identity": true,
+    "scalar_master_score_prohibited": true
+  },
+  "boundaries_preserved": {
+    "capability_implementation_authorized": false,
+    "capability_promotion_authorized": false,
+    "benchmark_execution_authorized": false,
+    "wind_codex_production_runtime_authorized": false,
+    "evidence_or_outcome_admission_authorized": false,
+    "a9_operational_canon_switch": false,
+    "rsi_promotion": false,
+    "trading_action_authorized": false,
+    "target_price_authorized": false,
+    "recommended_weight_or_position_size_authorized": false,
+    "live_execution": false
+  },
+  "next_gate": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK"
+}
