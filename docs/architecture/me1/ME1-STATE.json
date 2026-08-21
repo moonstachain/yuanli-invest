@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
+  "status": "candidate_started",
+  "design_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN",
+  "research_target_v2_successor_approved": true,
+  "implementation_authorities": {
+    "portfolio": false,
+    "position_sizing": false,
+    "trading": false,
+    "live_execution": false,
+    "registry_promotion": false,
+    "constitution_mutation": false,
+    "ME2": false,
+    "ME3": false,
+    "ME4": false,
+    "ME5": false
+  },
+  "migration": {
+    "M1_schema_parallel": "pending",
+    "M2_shadow_projection": "pending",
+    "M3_authority_cutover": "not_authorized"
+  },
+  "next_gate": "ME1_MACHINE_QUALIFICATION",
+  "next_me_stage_authorized": false
+}
