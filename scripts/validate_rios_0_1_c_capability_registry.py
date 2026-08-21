@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Validate RIOS-0.1-C capability convergence and governance boundaries.
 
-Task 3 materializes a research-only Genesis orchestration pack over the Task 2
-convergence matrix. Agent routing is not Capability authority, Replay PASS,
-Runtime authority, portfolio action, or Trading authority.
+Task 4 hardens semantic-gap candidates without admitting them to Registry.
+Identity plausibility and Registry readiness are deliberately separate claims.
 """
 
 from __future__ import annotations
@@ -40,6 +39,11 @@ EXPECTED_CLASSIFICATIONS = {
 }
 
 ALLOWED_CLASSIFICATIONS = {"reuse", "composite", "profile", "new_candidate", "reject"}
+ALLOWED_CANDIDATE_READINESS = {
+    "identity_candidate_only",
+    "schema_dependencies_complete_candidate",
+    "not_justified",
+}
 ALLOWED_AGENT_ROUTES = {
     "P_AGENT",
     "N_AGENT",
@@ -68,6 +72,28 @@ REQUIRED_MATRIX_FIELDS = {
     "benchmark_execution_authorized",
     "runtime_authorized",
     "trading_authorized",
+}
+TASK4_NEW_CANDIDATE_FIELDS = {
+    "semantic_gap_statement",
+    "why_existing_mothers_are_insufficient",
+    "required_dependency_types",
+    "candidate_readiness",
+}
+REQUIRED_DEPENDENCY_KEYS = {
+    "theory_ids",
+    "hypothesis_ids",
+    "factor_ids",
+    "algorithm_ids",
+    "benchmark_ids",
+    "canonical_input_fields",
+}
+REGISTRY_DEPENDENCY_CONFIG = {
+    "theory_ids": ("theories", "theory_id"),
+    "hypothesis_ids": ("hypotheses", "hypothesis_id"),
+    "factor_ids": ("factors", "factor_id"),
+    "algorithm_ids": ("algorithms", "algorithm_id"),
+    "benchmark_ids": ("benchmarks", "benchmark_id"),
+    "canonical_input_fields": ("data-fields", "field_id"),
 }
 
 PROHIBITED_TRUE_KEYS = {
@@ -148,13 +174,37 @@ def assert_pre_human_scope(paths):
     assert not offenders, f"pre-Human authority paths changed: {offenders}"
 
 
-def _capability_ids_from_pack(path: Path):
+def _ids_from_pack(path: Path, id_key: str):
     payload = json.loads(path.read_text(encoding="utf-8"))
     return [
-        obj["capability_id"]
+        obj[id_key]
         for obj in payload.get("objects", [])
-        if isinstance(obj, dict) and "capability_id" in obj
+        if isinstance(obj, dict) and id_key in obj
     ]
+
+
+def _capability_ids_from_pack(path: Path):
+    return _ids_from_pack(path, "capability_id")
+
+
+def load_active_registry_ids(root: Path, registry_name: str, id_key: str):
+    """Load governed IDs from a namespace index, never from physical presence alone."""
+    root = Path(root)
+    registry_dir = root / "registry" / registry_name
+    index_path = registry_dir / "_index.json"
+    assert index_path.exists(), f"registry index missing: {index_path}"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    active_ids = set()
+    for pack_name in index.get("pack_files", []):
+        pack_path = registry_dir / pack_name
+        assert pack_path.exists(), f"governed {registry_name} pack missing: {pack_name}"
+        active_ids.update(_ids_from_pack(pack_path, id_key))
+    assert len(active_ids) == index["entry_count"], (
+        registry_name,
+        len(active_ids),
+        index["entry_count"],
+    )
+    return active_ids
 
 
 def load_available_capability_ids(root: Path):
@@ -187,6 +237,70 @@ def load_available_capability_ids(root: Path):
     }
 
 
+def validate_candidate_readiness(root: Path, row: dict):
+    """Separate semantic identity plausibility from ResearchCapability Registry readiness."""
+    root = Path(root)
+    assert row.get("classification") == "new_candidate", row.get("genesis_id")
+    assert TASK4_NEW_CANDIDATE_FIELDS.issubset(row), row.get("genesis_id")
+    assert isinstance(row["semantic_gap_statement"], str) and row["semantic_gap_statement"].strip()
+    assert isinstance(row["why_existing_mothers_are_insufficient"], str) and row["why_existing_mothers_are_insufficient"].strip()
+    readiness = row["candidate_readiness"]
+    assert readiness in ALLOWED_CANDIDATE_READINESS, readiness
+
+    deps = row["required_dependency_types"]
+    assert isinstance(deps, dict), row.get("genesis_id")
+    assert set(deps) == REQUIRED_DEPENDENCY_KEYS, (row.get("genesis_id"), set(deps))
+
+    active_by_dependency = {}
+    for dep_key, (registry_name, id_key) in REGISTRY_DEPENDENCY_CONFIG.items():
+        active_ids = load_active_registry_ids(root, registry_name, id_key)
+        active_by_dependency[dep_key] = active_ids
+        for object_id in deps[dep_key]:
+            assert object_id in active_ids, (
+                row.get("genesis_id"),
+                dep_key,
+                f"dependency is not governed-active: {object_id}",
+            )
+
+    dependency_complete = bool(deps["theory_ids"])
+    dependency_complete = dependency_complete and bool(deps["hypothesis_ids"])
+    dependency_complete = dependency_complete and bool(deps["factor_ids"] or deps["algorithm_ids"])
+    dependency_complete = dependency_complete and bool(deps["benchmark_ids"])
+    dependency_complete = dependency_complete and bool(deps["canonical_input_fields"])
+
+    preview = row.get("candidate_contract_preview", {})
+    output_contract = preview.get("output_contract")
+    contract_complete = bool(isinstance(output_contract, str) and output_contract.strip())
+    contract_complete = contract_complete and preview.get("provider_independent") is True
+    contract_complete = contract_complete and preview.get("scalar_pnx_score_prohibited") is True
+    contract_complete = contract_complete and preview.get("investment_action_fields_prohibited") is True
+    if preview:
+        assert_provider_neutral(preview)
+        assert_non_authority(preview)
+
+    schema_dependencies_complete = dependency_complete and contract_complete
+    registry_apply_ready = readiness == "schema_dependencies_complete_candidate" and schema_dependencies_complete
+
+    if readiness == "schema_dependencies_complete_candidate":
+        assert schema_dependencies_complete, (
+            row.get("genesis_id"),
+            "schema-ready claim requires governed Theory + Hypothesis + Factor/Algorithm + Benchmark + CanonicalDataField + valid provider-independent output contract/prohibitions",
+        )
+    elif readiness == "identity_candidate_only":
+        assert not registry_apply_ready
+    elif readiness == "not_justified":
+        assert not registry_apply_ready
+
+    return {
+        "candidate_readiness": readiness,
+        "schema_dependencies_complete": schema_dependencies_complete,
+        "registry_apply_ready": registry_apply_ready,
+        "missing_dependency_types": [
+            key for key in REQUIRED_DEPENDENCY_KEYS if not deps[key]
+        ],
+    }
+
+
 def validate_convergence_matrix(root: Path):
     root = Path(root)
     matrix_path = root / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json"
@@ -206,6 +320,7 @@ def validate_convergence_matrix(root: Path):
     assert not inventory["duplicate_physical_ids"], inventory["duplicate_physical_ids"]
 
     candidate_ids = []
+    candidate_readiness = {}
     for row in rows:
         assert REQUIRED_MATRIX_FIELDS.issubset(row), row["genesis_id"]
         assert_classification(row)
@@ -223,6 +338,7 @@ def validate_convergence_matrix(root: Path):
         if row["classification"] == "new_candidate":
             assert candidate_id, row["genesis_id"]
             assert row["registry_mutation_required"] is True
+            candidate_readiness[row["genesis_id"]] = validate_candidate_readiness(root, row)
         else:
             assert candidate_id is None, (row["genesis_id"], candidate_id)
             assert row["registry_mutation_required"] is False
@@ -236,6 +352,9 @@ def validate_convergence_matrix(root: Path):
         "new_candidate_count": len(candidate_ids),
         "active_capability_count": len(inventory["active_ids"]),
         "physical_capability_count": len(inventory["physical_ids"]),
+        "schema_ready_candidate_count": sum(
+            1 for result in candidate_readiness.values() if result["registry_apply_ready"]
+        ),
     }
 
 
