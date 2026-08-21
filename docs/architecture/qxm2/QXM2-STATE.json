@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "stage": "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
-  "status": "shadow_compilation_started",
+  "status": "source_verification_complete",
   "upstream_dependency": {
     "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
     "required_status": "accepted_merged",
@@ -10,12 +10,29 @@
     "resolved": true
   },
   "candidate_count": 6,
+  "source_verification": {
+    "status": "complete",
+    "source_matrix": "docs/architecture/qxm2/QXM2-PRIMARY-SOURCE-MATRIX-v0.1.json",
+    "source_count": 25,
+    "all_candidates_covered": true,
+    "qin_material_remains_practitioner_authority": true,
+    "full_papers_stored": false
+  },
+  "evidence_compilation": {
+    "status": "complete",
+    "evidence_matrix": "docs/architecture/qxm2/QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json",
+    "relation_count": 22,
+    "support_and_boundary_coverage_required": true,
+    "replication_status_required": true
+  },
   "admission_authority": "none",
+  "hypothesis_preregistration_authority": "none",
+  "formal_benchmark_creation_authority": "none",
   "benchmark_execution_authority": "none",
   "capability_promotion_authority": "none",
   "human_gate": {
     "token": "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
     "decision": "pending"
   },
-  "next_gate": "QXM2_SOURCE_VERIFICATION"
+  "next_gate": "QXM2_MECHANISM_COMPILATION"
 }
