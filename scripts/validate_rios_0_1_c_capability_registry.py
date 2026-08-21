@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Validate RIOS-0.1-C convergence bootstrap and governance primitives.
+"""Validate RIOS-0.1-C capability convergence and governance boundaries.
 
-Task 1 intentionally stops before Matrix / Genesis Pack materialization. The
-full-pack validator therefore fails closed until later approved tasks create the
-missing convergence artifacts.
+Task 2 materializes the exact ten-row convergence matrix over the existing
+ResearchCapability registry. The Genesis orchestration pack remains deliberately
+absent until Task 3.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+from collections import Counter
 from pathlib import Path
 
 EXPECTED_GENESIS_IDS = [
@@ -25,7 +26,34 @@ EXPECTED_GENESIS_IDS = [
     "RIOS-GEN-10-MARKET-CLOCK-REGIME-TRANSITION",
 ]
 
+EXPECTED_CLASSIFICATIONS = {
+    "RIOS-GEN-01-AI-INFRASTRUCTURE-REGIME-TRANSITION": "profile",
+    "RIOS-GEN-02-ENERGY-BOTTLENECK-CAPTURE": "profile",
+    "RIOS-GEN-03-NARRATIVE-DIFFUSION-ENGINE": "composite",
+    "RIOS-GEN-04-NARRATIVE-BUBBLE-DETECTION": "composite",
+    "RIOS-GEN-05-PLATFORM-WINNER-CAPTURE": "composite",
+    "RIOS-GEN-06-CONVEXITY-EXPRESSION-ENGINE": "composite",
+    "RIOS-GEN-07-EVIDENCE-AUTHORITY-ENGINE": "new_candidate",
+    "RIOS-GEN-08-NARRATIVE-PRICE-GAP": "composite",
+    "RIOS-GEN-09-PORTFOLIO-SURVIVAL-ENGINE": "composite",
+    "RIOS-GEN-10-MARKET-CLOCK-REGIME-TRANSITION": "new_candidate",
+}
+
 ALLOWED_CLASSIFICATIONS = {"reuse", "composite", "profile", "new_candidate", "reject"}
+REQUIRED_MATRIX_FIELDS = {
+    "genesis_id",
+    "human_name",
+    "classification",
+    "canonical_capability_ids",
+    "candidate_capability_id",
+    "rationale",
+    "semantic_overlap_notes",
+    "authority_boundary",
+    "registry_mutation_required",
+    "benchmark_execution_authorized",
+    "runtime_authorized",
+    "trading_authorized",
+}
 
 PROHIBITED_TRUE_KEYS = {
     "registry_admission_authorized",
@@ -84,11 +112,100 @@ def assert_pre_human_scope(paths):
     assert not offenders, f"pre-Human authority paths changed: {offenders}"
 
 
+def _capability_ids_from_pack(path: Path):
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return [
+        obj["capability_id"]
+        for obj in payload.get("objects", [])
+        if isinstance(obj, dict) and "capability_id" in obj
+    ]
+
+
+def load_available_capability_ids(root: Path):
+    """Separate physical identity presence from governed active authority."""
+    root = Path(root)
+    registry_dir = root / "registry" / "capabilities"
+    index = json.loads((registry_dir / "_index.json").read_text(encoding="utf-8"))
+
+    physical_occurrences = []
+    for path in sorted(registry_dir.glob("*.json")):
+        if path.name == "_index.json":
+            continue
+        physical_occurrences.extend(_capability_ids_from_pack(path))
+
+    counts = Counter(physical_occurrences)
+    duplicate_physical_ids = {capability_id for capability_id, count in counts.items() if count > 1}
+
+    active_ids = set()
+    for pack_name in index.get("pack_files", []):
+        pack_path = registry_dir / pack_name
+        assert pack_path.exists(), f"governed capability pack missing: {pack_name}"
+        active_ids.update(_capability_ids_from_pack(pack_path))
+
+    assert len(active_ids) == index["entry_count"], (len(active_ids), index["entry_count"])
+    return {
+        "physical_ids": set(physical_occurrences),
+        "active_ids": active_ids,
+        "duplicate_physical_ids": duplicate_physical_ids,
+        "active_pack_files": tuple(index.get("pack_files", [])),
+    }
+
+
+def validate_convergence_matrix(root: Path):
+    root = Path(root)
+    matrix_path = root / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json"
+    assert matrix_path.exists(), f"Task 2 convergence matrix missing: {matrix_path}"
+    matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
+    rows = matrix["rows"]
+
+    assert matrix["genesis_count"] == 10, matrix["genesis_count"]
+    assert len(rows) == 10, len(rows)
+    ids = [row["genesis_id"] for row in rows]
+    assert_exact_genesis_ids(ids)
+    assert len(ids) == len(set(ids)), ids
+    actual_classifications = {row["genesis_id"]: row["classification"] for row in rows}
+    assert actual_classifications == EXPECTED_CLASSIFICATIONS, actual_classifications
+
+    inventory = load_available_capability_ids(root)
+    assert not inventory["duplicate_physical_ids"], inventory["duplicate_physical_ids"]
+
+    candidate_ids = []
+    for row in rows:
+        assert REQUIRED_MATRIX_FIELDS.issubset(row), row["genesis_id"]
+        assert_classification(row)
+        assert_non_authority(row)
+        assert row["benchmark_execution_authorized"] is False
+        assert row["runtime_authorized"] is False
+        assert row["trading_authorized"] is False
+        for capability_id in row["canonical_capability_ids"]:
+            assert capability_id in inventory["active_ids"], (
+                row["genesis_id"],
+                f"canonical dependency is not active governed authority: {capability_id}",
+            )
+        candidate_id = row["candidate_capability_id"]
+        if row["classification"] == "new_candidate":
+            assert candidate_id, row["genesis_id"]
+            assert row["registry_mutation_required"] is True
+        else:
+            assert candidate_id is None, (row["genesis_id"], candidate_id)
+            assert row["registry_mutation_required"] is False
+        if candidate_id:
+            assert candidate_id not in inventory["physical_ids"], f"candidate ID collision: {candidate_id}"
+            candidate_ids.append(candidate_id)
+
+    assert len(candidate_ids) == len(set(candidate_ids)), candidate_ids
+    return {
+        "genesis_count": len(rows),
+        "new_candidate_count": len(candidate_ids),
+        "active_capability_count": len(inventory["active_ids"]),
+        "physical_capability_count": len(inventory["physical_ids"]),
+    }
+
+
 def validate_rios_0_1_c(root: Path):
     root = Path(root)
     rios = root / "docs" / "architecture" / "rios" / "0.1-c"
     state_path = rios / "RIOS-0.1-C-STATE.json"
-    matrix_path = rios / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json"
     pack_path = rios / "RIOS-0.1-C-GENESIS-PACK-v0.1.json"
 
     assert state_path.exists(), state_path
@@ -104,12 +221,11 @@ def validate_rios_0_1_c(root: Path):
     ):
         assert state[field] == "none", (field, state[field])
 
-    assert matrix_path.exists(), f"Task 2 convergence matrix missing: {matrix_path}"
+    matrix_result = validate_convergence_matrix(root)
     assert pack_path.exists(), f"Task 3 Genesis pack missing: {pack_path}"
 
     return {
-        "genesis_count": 10,
-        "new_candidate_count": 0,
+        **matrix_result,
         "registry_mutations": 0,
         "next_gate": state["next_gate"],
     }
@@ -118,8 +234,10 @@ def validate_rios_0_1_c(root: Path):
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--self-test-primitives", action="store_true")
+    parser.add_argument("--matrix-only", action="store_true")
     args = parser.parse_args()
 
+    root = Path(__file__).resolve().parents[1]
     if args.self_test_primitives:
         assert_exact_genesis_ids(EXPECTED_GENESIS_IDS)
         assert_classification({"classification": "profile"})
@@ -127,8 +245,10 @@ def main() -> int:
         assert_pre_human_scope(["docs/architecture/rios/0.1-c/example.json"])
         print("RIOS-0.1-C primitive bootstrap: PASS")
         return 0
+    if args.matrix_only:
+        print(json.dumps(validate_convergence_matrix(root), ensure_ascii=False, sort_keys=True))
+        return 0
 
-    root = Path(__file__).resolve().parents[1]
     result = validate_rios_0_1_c(root)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     return 0
