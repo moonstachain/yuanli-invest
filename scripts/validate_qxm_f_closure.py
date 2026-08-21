@@ -21,12 +21,15 @@ SPEC = ROOT / "docs" / "superpowers" / "specs" / "2026-08-21-qxm-f-financial-mec
 PLAN = ROOT / "docs" / "superpowers" / "plans" / "2026-08-21-qxm-f-financial-mechanics-capability-closure.md"
 G1_LEDGER = QXM_F / "g1" / "QXM-F-G1-ADMISSION-LEDGER-v0.1.json"
 G1_REVIEW = QXM_F / "g1" / "QXM-F-G1-HUMAN-REVIEW-CARD-v0.1.md"
+G1_ACCEPTANCE = QXM_F / "g1" / "QXM-F-G1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+G1_ADMISSION = QXM_F / "g1" / "QXM-F-G1-ADMISSION-RECEIPT-v0.1.json"
 
 APPROVED_SPEC_SHA256 = "bc06e5b91cdf4ace24a228a691096ceb124285c8ae50fc8418905254a9abe8e2"
 APPROVED_PLAN_SHA256 = "61db36bc9fc67365a9ba7e06a654d34563c83c659e9fd8480665b93056970da7"
 QXM2_SEMANTIC_MERGE = "e1b7a65736c6f93089d7e635e5c72624345941fc"
 QXM2_CLOSURE_MERGE = "5143b3c141c712a58c9a0417ac6bb915882fa4d5"
 G1_HUMAN_TOKEN = "ACCEPT_QXM_F_G1_SELECTIVE_ADMISSION"
+G1_MERGE_TOKEN = "AUTHORIZE_QXM_F_G1_MERGE"
 
 LEGAL_STATES = {
     "G0_QXM2_ACCEPTED_MERGED",
@@ -333,13 +336,51 @@ def validate_qxm_f(root: Path = ROOT):
     if state["status"] == "G1_SELECTIVE_ADMISSION_READY_FOR_HUMAN_REVIEW":
         ledger_path = root / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-ADMISSION-LEDGER-v0.1.json"
         review_path = root / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-HUMAN-REVIEW-CARD-v0.1.md"
+        acceptance_path = root / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+        admission_path = root / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-ADMISSION-RECEIPT-v0.1.json"
         assert ledger_path.exists(), "G1 state requires Admission Ledger"
         assert review_path.exists(), "G1 state requires Human Review Card"
         validate_g1_admission_ledger(root, load_json(ledger_path))
-        assert state["identity_settlement"] == "candidate_dispositions_complete_human_pending"
         assert state["g1"]["human_gate_token"] == G1_HUMAN_TOKEN
-        assert state["next_gate"] == "QXM_F_G1_HUMAN_REVIEW"
-        assert_g1_pre_human_scope(_pull_request_changed_paths(root))
+
+        if acceptance_path.exists():
+            acceptance = load_json(acceptance_path)
+            assert acceptance["decision"] == G1_HUMAN_TOKEN
+            assert acceptance["merge_authority"] == "not_implied_by_human_acceptance"
+            assert acceptance["required_merge_token"] == G1_MERGE_TOKEN
+            assert all(value is False for value in acceptance["boundaries_preserved"].values())
+            assert admission_path.exists(), "Human-accepted G1 state requires Admission Receipt"
+            admission = load_json(admission_path)
+            assert admission["human_acceptance"] == G1_HUMAN_TOKEN
+            assert admission["required_next_authority"] == G1_MERGE_TOKEN
+            assert admission["formal_benchmark_objects_created"] == 0
+            assert admission["hypotheses_preregistered"] == 0
+            assert admission["capabilities_promoted"] == 0
+            assert admission["production_runtime_activated"] is False
+            assert all(value is False for value in admission["boundaries_preserved"].values())
+
+            g1 = state["g1"]
+            assert g1["human_decision"] == G1_HUMAN_TOKEN
+            assert g1["registry_apply_state"] == "human_accepted_ready_for_merge"
+            assert g1["theory_registry_admissions_applied"] == 12
+            assert g1["hypothesis_registry_admissions_applied"] == 11
+            assert g1["hypothesis_kept_shadow"] == 1
+            assert g1["benchmark_seed_formalize_dispositions"] == 6
+            assert g1["formal_registry_mutation_performed"] is True
+            assert g1["hypothesis_preregistration_performed"] is False
+            assert g1["formal_benchmark_creation_performed"] is False
+            assert g1["benchmark_execution_performed"] is False
+            assert g1["capability_promotion_performed"] is False
+            assert g1["required_merge_token"] == G1_MERGE_TOKEN
+            assert g1["next_gate"] == "QXM_F_G1_MERGE"
+            assert state["identity_settlement"] == "human_accepted_registry_identity_applied_pending_merge"
+            assert state["next_gate"] == "QXM_F_G1_MERGE"
+            assert_no_authority_escalation(acceptance)
+            assert_no_authority_escalation(admission)
+        else:
+            assert state["identity_settlement"] == "candidate_dispositions_complete_human_pending"
+            assert state["next_gate"] == "QXM_F_G1_HUMAN_REVIEW"
+            assert_g1_pre_human_scope(_pull_request_changed_paths(root))
 
     assert_no_authority_escalation(qxm2_receipt)
     assert_registry_counts_consistent(root)
