@@ -107,7 +107,7 @@ Hard boundary:
 
 Misconduct attribution requires separate evidence authority.
 
-## 6. Stress liquidity is not “can I click sell?”
+## 6. Stress Exit Liquidity is not “can I click sell?”
 
 QXM1 preserves a stronger liquidity definition:
 
