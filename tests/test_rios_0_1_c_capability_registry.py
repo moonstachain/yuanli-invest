@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import subprocess
 import sys
 import unittest
@@ -7,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 VALIDATOR = ROOT / "scripts" / "validate_rios_0_1_c_capability_registry.py"
 STATE = ROOT / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-STATE.json"
+MATRIX = ROOT / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json"
 
 EXPECTED_GENESIS_IDS = [
     "RIOS-GEN-01-AI-INFRASTRUCTURE-REGIME-TRANSITION",
@@ -20,6 +22,34 @@ EXPECTED_GENESIS_IDS = [
     "RIOS-GEN-09-PORTFOLIO-SURVIVAL-ENGINE",
     "RIOS-GEN-10-MARKET-CLOCK-REGIME-TRANSITION",
 ]
+
+EXPECTED_CLASSIFICATIONS = {
+    "RIOS-GEN-01-AI-INFRASTRUCTURE-REGIME-TRANSITION": "profile",
+    "RIOS-GEN-02-ENERGY-BOTTLENECK-CAPTURE": "profile",
+    "RIOS-GEN-03-NARRATIVE-DIFFUSION-ENGINE": "composite",
+    "RIOS-GEN-04-NARRATIVE-BUBBLE-DETECTION": "composite",
+    "RIOS-GEN-05-PLATFORM-WINNER-CAPTURE": "composite",
+    "RIOS-GEN-06-CONVEXITY-EXPRESSION-ENGINE": "composite",
+    "RIOS-GEN-07-EVIDENCE-AUTHORITY-ENGINE": "new_candidate",
+    "RIOS-GEN-08-NARRATIVE-PRICE-GAP": "composite",
+    "RIOS-GEN-09-PORTFOLIO-SURVIVAL-ENGINE": "composite",
+    "RIOS-GEN-10-MARKET-CLOCK-REGIME-TRANSITION": "new_candidate",
+}
+
+REQUIRED_MATRIX_FIELDS = {
+    "genesis_id",
+    "human_name",
+    "classification",
+    "canonical_capability_ids",
+    "candidate_capability_id",
+    "rationale",
+    "semantic_overlap_notes",
+    "authority_boundary",
+    "registry_mutation_required",
+    "benchmark_execution_authorized",
+    "runtime_authorized",
+    "trading_authorized",
+}
 
 
 def load_validator_module():
@@ -98,8 +128,45 @@ class RIOS01CBootstrapTests(unittest.TestCase):
             with self.assertRaises(AssertionError):
                 module.assert_pre_human_scope([path])
 
+    def test_task2_matrix_is_exactly_ten_unique_rows_with_frozen_classifications(self):
+        self.assertTrue(MATRIX.exists(), str(MATRIX))
+        matrix = json.loads(MATRIX.read_text(encoding="utf-8"))
+        rows = matrix["rows"]
+        self.assertEqual(matrix["genesis_count"], 10)
+        self.assertEqual(len(rows), 10)
+        ids = [row["genesis_id"] for row in rows]
+        self.assertEqual(ids, EXPECTED_GENESIS_IDS)
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(
+            {row["genesis_id"]: row["classification"] for row in rows},
+            EXPECTED_CLASSIFICATIONS,
+        )
+
+    def test_task2_matrix_rows_have_required_fields_and_no_execution_authority(self):
+        matrix = json.loads(MATRIX.read_text(encoding="utf-8"))
+        module = load_validator_module()
+        for row in matrix["rows"]:
+            self.assertTrue(REQUIRED_MATRIX_FIELDS.issubset(row), row["genesis_id"])
+            module.assert_classification(row)
+            module.assert_non_authority(row)
+            self.assertFalse(row["benchmark_execution_authorized"])
+            self.assertFalse(row["runtime_authorized"])
+            self.assertFalse(row["trading_authorized"])
+
+    def test_task2_canonical_dependencies_are_active_and_candidate_ids_do_not_collide(self):
+        module = load_validator_module()
+        inventory = module.load_available_capability_ids(ROOT)
+        self.assertFalse(inventory["duplicate_physical_ids"], inventory["duplicate_physical_ids"])
+        matrix = json.loads(MATRIX.read_text(encoding="utf-8"))
+        for row in matrix["rows"]:
+            for capability_id in row["canonical_capability_ids"]:
+                self.assertIn(capability_id, inventory["active_ids"], (row["genesis_id"], capability_id))
+            candidate_id = row["candidate_capability_id"]
+            if candidate_id:
+                self.assertNotIn(candidate_id, inventory["physical_ids"], candidate_id)
+
     @unittest.expectedFailure
-    def test_full_pack_validates_after_task2(self):
+    def test_full_pack_validates_after_task3(self):
         module = load_validator_module()
         result = module.validate_rios_0_1_c(ROOT)
         self.assertEqual(result["genesis_count"], 10)
