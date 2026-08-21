@@ -1,6 +1,6 @@
 # YIP0 | Human Review Card v0.1
 
-Status: `human_accepted_ready_for_merge`
+Status: `accepted_merged`
 
 Human Gate decision:
 
@@ -8,7 +8,9 @@ Human Gate decision:
 
 Decision recorded at `2026-08-21T05:15:00-03:00`.
 
-Acceptance freezes the **YIP0 philosophy authority candidate only**. It does not authorize merge, capability promotion, Evidence/Outcome admission, benchmark execution/PASS, production runtime, portfolio action or live execution. Merge remains a separate authority gate.
+Acceptance froze the **YIP0 philosophy authority candidate only**. It did not itself authorize merge, capability promotion, Evidence/Outcome admission, benchmark execution/PASS, production runtime, portfolio action or live execution. Merge was later separately authorized by:
+
+`AUTHORIZE_YIP0_MERGE`
 
 ## Qualification basis
 
@@ -34,7 +36,21 @@ Acceptance-record qualification head:
 
 `repository-gates` Run #226 (`32462558332`) = **SUCCESS** with contracts, governance, YIP0 validator and unit tests successful.
 
-Because this review-card/state closure changes the branch head again, the final current PR exact head must also be green before merge authorization is acted on. That later exact-head CI is an external Git runtime fact and is not recursively written into this review card.
+Before semantic merge, `main` advanced through QXM2. The YIP0 branch was rebased without changing any Human-Accepted YIP0 file blob; the only overlapping path, `.github/workflows/ci.yml`, was resolved by preserving both QXM2 gates and the YIP0 philosophy gate.
+
+Rebased pre-merge exact head:
+
+`112445a57f0650e423803d85288645a593844929`
+
+`repository-gates` Run #249 (`32468483237`) = **SUCCESS** with contracts, governance, QXM2 gates, YIP0 validator and full unit-test discovery successful.
+
+Authorized semantic merge:
+
+- PR: `#39`
+- method: `squash`
+- merge commit: `b79581c82ca7197a9ce078baa6f3b5e8708a1e17`
+- merged at: `2026-08-21T09:34:17Z`
+- merge receipt: `docs/architecture/yip0/YIP0-MERGE-RECEIPT-v0.1.json`
 
 ## D1 | Philosophical coherence — PASS
 
@@ -92,10 +108,12 @@ YIP0 grants no authority for target prices, recommended weights, position sizes,
 
 `ACCEPT_YIP0_INVESTMENT_PHILOSOPHY_CANON`
 
-## Current gate
-
-`YIP0_MERGE`
-
-Human Acceptance does **not** imply merge. Merge requires the separate explicit owner token:
+## Merge Decision
 
 `AUTHORIZE_YIP0_MERGE`
+
+## Current gate
+
+`YIP0_COMPLETE`
+
+YIP0 is now an accepted merged philosophy authority. No YIP1, capability promotion, Registry admission, benchmark execution, production runtime or trading authority is implied by this closure.
