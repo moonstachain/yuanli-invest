@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.0",
   "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
-  "status": "candidate_started",
+  "status": "candidate_ready_for_human_review",
   "design_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN",
   "research_target_v2_successor_approved": true,
   "implementation_authorities": {
@@ -28,6 +28,16 @@
     "legacy_engine_assignments_remain_unresolved": true,
     "book_membership_is_passport_specific": true
   },
-  "next_gate": "ME1_MACHINE_QUALIFICATION",
+  "machine_qualification": {
+    "validated_head_sha": "66d9478438d11c19ef86a3a96316f5553f042976",
+    "workflow": "repository-gates",
+    "run_number": 352,
+    "run_id": 32510838152,
+    "contracts": "success",
+    "governance": "success",
+    "me1_validator": "success",
+    "unit_tests": "success"
+  },
+  "next_gate": "HUMAN_REVIEW",
   "next_me_stage_authorized": false
 }
