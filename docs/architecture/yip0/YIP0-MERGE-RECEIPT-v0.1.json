@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YIP0_INVESTMENT_PHILOSOPHY_CANON",
+  "pr_number": 39,
+  "human_acceptance_token": "ACCEPT_YIP0_INVESTMENT_PHILOSOPHY_CANON",
+  "merge_authority": "AUTHORIZE_YIP0_MERGE",
+  "semantic_pre_merge_head_sha": "112445a57f0650e423803d85288645a593844929",
+  "pre_merge_ci": {
+    "workflow": "repository-gates",
+    "run_number": 249,
+    "run_id": 32468483237,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "yip0_philosophy": "success",
+    "unit_tests": "success"
+  },
+  "merge_method": "squash",
+  "semantic_merge_commit": "b79581c82ca7197a9ce078baa6f3b5e8708a1e17",
+  "merged_at": "2026-08-21T09:34:17Z",
+  "conflict_resolution": {
+    "main_before_rebase": "5143b3c141c712a58c9a0417ac6bb915882fa4d5",
+    "original_yip0_head": "986b902d4cdf4c4111e48c4799d1347e5e4af38a",
+    "conflicting_path": ".github/workflows/ci.yml",
+    "resolution": "rebased YIP0 onto current main; preserved QXM2 evidence/post-merge gates and added YIP0 philosophy gate; all Human-Accepted YIP0 file blobs preserved unchanged",
+    "semantic_change_to_yip0": false
+  },
+  "accepted_philosophy": {
+    "identity": "Fallibilist Reflexive Evolutionary Realism",
+    "human_name_zh": "原力投研哲学｜可错的反身演化实在论",
+    "mother_laws": [
+      "REALITY_OVER_BELIEF",
+      "REFLEXIVITY",
+      "TAIL_ASYMMETRY",
+      "SURVIVAL_FIRST"
+    ],
+    "axiom_count": 12,
+    "os_model": "one_core_three_worlds_three_gates_one_loop",
+    "x_semantics": "X := (Xs, Xa, Xp)",
+    "evidence_law": "Claim Authority <= Evidence Authority",
+    "v_identity": "Price-Implied Expectations",
+    "s_identity": "Portfolio Survival"
+  },
+  "boundaries_preserved": {
+    "capability_promotion_authorized": false,
+    "evidence_admission_authorized": false,
+    "outcome_admission_authorized": false,
+    "benchmark_execution_or_pass_authorized": false,
+    "production_runtime_authorized": false,
+    "target_price_authorized": false,
+    "recommended_weight_authorized": false,
+    "position_size_authorized": false,
+    "trading_action_authorized": false,
+    "live_execution": false,
+    "repository_active_gate_override_authorized": false
+  },
+  "yip0_status": "accepted_merged",
+  "next_yip_stage_authorized": false
+}

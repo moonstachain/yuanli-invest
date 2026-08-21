@@ -11,6 +11,7 @@ CONTRACT = YIP0 / "YIP0-PHILOSOPHY-CONTRACT-v0.1.json"
 STATE = YIP0 / "YIP0-STATE.json"
 REVIEW = YIP0 / "YIP0-HUMAN-REVIEW-CARD-v0.1.md"
 ACCEPT_RECEIPT = YIP0 / "YIP0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+MERGE_RECEIPT = YIP0 / "YIP0-MERGE-RECEIPT-v0.1.json"
 CONSTITUTION = OS / "CONSTITUTION.md"
 CANON_STATUS = ROOT / "docs" / "architecture" / "CANON-STATUS.json"
 
@@ -20,6 +21,11 @@ MERGE_TOKEN = "AUTHORIZE_YIP0_MERGE"
 ACCEPTED_REVIEW_HEAD = "500b1fac6771861d1222275781460fdebfafa196"
 ACCEPTED_REVIEW_RUN = 220
 ACCEPTED_REVIEW_RUN_ID = 32462028520
+PRE_MERGE_HEAD = "112445a57f0650e423803d85288645a593844929"
+PRE_MERGE_RUN = 249
+PRE_MERGE_RUN_ID = 32468483237
+SEMANTIC_MERGE_COMMIT = "b79581c82ca7197a9ce078baa6f3b5e8708a1e17"
+MERGED_AT = "2026-08-21T09:34:17Z"
 EXPECTED_AXIOMS = [f"YL-PH-{i:02d}" for i in range(1, 13)]
 EXPECTED_MOTHER_LAWS = [
     "REALITY_OVER_BELIEF",
@@ -65,6 +71,36 @@ def assert_success_qualification(qualification, *, require_review=False):
         assert qualification["run_number"] == ACCEPTED_REVIEW_RUN
         assert qualification["run_id"] == ACCEPTED_REVIEW_RUN_ID
         assert qualification["formal_review"] == "12/12 PASS"
+
+
+def assert_acceptance_receipt(acceptance):
+    assert acceptance["stage"] == STAGE
+    assert acceptance["decision"] == HUMAN_TOKEN
+    assert acceptance["pr_number"] == 39
+    assert acceptance["reviewed_head_sha"] == ACCEPTED_REVIEW_HEAD
+    reviewed_ci = acceptance["reviewed_ci"]
+    assert reviewed_ci["workflow"] == "repository-gates"
+    assert reviewed_ci["run_number"] == ACCEPTED_REVIEW_RUN
+    assert reviewed_ci["run_id"] == ACCEPTED_REVIEW_RUN_ID
+    assert reviewed_ci["conclusion"] == "success"
+    assert reviewed_ci["contracts"] == "success"
+    assert reviewed_ci["governance"] == "success"
+    assert reviewed_ci["yip0_philosophy"] == "success"
+    assert reviewed_ci["unit_tests"] == "success"
+    accepted_decisions = acceptance["accepted_decisions"]
+    assert accepted_decisions["axiom_count"] == 12
+    assert accepted_decisions["axiom_ids"] == EXPECTED_AXIOMS
+    assert accepted_decisions["mother_laws"] == EXPECTED_MOTHER_LAWS
+    assert accepted_decisions["os_model"] == "one_core_three_worlds_three_gates_one_loop"
+    assert accepted_decisions["p_not_equal_n"] is True
+    assert accepted_decisions["x_semantics"] == "X := (Xs, Xa, Xp)"
+    assert accepted_decisions["lineage_is_not_evidence_authority_laundering"] is True
+    assert accepted_decisions["scalar_master_score_prohibited"] is True
+    boundaries = acceptance["boundaries_preserved"]
+    assert all(value is False for value in boundaries.values())
+    assert acceptance["merge_authority"] == "not_implied_by_acceptance"
+    assert acceptance["required_merge_token"] == MERGE_TOKEN
+    assert acceptance["post_acceptance_ci"] == "required_on_acceptance_record_head"
 
 
 def main():
@@ -178,12 +214,13 @@ def main():
     assert governance["active_repository_gate_override"] is False
     assert governance["parallel_candidate_track"] is True
 
-    # Candidate state and Human Gate.
+    # Lifecycle state and Human Gate.
     allowed_states = {
         "candidate_started",
         "candidate_ready_for_human_review",
         "human_accepted_pending_post_acceptance_ci",
         "human_accepted_ready_for_merge",
+        "accepted_merged",
     }
     assert state["stage"] == STAGE
     assert state["status"] in allowed_states
@@ -205,49 +242,23 @@ def main():
     assert human_gate["acceptance_does_not_imply_evidence_admission"] is True
     assert human_gate["acceptance_does_not_imply_runtime_authority"] is True
     assert human_gate["acceptance_does_not_imply_trading_authority"] is True
-    assert state["global_gate_behavior"] == "parallel_candidate_does_not_override_repository_next_gate"
-    assert state["repository_next_gate_expected_to_remain_external_to_yip0"] is True
 
     if state["status"] == "candidate_started":
         assert state["machine_qualification"] is None
         assert human_gate["decision"] == "pending"
         assert state["merge_authority"] == MERGE_TOKEN
         assert state["next_gate"] == "YIP0_MACHINE_QUALIFICATION"
+        assert state["global_gate_behavior"] == "parallel_candidate_does_not_override_repository_next_gate"
     elif state["status"] == "candidate_ready_for_human_review":
         assert_success_qualification(state["machine_qualification"])
         assert human_gate["decision"] == "pending"
         assert state["merge_authority"] == MERGE_TOKEN
         assert state["next_gate"] == "YIP0_HUMAN_REVIEW"
+        assert state["global_gate_behavior"] == "parallel_candidate_does_not_override_repository_next_gate"
     else:
         assert ACCEPT_RECEIPT.exists(), ACCEPT_RECEIPT
         acceptance = load_json(ACCEPT_RECEIPT)
-        assert acceptance["stage"] == STAGE
-        assert acceptance["decision"] == HUMAN_TOKEN
-        assert acceptance["pr_number"] == 39
-        assert acceptance["reviewed_head_sha"] == ACCEPTED_REVIEW_HEAD
-        reviewed_ci = acceptance["reviewed_ci"]
-        assert reviewed_ci["workflow"] == "repository-gates"
-        assert reviewed_ci["run_number"] == ACCEPTED_REVIEW_RUN
-        assert reviewed_ci["run_id"] == ACCEPTED_REVIEW_RUN_ID
-        assert reviewed_ci["conclusion"] == "success"
-        assert reviewed_ci["contracts"] == "success"
-        assert reviewed_ci["governance"] == "success"
-        assert reviewed_ci["yip0_philosophy"] == "success"
-        assert reviewed_ci["unit_tests"] == "success"
-        accepted_decisions = acceptance["accepted_decisions"]
-        assert accepted_decisions["axiom_count"] == 12
-        assert accepted_decisions["axiom_ids"] == EXPECTED_AXIOMS
-        assert accepted_decisions["mother_laws"] == EXPECTED_MOTHER_LAWS
-        assert accepted_decisions["os_model"] == "one_core_three_worlds_three_gates_one_loop"
-        assert accepted_decisions["p_not_equal_n"] is True
-        assert accepted_decisions["x_semantics"] == "X := (Xs, Xa, Xp)"
-        assert accepted_decisions["lineage_is_not_evidence_authority_laundering"] is True
-        assert accepted_decisions["scalar_master_score_prohibited"] is True
-        boundaries = acceptance["boundaries_preserved"]
-        assert all(value is False for value in boundaries.values())
-        assert acceptance["merge_authority"] == "not_implied_by_acceptance"
-        assert acceptance["required_merge_token"] == MERGE_TOKEN
-        assert acceptance["post_acceptance_ci"] == "required_on_acceptance_record_head"
+        assert_acceptance_receipt(acceptance)
 
         assert human_gate["decision"] == HUMAN_TOKEN
         assert human_gate["accepted_at"] == acceptance["accepted_at"]
@@ -255,20 +266,64 @@ def main():
         assert human_gate["reviewed_head_sha"] == ACCEPTED_REVIEW_HEAD
         assert human_gate["reviewed_ci_run"] == ACCEPTED_REVIEW_RUN
         assert_success_qualification(state["human_review_qualification"], require_review=True)
-        assert state["merge_authority"] == "not_implied_by_acceptance"
         assert state["required_merge_token"] == MERGE_TOKEN
         assert state["post_acceptance_ci_required"] is True
 
         if state["status"] == "human_accepted_pending_post_acceptance_ci":
+            assert state["merge_authority"] == "not_implied_by_acceptance"
             assert state["post_acceptance_qualification"] is None
             assert state["post_acceptance_ci_satisfied"] is False
             assert state["next_gate"] == "YIP0_POST_ACCEPTANCE_CI"
-        else:
+            assert state["global_gate_behavior"] == "parallel_candidate_does_not_override_repository_next_gate"
+        elif state["status"] == "human_accepted_ready_for_merge":
+            assert state["merge_authority"] == "not_implied_by_acceptance"
             assert_success_qualification(state["post_acceptance_qualification"])
             assert state["post_acceptance_ci_satisfied"] is True
             assert state["next_gate"] == "YIP0_MERGE"
+            assert state["global_gate_behavior"] == "parallel_candidate_does_not_override_repository_next_gate"
+        else:
+            assert state["merge_authority"] == MERGE_TOKEN
+            assert state["merge_method"] == "squash"
+            assert state["merge_commit"] == SEMANTIC_MERGE_COMMIT
+            assert state["merge_receipt"] == "docs/architecture/yip0/YIP0-MERGE-RECEIPT-v0.1.json"
+            assert state["merged_at"] == MERGED_AT
+            assert state["post_acceptance_ci_satisfied"] is True
+            assert state["next_gate"] == "YIP0_COMPLETE"
+            assert state["next_yip_stage_authorized"] is False
+            assert state["global_gate_behavior"] == "parallel_philosophy_authority_does_not_override_repository_next_gate"
 
-    # YIP0 must not become the repository-wide active gate while it is a parallel track.
+            pre_merge = state["pre_merge_rebase_qualification"]
+            assert_success_qualification(pre_merge)
+            assert pre_merge["validated_head_sha"] == PRE_MERGE_HEAD
+            assert pre_merge["run_number"] == PRE_MERGE_RUN
+            assert pre_merge["run_id"] == PRE_MERGE_RUN_ID
+
+            assert MERGE_RECEIPT.exists(), MERGE_RECEIPT
+            merge_receipt = load_json(MERGE_RECEIPT)
+            assert merge_receipt["stage"] == STAGE
+            assert merge_receipt["pr_number"] == 39
+            assert merge_receipt["human_acceptance_token"] == HUMAN_TOKEN
+            assert merge_receipt["merge_authority"] == MERGE_TOKEN
+            assert merge_receipt["semantic_pre_merge_head_sha"] == PRE_MERGE_HEAD
+            assert merge_receipt["merge_method"] == "squash"
+            assert merge_receipt["semantic_merge_commit"] == SEMANTIC_MERGE_COMMIT
+            assert merge_receipt["merged_at"] == MERGED_AT
+            assert merge_receipt["yip0_status"] == "accepted_merged"
+            assert merge_receipt["next_yip_stage_authorized"] is False
+            assert merge_receipt["conflict_resolution"]["semantic_change_to_yip0"] is False
+            pre_merge_ci = merge_receipt["pre_merge_ci"]
+            assert pre_merge_ci["run_number"] == PRE_MERGE_RUN
+            assert pre_merge_ci["run_id"] == PRE_MERGE_RUN_ID
+            assert pre_merge_ci["conclusion"] == "success"
+            assert pre_merge_ci["contracts"] == "success"
+            assert pre_merge_ci["governance"] == "success"
+            assert pre_merge_ci["yip0_philosophy"] == "success"
+            assert pre_merge_ci["unit_tests"] == "success"
+            assert all(value is False for value in merge_receipt["boundaries_preserved"].values())
+
+    assert state["repository_next_gate_expected_to_remain_external_to_yip0"] is True
+
+    # YIP0 must not become the repository-wide active gate while it is a parallel philosophy track.
     assert status_projection["os_model"] == "one_core_three_worlds_three_gates_one_loop"
     assert status_projection["next_gate"] != STAGE
     assert status_projection["next_gate"] != "YIP0_HUMAN_REVIEW"
@@ -283,6 +338,12 @@ def main():
         assert review_text.count("— PASS") >= 12
         assert "Human Decision" in review_text
         assert "YIP0_POST_ACCEPTANCE_CI" in review_text or "YIP0_MERGE" in review_text
+    elif state["status"] == "accepted_merged":
+        assert review_text.count("— PASS") >= 12
+        assert "Status: `accepted_merged`" in review_text
+        assert "Merge Decision" in review_text
+        assert "`YIP0_COMPLETE`" in review_text
+        assert "YIP0-MERGE-RECEIPT-v0.1.json" in review_text
 
     print("YIP0 philosophy canon validation: PASS")
 
