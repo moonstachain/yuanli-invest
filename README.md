@@ -41,7 +41,7 @@ R0/R1 compatibility chain：`Theory → Mechanism → Hypothesis → Factor → 
 
 ## R0/R1 兼容法权标记
 
-R2.2 / R2.3 是上位语义演进，不抹除历史 Human-Accepted 法权：
+R2.2 / R2.3 / R2.3-A / R2.3-B0 是上位语义演进，不抹除历史 Human-Accepted 法权：
 
 - Research Capability Canon
 - Compile investment knowledge into machine-callable research intelligence.
@@ -67,17 +67,19 @@ Human decision、CI、GitHub merge、Runtime execution、Future Settlement 等�
 - R2：accepted_merged
 - R2.1：accepted_merged
 - R2.2：accepted_merged；merge commit `3bccf723c301f77364c198b9a7b1282c340f5534`
-- R2.3：candidate_ready_for_human_review；Run #99 machine qualification PASS
-- R3A：paused_not_started，等待 R2.3 Human Gate 与 merge
+- R2.3：accepted_merged；merge commit `418f06200cde16173743454d506ee946bbc572fc`
+- R2.3-A：accepted_merged；merge commit `ef3f470f7ef0ceb2b58f392d4a2bd5a5c4c691bd`
+- R2.3-B0：accepted_merged；PR #24 squash merge commit `cb5ffd0f2e8e377d82c12d716e995c7b5b328e01`
+- R3A：paused_not_started；Capability implementation/runtime remains separately governed
 - R4A：not_authorized
 
-R2.3 的授权范围只有：
+R2.3-B0 已冻结 Universal ResearchCapability Contract 的 11 个必备区块，以及 `CAP-R-01 / CAP-V-01 / CAP-XS-01` 的 P0 contract profiles。它没有授权 Capability implementation、promotion、benchmark execution、Wind/Codex production runtime、Evidence/Outcome admission、A9 switch、RSI promotion 或交易执行。
 
-1. R2.2 post-merge Status / Receipt closure；
-2. V successor：`CAP-V-002-PRICE-IMPLIED-EXPECTATIONS`；
-3. S successor：`CAP-S-003-GROWTH-OPTIMAL-RISK-BUDGET-UNDER-UNCERTAINTY`。
+当前下一研究战役：
 
-历史 R2 Gold pack 保持不可变。若 R2.3 后续 Human Accepted 并 merge，current vNext effective Gold 仍为 12：10 个旧身份原样保留，V/S 各以显式 successor 替换当前运行身份；旧 V/S 对象永久保留历史。
+> **QXM1｜Financial Mechanics Capability Candidate Pack**
+>
+> 将经典金融机械层——基本面 Driver Tree、三表完整性与现金转换、信用与资产负债表传导、机会成本/折现率桥、压力退出流动性、收益来源归因——第一次编译进 11-block ResearchCapability Contract，保持 candidate/specification 身份，不静默晋升 Canon。
 
 ## 研究与交易边界
 
