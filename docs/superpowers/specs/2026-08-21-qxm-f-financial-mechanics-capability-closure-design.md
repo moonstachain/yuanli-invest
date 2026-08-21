@@ -12,7 +12,7 @@ QXM-F is not "QXM3 with a larger name" and is not authorization to promote all s
 The program is complete only when three settlements are simultaneously true:
 
 1. **Identity Settlement** — every QXM2 Shadow TheoryObject, Shadow HypothesisObject, and Benchmark Seed has an explicit disposition and no orphan authority object remains.
-2. **Reality Settlement** — the designated priority capabilities have undergone frozen point-in-time, out-of-sample, regime-holdout, and failure-replay tests against simpler baselines.
+2. **Reality Settlement** — the designated priority capabilities have undergone frozen point-in-time, held-out, regime, and failure-replay tests against simpler baselines, using a test modality appropriate to the capability's semantics rather than forcing every capability into a forecasting task.
 3. **Learning Settlement** — results, including failures, have been compiled into Promote / Promote-with-Boundary / Interpretation-Only / Reject-or-Redesign decisions and into a reusable External Research Compiler protocol.
 
 Mnemonic:
@@ -62,7 +62,7 @@ G1 | Selective Registry Admission
 G2 | Hypothesis Preregistration + Benchmark Formalization
         |
         v
-G3 | Provider Mapping + PIT/OOS Reality Proof
+G3 | Provider Mapping + PIT/Held-Out Reality Proof
         |
         v
 G4 | Capability Settlement + Financial Mechanics Gold Pack
@@ -232,7 +232,7 @@ Each formal benchmark must freeze at least:
 - simpler baselines;
 - point-in-time policy;
 - lookahead prohibition;
-- train/validation/OOS split;
+- train/validation/OOS split or held-out case split appropriate to the capability;
 - regime holdout;
 - primary metrics;
 - failure metrics;
@@ -245,7 +245,7 @@ Each formal benchmark must freeze at least:
 
 ### Simple-baseline constitution
 
-Every complex capability must beat a simpler alternative under the same PIT/OOS rules.
+Every complex capability must beat a simpler alternative under the same PIT/held-out rules when incremental performance is part of its claimed authority.
 
 Minimum baseline map:
 
@@ -262,13 +262,15 @@ Law:
 
 > **No stable incremental information over a simpler baseline → no predictive Capability promotion.**
 
+For non-predictive learning/interpretation capabilities, settlement must instead demonstrate stable reconstruction, discrimination, or thesis-fidelity value over the simpler baseline defined in the BenchmarkObject.
+
 ### Anti-p-hacking / anti-hindsight rule
 
 Once a preregistration hash is frozen, changes to target, horizon, universe, metric, threshold, split, or baseline require a new revision identity. Results from the old contract cannot be relabeled under the revised contract.
 
 ---
 
-## 6. G3｜Provider Mapping + PIT/OOS Reality Proof
+## 6. G3｜Provider Mapping + PIT/Held-Out Reality Proof
 
 ### Purpose
 
@@ -293,10 +295,10 @@ No Wind field code may become part of the canonical capability identity.
 
 ### Minimum Reality Proof stack
 
-For each Tier-1 capability, all four tests are mandatory:
+For each Tier-1 capability, all four categories are mandatory, but the held-out modality must match the capability's actual semantics:
 
 1. **PIT Replay** — prove that every observable was available at the decision timestamp under the frozen data policy.
-2. **OOS Test** — evaluate outside the development sample.
+2. **Held-Out Test** — predictive capabilities use OOS forecasting/evaluation; attribution or interpretation capabilities use held-out episodes/cases and reconstruction, discrimination, or thesis-fidelity tests rather than pretending to forecast.
 3. **Regime Holdout** — evaluate under materially different regimes/markets/accounting states where applicable.
 4. **Failure Replay** — deliberately test cases where the model is expected to mislead or become inapplicable.
 
@@ -378,7 +380,7 @@ The pack must include:
 - admitted theory ancestry;
 - admitted/preregistered hypothesis identities;
 - benchmark receipts;
-- PIT/OOS replay receipts;
+- PIT/held-out replay receipts;
 - known failure envelopes;
 - capability revision history;
 - settlement status;
@@ -412,7 +414,7 @@ R7  Human Epistemic Review
 R8  Selective Registry Admission
 R9  Hypothesis Preregistration
 R10 Implementation / Provider Mapping
-R11 PIT/OOS Benchmark + Failure Replay
+R11 PIT/Held-Out Benchmark + Failure Replay
 R12 Settlement
 R13 Promote / Bound / Interpret / Reject
 ```
@@ -449,7 +451,7 @@ QXM-F may declare `QXM_PROJECT_CLOSED` only when every condition below is satisf
 | Shadow TheoryObjects | every object = Admit / Admit-with-Boundary / Keep-Shadow / Reject |
 | Shadow HypothesisObjects | every object = Preregister / Keep / Reject disposition |
 | Benchmark Seeds | every seed = Formalize / Defer / Reject disposition |
-| Tier-1 Reality Proof | PIT + OOS + regime holdout + failure replay completed |
+| Tier-1 Reality Proof | PIT + held-out + regime holdout + failure replay completed |
 | Simple baseline | present for every executed benchmark |
 | Settlement receipt | exists for every Tier-1 capability |
 | Known Failure Envelope | exists for every promoted/bounded capability |
@@ -558,7 +560,7 @@ Scope: selected HypothesisObject transitions and formal BenchmarkObjects. No ben
 
 ### Campaign D — G3 reality proof
 
-Scope: provider-independent implementation, provider adapters, PIT/OOS execution, failure replay, benchmark receipts. No self-promotion.
+Scope: provider-independent implementation, provider adapters, PIT/held-out execution, failure replay, benchmark receipts. No self-promotion.
 
 ### Campaign E — G4 settlement
 
@@ -578,7 +580,7 @@ QXM-F succeeds when:
 
 - it closes the Qin Xiaoming line without turning practitioner authority into canonical theory authority;
 - at least the Tier-1 Financial Mechanics loop receives complete reality settlement, whether the result is Promote or Reject;
-- complex mechanics are tested against simpler baselines under PIT/OOS rules;
+- complex mechanics are tested against simpler baselines under PIT/held-out rules;
 - failures become explicit known-failure knowledge rather than being discarded;
 - every QXM object has a final disposition;
 - durable runtime assets are de-personalized ResearchCapabilities;
