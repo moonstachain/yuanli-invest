@@ -1,7 +1,7 @@
 {
   "schema_version": "0.2.0",
   "stage": "ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
-  "status": "human_accepted_pending_post_acceptance_ci",
+  "status": "human_accepted_ready_for_merge_authorization",
   "repository_base_sha": "bd8931e1bf21dceb5e34a68ec41aa199b83e9410",
   "design_approval": {
     "token": "APPROVE_ME0_DESIGN_FOR_IMPLEMENTATION",
@@ -49,8 +49,20 @@
     "live_execution": false
   },
   "post_acceptance_ci_required": true,
+  "post_acceptance_qualification": {
+    "validated_head_sha": "ab378aff7aea539aed79d4f158ba4da62e852143",
+    "workflow": "repository-gates",
+    "run_number": 331,
+    "run_id": 32507388014,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "me0_validator": "success",
+    "unit_tests": "success"
+  },
+  "post_acceptance_ci_satisfied": true,
   "merge_authority": "not_authorized",
   "required_merge_token": "AUTHORIZE_ME0_MERGE",
-  "next_gate": "ME0_POST_ACCEPTANCE_CI",
+  "next_gate": "ME0_MERGE_AUTHORIZATION",
   "next_me_stage_authorized": false
 }
