@@ -1,0 +1,221 @@
+{
+  "pack_id": "RIOS-GENESIS-PACK-001",
+  "stage": "RIOS_0_1_C_CAPABILITY_REGISTRY_MATERIALIZATION_GOVERNANCE_GATE",
+  "status": "candidate_orchestration_pack",
+  "genesis_count": 10,
+  "purpose": "Route the exact ten Genesis concepts to existing governed ResearchCapability dependencies and research-agent roles without creating new authority.",
+  "routing_policy": "Agent labels are orchestration roles only. They do not own Capability truth, Registry authority, Benchmark PASS, Runtime state, portfolio action, or trading authority.",
+  "registry_admission_authorized": false,
+  "benchmark_execution_authorized": false,
+  "runtime_authorized": false,
+  "trading_authorized": false,
+  "entries": [
+    {
+      "genesis_id": "RIOS-GEN-01-AI-INFRASTRUCTURE-REGIME-TRANSITION",
+      "human_name": "AI Infrastructure Regime Transition",
+      "classification": "profile",
+      "canonical_capability_ids": [
+        "CAP-P-001-TECHNOLOGY-COST-CURVE",
+        "CAP-P-002-ADOPTION-ACCELERATION",
+        "CAP-XS-001-MARKET-SHARE-ACCELERATION",
+        "CAP-XS-002-BOTTLENECK-SCARCITY",
+        "CAP-N-001-NARRATIVE-VELOCITY",
+        "CAP-N-002-NARRATIVE-SATURATION",
+        "CAP-V-001-REVERSE-DCF-EXPECTATIONS"
+      ],
+      "candidate_capability_id": null,
+      "agent_routes": ["P_AGENT", "N_AGENT", "X_AGENT", "V_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["P_AGENT", "N_AGENT", "X_AGENT", "V_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Theme profile orchestration only; no new Capability identity, timing call, allocation, or trade action."
+    },
+    {
+      "genesis_id": "RIOS-GEN-02-ENERGY-BOTTLENECK-CAPTURE",
+      "human_name": "Energy Bottleneck Capture",
+      "classification": "profile",
+      "canonical_capability_ids": [
+        "CAP-P-001-TECHNOLOGY-COST-CURVE",
+        "CAP-P-002-ADOPTION-ACCELERATION",
+        "CAP-XS-002-BOTTLENECK-SCARCITY"
+      ],
+      "candidate_capability_id": null,
+      "agent_routes": ["P_AGENT", "X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["P_AGENT", "X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Energy context supplies a profile over existing mothers; no commodity, infrastructure, or equity action authority."
+    },
+    {
+      "genesis_id": "RIOS-GEN-03-NARRATIVE-DIFFUSION-ENGINE",
+      "human_name": "Narrative Diffusion Engine",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-N-001-NARRATIVE-VELOCITY",
+        "CAP-N-002-NARRATIVE-SATURATION"
+      ],
+      "candidate_capability_id": null,
+      "agent_routes": ["N_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["N_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Narrative orchestration only; no scalar N score, consensus certainty, or market action."
+    },
+    {
+      "genesis_id": "RIOS-GEN-04-NARRATIVE-BUBBLE-DETECTION",
+      "human_name": "Narrative Bubble Detection",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-N-002-NARRATIVE-SATURATION",
+        "CAP-V-001-REVERSE-DCF-EXPECTATIONS",
+        "CAP-XA-002-EXTREME-REGIME-SHIFT"
+      ],
+      "candidate_capability_id": null,
+      "agent_routes": ["N_AGENT", "V_AGENT", "X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["N_AGENT", "V_AGENT", "X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "May diagnose saturation, expectation tension, and tail-regime evidence; cannot declare a deterministic bubble or timing instruction."
+    },
+    {
+      "genesis_id": "RIOS-GEN-05-PLATFORM-WINNER-CAPTURE",
+      "human_name": "Platform Winner Capture",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-XS-001-MARKET-SHARE-ACCELERATION",
+        "CAP-XS-002-BOTTLENECK-SCARCITY"
+      ],
+      "candidate_capability_id": null,
+      "agent_routes": ["X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Value-capture research only; cannot assert winner certainty or portfolio allocation."
+    },
+    {
+      "genesis_id": "RIOS-GEN-06-CONVEXITY-EXPRESSION-ENGINE",
+      "human_name": "Convexity Expression Engine",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-XA-001-CONDITIONAL-TAIL-ACTIVATION",
+        "CAP-XA-002-EXTREME-REGIME-SHIFT",
+        "CAP-XP-001-PAYOFF-CONVEXITY-GEOMETRY"
+      ],
+      "candidate_capability_id": null,
+      "agent_routes": ["X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Scenario and payoff-geometry research only; no instrument recommendation, sizing, or execution."
+    },
+    {
+      "genesis_id": "RIOS-GEN-07-EVIDENCE-AUTHORITY-ENGINE",
+      "human_name": "Evidence Authority Engine",
+      "classification": "new_candidate",
+      "canonical_capability_ids": [],
+      "candidate_capability_id": "CAP-E-001-EVIDENCE-AUTHORITY-VALIDATION",
+      "agent_routes": ["E_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["E_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Identity candidate only; evidence validation cannot convert weak evidence into investment truth and Registry apply remains separately governed."
+    },
+    {
+      "genesis_id": "RIOS-GEN-08-NARRATIVE-PRICE-GAP",
+      "human_name": "Narrative Price Gap",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-N-002-NARRATIVE-SATURATION",
+        "CAP-V-001-REVERSE-DCF-EXPECTATIONS"
+      ],
+      "candidate_capability_id": null,
+      "agent_routes": ["N_AGENT", "V_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["N_AGENT", "V_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Expectation-gap research only; target price and buy/sell commands are prohibited."
+    },
+    {
+      "genesis_id": "RIOS-GEN-09-PORTFOLIO-SURVIVAL-ENGINE",
+      "human_name": "Portfolio Survival Engine",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-S-001-RUIN-AND-EXPECTED-SHORTFALL",
+        "CAP-S-002-ROBUST-FRACTIONAL-KELLY"
+      ],
+      "candidate_capability_id": null,
+      "agent_routes": ["S_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["S_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Survival diagnostics only; no recommended weights, position size, leverage, or live portfolio action."
+    },
+    {
+      "genesis_id": "RIOS-GEN-10-MARKET-CLOCK-REGIME-TRANSITION",
+      "human_name": "Market Clock Regime Transition",
+      "classification": "new_candidate",
+      "canonical_capability_ids": [
+        "CAP-N-001-NARRATIVE-VELOCITY",
+        "CAP-N-002-NARRATIVE-SATURATION",
+        "CAP-V-001-REVERSE-DCF-EXPECTATIONS",
+        "CAP-XA-002-EXTREME-REGIME-SHIFT"
+      ],
+      "candidate_capability_id": "CAP-CROSS-002-MARKET-CLOCK-REGIME-TRANSITION",
+      "agent_routes": ["N_AGENT", "V_AGENT", "X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "research_sequence": ["N_AGENT", "V_AGENT", "X_AGENT", "CHIEF_RESEARCH_COUNCIL"],
+      "replay_prerequisites": {
+        "historical_case_required": true,
+        "pit_evidence_required": true,
+        "falsifier_required": true,
+        "benchmark_spec_required_before_execution": true
+      },
+      "replay_pass_claimed": false,
+      "authority_boundary": "Cross-domain identity candidate only; no market-timing call, allocation, benchmark execution, Runtime state change, or trading authority."
+    }
+  ]
+}
