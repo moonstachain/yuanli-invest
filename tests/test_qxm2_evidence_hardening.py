@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 QXM2 = ROOT / "docs" / "architecture" / "qxm2"
 SOURCE_MATRIX = QXM2 / "QXM2-PRIMARY-SOURCE-MATRIX-v0.1.json"
 EVIDENCE_MATRIX = QXM2 / "QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json"
+CROSSWALK = QXM2 / "QXM2-CLAIM-MECHANISM-CROSSWALK-v0.1.json"
 
 EXPECTED = [
     "QXM1-CAND-01-FUNDAMENTAL-DRIVER-DECOMPOSITION",
@@ -82,25 +83,44 @@ class QXM2PrimitiveTests(unittest.TestCase):
         })
 
 
-class QXM2RealityMechanicsEvidenceTests(unittest.TestCase):
-    def test_reality_mechanics_minimum_evidence(self):
+class QXM2EvidenceCoverageTests(unittest.TestCase):
+    def test_all_candidates_have_minimum_evidence(self):
         sources, relations = load_evidence()
-        for candidate_id in EXPECTED[:2]:
+        for candidate_id in EXPECTED:
             assert_minimum_evidence(self, candidate_id, sources, relations)
 
 
-class QXM2TransmissionPricingEvidenceTests(unittest.TestCase):
-    def test_transmission_and_pricing_minimum_evidence(self):
-        sources, relations = load_evidence()
-        for candidate_id in EXPECTED[2:4]:
-            assert_minimum_evidence(self, candidate_id, sources, relations)
+class QXM2ClaimMechanismCrosswalkTests(unittest.TestCase):
+    def test_claim_crosswalk_is_referentially_complete(self):
+        relations = json.loads(EVIDENCE_MATRIX.read_text(encoding="utf-8"))["relations"]
+        relation_by_id = {r["relation_id"]: r for r in relations}
+        claims = json.loads(CROSSWALK.read_text(encoding="utf-8"))["claims"]
 
+        for candidate_id in EXPECTED:
+            candidate_claims = [c for c in claims if c["candidate_id"] == candidate_id]
+            self.assertGreaterEqual(len(candidate_claims), 3, candidate_id)
+            self.assertLessEqual(len(candidate_claims), 6, candidate_id)
 
-class QXM2OutcomeSurvivalEvidenceTests(unittest.TestCase):
-    def test_liquidity_and_attribution_minimum_evidence(self):
-        sources, relations = load_evidence()
-        for candidate_id in EXPECTED[4:6]:
-            assert_minimum_evidence(self, candidate_id, sources, relations)
+        for claim in claims:
+            self.assertTrue(claim["statement"].strip(), claim["claim_id"])
+            self.assertTrue(claim["mechanism_ids"], claim["claim_id"])
+            self.assertTrue(claim["observable_set"], claim["claim_id"])
+            self.assertTrue(claim["falsifier"].strip(), claim["claim_id"])
+            self.assertTrue(claim["shadow_hypothesis_ids"], claim["claim_id"])
+            self.assertTrue(claim["benchmark_seed_ids"], claim["claim_id"])
+            self.assertTrue(claim["support_relation_ids"], claim["claim_id"])
+            self.assertTrue(claim["boundary_relation_ids"], claim["claim_id"])
+
+            for relation_id in claim["support_relation_ids"]:
+                self.assertIn(relation_id, relation_by_id, claim["claim_id"])
+                self.assertEqual(relation_by_id[relation_id]["role"], "supports", claim["claim_id"])
+            for relation_id in claim["boundary_relation_ids"]:
+                self.assertIn(relation_id, relation_by_id, claim["claim_id"])
+                self.assertIn(
+                    relation_by_id[relation_id]["role"],
+                    {"boundary", "contradicts", "competing_mechanism"},
+                    claim["claim_id"],
+                )
 
 
 if __name__ == "__main__":
