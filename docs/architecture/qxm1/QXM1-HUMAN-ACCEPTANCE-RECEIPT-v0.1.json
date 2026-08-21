@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.1",
+  "schema_version": "0.1.0",
   "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
   "decision": "ACCEPT_QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
   "accepted_at": "2026-08-20T23:26:00-03:00",
@@ -55,18 +55,6 @@
     "live_execution": false
   },
   "merge_authority": "not_implied_by_acceptance",
-  "post_acceptance_ci": "satisfied; merge gate additionally exact-head qualified externally",
-  "post_acceptance_ci_fact": {
-    "validated_head_sha": "47f0f5cfde489e11ed804f82264d8a44206546ed",
-    "run_number": 176,
-    "run_id": 32439955420,
-    "conclusion": "success"
-  },
-  "latest_exact_head_ci_fact_before_receipt_projection_update": {
-    "validated_head_sha": "d03e26c4105f852433963be9e5c7dfcf26f3bdb2",
-    "run_number": 179,
-    "run_id": 32440125256,
-    "conclusion": "success"
-  },
-  "next_gate": "QXM1_MERGE"
+  "post_acceptance_ci": "required_on_acceptance_record_head",
+  "next_gate": "QXM1_POST_ACCEPTANCE_CI"
 }
