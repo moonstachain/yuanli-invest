@@ -8,6 +8,7 @@ from scripts.validate_qxm2_evidence_hardening import (
     assert_benchmark_seed_authority,
     assert_evidence_role,
     assert_expected_candidate_ids,
+    assert_human_acceptance_receipt,
     assert_no_authority_regression,
     assert_no_prohibited_paths,
     assert_replication_status,
@@ -102,6 +103,31 @@ class QXM2PrimitiveTests(unittest.TestCase):
         ):
             with self.assertRaises(AssertionError):
                 assert_no_prohibited_paths([path])
+
+    def test_human_acceptance_receipt_preserves_separate_merge_authority(self):
+        receipt = {
+            "stage": "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
+            "decision": "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
+            "pr_number": 38,
+            "reviewed_head_sha": "cecbdee29f888a6d9ee5041af5e1ad6d6965fb54",
+            "reviewed_ci": {"run_number": 217, "run_id": 32461754235, "conclusion": "success", "contracts": "success", "governance": "success", "qxm2_evidence_hardening": "success", "unit_tests": "success"},
+            "boundaries_preserved": {
+                "merge_authorized": False,
+                "registry_admission_authorized": False,
+                "hypothesis_preregistration_authorized": False,
+                "formal_benchmark_creation_authorized": False,
+                "benchmark_execution_authorized": False,
+                "benchmark_pass_claim_authorized": False,
+                "capability_promotion_authorized": False,
+                "trading_action_authorized": False,
+                "live_execution": False,
+            },
+            "merge_authority": "not_implied_by_acceptance",
+        }
+        assert_human_acceptance_receipt(receipt)
+        receipt["boundaries_preserved"]["merge_authorized"] = True
+        with self.assertRaises(AssertionError):
+            assert_human_acceptance_receipt(receipt)
 
 
 class QXM2EvidenceCoverageTests(unittest.TestCase):
