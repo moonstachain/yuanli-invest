@@ -1,10 +1,12 @@
 from pathlib import Path
+import copy
 import json
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-V1 = ROOT / "packages/contracts/schemas/vnext/research-target.schema.json"
-V2 = ROOT / "packages/contracts/schemas/vnext/research-target-v2.schema.json"
+VNEXT = ROOT / "packages/contracts/schemas/vnext"
+V1 = VNEXT / "research-target.schema.json"
+V2 = VNEXT / "research-target-v2.schema.json"
 
 
 class ME1ResearchTargetTests(unittest.TestCase):
@@ -18,6 +20,21 @@ class ME1ResearchTargetTests(unittest.TestCase):
         self.assertEqual(v2["$id"], "urn:yuanli-invest:schema:vnext-research-target:2.0.0")
         self.assertIn("canonical_name", v2["properties"])
         self.assertIn("asset_form", v2["properties"])
+
+
+class ME1ThesisPassportSchemaTests(unittest.TestCase):
+    def test_engine_thesis_schema_has_immutable_identity_core(self):
+        schema = json.loads((VNEXT / "engine-thesis.schema.json").read_text(encoding="utf-8"))
+        required = schema["properties"]["identity_core"]["required"]
+        self.assertIn("primary_engine", required)
+        self.assertIn("opened_at", required)
+        self.assertNotIn("enum", schema["properties"]["identity_core"]["properties"]["primary_engine"])
+
+    def test_position_passport_cannot_grant_trade_execution(self):
+        schema = json.loads((VNEXT / "position-passport.schema.json").read_text(encoding="utf-8"))
+        authority = schema["properties"]["authority"]["properties"]
+        self.assertEqual(authority["portfolio_weight_authority"]["const"], False)
+        self.assertEqual(authority["trade_execution_authority"]["const"], False)
 
 
 if __name__ == "__main__":
