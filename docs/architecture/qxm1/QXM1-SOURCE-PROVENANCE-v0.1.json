@@ -28,7 +28,7 @@
       "source_kind": "raw_course_transcript",
       "authority_class": "practitioner_teaching_source",
       "usable_for": ["stock_flow_separation_seed", "balance_sheet_liquidity_seed", "cash_conversion_question_seed"],
-      "not_usable_as": ["primary_accounting_standard", "audited_company_evidence", "empirical_validation"]
+      "not_usable_as": ["primary_theory_authority", "primary_accounting_standard", "audited_company_evidence", "empirical_validation"]
     },
     {
       "source_id": "QXM-SRC-DCF-GRAND-UNIFICATION",
@@ -36,7 +36,7 @@
       "source_kind": "raw_course_transcript",
       "authority_class": "practitioner_teaching_source",
       "usable_for": ["cash_flow_discount_rate_bridge_seed", "investment_logic_seed", "price_expectation_question_seed"],
-      "not_usable_as": ["primary_asset_pricing_theory", "universal_pricing_model_authority"]
+      "not_usable_as": ["primary_theory_authority", "primary_asset_pricing_theory", "universal_pricing_model_authority"]
     },
     {
       "source_id": "QXM-SRC-CREDIT-DEBT-CYCLE",
@@ -44,7 +44,7 @@
       "source_kind": "raw_course_transcript",
       "authority_class": "practitioner_teaching_source",
       "usable_for": ["credit_transmission_seed", "balance_sheet_cycle_seed", "behavioral_mechanism_seed"],
-      "not_usable_as": ["primary_macro_theory", "causal_identification_proof", "live_regime_fact"]
+      "not_usable_as": ["primary_theory_authority", "primary_macro_theory", "causal_identification_proof", "live_regime_fact"]
     },
     {
       "source_id": "QXM-SRC-ASSET-ALLOCATION",
@@ -52,7 +52,7 @@
       "source_kind": "raw_course_transcript_guest_share",
       "authority_class": "practitioner_teaching_source",
       "usable_for": ["cross_asset_discount_rate_seed", "liquidity_and_cash_flow_uncertainty_seed"],
-      "not_usable_as": ["current_market_fact", "primary_asset_allocation_theory", "empirical_validation"]
+      "not_usable_as": ["primary_theory_authority", "current_market_fact", "primary_asset_allocation_theory", "empirical_validation"]
     },
     {
       "source_id": "QXM-SRC-INVESTMENT-PRACTICE-HPR",
@@ -60,7 +60,7 @@
       "source_kind": "raw_course_transcript",
       "authority_class": "practitioner_teaching_source",
       "usable_for": ["holding_period_return_seed", "exit_liquidity_seed", "investment_process_seed"],
-      "not_usable_as": ["portfolio_policy_authority", "benchmark_result", "trading_authority"]
+      "not_usable_as": ["primary_theory_authority", "portfolio_policy_authority", "benchmark_result", "trading_authority"]
     },
     {
       "source_id": "QXM-SRC-VCPE-EXIT-MECHANICS",
@@ -68,7 +68,7 @@
       "source_kind": "raw_course_transcript",
       "authority_class": "practitioner_teaching_source",
       "usable_for": ["illiquidity_seed", "entry_exit_price_seed", "right_tail_portfolio_structure_seed"],
-      "not_usable_as": ["base_rate_authority_without_verification", "primary_private_market_theory", "empirical_validation"]
+      "not_usable_as": ["primary_theory_authority", "base_rate_authority_without_verification", "primary_private_market_theory", "empirical_validation"]
     },
     {
       "source_id": "QXM-SRC-INTERNAL-SYNTHESIS",
