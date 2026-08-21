@@ -245,7 +245,13 @@ class RIOS01CBootstrapTests(unittest.TestCase):
 
     def test_task3_full_pack_validates(self):
         module = load_validator_module()
-        result = module.validate_rios_0_1_c(ROOT)
+        result = module.validate_rios_0_1_c(ROOT, changed_paths=[
+            "docs/architecture/rios/0.1-c/RIOS-0.1-C-STATE.json",
+            "docs/architecture/rios/0.1-c/RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json",
+            "docs/architecture/rios/0.1-c/RIOS-0.1-C-GENESIS-PACK-v0.1.json",
+            "scripts/validate_rios_0_1_c_capability_registry.py",
+            "tests/test_rios_0_1_c_capability_registry.py",
+        ])
         self.assertEqual(result["genesis_count"], 10)
         self.assertEqual(result["pack_id"], "RIOS-GENESIS-PACK-001")
         self.assertEqual(result["entry_count"], 10)
@@ -291,6 +297,34 @@ class RIOS01CBootstrapTests(unittest.TestCase):
         }
         with self.assertRaises(AssertionError):
             module.validate_candidate_readiness(ROOT, bad)
+
+    def test_task5_machine_ready_state_and_full_gate(self):
+        module = load_validator_module()
+        self.assertTrue(hasattr(module, "detect_changed_paths"))
+        changed_paths = [
+            "docs/architecture/rios/0.1-c/RIOS-0.1-C-STATE.json",
+            "docs/architecture/rios/0.1-c/RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json",
+            "docs/architecture/rios/0.1-c/RIOS-0.1-C-GENESIS-PACK-v0.1.json",
+            "scripts/validate_rios_0_1_c_capability_registry.py",
+            "tests/test_rios_0_1_c_capability_registry.py",
+        ]
+        result = module.validate_rios_0_1_c(ROOT, changed_paths=changed_paths)
+        self.assertEqual(result["genesis_count"], 10)
+        self.assertEqual(result["registry_mutations"], 0)
+        self.assertEqual(result["next_gate"], "RIOS_0_1_C_HUMAN_REVIEW")
+        self.assertEqual(result["state_status"], "candidate_ready_for_human_review")
+        self.assertEqual(result["changed_path_count"], len(changed_paths))
+
+    def test_task5_scope_guard_fails_closed_on_authority_paths(self):
+        module = load_validator_module()
+        for bad in (
+            ["registry/capabilities/unauthorized.json"],
+            ["canon/unauthorized.md"],
+            ["runtime/unauthorized.py"],
+            ["packages/contracts/schemas/research-capability.schema.json"],
+        ):
+            with self.assertRaises(AssertionError):
+                module.validate_rios_0_1_c(ROOT, changed_paths=bad)
 
 
 if __name__ == "__main__":
