@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "docs" / "superpowers" / "specs" / "2026-08-21-qxm-f-financial-mechanics-capability-closure-design.md"
 PLAN = ROOT / "docs" / "superpowers" / "plans" / "2026-08-21-qxm-f-financial-mechanics-capability-closure.md"
 G1_LEDGER = ROOT / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-ADMISSION-LEDGER-v0.1.json"
+G1_ACCEPTANCE = ROOT / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 QXM2_EVIDENCE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json"
 QXM2_STATE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-STATE.json"
 QXM2_COUNT_RECONCILIATION = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json"
@@ -51,6 +52,19 @@ class QXMFClosureBootstrapTests(unittest.TestCase):
             if original_base_ref is not None:
                 os.environ["GITHUB_BASE_REF"] = original_base_ref
         self.assertEqual(result["stage"], "QXM_F_FINANCIAL_MECHANICS_CAPABILITY_CLOSURE")
+
+    def test_post_acceptance_core_validation_is_phase_aware_under_pr_diff(self):
+        self.assertTrue(G1_ACCEPTANCE.exists(), "Human Acceptance receipt is required for post-Human routing")
+        original_base_ref = os.environ.get("GITHUB_BASE_REF")
+        os.environ["GITHUB_BASE_REF"] = "main"
+        try:
+            result = validate_qxm_f(ROOT)
+        finally:
+            if original_base_ref is None:
+                os.environ.pop("GITHUB_BASE_REF", None)
+            else:
+                os.environ["GITHUB_BASE_REF"] = original_base_ref
+        self.assertEqual(result["next_gate"], "QXM_F_G1_MERGE")
 
     def test_qxm2_stale_evidence_count_requires_explicit_reconciliation(self):
         evidence = json.loads(QXM2_EVIDENCE.read_text(encoding="utf-8"))
