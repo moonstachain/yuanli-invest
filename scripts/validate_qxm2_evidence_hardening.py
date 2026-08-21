@@ -34,6 +34,15 @@ EXPECTED_BENCHMARK_SEEDS = {
     "QXM2-BSEED-CROSS001-RETURN-ATTRIBUTION",
 }
 
+EXPECTED_ADMISSION_RECOMMENDATIONS = {
+    "QXM1-CAND-01-FUNDAMENTAL-DRIVER-DECOMPOSITION": "advance_with_boundary",
+    "QXM1-CAND-02-THREE-STATEMENT-INTEGRITY": "advance_with_boundary",
+    "QXM1-CAND-03-CREDIT-BALANCE-SHEET-TRANSMISSION": "advance_with_boundary",
+    "QXM1-CAND-04-OPPORTUNITY-COST-DISCOUNT-RATE-BRIDGE": "interpretation_only",
+    "QXM1-CAND-05-STRESS-EXIT-LIQUIDITY": "advance_with_boundary",
+    "QXM1-CAND-06-RETURN-SOURCE-ATTRIBUTION": "advance_with_boundary",
+}
+
 EVIDENCE_ROLES = {"supports", "contradicts", "boundary", "competing_mechanism"}
 REPLICATION_STATES = {
     "direct_replication_supported",
@@ -62,6 +71,10 @@ APPROVED_STATES = {
 }
 
 QXM1_MERGE_COMMIT = "81bf6d83da7463e31c58e2d35bcabc291b580546"
+QXM2_ACCEPTANCE_TOKEN = "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING"
+QXM2_REVIEWED_HEAD = "cecbdee29f888a6d9ee5041af5e1ad6d6965fb54"
+QXM2_REVIEWED_RUN_NUMBER = 217
+QXM2_REVIEWED_RUN_ID = 32461754235
 
 
 def load_json(path: Path):
@@ -158,6 +171,48 @@ def assert_no_scalar_admission_score(obj):
             assert_no_scalar_admission_score(value)
 
 
+def assert_human_acceptance_receipt(receipt):
+    require_fields(
+        receipt,
+        [
+            "stage",
+            "decision",
+            "pr_number",
+            "reviewed_head_sha",
+            "reviewed_ci",
+            "boundaries_preserved",
+            "merge_authority",
+        ],
+        "QXM2 Human Acceptance receipt",
+    )
+    assert receipt["stage"] == "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING"
+    assert receipt["decision"] == QXM2_ACCEPTANCE_TOKEN
+    assert receipt["pr_number"] == 38
+    assert receipt["reviewed_head_sha"] == QXM2_REVIEWED_HEAD
+    reviewed_ci = receipt["reviewed_ci"]
+    assert reviewed_ci["run_number"] == QXM2_REVIEWED_RUN_NUMBER
+    assert reviewed_ci["run_id"] == QXM2_REVIEWED_RUN_ID
+    for key in ("conclusion", "contracts", "governance", "qxm2_evidence_hardening", "unit_tests"):
+        assert reviewed_ci[key] == "success", (key, reviewed_ci[key])
+    boundaries = receipt["boundaries_preserved"]
+    for key in (
+        "merge_authorized",
+        "registry_admission_authorized",
+        "hypothesis_preregistration_authorized",
+        "formal_benchmark_creation_authorized",
+        "benchmark_execution_authorized",
+        "benchmark_pass_claim_authorized",
+        "capability_promotion_authorized",
+        "trading_action_authorized",
+        "live_execution",
+    ):
+        assert boundaries[key] is False, (key, boundaries[key])
+    assert receipt["merge_authority"] == "not_implied_by_acceptance"
+    if "per_candidate_admission_recommendations" in receipt:
+        assert receipt["per_candidate_admission_recommendations"] == EXPECTED_ADMISSION_RECOMMENDATIONS
+    assert_no_authority_regression(receipt)
+
+
 def _pull_request_changed_paths(root: Path):
     base_ref = os.environ.get("GITHUB_BASE_REF")
     if not base_ref:
@@ -196,6 +251,11 @@ def validate_qxm2(root: Path):
     hypotheses_doc = load_json(paths["hypotheses"])
     seeds_doc = load_json(paths["seeds"])
 
+    acceptance_path = qxm2 / "QXM2-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+    acceptance_receipt = load_json(acceptance_path) if acceptance_path.exists() else None
+    if acceptance_receipt is not None:
+        assert_human_acceptance_receipt(acceptance_receipt)
+
     qxm1_state = load_json(root / "docs" / "architecture" / "qxm1" / "QXM1-STATE.json")
     assert qxm1_state["status"] == "accepted_merged"
     assert qxm1_state["merge_commit"] == QXM1_MERGE_COMMIT
@@ -208,8 +268,23 @@ def validate_qxm2(root: Path):
     assert state["upstream_dependency"]["resolved"] is True
     assert state["upstream_dependency"]["merge_commit"] == QXM1_MERGE_COMMIT
     assert state["admission_authority"] == "none"
+    assert state["hypothesis_preregistration_authority"] == "none"
+    assert state["formal_benchmark_creation_authority"] == "none"
     assert state["benchmark_execution_authority"] == "none"
     assert state["capability_promotion_authority"] == "none"
+
+    if state["status"] in {"human_accepted_ready_for_merge", "accepted_merged"}:
+        assert acceptance_receipt is not None, "accepted QXM2 state requires Human Acceptance receipt"
+        human_gate = state["human_gate"]
+        assert human_gate["token"] == QXM2_ACCEPTANCE_TOKEN
+        assert human_gate["decision"] == QXM2_ACCEPTANCE_TOKEN
+        assert human_gate["acceptance_receipt"] == "docs/architecture/qxm2/QXM2-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+        assert human_gate["reviewed_head_sha"] == QXM2_REVIEWED_HEAD
+        assert human_gate["reviewed_ci_run"] == QXM2_REVIEWED_RUN_NUMBER
+        assert state["post_acceptance_ci_required"] is True
+        assert state["post_acceptance_ci_satisfied"] is True
+        if state["status"] == "human_accepted_ready_for_merge":
+            assert state["merge_authority"] == "not_implied_by_acceptance"
 
     sources = sources_doc["sources"]
     relations = evidence_doc["relations"]
@@ -335,7 +410,10 @@ def validate_qxm2(root: Path):
         assert seed["regime_holdout"]
         assert_benchmark_seed_authority(seed)
 
-    for doc in (state, sources_doc, evidence_doc, crosswalk_doc, theories_doc, hypotheses_doc, seeds_doc):
+    docs_to_check = [state, sources_doc, evidence_doc, crosswalk_doc, theories_doc, hypotheses_doc, seeds_doc]
+    if acceptance_receipt is not None:
+        docs_to_check.append(acceptance_receipt)
+    for doc in docs_to_check:
         assert_no_authority_regression(doc)
         assert_no_scalar_admission_score(doc)
 
