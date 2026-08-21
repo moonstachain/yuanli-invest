@@ -4,9 +4,9 @@
 
 **Goal:** Close the Qin Xiaoming Financial Mechanics research line by giving every QXM object an explicit governed disposition, reality-testing the priority capabilities against preregistered baselines, settling capability authority, and canonizing the reusable External Research Compiler.
 
-**Architecture:** QXM-F is one terminal program with six sequential gates: G0 closes QXM2; G1 performs selective Registry admission; G2 preregisters hypotheses and formalizes benchmarks; G3 creates provider mappings, implementations, and PIT/held-out reality proofs; G4 settles each capability and optionally builds `FM-GOLD-01`; G5 freezes the External Research Compiler and archives QXM as `ERC-GOLD-CASE-001`. Each gate uses an independent branch/PR, machine qualification, Human Gate where epistemic judgment is required, and a separate merge authority. `Receipt = Ledger; State = Projection` remains binding.
+**Architecture:** QXM-F is one terminal program with six sequential gates: G0 closes QXM2; G1 performs selective Registry admission; G2 preregisters hypotheses and formalizes benchmarks; G3 creates provider mappings, implementation objects, and PIT/held-out reality proofs; G4 settles each capability and optionally builds `FM-GOLD-01`; G5 freezes the External Research Compiler and archives QXM as `ERC-GOLD-CASE-001`. Each gate uses its own branch/PR, machine qualification, Human Gate where epistemic judgment is required, and a separate merge authority. `Receipt = Ledger; State = Projection` remains binding.
 
-**Tech Stack:** Python 3.12, JSON Schema Draft 2020-12, `jsonschema==4.25.1`, `unittest`, Git/GitHub, GitHub Actions `repository-gates`, provider-neutral JSON contracts, licensed Wind execution through an external authorized runtime with receipt-only return to GitHub.
+**Tech Stack:** Python 3.12, JSON Schema Draft 2020-12, `jsonschema==4.25.1`, `unittest`, Git/GitHub, GitHub Actions `repository-gates`, provider-neutral JSON contracts, and licensed Wind execution through an external authorized runtime with receipt-only return to GitHub.
 
 **Spec:** `docs/superpowers/specs/2026-08-21-qxm-f-financial-mechanics-capability-closure-design.md`
 
@@ -29,7 +29,7 @@
 - Return Source Attribution is tested as a learning/attribution capability using held-out episode reconstruction and thesis-fidelity, not forced into a forecasting task.
 - Every executed complex capability must face a simpler baseline under the same PIT/held-out rules.
 - `No stable incremental information over a simpler baseline -> no predictive Capability promotion`.
-- QXM-F does not target 6/6 promotion. `REJECT_OR_REDESIGN`, `INTERPRETATION_ONLY`, and `DEFER` are legitimate research outcomes.
+- QXM-F does not target 6/6 promotion. `REJECT_OR_REDESIGN`, `INTERPRETATION_ONLY`, `KEEP_SHADOW`, and `DEFER_DATA_INSUFFICIENT` are legitimate research outcomes.
 - Provider-specific fields belong in `ProviderAdapter`; canonical economic fields remain provider-neutral.
 - No licensed raw Wind dataset is committed to GitHub. GitHub stores contracts, hashes, metadata, metrics, receipts, and failure evidence only.
 - No target price, buy/sell/hold instruction, recommended weight, position size, broker action, or live execution is authorized anywhere in QXM-F.
@@ -46,7 +46,7 @@
 - Capability schema: `packages/contracts/schemas/research-capability.schema.json`.
 - Skill schema: `packages/contracts/schemas/skill-contract.schema.json`.
 - Registry topology and counts: `registry/registry-index.json` plus each `registry/*/_index.json`.
-- Current Registry pack-file convention: each registry may add a versioned pack whose `objects[]` items independently validate against the corresponding single-object schema.
+- Current Registry pack-file convention: each registry may add a versioned pack whose `objects[]` entries independently validate against the corresponding single-object schema.
 
 ## Program State Machine
 
@@ -95,11 +95,13 @@ If absent, stop Task 1 and report `G0_WAITING_QXM2_MERGE_AUTHORITY`. Do not merg
 
 - [ ] **Step 2: Re-fetch PR #38 and exact-head CI**
 
-Require `open`, `merged=false`, `mergeable=true`, and head equal to the head recorded by the current `QXM2-STATE.json`. At design time the merge-candidate head is `846a9c2166d770ca0a0471fc35a9cacc1b9590ea` with repository-gates Run #230 / id `32462649431`; execution must use the fresh values immediately before merge.
+Require `open`, `merged=false`, `mergeable=true`. Record the freshly returned `head_sha` as `semantic_merge_head_sha`. Fetch workflow runs for that exact SHA and require current required checks `contracts=success` and `governance=success`, plus the QXM2 validator and full unit tests successful in the corresponding `repository-gates` run.
+
+At plan-freeze time the merge-candidate head is `846a9c2166d770ca0a0471fc35a9cacc1b9590ea` with repository-gates Run #230 / id `32462649431`; execution must use the newly fetched values, not assume the plan-freeze values remain current.
 
 - [ ] **Step 3: Re-audit changed paths**
 
-Reject the merge if any PR path begins with:
+Reject the semantic merge if any PR path begins with:
 
 ```python
 PROHIBITED = (
@@ -113,7 +115,7 @@ PROHIBITED = (
 
 - [ ] **Step 4: Squash merge PR #38 with expected-head protection**
 
-Use `merge_method="squash"` and `expected_head_sha=<fresh exact head>`.
+Call the merge operation with `merge_method="squash"` and set `expected_head_sha` to the `semantic_merge_head_sha` captured in Step 2. Do not substitute a SHA from this plan document.
 
 - [ ] **Step 5: Create `qxm2/post-merge-closure-v0.1` from the semantic merge commit**
 
@@ -145,15 +147,19 @@ python -m unittest tests.test_qxm2_evidence_hardening -v
 
 - [ ] **Step 9: Open closure PR, obtain exact-head repository-gates, then merge closure under the same QXM2 merge authorization**
 
+Use expected-head protection on the closure PR. The closure PR may not introduce Registry, benchmark, capability-promotion, runtime, or trading authority.
+
 - [ ] **Step 10: Verify main**
 
 Fresh-read `main`; require `QXM2.status == "accepted_merged"`, the merge receipt exists, and all higher authorities remain false.
 
 ---
 
-### Task 2: Bootstrap the QXM-F program validator and state
+### Task 2: Bootstrap the QXM-F program validator and state on the post-G0 baseline
 
 **Files:**
+- Carry forward unchanged from design branch: `docs/superpowers/specs/2026-08-21-qxm-f-financial-mechanics-capability-closure-design.md`
+- Carry forward unchanged from design branch: `docs/superpowers/plans/2026-08-21-qxm-f-financial-mechanics-capability-closure.md`
 - Create: `docs/architecture/qxm-f/QXM-F-STATE.json`
 - Create: `scripts/validate_qxm_f_closure.py`
 - Create: `tests/test_qxm_f_closure.py`
@@ -161,9 +167,11 @@ Fresh-read `main`; require `QXM2.status == "accepted_merged"`, the merge receipt
 
 **Interfaces:**
 - Consumes: QXM2 `accepted_merged` and `QXM2-MERGE-RECEIPT-v0.1.json` from main.
-- Produces: one fail-closed QXM-F state machine and reusable gate validators.
+- Produces: one fail-closed QXM-F state machine, persisted QXM-F spec/plan, and reusable gate validators.
 
-- [ ] **Step 1: Create implementation branch `qxm-f/financial-mechanics-capability-closure-v0.1` from the post-G0 main**
+- [ ] **Step 1: Create implementation branch `qxm-f/financial-mechanics-capability-closure-v0.1` from the freshly verified post-G0 main**
+
+Copy the approved QXM-F spec and this plan byte-for-byte from `qxm-f/financial-mechanics-capability-closure-design-v0.1` into the implementation branch. Their content hashes must be recorded in `QXM-F-STATE.json` so execution cannot silently drift from the approved design/plan.
 
 - [ ] **Step 2: Write RED tests for the legal state machine and authority separation**
 
@@ -195,7 +203,7 @@ def test_qxm_f_rejects_trading_authority():
 python -m unittest tests.test_qxm_f_closure -v
 ```
 
-Expected: import failure because the QXM-F validator does not exist.
+Expected: import failure because the QXM-F validator does not yet exist.
 
 - [ ] **Step 4: Implement validator primitives**
 
@@ -222,6 +230,8 @@ Implement `load_json`, `require_fields`, `assert_state`, `assert_no_authority_es
 }
 ```
 
+Add `approved_spec_sha256` and `approved_plan_sha256` using the actual byte hashes produced in Step 1.
+
 - [ ] **Step 6: Add QXM-F validator to `repository-gates` after QXM2 validator**
 
 ```yaml
@@ -233,7 +243,7 @@ Implement `load_json`, `require_fields`, `assert_state`, `assert_no_authority_es
 ```bash
 python scripts/validate_qxm_f_closure.py
 python -m unittest discover -s tests -p 'test_*.py' -v
-git add docs/architecture/qxm-f scripts/validate_qxm_f_closure.py tests/test_qxm_f_closure.py .github/workflows/ci.yml
+git add docs/superpowers/specs docs/superpowers/plans docs/architecture/qxm-f scripts/validate_qxm_f_closure.py tests/test_qxm_f_closure.py .github/workflows/ci.yml
 git commit -m "test(qxm-f): bootstrap closure state and governance validator"
 ```
 
@@ -305,8 +315,14 @@ If `ACCEPT_QXM_F_G1_SELECTIVE_ADMISSION` is absent, stop with no Registry writes
 ```python
 def test_g1_registry_delta_equals_accepted_ledger():
     ledger = load_json(G1_LEDGER)
-    expected_theory_ids = {r["object_id"] for r in ledger["theories"] if r["human_disposition"] in {"ADMIT", "ADMIT_WITH_BOUNDARY"}}
-    expected_hyp_ids = {r["object_id"] for r in ledger["hypotheses"] if r["human_disposition"] in {"ADMIT", "ADMIT_WITH_BOUNDARY"}}
+    expected_theory_ids = {
+        r["object_id"] for r in ledger["theories"]
+        if r["human_disposition"] in {"ADMIT", "ADMIT_WITH_BOUNDARY"}
+    }
+    expected_hyp_ids = {
+        r["object_id"] for r in ledger["hypotheses"]
+        if r["human_disposition"] in {"ADMIT", "ADMIT_WITH_BOUNDARY"}
+    }
     assert ids_from_pack(THEORY_PACK) == expected_theory_ids
     assert ids_from_pack(HYP_PACK) == expected_hyp_ids
 ```
@@ -317,7 +333,7 @@ Copy the QXM2 inner `theory_object` / `hypothesis_object` payloads without seman
 
 - [ ] **Step 4: Update subindexes and global Registry count deterministically**
 
-Never hand-maintain counts without comparing pack object counts and `_index.json` counts.
+Compute each new `entry_count` from pack contents, then require the global total to equal the sum of all nine registry subindex counts.
 
 - [ ] **Step 5: Run R1 validator, QXM-F validator and full tests**
 
@@ -353,13 +369,17 @@ Post-merge state: `G1_ADMITTED_MERGED`; next gate `QXM_F_G2_PREREGISTRATION`.
 - Consumes: G1 admitted `proposed` hypotheses and seed dispositions marked `FORMALIZE`.
 - Produces: frozen candidate experiment contracts plus SHA-256 hashes; still no benchmark execution.
 
-- [ ] **Step 1: Write RED tests that require immutable experiment fields**
+- [ ] **Step 1: Create branch `qxm-f/g2-preregistration-benchmark-v0.1` from the verified G1 post-merge main**
+
+Do not continue using the G1 branch after G1 is merged.
+
+- [ ] **Step 2: Write RED tests that require immutable experiment fields**
 
 Each selected hypothesis/benchmark pair must freeze target, horizon, universe, conditioning state, baseline, split method, PIT policy, lookahead prohibition, regime holdout, metric set, acceptance threshold, complexity penalty, multiple-testing policy, calibration requirement, missing-data policy and revision rule.
 
-- [ ] **Step 2: Define exact benchmark IDs**
+- [ ] **Step 3: Define exact benchmark IDs**
 
-Use R1 ID rules, for example:
+Use R1 ID rules:
 
 ```text
 BENCH-P-FUNDAMENTAL-DRIVER-INCREMENTAL-V1
@@ -372,15 +392,15 @@ BENCH-CROSS-RETURN-SOURCE-ATTRIBUTION-V1
 
 Only IDs whose seed disposition is `FORMALIZE` may enter the candidate pack.
 
-- [ ] **Step 3: Freeze the modality for Return Source Attribution**
+- [ ] **Step 4: Freeze the modality for Return Source Attribution**
 
 Its `split_method` must use held-out ResearchReceipt/episode cases; its acceptance threshold must evaluate reconstruction error and thesis-fidelity discrimination versus naive P&L-sign/baseline attribution. Do not use forecast accuracy as the primary metric.
 
-- [ ] **Step 4: Hash every preregistration record**
+- [ ] **Step 5: Hash every preregistration record**
 
 Use canonical JSON serialization with `sort_keys=True`, UTF-8 and compact separators, then SHA-256. Store `contract_hash` in the preregistration pack.
 
-- [ ] **Step 5: Create Human Review Card and obtain exact-head CI**
+- [ ] **Step 6: Create Human Review Card and obtain exact-head CI**
 
 Human Gate token:
 
@@ -407,6 +427,8 @@ Stop before mutating formal hypothesis status or `registry/benchmarks`.
 - Produces: selected formal hypotheses with `status="preregistered"` and formal BenchmarkObjects; execution authority remains false.
 
 - [ ] **Step 1: Write RED tests that reject unaccepted status changes and benchmark drift**
+
+Require every changed hypothesis ID to be Human-accepted, and require its non-status semantic fields to hash identically to the G1 version. Require each BenchmarkObject to hash to the accepted G2 candidate contract.
 
 - [ ] **Step 2: Change only selected hypotheses from `proposed` to `preregistered`**
 
@@ -450,19 +472,23 @@ Post-merge state: `G2_PREREGISTERED_MERGED`; next gate `QXM_F_G3_PROVIDER_AND_RE
 - Create: `docs/architecture/qxm-f/g3/QXM-F-G3-IMPLEMENTATION-CONTRACTS-v0.1.json`
 - Create: `docs/architecture/qxm-f/g3/QXM-F-G3-WIND-EXECUTION-TASK-SPEC-v0.1.md`
 - Create: `docs/architecture/qxm-f/g3/QXM-F-G3-HUMAN-REVIEW-CARD-v0.1.md`
-- Add deterministic reference implementation modules under `src/yuanli_research/financial_mechanics/` only for G2-preregistered tests.
-- Add unit tests under `tests/financial_mechanics/`.
+- Create deterministic reference implementation modules under `src/yuanli_research/financial_mechanics/` only for G2-preregistered tests.
+- Create unit tests under `tests/financial_mechanics/`.
 - Modify QXM-F validator/tests/state.
 
 **Interfaces:**
 - Consumes: G2 formal hypotheses/benchmarks and current canonical data-field registry.
 - Produces: provider-neutral implementation contracts and a schema-compatible Wind ProviderAdapter candidate; no licensed data and no benchmark execution yet.
 
-- [ ] **Step 1: Inventory every required observable against `registry/data-fields`**
+- [ ] **Step 1: Create branch `qxm-f/g3-provider-reality-proof-v0.1` from the verified G2 post-merge main**
+
+G3A and G3B share this single G3 branch/PR because G3B is execution of the protocol reviewed in G3A; no G3 merge occurs between protocol review and authorized execution.
+
+- [ ] **Step 2: Inventory every required observable against `registry/data-fields`**
 
 Classify each as `existing_field`, `new_provider_neutral_field_required`, or `provider_only_not_canonical`. New economic semantics require a new `FIELD-*`; Wind codes never appear in `FIELD-*` identities.
 
-- [ ] **Step 2: Write RED implementation tests per Tier-1 capability**
+- [ ] **Step 3: Write RED implementation tests per Tier-1 capability**
 
 Minimum modules:
 
@@ -474,19 +500,19 @@ return_source_attribution.py
 
 Each exposes a deterministic function returning structured ResearchState-compatible diagnostics and abstains/fails closed on missing PIT lineage.
 
-- [ ] **Step 3: Create FactorObject or AlgorithmObject candidates required by `ResearchCapability` schema**
+- [ ] **Step 4: Create FactorObject or AlgorithmObject candidates required by `ResearchCapability` schema**
 
-Do not create a ResearchCapability entry that lacks both factor and algorithm linkage; the schema explicitly requires at least one. Predictive mechanics may use FactorObject/AlgorithmObject; attribution can use an AlgorithmObject with `causal_claim_status="not_applicable"` or `descriptive` as appropriate.
+Do not create a ResearchCapability entry that lacks both factor and algorithm linkage; the schema explicitly requires at least one. Predictive mechanics may use FactorObject/AlgorithmObject; attribution may use an AlgorithmObject with `causal_claim_status="not_applicable"` or `descriptive` as justified by the contract.
 
-- [ ] **Step 4: Build Wind ProviderAdapter candidate**
+- [ ] **Step 5: Build Wind ProviderAdapter candidate**
 
-Use ID `PROVIDER-WIND-FINANCIAL-MECHANICS-V1` only if it matches the provider schema pattern at execution time. Every mapping must specify canonical `field_id`, Wind/provider field, transformation, PIT compatibility and revision handling; `canonical_semantics_may_not_be_redefined=true`.
+Use `PROVIDER-WIND-FINANCIAL-MECHANICS-V1` if it still validates against the current provider schema at execution time. Every mapping must specify canonical `field_id`, provider field, transformation, PIT compatibility and revision handling; `canonical_semantics_may_not_be_redefined=true`.
 
-- [ ] **Step 5: Write the external Wind execution task spec**
+- [ ] **Step 6: Write the external Wind execution task spec**
 
 The task spec must list benchmark IDs, preregistration hashes, required universes/splits, field mappings, publication-lag rules, permitted derived transforms, simple baselines, expected receipt schema, and the prohibition on uploading raw licensed data to GitHub.
 
-- [ ] **Step 6: Create Human Review Card and obtain exact-head CI**
+- [ ] **Step 7: Create Human Review Card and obtain exact-head CI**
 
 Human Gate token:
 
@@ -523,7 +549,7 @@ Without it, no Wind/provider data request may run.
 
 - [ ] **Step 2: Execute Tier-1 four-part proof**
 
-For CAP-P-003 and CAP-P-004: PIT replay, true OOS/held-out prediction/explanation test, regime holdout, failure replay.
+For CAP-P-003 and CAP-P-004: PIT replay, true OOS/held-out prediction-or-explanation test, regime holdout, failure replay.
 
 For CAP-CROSS-001: PIT position/receipt reconstruction, held-out episode reconstruction and thesis-fidelity discrimination, regime/asset-form holdout, hindsight/failure replay.
 
@@ -533,11 +559,11 @@ Credit and Stress Liquidity may return `DEFER_DATA_INSUFFICIENT` when vintage-co
 
 - [ ] **Step 4: Store receipt-only results**
 
-Each receipt must include benchmark ID, preregistration hash, implementation revision, provider adapter revision, data-vintage/hash metadata, universe size, time span, split/regime labels, baseline metrics, candidate metrics, failure metrics, missingness, exclusions, and a `raw_licensed_data_committed=false` assertion.
+Each receipt must include benchmark ID, preregistration hash, implementation revision, provider adapter revision, data-vintage/hash metadata, universe size, time span, split/regime labels, baseline metrics, candidate metrics, failure metrics, missingness, exclusions, and `raw_licensed_data_committed=false`.
 
 - [ ] **Step 5: Validate result integrity**
 
-A result is stale if its preregistration hash, code revision, provider adapter revision, or benchmark object revision differs from the frozen execution contract.
+A result is stale if its preregistration hash, code revision, provider adapter revision, or BenchmarkObject revision differs from the frozen execution contract.
 
 - [ ] **Step 6: Human Results Review**
 
@@ -571,7 +597,9 @@ After merge: state `G3_RESULTS_MERGED`; next gate `QXM_F_G4_CAPABILITY_SETTLEMEN
 - Consumes: six candidate dispositions, G2 preregistration/benchmark receipts, G3 results/defer records.
 - Produces: exactly one proposed terminal research disposition for each of six QXM candidates.
 
-- [ ] **Step 1: Write RED test requiring 6/6 settlement coverage**
+- [ ] **Step 1: Create branch `qxm-f/g4-capability-settlement-v0.1` from the verified G3 post-merge main**
+
+- [ ] **Step 2: Write RED test requiring 6/6 settlement coverage**
 
 Legal values:
 
@@ -586,19 +614,19 @@ SETTLEMENTS = {
 
 Every candidate must have one proposed settlement, evidence pointers, benchmark outcome, boundary, and runtime-authority proposal.
 
-- [ ] **Step 2: Derive candidate settlement from frozen rules, never from narrative preference**
+- [ ] **Step 3: Derive candidate settlement from frozen rules, never from narrative preference**
 
-A predictive promotion requires meeting the exact G2 acceptance threshold against simple baselines. An attribution/interpretation promotion requires the corresponding reconstruction/discrimination threshold. Failed or stale benchmarks cannot be overridden by a prose rationale.
+A predictive promotion requires meeting the exact G2 acceptance threshold against simple baselines. An attribution/interpretation promotion requires the corresponding reconstruction/discrimination threshold. Failed, deferred, or stale benchmarks cannot be overridden by prose rationale.
 
-- [ ] **Step 3: Build Known Failure Envelope for every proposed promoted/bounded capability**
+- [ ] **Step 4: Build Known Failure Envelope for every proposed promoted/bounded capability**
 
 Require unsupported asset forms, sectors/regimes, data-quality failures, false positives, false negatives, causal-language limits, provider limits and abstention conditions.
 
-- [ ] **Step 4: Enforce Discount-Rate boundary**
+- [ ] **Step 5: Enforce Discount-Rate boundary**
 
 Without a valid predictive benchmark PASS, Candidate 04 settlement cannot be `PROMOTE` with timing authority; it may remain `INTERPRETATION_ONLY` or be redesigned.
 
-- [ ] **Step 5: Create Human Review Card and stop at exact-head CI**
+- [ ] **Step 6: Create Human Review Card and stop at exact-head CI**
 
 Token:
 
@@ -613,7 +641,7 @@ No Capability Registry mutation occurs before this token.
 ### Task 10: G4 — Apply settlement, lifecycle transitions, and build `FM-GOLD-01` only when earned
 
 **Files:**
-- Create: `docs/architecture/qxm-f/g4/QXM-F-G4-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json`
+- Create after Human Acceptance: `docs/architecture/qxm-f/g4/QXM-F-G4-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json`
 - Create/update: `registry/capabilities/qxm-f-financial-mechanics-v0.1.json`
 - Create accepted Factor/Algorithm/Skill packs when required by promoted capability contracts.
 - Update Registry indexes/global index.
@@ -644,6 +672,12 @@ If any Tier-1 object is `REJECT_OR_REDESIGN`, record `gold_pack_created=false` w
 
 - [ ] **Step 5: Run R1/QXM-F/full tests and exact-head CI**
 
+```bash
+python scripts/validate_r1_registry.py
+python scripts/validate_qxm_f_closure.py
+python -m unittest discover -s tests -p 'test_*.py' -v
+```
+
 - [ ] **Step 6: Wait for separate merge authority**
 
 ```text
@@ -669,9 +703,11 @@ After merge: state `G4_SETTLED_MERGED`; next gate `QXM_F_G5_ERC_CANONIZATION`.
 
 **Interfaces:**
 - Consumes: complete QXM0/QXM1/QXM2/QXM-F provenance, all dispositions and settlements.
-- Produces: reusable External Research Compiler protocol and archival Gold Case; QXM not yet declared closed until Human Gate and merge.
+- Produces: reusable External Research Compiler protocol and archival Gold Case; QXM is not declared closed until Human Gate and merge.
 
-- [ ] **Step 1: Write RED closure tests for the 13-stage compiler sequence**
+- [ ] **Step 1: Create branch `qxm-f/g5-erc-canonization-closure-v0.1` from the verified G4 post-merge main**
+
+- [ ] **Step 2: Write RED closure tests for the 13-stage compiler sequence**
 
 Require exactly:
 
@@ -692,19 +728,19 @@ R12 Settlement
 R13 Promote / Bound / Interpret / Reject
 ```
 
-- [ ] **Step 2: Encode the de-personalization law**
+- [ ] **Step 3: Encode the de-personalization law**
 
 The ERC contract must preserve source/person provenance but prohibit practitioner authority from automatically creating Theory, Hypothesis, Capability or runtime authority.
 
-- [ ] **Step 3: Build `ERC-GOLD-CASE-001-QXM.md` as an auditable case, not a biography**
+- [ ] **Step 4: Build `ERC-GOLD-CASE-001-QXM.md` as an auditable case, not a biography**
 
 It must map QXM0 -> QXM1 -> QXM2 -> QXM-F, show accepted/rejected/deferred objects, reality proofs, failures, settlement decisions, and the compiler rules learned from the project.
 
-- [ ] **Step 4: Evaluate the full Project Closure Contract**
+- [ ] **Step 5: Evaluate the full Project Closure Contract**
 
 Closure candidate must prove: QXM2 accepted_merged; six candidate terminal dispositions; all 12 theory shadows disposed; all 12 hypothesis shadows disposed; all six seeds formalized/deferred/rejected; Tier-1 four-part reality proof; simple baselines; Tier-1 settlement receipts; failure envelopes for promoted/bounded objects; no orphan Registry objects; ERC frozen; trading authority still false.
 
-- [ ] **Step 5: Create Human Review Card and exact-head CI**
+- [ ] **Step 6: Create Human Review Card and exact-head CI**
 
 Human Gate token:
 
