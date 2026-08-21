@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.6.0",
+  "schema_version": "0.7.0",
   "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
   "status": "human_accepted_ready_for_merge_authorization",
   "design_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN",
@@ -33,7 +33,6 @@
   },
   "machine_qualification": {
     "validated_head_sha": "66d9478438d11c19ef86a3a96316f5553f042976",
-    "workflow": "repository-gates",
     "run_number": 352,
     "run_id": 32510838152,
     "contracts": "success",
@@ -43,7 +42,6 @@
   },
   "human_review_qualification": {
     "validated_head_sha": "dc2c41b4499871336aafc62100a126ce8cab1475",
-    "workflow": "repository-gates",
     "run_number": 353,
     "run_id": 32510936828,
     "contracts": "success",
@@ -54,7 +52,6 @@
   },
   "post_acceptance_qualification": {
     "validated_head_sha": "bec2adcd58dbdfbfa9ee5ec3be062737ccafe795",
-    "workflow": "repository-gates",
     "run_number": 357,
     "run_id": 32511222134,
     "contracts": "success",
@@ -62,11 +59,10 @@
     "me1_validator": "success",
     "unit_tests": "success"
   },
-  "final_acceptance_closure_qualification": {
-    "validated_head_sha": "d785dd527d072a13dea746557a607bad872e053e",
-    "workflow": "repository-gates",
-    "run_number": 360,
-    "run_id": 32511372727,
+  "acceptance_closure_qualification": {
+    "validated_head_sha": "68f823e80228b08891dffdc920c3c2f3636fb0c8",
+    "run_number": 361,
+    "run_id": 32511438447,
     "contracts": "success",
     "governance": "success",
     "me1_validator": "success",
