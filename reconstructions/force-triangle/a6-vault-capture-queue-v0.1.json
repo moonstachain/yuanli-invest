@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "A6",
+  "status": "waiting_external_vault_capture",
+  "source_of_truth": "reconstructions/force-triangle/a5-evidence-freeze-v0.1.json",
+  "capture_policy": "raw source stays in local/NAS Evidence Vault; GitHub stores metadata, locator, hash and adjudication only",
+  "items": [
+    {"source_id":"FTSRC-MOB-001","case_id":"FT-GR-MOBILE-2008","priority":"P0","eligibility":"eligible_pending_vault_capture","capture_state":"not_run","sha256":null,"locator":null,"review_state":"not_reviewed"},
+    {"source_id":"FTSRC-MOB-002","case_id":"FT-GR-MOBILE-2008","priority":"P0","eligibility":"eligible_pending_vault_capture","capture_state":"not_run","sha256":null,"locator":null,"review_state":"not_reviewed"},
+    {"source_id":"FTSRC-MOB-003","case_id":"FT-GR-MOBILE-2008","priority":"P0","eligibility":"eligible_pending_vault_capture","capture_state":"not_run","sha256":null,"locator":null,"review_state":"not_reviewed"},
+    {"source_id":"FTSRC-MOB-004","case_id":"FT-GR-MOBILE-2008","priority":"P0","eligibility":"eligible_pending_vault_capture","capture_state":"not_run","sha256":null,"locator":null,"review_state":"not_reviewed"},
+    {"source_id":"FTSRC-AI-001","case_id":"FT-GR-AI-2023","priority":"P0","eligibility":"eligible_pending_vault_capture","capture_state":"not_run","sha256":null,"locator":null,"review_state":"not_reviewed"},
+    {"source_id":"FTSRC-AI-002","case_id":"FT-GR-AI-2023","priority":"P0","eligibility":"eligible_pending_vault_capture","capture_state":"not_run","sha256":null,"locator":null,"review_state":"not_reviewed"},
+    {"source_id":"FTSRC-AI-003","case_id":"FT-GR-AI-2023","priority":"P0","eligibility":"eligible_pending_vault_capture","capture_state":"not_run","sha256":null,"locator":null,"review_state":"not_reviewed"},
+    {"source_id":"FTSRC-PC-001","case_id":"FT-GR-PC-1995","priority":"P1","eligibility":"eligible_pending_vault_capture","capture_state":"not_run","sha256":null,"locator":null,"review_state":"not_reviewed"},
+    {"source_id":"FTSRC-PC-002","case_id":"FT-GR-PC-1995","priority":"P2","eligibility":"same_day_timestamp_review","capture_state":"not_run","sha256":null,"locator":null,"review_state":"needs_timestamp_review"},
+    {"source_id":"FTSRC-MOB-005","case_id":"FT-GR-MOBILE-2008","priority":"P2","eligibility":"same_day_timestamp_review","capture_state":"not_run","sha256":null,"locator":null,"review_state":"needs_timestamp_review"}
+  ],
+  "excluded": [
+    {"source_id":"FTSRC-AI-004","case_id":"FT-GR-AI-2023","reason":"post_t0_2023_02_02_after_t0_2023_02_01"},
+    {"source_id":"FTSRC-PC-003","case_id":"FT-GR-PC-1995","reason":"derived_2026_discovery_only"},
+    {"source_id":"FTSRC-AI-005","case_id":"FT-GR-AI-2023","reason":"derived_2026_discovery_only"}
+  ]
+}
