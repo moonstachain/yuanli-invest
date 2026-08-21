@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 VALIDATOR = ROOT / "scripts" / "validate_rios_0_1_c_capability_registry.py"
 STATE = ROOT / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-STATE.json"
 MATRIX = ROOT / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json"
+PACK = ROOT / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-GENESIS-PACK-v0.1.json"
 
 EXPECTED_GENESIS_IDS = [
     "RIOS-GEN-01-AI-INFRASTRUCTURE-REGIME-TRANSITION",
@@ -49,6 +50,23 @@ REQUIRED_MATRIX_FIELDS = {
     "benchmark_execution_authorized",
     "runtime_authorized",
     "trading_authorized",
+}
+
+ALLOWED_AGENT_ROUTES = {
+    "P_AGENT",
+    "N_AGENT",
+    "X_AGENT",
+    "E_AGENT",
+    "V_AGENT",
+    "S_AGENT",
+    "CHIEF_RESEARCH_COUNCIL",
+}
+
+REQUIRED_REPLAY_PREREQUISITES = {
+    "historical_case_required",
+    "pit_evidence_required",
+    "falsifier_required",
+    "benchmark_spec_required_before_execution",
 }
 
 
@@ -165,8 +183,61 @@ class RIOS01CBootstrapTests(unittest.TestCase):
             if candidate_id:
                 self.assertNotIn(candidate_id, inventory["physical_ids"], candidate_id)
 
+    def test_task3_pack_exactly_covers_matrix_and_routes_only_allowed_agents(self):
+        self.assertTrue(PACK.exists(), str(PACK))
+        matrix = json.loads(MATRIX.read_text(encoding="utf-8"))
+        pack = json.loads(PACK.read_text(encoding="utf-8"))
+        self.assertEqual(pack["pack_id"], "RIOS-GENESIS-PACK-001")
+        self.assertEqual(pack["status"], "candidate_orchestration_pack")
+        entries = pack["entries"]
+        self.assertEqual([entry["genesis_id"] for entry in entries], EXPECTED_GENESIS_IDS)
+        matrix_deps = {row["genesis_id"]: row["canonical_capability_ids"] for row in matrix["rows"]}
+        for entry in entries:
+            self.assertEqual(entry["canonical_capability_ids"], matrix_deps[entry["genesis_id"]])
+            self.assertTrue(entry["agent_routes"], entry["genesis_id"])
+            self.assertTrue(set(entry["agent_routes"]).issubset(ALLOWED_AGENT_ROUTES), entry)
+
+    def test_task3_pack_requires_replay_prerequisites_and_zero_authorities(self):
+        pack = json.loads(PACK.read_text(encoding="utf-8"))
+        module = load_validator_module()
+        module.assert_non_authority(pack)
+        self.assertFalse(pack["registry_admission_authorized"])
+        self.assertFalse(pack["benchmark_execution_authorized"])
+        self.assertFalse(pack["runtime_authorized"])
+        self.assertFalse(pack["trading_authorized"])
+        for entry in pack["entries"]:
+            prereqs = entry["replay_prerequisites"]
+            self.assertEqual(set(prereqs), REQUIRED_REPLAY_PREREQUISITES)
+            self.assertTrue(all(prereqs.values()), entry["genesis_id"])
+            self.assertFalse(entry["replay_pass_claimed"])
+
+    def test_task3_prohibited_outputs_and_provider_native_semantics_fail_closed(self):
+        module = load_validator_module()
+        for bad in (
+            {"target_price": 100},
+            {"buy_signal": True},
+            {"sell_signal": True},
+            {"recommended_weight": 0.2},
+            {"target_weight": 0.2},
+            {"position_size": 0.2},
+            {"broker_action": "BUY"},
+            {"live_execution": True},
+            {"pnx_score": 0.9},
+            {"force_score": 0.9},
+        ):
+            with self.assertRaises(AssertionError):
+                module.assert_non_authority(bad)
+        for bad in (
+            {"wind_field": "S_DQ_CLOSE"},
+            {"wind_code": "000001.SZ"},
+            {"bloomberg_field": "PX_LAST"},
+            {"provider_native_identifier": "vendor:key"},
+        ):
+            with self.assertRaises(AssertionError):
+                module.assert_provider_neutral(bad)
+
     @unittest.expectedFailure
-    def test_full_pack_validates_after_task3(self):
+    def test_full_pack_validates_after_task4(self):
         module = load_validator_module()
         result = module.validate_rios_0_1_c(ROOT)
         self.assertEqual(result["genesis_count"], 10)
