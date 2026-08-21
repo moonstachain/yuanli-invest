@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "stage": "QXM_F_FINANCIAL_MECHANICS_CAPABILITY_CLOSURE",
-  "status": "G0_QXM2_ACCEPTED_MERGED",
+  "status": "G1_SELECTIVE_ADMISSION_READY_FOR_HUMAN_REVIEW",
   "program_formula": "Identity Settlement x Reality Settlement x Learning Settlement",
   "upstream_qxm2": {
     "status": "accepted_merged",
@@ -20,7 +20,23 @@
     "source_spec_git_blob_sha": "f2ab51b07e514e9dbf65061651ee800a89322db1",
     "source_plan_git_blob_sha": "3e5cd9fa5fe2c1cab6a14d079da166e7cac43af4"
   },
-  "identity_settlement": "not_started",
+  "g1": {
+    "stage": "QXM_F_G1_SELECTIVE_REGISTRY_ADMISSION",
+    "admission_ledger": "docs/architecture/qxm-f/g1/QXM-F-G1-ADMISSION-LEDGER-v0.1.json",
+    "human_review_card": "docs/architecture/qxm-f/g1/QXM-F-G1-HUMAN-REVIEW-CARD-v0.1.md",
+    "object_count": 30,
+    "theory_count": 12,
+    "hypothesis_count": 12,
+    "benchmark_seed_count": 6,
+    "human_gate_token": "ACCEPT_QXM_F_G1_SELECTIVE_ADMISSION",
+    "human_decision": "pending",
+    "formal_registry_mutation_performed": false,
+    "hypothesis_preregistration_performed": false,
+    "benchmark_execution_performed": false,
+    "capability_promotion_performed": false,
+    "machine_qualification": "exact_head_ci_required_before_human_review"
+  },
+  "identity_settlement": "candidate_dispositions_complete_human_pending",
   "reality_settlement": "not_started",
   "learning_settlement": "not_started",
   "registry_admission_authority": "none",
@@ -30,5 +46,5 @@
   "capability_promotion_authority": "none",
   "production_runtime_authority": "none",
   "trading_authority": "none",
-  "next_gate": "QXM_F_G1_SELECTIVE_ADMISSION"
+  "next_gate": "QXM_F_G1_HUMAN_REVIEW"
 }
