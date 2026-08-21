@@ -28,9 +28,30 @@ def build():
     r23b0r = load(ARCH / "r2_3b0" / "R2-3B0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json")
     r23b0m = load(ARCH / "r2_3b0" / "R2-3B0-MERGE-RECEIPT-v0.1.json")
     r23b1 = load(ARCH / "r2_3b1" / "R2-3B1-STATE.json")
+    r23b1r_path = ARCH / "r2_3b1" / "R2-3B1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+    r23b1r = load(r23b1r_path) if r23b1r_path.exists() else None
+
+    b1_stage = {
+        "status": r23b1["status"],
+        "purpose": r23b1["purpose"],
+        "human_gate": r23b1["human_gate"]["token"],
+        "human_gate_decision": r23b1["human_gate"]["decision"],
+        "machine_qualification": r23b1["machine_qualification"],
+        "upstream_dependency_resolved": r23b1["upstream_dependency"]["resolved"],
+    }
+    for field, key in [
+        ("human_review_qualification", "human_review_qualification"),
+        ("post_acceptance_ci", "post_acceptance_qualification"),
+        ("merge_authority", "merge_authority"),
+        ("downstream_implementation_authorization", "downstream_implementation_authorization"),
+    ]:
+        if key in r23b1:
+            b1_stage[field] = r23b1[key]
+    if r23b1["human_gate"].get("acceptance_receipt"):
+        b1_stage["human_acceptance_receipt"] = r23b1["human_gate"]["acceptance_receipt"]
 
     return {
-        "schema_version": "1.2.0",
+        "schema_version": "1.3.0",
         "projection_semantics": "deterministic_non_authoritative_projection",
         "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
         "mission": "Yuanli Investment Research Intelligence Canon",
@@ -58,8 +79,8 @@ def build():
             "R2_3": {"status": r23["status"], "purpose": "Runtime Blocker Closure", "merge_commit": r23["merge_commit"], "merge_receipt": r23["merge_receipt"]},
             "R2_3A": {"status": r23a["status"], "purpose": r23a["purpose"], "human_gate": r23a["human_gate"]["token"], "human_gate_decision": r23a["human_gate"]["decision"], "human_acceptance_receipt": r23a["human_gate"]["acceptance_receipt"], "merge_commit": r23a["merge_commit"], "merge_receipt": r23a["merge_receipt"], "merge_authority": r23a["merge_authority"], "post_acceptance_ci": r23a["post_acceptance_qualification"]},
             "R2_3B0": {"status": r23b0["status"], "purpose": r23b0["purpose"], "human_gate": r23b0["human_gate"]["token"], "human_gate_decision": r23b0["human_gate"]["decision"], "human_acceptance_receipt": r23b0["human_gate"]["acceptance_receipt"], "merge_commit": r23b0["merge_commit"], "merge_receipt": r23b0["merge_receipt"], "merge_authority": r23b0["merge_authority"], "post_acceptance_ci": r23b0["post_acceptance_qualification"]},
-            "R2_3B1": {"status": r23b1["status"], "purpose": r23b1["purpose"], "human_gate": r23b1["human_gate"]["token"], "human_gate_decision": r23b1["human_gate"]["decision"], "machine_qualification": r23b1["machine_qualification"], "upstream_dependency_resolved": r23b1["upstream_dependency"]["resolved"]},
-            "R3A": {"status": "paused_not_started", "reason": "await_r2_3b1_specification_and_reference_implementation_authorization"},
+            "R2_3B1": b1_stage,
+            "R3A": {"status": "paused_not_started", "reason": "await_r2_3b1_merge_then_execute_owner_authorized_b2_reference_implementation"},
             "R4A": {"status": "not_authorized", "purpose": "Benchmark Closure"}
         },
         "constitutional_invariants": {
@@ -78,7 +99,23 @@ def build():
         "r2_3b0_contract_architecture": {"required_blocks": r23b0["contract_architecture"]["required_blocks"], "canonical_output_root": r23b0["contract_architecture"]["canonical_output_root"], "invocation_envelope_required": r23b0["contract_architecture"]["invocation_envelope_required"], "research_receipt_required": r23b0["contract_architecture"]["research_receipt_required"], "p0_capabilities": r23b0["p0_capabilities"], "point_in_time_required": r23b0["constitutional_invariants"]["point_in_time_required"], "provider_independent_identity": r23b0["constitutional_invariants"]["provider_independent_identity"], "scalar_master_score_prohibited": r23b0["constitutional_invariants"]["scalar_master_score_prohibited"], "n02_reunderwrite_policy": r23b0["n02_reunderwrite_policy"]},
         "r2_3b0_acceptance_fact": {"pr": r23b0r["pr_number"], "decision": r23b0r["decision"], "reviewed_head": r23b0r["reviewed_head_sha"], "reviewed_ci_run": r23b0r["reviewed_ci"]["run_number"], "merge_authority": r23b0r["merge_authority"]},
         "r2_3b0_merge_fact": {"pr": r23b0m["pr_number"], "merge_authorization": r23b0m["merge_authorization"], "pre_merge_head": r23b0m["pre_merge_head_sha"], "pre_merge_ci_run": r23b0m["pre_merge_ci"]["run_number"], "merge_method": r23b0m["merge_method"], "merge_commit": r23b0m["merge_commit_sha"]},
-        "r2_3b1_specification": {"required_contract_blocks": r23b1["required_contract_blocks"], "p0_capabilities": r23b1["p0_capabilities"], "specification_artifacts": r23b1["specification_artifacts"], "implementation_sequence_after_acceptance": r23b1["implementation_sequence_after_acceptance"], "implementation_authorized": False},
+        "r2_3b1_specification": {
+            "required_contract_blocks": r23b1["required_contract_blocks"],
+            "p0_capabilities": r23b1["p0_capabilities"],
+            "specification_artifacts": r23b1["specification_artifacts"],
+            "implementation_sequence_after_acceptance": r23b1["implementation_sequence_after_acceptance"],
+            "owner_authorized_b2_after_merge": r23b1.get("downstream_implementation_authorization", {}).get("explicitly_authorized_by_owner", False),
+            "implementation_effective_now": r23b1["status"] == "accepted_merged",
+            "implementation_plan": r23b1.get("downstream_implementation_authorization", {}).get("implementation_plan")
+        },
+        "r2_3b1_acceptance_fact": None if r23b1r is None else {
+            "pr": r23b1r["pr_number"],
+            "decision": r23b1r["decision"],
+            "reviewed_head": r23b1r["reviewed_head_sha"],
+            "reviewed_ci_run": r23b1r["reviewed_ci"]["run_number"],
+            "merge_authority": r23b1r["merge_authority"],
+            "b2_authorized_after_merge": r23b1r["downstream_implementation_authorization"]["explicitly_authorized_by_owner"]
+        },
         "admission": {"evidence": "not_authorized", "outcome": "not_authorized", "rsi_promotion": "not_authorized"},
         "r2_1_merge_fact": {"pr": r21r["pr_number"], "merge_commit": r21r["merge_commit_sha"], "post_acceptance_ci_run": r21r["post_acceptance_ci"]["run_number"]},
         "r2_2_merge_fact": {"pr": r22r["pr_number"], "merge_commit": r22r["merge_commit_sha"], "post_acceptance_ci_run": r22r["post_acceptance_ci"]["run_number"]},
