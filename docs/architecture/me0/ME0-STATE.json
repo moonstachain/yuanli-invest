@@ -1,15 +1,44 @@
 {
+  "schema_version": "0.2.0",
   "stage": "ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
-  "status": "candidate_ready_for_human_review",
+  "status": "human_accepted_pending_post_acceptance_ci",
   "repository_base_sha": "bd8931e1bf21dceb5e34a68ec41aa199b83e9410",
   "design_approval": {
     "token": "APPROVE_ME0_DESIGN_FOR_IMPLEMENTATION",
     "decision": "accepted"
   },
+  "machine_qualification": {
+    "decision": "passed",
+    "qualification_basis_sha": "226391a76c3e31128706594fe20c0ad9268971ba",
+    "qualification_run_number": 329,
+    "contracts_gate": "passed",
+    "governance_gate": "passed"
+  },
+  "human_review_qualification": {
+    "validated_head_sha": "5dfe423f856506ce20701fdc1bb5a721e5df48c8",
+    "workflow": "repository-gates",
+    "run_number": 330,
+    "run_id": 32506837751,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "me0_validator": "success",
+    "unit_tests": "success",
+    "formal_review": "16/16 PASS"
+  },
   "human_gate": {
     "token": "ACCEPT_ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
-    "decision": "pending",
-    "acceptance_does_not_imply_merge": true
+    "decision": "ACCEPT_ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
+    "accepted_at": "2026-08-22T01:13:00+08:00",
+    "acceptance_receipt": "docs/architecture/me0/ME0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+    "reviewed_head_sha": "5dfe423f856506ce20701fdc1bb5a721e5df48c8",
+    "reviewed_ci_run": 330,
+    "acceptance_does_not_imply_merge": true,
+    "acceptance_does_not_imply_schema_migration": true,
+    "acceptance_does_not_imply_registry_admission": true,
+    "acceptance_does_not_imply_runtime_authority": true,
+    "acceptance_does_not_imply_portfolio_authority": true,
+    "acceptance_does_not_imply_trading_authority": true
   },
   "implementation_authorities": {
     "constitution_mutation": false,
@@ -19,13 +48,9 @@
     "portfolio": false,
     "live_execution": false
   },
-  "machine_qualification": {
-    "decision": "passed",
-    "qualification_basis_sha": "226391a76c3e31128706594fe20c0ad9268971ba",
-    "qualification_run_number": 329,
-    "contracts_gate": "passed",
-    "governance_gate": "passed",
-    "candidate_head_requires_exact_head_green": true
-  },
-  "next_gate": "HUMAN_REVIEW"
+  "post_acceptance_ci_required": true,
+  "merge_authority": "not_authorized",
+  "required_merge_token": "AUTHORIZE_ME0_MERGE",
+  "next_gate": "ME0_POST_ACCEPTANCE_CI",
+  "next_me_stage_authorized": false
 }

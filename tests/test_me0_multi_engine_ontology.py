@@ -40,11 +40,29 @@ class ME0OntologyTests(unittest.TestCase):
             me0.validate_contract(contract)
 
     def test_future_object_implementation_authority_is_rejected(self):
-        successor_map = me0.load_json(me0.SUCCESSOR_MAP_PATH)
-        mutated = copy.deepcopy(successor_map)
-        mutated["future_object_identities"][0]["implementation_authority_in_ME0"] = True
+        successor_map = copy.deepcopy(me0.load_json(me0.SUCCESSOR_MAP_PATH))
+        successor_map["future_object_identities"][0]["implementation_authority_in_ME0"] = True
         with self.assertRaises(ValueError):
-            me0.validate_successor_map(mutated)
+            me0.validate_successor_map(successor_map)
+
+    def test_acceptance_receipt_cannot_imply_merge(self):
+        receipt = copy.deepcopy(me0.load_json(me0.ACCEPTANCE_RECEIPT_PATH))
+        receipt["merge_authority"] = "authorized"
+        with self.assertRaises(ValueError):
+            me0.validate_acceptance_receipt(receipt)
+
+    def test_acceptance_receipt_must_bind_reviewed_head(self):
+        receipt = copy.deepcopy(me0.load_json(me0.ACCEPTANCE_RECEIPT_PATH))
+        receipt["reviewed_head_sha"] = "deadbeef"
+        with self.assertRaises(ValueError):
+            me0.validate_acceptance_receipt(receipt)
+
+    def test_acceptance_cannot_authorize_next_stage(self):
+        state = copy.deepcopy(me0.load_json(me0.STATE_PATH))
+        receipt = me0.load_json(me0.ACCEPTANCE_RECEIPT_PATH)
+        state["next_me_stage_authorized"] = True
+        with self.assertRaises(ValueError):
+            me0.validate_state(state, receipt)
 
 
 if __name__ == "__main__":
