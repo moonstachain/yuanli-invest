@@ -1,6 +1,6 @@
 # ME1 | Human Review Card v0.1
 
-Status: `human_accepted_pending_post_acceptance_ci`
+Status: `human_accepted_ready_for_merge_authorization`
 
 Reviewed candidate:
 - exact head: `dc2c41b4499871336aafc62100a126ce8cab1475`
@@ -15,6 +15,12 @@ Human decision:
 `ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME`
 
 Formal review: **13/13 PASS**
+
+Post-acceptance qualification:
+- acceptance-record head: `bec2adcd58dbdfbfa9ee5ec3be062737ccafe795`
+- Run #357 (`32511222134`) = **SUCCESS**
+- final acceptance-closure head: `8ec2670c2649903533a7ab13dd2a90f27c0b0c5f`
+- Run #359 (`32511316612`) = **SUCCESS**
 
 ## D1 | Target / Thesis separation — ACCEPTED
 ResearchTarget identity does not imply a unique investment thesis.
@@ -55,9 +61,9 @@ Portfolio sizing, buy/sell/hold, trading, execution, Registry promotion, Constit
 ## D13 | ResearchTarget v2 semantic successor non-regression — ACCEPTED
 ResearchTarget v1.0.0 remains immutable; ResearchTarget v2.0.0 is a distinct semantic successor.
 
-## Next gate
+## Current gate
 
-`ME1_POST_ACCEPTANCE_CI`
+`ME1_MERGE_AUTHORIZATION`
 
 Acceptance does not imply merge.
 
