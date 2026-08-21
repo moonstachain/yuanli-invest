@@ -53,8 +53,32 @@ Verified anchors:
 
 The resulting QXM2 boundary is permanent: **statement divergence is diagnostic, not proof of manipulation, fraud, insolvency, or future underperformance.**
 
+## Batch B｜Transmission & Pricing Mechanics
+
+### QXM1-CAND-03｜Credit & Balance-Sheet Transmission
+
+Verified anchors:
+
+- `QXM2-SRC-BERNANKE-GERTLER-1989` — borrower net worth can alter the agency cost of external finance and amplify investment fluctuations.
+- `QXM2-SRC-KIYOTAKI-MOORE-1997` — collateral values, borrowing limits and asset prices can reinforce each other dynamically when credit constraints bind.
+- `QXM2-SRC-SCHULARICK-TAYLOR-2012` — long-run international evidence links strong credit growth to elevated future financial-crisis risk; the source also provides replication materials.
+- `QXM2-SRC-JORDA-SCHULARICK-TAYLOR-2013` — historically, more credit-intensive expansions are associated with deeper recessions and slower recoveries.
+
+The capability therefore cannot collapse to `credit growth -> asset price`. The QXM2 mechanism remains sectoral and balance-sheet based: borrower sector -> leverage/net worth -> collateral -> lending/funding conditions -> credit creation -> spending/investment -> cash flow -> financial-condition feedback. When the borrower/collateral/funding channel is not observed, output authority must degrade to `association_only` rather than causal transmission.
+
+### QXM1-CAND-04｜Opportunity-Cost / Discount-Rate Bridge
+
+Verified anchors:
+
+- `QXM2-SRC-SHARPE-1964` — required return can be modeled as compensation for time and priced risk under explicit equilibrium assumptions; those assumptions are restrictive.
+- `QXM2-SRC-CAMPBELL-SHILLER-1988` — present-value relations provide a model-based decomposition of valuation ratios into expected cash-flow growth, discount-rate expectations and unresolved components.
+- `QXM2-SRC-COCHRANE-2011` — discount-rate variation is a central organizing problem in modern asset pricing, but the synthesis does not grant universal forecasting authority to a single predictor.
+- `QXM2-SRC-WELCH-GOYAL-2008` — many published equity-premium predictors perform poorly or unstably out of sample relative to simple historical-mean baselines.
+
+This profile is therefore frozen as an **expectations-decomposition capability, not a market-timing oracle**. `Price-Implied Expectations != Target Price`; DCF is routed only to compatible asset forms; predictive status requires separate PIT/OOS evidence against simple baselines.
+
 ## Current staging status
 
-Reality Mechanics source verification and EvidenceRelation compilation are complete at the minimum-sufficient level. Credit/Balance-Sheet Transmission, Discount-Rate Bridge, Stress Exit Liquidity, and Return Source Attribution remain to be compiled before QXM2 can advance to `source_verification_complete`.
+Primary-source identity verification is complete for all six QXM1 candidates. EvidenceRelations are complete at the minimum-sufficient level for Candidates 01-04. Stress Exit Liquidity and Return Source Attribution still require their EvidenceRelation batch before QXM2 can advance from source verification into full mechanism compilation.
 
 No Registry admission, formal BenchmarkObject creation, benchmark execution, capability promotion, production runtime, target price, portfolio sizing, or trading authority is created by this document.
