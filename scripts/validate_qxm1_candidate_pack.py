@@ -14,6 +14,7 @@ SOURCES = QXM / "QXM1-SOURCE-PROVENANCE-v0.1.json"
 STATE = QXM / "QXM1-STATE.json"
 REVIEW = QXM / "QXM1-HUMAN-REVIEW-CARD-v0.1.md"
 ACCEPT_RECEIPT = QXM / "QXM1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+MERGE_RECEIPT = QXM / "QXM1-MERGE-RECEIPT-v0.1.json"
 B0_SCHEMA = B0 / "R2-3B0-CONTRACT-SCHEMA-v0.1.json"
 B0_PROFILES = B0 / "R2-3B0-P0-CONTRACT-PROFILES-v0.1.json"
 B0_STATE = B0 / "R2-3B0-STATE.json"
@@ -21,7 +22,9 @@ B0_MERGE = B0 / "R2-3B0-MERGE-RECEIPT-v0.1.json"
 
 STAGE = "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK"
 HUMAN_TOKEN = "ACCEPT_QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK"
+MERGE_TOKEN = "AUTHORIZE_QXM1_MERGE"
 B0_MERGE_COMMIT = "cb5ffd0f2e8e377d82c12d716e995c7b5b328e01"
+QXM1_MERGE_COMMIT = "81bf6d83da7463e31c58e2d35bcabc291b580546"
 EXPECTED_CANDIDATES = [
     "QXM1-CAND-01-FUNDAMENTAL-DRIVER-DECOMPOSITION",
     "QXM1-CAND-02-THREE-STATEMENT-INTEGRITY",
@@ -190,6 +193,7 @@ def main():
         "candidate_ready_for_human_review",
         "human_accepted_pending_post_acceptance_ci",
         "human_accepted_ready_for_merge",
+        "accepted_merged",
     }
     assert state["stage"] == STAGE
     assert state["status"] in allowed_states
@@ -245,9 +249,10 @@ def main():
         assert state["human_gate"]["reviewed_head_sha"] == acceptance["reviewed_head_sha"]
         assert state["human_gate"]["reviewed_ci_run"] == 173
         assert state["human_review_qualification"]["run_number"] == 173
-        assert state["merge_authority"] == "not_implied_by_acceptance"
         assert state["post_acceptance_ci_required"] is True
+
         if state["status"] == "human_accepted_pending_post_acceptance_ci":
+            assert state["merge_authority"] == "not_implied_by_acceptance"
             assert state["post_acceptance_qualification"] is None
             assert state["post_acceptance_ci_satisfied"] is False
             assert state["next_gate"] == "QXM1_POST_ACCEPTANCE_CI"
@@ -260,7 +265,43 @@ def main():
             assert q["qxm1_candidate_pack"] == "success"
             assert q["unit_tests"] == "success"
             assert state["post_acceptance_ci_satisfied"] is True
-            assert state["next_gate"] == "QXM1_MERGE"
+
+            if state["status"] == "human_accepted_ready_for_merge":
+                assert state["merge_authority"] == "not_implied_by_acceptance"
+                assert state["next_gate"] == "QXM1_MERGE"
+            else:
+                assert MERGE_RECEIPT.exists(), MERGE_RECEIPT
+                merge = load(MERGE_RECEIPT)
+                assert merge["stage"] == STAGE
+                assert merge["pr_number"] == 36
+                assert merge["human_acceptance"] == HUMAN_TOKEN
+                assert merge["merge_authorization"] == MERGE_TOKEN
+                assert merge["pre_merge_head_sha"] == "5e02e369328c355dc754d8eb2747652b7dd65eec"
+                assert merge["pre_merge_ci"]["run_number"] == 183
+                assert merge["pre_merge_ci"]["run_id"] == 32440277831
+                assert merge["pre_merge_ci"]["conclusion"] == "success"
+                assert merge["pre_merge_ci"]["contracts"] == "success"
+                assert merge["pre_merge_ci"]["governance"] == "success"
+                assert merge["pre_merge_ci"]["qxm1_candidate_pack"] == "success"
+                assert merge["pre_merge_ci"]["unit_tests"] == "success"
+                assert merge["merge_method"] == "squash"
+                assert merge["merge_commit_sha"] == QXM1_MERGE_COMMIT
+                assert merge["accepted_candidate_pack"]["candidate_count"] == 6
+                assert merge["accepted_candidate_pack"]["candidate_pack_is_canon"] is False
+                assert merge["boundaries_preserved"]["registry_admission_authorized"] is False
+                assert merge["boundaries_preserved"]["capability_implementation_authorized"] is False
+                assert merge["boundaries_preserved"]["capability_promotion_authorized"] is False
+                assert merge["boundaries_preserved"]["benchmark_execution_authorized"] is False
+                assert merge["boundaries_preserved"]["shadow_qualification_authorized"] is False
+                assert merge["boundaries_preserved"]["trading_action_authorized"] is False
+                assert merge["next_gate"] == "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING"
+                assert state["merge_authority"] == MERGE_TOKEN
+                assert state["merge_commit"] == QXM1_MERGE_COMMIT
+                assert state["merge_receipt"] == "docs/architecture/qxm1/QXM1-MERGE-RECEIPT-v0.1.json"
+                assert state["pre_merge_qualification"]["validated_head_sha"] == merge["pre_merge_head_sha"]
+                assert state["pre_merge_qualification"]["run_number"] == 183
+                assert state["pre_merge_qualification"]["conclusion"] == "success"
+                assert state["next_gate"] == "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING"
 
     pack_text = PACK.read_text(encoding="utf-8")
     review_text = REVIEW.read_text(encoding="utf-8")
