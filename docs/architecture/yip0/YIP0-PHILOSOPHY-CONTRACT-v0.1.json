@@ -1,0 +1,218 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YIP0_INVESTMENT_PHILOSOPHY_CANON",
+  "status": "candidate_philosophy_authority",
+  "identity": {
+    "canonical_name": "Yuanli Investment Philosophy Canon",
+    "human_name_zh": "原力投研哲学｜可错的反身演化实在论",
+    "english_name": "Fallibilist Reflexive Evolutionary Realism",
+    "authority_role": "upstream_philosophy_constraint",
+    "os_identity_preserved": "one_core_three_worlds_three_gates_one_loop"
+  },
+  "mother_proposition": "Reality exists independently of any one investor, yet it changes through time. Human knowledge is always incomplete. In financial systems, belief can alter action, capital allocation, price and later reality. Markets can remain non-equilibrium for long periods. Wealth outcomes are non-Gaussian and path-dependent. Therefore investment should optimize reality-tested learning, asymmetric payoff capture and survival rather than permanent correctness.",
+  "compression": [
+    "实在",
+    "可错",
+    "反身",
+    "演化",
+    "凸性",
+    "生存"
+  ],
+  "mother_laws": [
+    {
+      "id": "REALITY_OVER_BELIEF",
+      "zh": "实在高于叙事",
+      "constraint": "P != N; belief diffusion, attention and price appreciation do not establish reality truth."
+    },
+    {
+      "id": "REFLEXIVITY",
+      "zh": "反身性",
+      "constraint": "Belief can alter action, capital allocation, price, financing conditions and later reality."
+    },
+    {
+      "id": "TAIL_ASYMMETRY",
+      "zh": "尾部非对称",
+      "constraint": "Decision quality cannot be reduced to averages or raw hit-rate; tail concentration, payoff geometry and path dependence matter."
+    },
+    {
+      "id": "SURVIVAL_FIRST",
+      "zh": "生存优先",
+      "constraint": "The right to continue compounding dominates local expected-return optimization that permits unacceptable ruin risk."
+    }
+  ],
+  "axioms": [
+    {
+      "id": "YL-PH-01",
+      "name": "Becoming before Being",
+      "zh": "世界首先是过程，不是状态。",
+      "primary_nodes": ["P"],
+      "required_interpretation": "Research must examine structural transition, not snapshot state alone."
+    },
+    {
+      "id": "YL-PH-02",
+      "name": "Reality exceeds belief",
+      "zh": "现实独立存在，但人的认识永远不完备。",
+      "primary_nodes": ["P", "N", "E"],
+      "required_interpretation": "P != N; narrative strength cannot establish physical, institutional or economic truth."
+    },
+    {
+      "id": "YL-PH-03",
+      "name": "All investment knowledge is provisional",
+      "zh": "所有投资判断都是暂时假说。",
+      "primary_nodes": ["E", "LearningLoop"],
+      "required_interpretation": "Claims require evidence authority, falsifier and revision rule; Canon is governed current knowledge, not final truth."
+    },
+    {
+      "id": "YL-PH-04",
+      "name": "Belief is an economic state variable",
+      "zh": "信念不是噪声，而是金融系统的真实状态变量。",
+      "primary_nodes": ["N"],
+      "required_interpretation": "Shared belief can alter spending, financing, capex, allocation, valuation and institutional behavior."
+    },
+    {
+      "id": "YL-PH-05",
+      "name": "Belief can change reality",
+      "zh": "信念既反映现实，也能改变现实。",
+      "primary_nodes": ["P", "N", "V"],
+      "required_interpretation": "Financial systems can contain reflexive feedback from belief through action, capital and price into later reality."
+    },
+    {
+      "id": "YL-PH-06",
+      "name": "Price is both outcome and cause",
+      "zh": "价格既是结果，也是原因。",
+      "primary_nodes": ["N", "V"],
+      "required_interpretation": "Price can affect financing capacity, collateral, incentives, attention and future actions."
+    },
+    {
+      "id": "YL-PH-07",
+      "name": "Non-equilibrium can persist",
+      "zh": "市场没有义务迅速回到合理价格。",
+      "primary_nodes": ["N", "V", "Xa"],
+      "required_interpretation": "A valuation gap alone does not imply immediate mean reversion; sustaining loops and loop breakers must be distinguished."
+    },
+    {
+      "id": "YL-PH-08",
+      "name": "Returns are non-Gaussian",
+      "zh": "金融收益是肥尾的，财富高度集中于少数极端结果。",
+      "primary_nodes": ["X"],
+      "required_interpretation": "Average outcomes are insufficient descriptions of long-horizon wealth creation and destruction."
+    },
+    {
+      "id": "YL-PH-09",
+      "name": "Payoff dominates raw hit-rate",
+      "zh": "赔率与收益结构的重要性高于单纯预测准确率。",
+      "primary_nodes": ["Xs", "Xa", "Xp"],
+      "required_interpretation": "Probability, payoff geometry, path dependence, liquidity and ruin exposure must remain distinct; X := (Xs, Xa, Xp)."
+    },
+    {
+      "id": "YL-PH-10",
+      "name": "Great future != great investment",
+      "zh": "伟大的未来，不等于伟大的投资。",
+      "primary_nodes": ["V"],
+      "required_interpretation": "Price is an admissibility boundary; V remains Price-Implied Expectations rather than target-price ontology."
+    },
+    {
+      "id": "YL-PH-11",
+      "name": "Survival precedes optimization",
+      "zh": "生存优先于优化。",
+      "primary_nodes": ["S"],
+      "required_interpretation": "Portfolio survival dominates locally optimal strategies that permit unacceptable ruin; S does not automatically output recommended position size."
+    },
+    {
+      "id": "YL-PH-12",
+      "name": "Reality has final settlement authority",
+      "zh": "现实拥有最终裁决权。",
+      "primary_nodes": ["LearningLoop", "ResearchCapability"],
+      "required_interpretation": "Replay, benchmark, falsification, failure and future settlement must be allowed to revise or demote prior knowledge."
+    }
+  ],
+  "os_mapping": {
+    "objective": "Lifetime Right-Tail Capture under Survival Constraints",
+    "human_navigation": "势 · 信 · 极｜真 · 价 · 生",
+    "worlds": {
+      "P": "Reality",
+      "N": "Belief",
+      "X": "Asymmetry"
+    },
+    "x_semantics": "X := (Xs, Xa, Xp)",
+    "gates": {
+      "E": "Evidence",
+      "V": "Price-Implied Expectations",
+      "S": "Portfolio Survival"
+    },
+    "evidence_law": "Claim Authority <= Evidence Authority",
+    "evidence_role": "horizontal_claim_control_plane",
+    "dependency_graph": "P -> Xs -> N -> V -> Xa -> Xp -> S",
+    "dependency_graph_is_universal_causal_law": false,
+    "reflexivity_is_target_system_property_not_dependency_graph_rewrite": true
+  },
+  "lineage_boundary": {
+    "rule": "Intellectual lineage is orientation, not evidence-authority laundering.",
+    "lineages": [
+      {
+        "name": "Popper",
+        "orientation": ["fallibilism", "falsification", "provisional knowledge"],
+        "not_authority_for": ["asset_level_market_claims"]
+      },
+      {
+        "name": "Soros",
+        "orientation": ["fallibility", "reflexivity", "non_equilibrium_implications"],
+        "not_authority_for": ["claim_that_every_market_is_feedback_dominated"]
+      },
+      {
+        "name": "Shiller",
+        "orientation": ["narrative_diffusion", "economic_effects_of_popular_stories"],
+        "not_authority_for": ["claim_that_narrative_strength_establishes_truth"]
+      },
+      {
+        "name": "Schumpeter_Kuhn_Perez",
+        "orientation": ["structural_change", "creative_destruction", "paradigm_transition", "technology_economic_diffusion"],
+        "not_authority_for": ["precise_turning_point_date_prediction"]
+      },
+      {
+        "name": "Knight_Taleb_EVT_tradition",
+        "orientation": ["uncertainty", "fat_tails", "convexity", "ruin_sensitivity"],
+        "not_authority_for": ["calibrated_tail_probability_without_valid_estimation"]
+      },
+      {
+        "name": "Yuanli_synthesis",
+        "orientation": ["P_N_X", "E_V_S", "learning_loop"],
+        "not_authority_for": ["unfalsifiable_self_sealing_claims"]
+      }
+    ]
+  },
+  "forbidden_interpretations": [
+    "fourth_human_world",
+    "scalar_pnx_score",
+    "scalar_force_score",
+    "scalar_macro_score",
+    "scalar_philosophy_score",
+    "arithmetic_Xs_plus_Xa_plus_Xp",
+    "numeric_Xs_times_Xa_times_Xp",
+    "narrative_strength_proves_reality",
+    "target_price_is_canonical_V_state",
+    "canonical_upside_percentage_is_canonical_V_state",
+    "S_automatically_outputs_recommended_position_size",
+    "philosophy_acceptance_implies_capability_promotion",
+    "philosophy_acceptance_implies_evidence_or_outcome_admission",
+    "philosophy_acceptance_implies_benchmark_pass",
+    "philosophy_acceptance_implies_production_runtime",
+    "philosophy_acceptance_implies_trade_authority"
+  ],
+  "governance": {
+    "new_human_worlds_added": 0,
+    "existing_os_semantics_mutated": false,
+    "research_capabilities_promoted": 0,
+    "evidence_admission_authority": "none",
+    "outcome_admission_authority": "none",
+    "benchmark_execution_authority": "none",
+    "runtime_authority": "none",
+    "target_price_authority": "none",
+    "recommended_weight_authority": "none",
+    "position_size_authority": "none",
+    "buy_sell_authority": "none",
+    "live_execution_authority": "none",
+    "active_repository_gate_override": false,
+    "parallel_candidate_track": true
+  }
+}
