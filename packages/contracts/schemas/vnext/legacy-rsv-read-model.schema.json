@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"urn:yuanli-invest:schema:vnext-legacy-rsv-read-model:1.0.0",
+  "title":"LegacyRSVReadModel",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["legacy_read_model_id","schema_version","source_new_canon_refs","target_ref","projection_only","machine_authority","write_back_prohibited"],
+  "properties":{
+    "legacy_read_model_id":{"type":"string","pattern":"^LRM-[A-Z0-9-]+$"},
+    "schema_version":{"const":"1.0.0"},
+    "source_new_canon_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},
+    "target_ref":{"type":"string","minLength":1},
+    "legacy_vector_view":{"type":"object"},
+    "projection_only":{"const":true},
+    "machine_authority":{"const":false},
+    "write_back_prohibited":{"const":true}
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "book_state_id":"BS-RESEARCH-SHADOW-BOOK-C-20260821",
+    "schema_version":"1.0.0",
+    "book_id":"BOOK-C",
+    "portfolio_namespace":"research_shadow",
+    "as_of":"2026-08-21T23:59:00+08:00",
+    "memberships":[{"position_passport_id":"PP-NVDA-C-001","liquidity_reserve_record":null,"membership_role":"primary","effective_from":"2026-08-21T23:59:00+08:00","source_event_ref":"PBME-NVDA-C-001"}],
+    "survival_constraint_refs":[],
+    "source_snapshot_refs":[],
+    "snapshot":{"append_only":true,"point_in_time":true},
+    "authority":{"portfolio_weight_authority":false,"execution_authority":false}
+  },
+  {
+    "book_state_id":"BS-RESEARCH-SHADOW-BOOK-CASH-20260821",
+    "schema_version":"1.0.0",
+    "book_id":"BOOK-CASH",
+    "portfolio_namespace":"research_shadow",
+    "as_of":"2026-08-21T23:59:00+08:00",
+    "memberships":[{"position_passport_id":null,"liquidity_reserve_record":"LRR-RESEARCH-SHADOW-001","membership_role":"reserve","effective_from":"2026-08-21T23:59:00+08:00","source_event_ref":"CASH-RESERVE-001"}],
+    "survival_constraint_refs":[],
+    "source_snapshot_refs":[],
+    "snapshot":{"append_only":true,"point_in_time":true},
+    "authority":{"portfolio_weight_authority":false,"execution_authority":false}
+  }
+]
