@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+  "decision": "ACCEPT_R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+  "pr_number": 25,
+  "reviewed_head_sha": "35ef440055f676a049c959267886ebb5a6426237",
+  "reviewed_ci": {
+    "workflow": "repository-gates",
+    "run_number": 148,
+    "run_id": 32368829541,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "p0_specification": "success",
+    "unit_tests": "success"
+  },
+  "human_review": {
+    "dimensions": 12,
+    "passed": 12,
+    "architecture_or_governance_blocker": false
+  },
+  "accepted_scope": {
+    "universal_contract_blocks": 11,
+    "p0_capabilities": ["CAP-R-01", "CAP-V-01", "CAP-XS-01"],
+    "stable_question_identity_preserved": true,
+    "point_in_time_required": true,
+    "provider_independent_identity": true,
+    "typed_research_state_required": true,
+    "benchmark_and_settlement_required": true,
+    "research_pass_implies_capital_pass": false
+  },
+  "downstream_implementation_authorization": {
+    "explicitly_authorized_by_owner": true,
+    "effective_after_b1_merge": true,
+    "authorized_sequence": [
+      "B2-R | CAP-R-01 Reference Implementation + Replay",
+      "B2-V | CAP-V-01 Cross-Asset Reference Implementation + Replay",
+      "B2-XS | CAP-XS-01 Routed Reference Implementation + Replay",
+      "joint five-asset shadow | NVIDIA / UST30Y / COPPER / GOLD / USDJPY",
+      "benchmark + ablation"
+    ],
+    "promotion_authorized": false,
+    "production_runtime_authorized": false,
+    "evidence_outcome_admission_authorized": false,
+    "a9_switch_authorized": false,
+    "portfolio_or_execution_authorized": false
+  },
+  "merge_authority": "not_implied_by_acceptance",
+  "post_acceptance_ci_required": true,
+  "next_gate": "R2_3B1_POST_ACCEPTANCE_CI"
+}
