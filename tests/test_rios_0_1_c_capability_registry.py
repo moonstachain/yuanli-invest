@@ -54,6 +54,56 @@ class RIOS01CBootstrapTests(unittest.TestCase):
         ):
             self.assertTrue(hasattr(module, name), name)
 
+    def test_exact_genesis_ids_fail_closed(self):
+        module = load_validator_module()
+        module.assert_exact_genesis_ids(EXPECTED_GENESIS_IDS)
+        with self.assertRaises(AssertionError):
+            module.assert_exact_genesis_ids(EXPECTED_GENESIS_IDS + ["RIOS-GEN-11-SILENT"])
+
+    def test_classification_is_closed(self):
+        module = load_validator_module()
+        for value in ("reuse", "composite", "profile", "new_candidate", "reject"):
+            module.assert_classification({"classification": value})
+        with self.assertRaises(AssertionError):
+            module.assert_classification({"classification": "mother_by_default"})
+
+    def test_non_authority_rejects_escalation(self):
+        module = load_validator_module()
+        module.assert_non_authority({
+            "registry_admission_authorized": False,
+            "benchmark_execution_authorized": False,
+            "runtime_authorized": False,
+            "trading_authorized": False,
+        })
+        for bad in (
+            {"runtime_authorized": True},
+            {"target_price": 123},
+            {"pnx_score": 0.9},
+        ):
+            with self.assertRaises(AssertionError):
+                module.assert_non_authority(bad)
+
+    def test_pre_human_scope_rejects_authority_paths(self):
+        module = load_validator_module()
+        module.assert_pre_human_scope([
+            "docs/architecture/rios/0.1-c/example.json",
+            "scripts/validate_rios_0_1_c_capability_registry.py",
+        ])
+        for path in (
+            "registry/capabilities/new.json",
+            "canon/new.md",
+            "runtime/new.py",
+            "packages/contracts/schemas/research-capability.schema.json",
+        ):
+            with self.assertRaises(AssertionError):
+                module.assert_pre_human_scope([path])
+
+    @unittest.expectedFailure
+    def test_full_pack_validates_after_task2(self):
+        module = load_validator_module()
+        result = module.validate_rios_0_1_c(ROOT)
+        self.assertEqual(result["genesis_count"], 10)
+
 
 if __name__ == "__main__":
     unittest.main()
