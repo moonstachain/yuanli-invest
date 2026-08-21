@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "stage": "YIP0_INVESTMENT_PHILOSOPHY_CANON",
-  "status": "human_accepted_ready_for_merge",
+  "status": "accepted_merged",
   "repository_base_sha": "43911282d5ff80a2795d1b02afcf7ef40bc513a3",
   "purpose": "Freeze a philosophy authority candidate beneath the accepted Yuanli Investment OS and above ResearchCapability implementation without changing existing P/N/X/E/V/S semantics.",
   "philosophy_identity": {
@@ -64,10 +64,6 @@
     "acceptance_does_not_imply_runtime_authority": true,
     "acceptance_does_not_imply_trading_authority": true
   },
-  "merge_authority": "not_implied_by_acceptance",
-  "required_merge_token": "AUTHORIZE_YIP0_MERGE",
-  "global_gate_behavior": "parallel_candidate_does_not_override_repository_next_gate",
-  "repository_next_gate_expected_to_remain_external_to_yip0": true,
   "post_acceptance_ci_required": true,
   "post_acceptance_qualification": {
     "validated_head_sha": "0eef6fd10e5ed88f507d344545c88216ce211a60",
@@ -80,6 +76,26 @@
     "yip0_philosophy": "success",
     "unit_tests": "success"
   },
+  "pre_merge_rebase_qualification": {
+    "validated_head_sha": "112445a57f0650e423803d85288645a593844929",
+    "workflow": "repository-gates",
+    "run_number": 249,
+    "run_id": 32468483237,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "yip0_philosophy": "success",
+    "unit_tests": "success"
+  },
+  "merge_authority": "AUTHORIZE_YIP0_MERGE",
+  "required_merge_token": "AUTHORIZE_YIP0_MERGE",
+  "merge_method": "squash",
+  "merge_commit": "b79581c82ca7197a9ce078baa6f3b5e8708a1e17",
+  "merge_receipt": "docs/architecture/yip0/YIP0-MERGE-RECEIPT-v0.1.json",
+  "merged_at": "2026-08-21T09:34:17Z",
+  "global_gate_behavior": "parallel_philosophy_authority_does_not_override_repository_next_gate",
+  "repository_next_gate_expected_to_remain_external_to_yip0": true,
   "post_acceptance_ci_satisfied": true,
-  "next_gate": "YIP0_MERGE"
+  "next_gate": "YIP0_COMPLETE",
+  "next_yip_stage_authorized": false
 }
