@@ -12,6 +12,8 @@ PACK = QXM / "QXM1-FINANCIAL-MECHANICS-CAPABILITY-CANDIDATE-PACK-v0.1.md"
 CONTRACTS = QXM / "QXM1-CANDIDATE-CONTRACTS-v0.1.json"
 SOURCES = QXM / "QXM1-SOURCE-PROVENANCE-v0.1.json"
 STATE = QXM / "QXM1-STATE.json"
+REVIEW = QXM / "QXM1-HUMAN-REVIEW-CARD-v0.1.md"
+ACCEPT_RECEIPT = QXM / "QXM1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 B0_SCHEMA = B0 / "R2-3B0-CONTRACT-SCHEMA-v0.1.json"
 B0_PROFILES = B0 / "R2-3B0-P0-CONTRACT-PROFILES-v0.1.json"
 B0_STATE = B0 / "R2-3B0-STATE.json"
@@ -59,10 +61,9 @@ def assert_no_authority_regression(text: str):
 
 
 def main():
-    for path in [PACK, CONTRACTS, SOURCES, STATE, B0_SCHEMA, B0_PROFILES, B0_STATE, B0_MERGE]:
+    for path in [PACK, CONTRACTS, SOURCES, STATE, REVIEW, B0_SCHEMA, B0_PROFILES, B0_STATE, B0_MERGE]:
         assert path.exists(), path
 
-    # Upstream R2.3-B0 must be fully merged before QXM1 can exist.
     b0_state = load(B0_STATE)
     b0_merge = load(B0_MERGE)
     assert b0_state["status"] == "accepted_merged"
@@ -77,7 +78,6 @@ def main():
     required_blocks = schema["required_blocks"]
     assert len(required_blocks) == 11
 
-    # Source provenance: Qin material is a seed, never silent theory/evidence authority.
     sources = load(SOURCES)
     assert sources["stage"] == STAGE
     assert sources["authority_law"] == "Claim Authority <= Evidence Authority"
@@ -92,7 +92,6 @@ def main():
     assert sources["admission"]["outcome"] == "not_authorized"
     assert sources["admission"]["capability_promotion"] == "not_authorized"
 
-    # Contract pack structure.
     contracts = load(CONTRACTS)
     assert contracts["stage"] == STAGE
     assert contracts["status"] == "candidate_specification_only"
@@ -162,7 +161,6 @@ def main():
     assert new_caps == EXPECTED_NEW_CAPS
     assert profile_caps == EXPECTED_PROFILE_CAPS
 
-    # Existing mother capability identities/stable questions may not be mutated by QXM profiles.
     b0_profiles = load(B0_PROFILES)
     mother = {p["capability_id"]: p for p in b0_profiles["profiles"]}
     for candidate in candidates:
@@ -187,8 +185,14 @@ def main():
     assert governance["trading_execution_authority"] == "none"
 
     state = load(STATE)
+    allowed_states = {
+        "candidate_started",
+        "candidate_ready_for_human_review",
+        "human_accepted_pending_post_acceptance_ci",
+        "human_accepted_ready_for_merge",
+    }
     assert state["stage"] == STAGE
-    assert state["status"] in {"candidate_started", "candidate_ready_for_human_review"}
+    assert state["status"] in allowed_states
     assert state["upstream_dependency"]["required_status"] == "accepted_merged"
     assert state["upstream_dependency"]["merge_commit"] == B0_MERGE_COMMIT
     assert state["upstream_dependency"]["resolved"] is True
@@ -207,11 +211,12 @@ def main():
     assert state["human_gate"]["token"] == HUMAN_TOKEN
     assert state["human_gate"]["acceptance_does_not_imply_implementation"] is True
     assert state["human_gate"]["acceptance_does_not_imply_promotion"] is True
+
     if state["status"] == "candidate_started":
         assert state["machine_qualification"] is None
         assert state["human_gate"]["decision"] == "pending"
         assert state["next_gate"] == "QXM1_MACHINE_QUALIFICATION"
-    else:
+    elif state["status"] == "candidate_ready_for_human_review":
         q = state["machine_qualification"]
         assert q["workflow"] == "repository-gates"
         assert q["conclusion"] == "success"
@@ -221,8 +226,44 @@ def main():
         assert q["unit_tests"] == "success"
         assert state["human_gate"]["decision"] == "pending"
         assert state["next_gate"] == "QXM1_HUMAN_REVIEW"
+    else:
+        assert ACCEPT_RECEIPT.exists(), ACCEPT_RECEIPT
+        acceptance = load(ACCEPT_RECEIPT)
+        assert acceptance["stage"] == STAGE
+        assert acceptance["decision"] == HUMAN_TOKEN
+        assert acceptance["pr_number"] == 36
+        assert acceptance["reviewed_head_sha"] == "0b2ae99f3d5b38946e55cc600eb774831075e306"
+        assert acceptance["reviewed_ci"]["run_number"] == 173
+        assert acceptance["reviewed_ci"]["run_id"] == 32439720306
+        assert acceptance["reviewed_ci"]["conclusion"] == "success"
+        assert acceptance["reviewed_ci"]["qxm1_candidate_pack"] == "success"
+        assert acceptance["boundaries_preserved"]["merge_authorized"] is False
+        assert acceptance["merge_authority"] == "not_implied_by_acceptance"
+        assert acceptance["next_gate"] == "QXM1_POST_ACCEPTANCE_CI"
+        assert state["human_gate"]["decision"] == HUMAN_TOKEN
+        assert state["human_gate"]["acceptance_receipt"] == "docs/architecture/qxm1/QXM1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+        assert state["human_gate"]["reviewed_head_sha"] == acceptance["reviewed_head_sha"]
+        assert state["human_gate"]["reviewed_ci_run"] == 173
+        assert state["human_review_qualification"]["run_number"] == 173
+        assert state["merge_authority"] == "not_implied_by_acceptance"
+        assert state["post_acceptance_ci_required"] is True
+        if state["status"] == "human_accepted_pending_post_acceptance_ci":
+            assert state["post_acceptance_qualification"] is None
+            assert state["post_acceptance_ci_satisfied"] is False
+            assert state["next_gate"] == "QXM1_POST_ACCEPTANCE_CI"
+        else:
+            q = state["post_acceptance_qualification"]
+            assert q["workflow"] == "repository-gates"
+            assert q["conclusion"] == "success"
+            assert q["contracts"] == "success"
+            assert q["governance"] == "success"
+            assert q["qxm1_candidate_pack"] == "success"
+            assert q["unit_tests"] == "success"
+            assert state["post_acceptance_ci_satisfied"] is True
+            assert state["next_gate"] == "QXM1_MERGE"
 
     pack_text = PACK.read_text(encoding="utf-8")
+    review_text = REVIEW.read_text(encoding="utf-8")
     require_tokens = [
         "Classical Financial Mechanics",
         "Fundamental Driver Decomposition",
@@ -230,11 +271,12 @@ def main():
         "Stress Exit Liquidity",
         "Return Source Attribution",
         "Asset form is not pricing model",
-        "ACCEPT_QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
+        HUMAN_TOKEN,
     ]
     for token in require_tokens:
-        assert token in pack_text, token
+        assert token in pack_text or token in review_text, token
     assert_no_authority_regression(pack_text)
+    assert_no_authority_regression(review_text)
     assert_no_authority_regression(json.dumps(contracts, ensure_ascii=False))
 
     print("QXM1 Financial Mechanics Capability Candidate Pack validation: PASS")
