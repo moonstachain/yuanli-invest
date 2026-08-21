@@ -2,6 +2,8 @@ import json
 import unittest
 from pathlib import Path
 
+from jsonschema import Draft202012Validator
+
 from scripts.validate_qxm2_evidence_hardening import (
     assert_benchmark_seed_authority,
     assert_evidence_role,
@@ -15,6 +17,10 @@ QXM2 = ROOT / "docs" / "architecture" / "qxm2"
 SOURCE_MATRIX = QXM2 / "QXM2-PRIMARY-SOURCE-MATRIX-v0.1.json"
 EVIDENCE_MATRIX = QXM2 / "QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json"
 CROSSWALK = QXM2 / "QXM2-CLAIM-MECHANISM-CROSSWALK-v0.1.json"
+SHADOW_THEORIES = QXM2 / "QXM2-SHADOW-THEORY-OBJECTS-v0.1.json"
+SHADOW_HYPOTHESES = QXM2 / "QXM2-SHADOW-HYPOTHESIS-OBJECTS-v0.1.json"
+THEORY_SCHEMA = ROOT / "packages" / "contracts" / "schemas" / "theory-object.schema.json"
+HYPOTHESIS_SCHEMA = ROOT / "packages" / "contracts" / "schemas" / "hypothesis-object.schema.json"
 
 EXPECTED = [
     "QXM1-CAND-01-FUNDAMENTAL-DRIVER-DECOMPOSITION",
@@ -40,14 +46,8 @@ def assert_minimum_evidence(testcase, candidate_id, sources, relations):
     ]
     testcase.assertGreaterEqual(len(anchors), 2, candidate_id)
     rels = [r for r in relations if r["candidate_id"] == candidate_id]
-    testcase.assertTrue(
-        any(r["role"] == "supports" and r["identification_strength"] != "theoretical_only" for r in rels),
-        candidate_id,
-    )
-    testcase.assertTrue(
-        any(r["role"] in {"boundary", "contradicts", "competing_mechanism"} for r in rels),
-        candidate_id,
-    )
+    testcase.assertTrue(any(r["role"] == "supports" and r["identification_strength"] != "theoretical_only" for r in rels), candidate_id)
+    testcase.assertTrue(any(r["role"] in {"boundary", "contradicts", "competing_mechanism"} for r in rels), candidate_id)
     for relation in rels:
         assert_evidence_role(relation["role"])
         assert_replication_status(relation["replication_status"])
@@ -110,17 +110,40 @@ class QXM2ClaimMechanismCrosswalkTests(unittest.TestCase):
             self.assertTrue(claim["benchmark_seed_ids"], claim["claim_id"])
             self.assertTrue(claim["support_relation_ids"], claim["claim_id"])
             self.assertTrue(claim["boundary_relation_ids"], claim["claim_id"])
-
             for relation_id in claim["support_relation_ids"]:
                 self.assertIn(relation_id, relation_by_id, claim["claim_id"])
                 self.assertEqual(relation_by_id[relation_id]["role"], "supports", claim["claim_id"])
             for relation_id in claim["boundary_relation_ids"]:
                 self.assertIn(relation_id, relation_by_id, claim["claim_id"])
-                self.assertIn(
-                    relation_by_id[relation_id]["role"],
-                    {"boundary", "contradicts", "competing_mechanism"},
-                    claim["claim_id"],
-                )
+                self.assertIn(relation_by_id[relation_id]["role"], {"boundary", "contradicts", "competing_mechanism"}, claim["claim_id"])
+
+
+class QXM2ShadowObjectTests(unittest.TestCase):
+    def test_shadow_theories_are_schema_compatible_and_non_authoritative(self):
+        schema = json.loads(THEORY_SCHEMA.read_text(encoding="utf-8"))
+        validator = Draft202012Validator(schema)
+        objects = json.loads(SHADOW_THEORIES.read_text(encoding="utf-8"))["shadow_theories"]
+        for candidate_id in EXPECTED:
+            self.assertGreaterEqual(sum(candidate_id in obj["candidate_targets"] for obj in objects), 2, candidate_id)
+        for obj in objects:
+            self.assertEqual(obj["admission_state"], "shadow_only")
+            self.assertEqual(obj["admission_authority"], "none")
+            self.assertFalse(obj["theory_object"]["theory_id"].startswith("THEORY-QIN"))
+            validator.validate(obj["theory_object"])
+        self.assertFalse(any("IAS7" in obj["theory_object"]["theory_id"] for obj in objects))
+
+    def test_shadow_hypotheses_are_schema_compatible_and_proposed_only(self):
+        schema = json.loads(HYPOTHESIS_SCHEMA.read_text(encoding="utf-8"))
+        validator = Draft202012Validator(schema)
+        objects = json.loads(SHADOW_HYPOTHESES.read_text(encoding="utf-8"))["shadow_hypotheses"]
+        for candidate_id in EXPECTED:
+            candidate_objects = [obj for obj in objects if obj["candidate_id"] == candidate_id]
+            self.assertGreaterEqual(len(candidate_objects), 2, candidate_id)
+        for obj in objects:
+            self.assertEqual(obj["admission_state"], "shadow_only")
+            self.assertEqual(obj["admission_authority"], "none")
+            validator.validate(obj["hypothesis_object"])
+            assert_shadow_hypothesis_state(obj["hypothesis_object"]["status"])
 
 
 if __name__ == "__main__":
