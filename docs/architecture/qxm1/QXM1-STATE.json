@@ -6,7 +6,8 @@
   "upstream_dependency": {
     "stage": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
     "required_status": "accepted_merged",
-    "merge_commit": "838a436d77932d07888ef15d1f8e937666dd4c82",
+    "merge_commit": "cb5ffd0f2e8e377d82c12d716e995c7b5b328e01",
+    "post_merge_closure_commit": "838a436d77932d07888ef15d1f8e937666dd4c82",
     "merge_receipt": "docs/architecture/r2_3b0/R2-3B0-MERGE-RECEIPT-v0.1.json",
     "resolved": true
   },
