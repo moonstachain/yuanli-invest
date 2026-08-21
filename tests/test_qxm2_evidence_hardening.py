@@ -25,6 +25,33 @@ EXPECTED = [
 ]
 
 
+def load_evidence():
+    sources = json.loads(SOURCE_MATRIX.read_text(encoding="utf-8"))["sources"]
+    relations = json.loads(EVIDENCE_MATRIX.read_text(encoding="utf-8"))["relations"]
+    return sources, relations
+
+
+def assert_minimum_evidence(testcase, candidate_id, sources, relations):
+    anchors = [
+        s for s in sources
+        if candidate_id in s["candidate_ids"]
+        and s["authority_class"] != "normative_accounting_standard"
+    ]
+    testcase.assertGreaterEqual(len(anchors), 2, candidate_id)
+    rels = [r for r in relations if r["candidate_id"] == candidate_id]
+    testcase.assertTrue(
+        any(r["role"] == "supports" and r["identification_strength"] != "theoretical_only" for r in rels),
+        candidate_id,
+    )
+    testcase.assertTrue(
+        any(r["role"] in {"boundary", "contradicts", "competing_mechanism"} for r in rels),
+        candidate_id,
+    )
+    for relation in rels:
+        assert_evidence_role(relation["role"])
+        assert_replication_status(relation["replication_status"])
+
+
 class QXM2PrimitiveTests(unittest.TestCase):
     def test_candidate_identity_is_exact(self):
         assert_expected_candidate_ids(EXPECTED)
@@ -56,23 +83,17 @@ class QXM2PrimitiveTests(unittest.TestCase):
 
 
 class QXM2RealityMechanicsEvidenceTests(unittest.TestCase):
-    def setUp(self):
-        self.sources = json.loads(SOURCE_MATRIX.read_text(encoding="utf-8"))["sources"]
-        self.relations = json.loads(EVIDENCE_MATRIX.read_text(encoding="utf-8"))["relations"]
-
-    def test_reality_mechanics_has_minimum_source_coverage(self):
+    def test_reality_mechanics_minimum_evidence(self):
+        sources, relations = load_evidence()
         for candidate_id in EXPECTED[:2]:
-            anchors = [s for s in self.sources if candidate_id in s["candidate_ids"] and s["authority_class"] != "normative_accounting_standard"]
-            self.assertGreaterEqual(len(anchors), 2, candidate_id)
+            assert_minimum_evidence(self, candidate_id, sources, relations)
 
-    def test_reality_mechanics_has_empirical_and_boundary_relations(self):
-        for candidate_id in EXPECTED[:2]:
-            rels = [r for r in self.relations if r["candidate_id"] == candidate_id]
-            self.assertTrue(any(r["role"] == "supports" and r["identification_strength"] != "theoretical_only" for r in rels), candidate_id)
-            self.assertTrue(any(r["role"] in {"boundary", "contradicts", "competing_mechanism"} for r in rels), candidate_id)
-            for relation in rels:
-                assert_evidence_role(relation["role"])
-                assert_replication_status(relation["replication_status"])
+
+class QXM2TransmissionPricingEvidenceTests(unittest.TestCase):
+    def test_transmission_and_pricing_minimum_evidence(self):
+        sources, relations = load_evidence()
+        for candidate_id in EXPECTED[2:4]:
+            assert_minimum_evidence(self, candidate_id, sources, relations)
 
 
 if __name__ == "__main__":
