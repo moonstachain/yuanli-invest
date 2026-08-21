@@ -1,0 +1,95 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
+  "purpose": "Freeze source provenance for the Qin Xiaoming reverse-engineering seed material without promoting practitioner teaching notes into primary theory authority.",
+  "source_repository": "moonstachain/llm-wiki",
+  "source_revision": "d6ce0a92bc13e3b5cc807a52ed0599e6c914f7fb",
+  "authority_law": "Claim Authority <= Evidence Authority",
+  "sources": [
+    {
+      "source_id": "QXM-SRC-THINKING-FIRST-PRINCIPLES",
+      "path": "qin-xiao-ming/专题3：第一性思维原理.md",
+      "source_kind": "raw_course_transcript",
+      "authority_class": "practitioner_teaching_source",
+      "usable_for": ["research_question_seed", "decomposition_method_seed", "hypothesis_seed"],
+      "not_usable_as": ["primary_theory_authority", "empirical_validation", "causal_identification_proof"]
+    },
+    {
+      "source_id": "QXM-SRC-FUNDAMENTAL-DRIVER-DEDUCTION",
+      "path": "qin-xiao-ming/第三讲_财务分析I-商业分析的演绎框架&利润表的系统拆解.md",
+      "source_kind": "raw_course_transcript",
+      "authority_class": "practitioner_teaching_source",
+      "usable_for": ["fundamental_driver_tree_seed", "volume_price_revenue_cost_profit_decomposition", "financial_mechanics_question_seed"],
+      "not_usable_as": ["primary_theory_authority", "empirical_alpha_evidence"]
+    },
+    {
+      "source_id": "QXM-SRC-THREE-STATEMENT-INTEGRITY",
+      "path": "qin-xiao-ming/第四讲_财务分析II-资产负债表与现金流量表.md",
+      "source_kind": "raw_course_transcript",
+      "authority_class": "practitioner_teaching_source",
+      "usable_for": ["stock_flow_separation_seed", "balance_sheet_liquidity_seed", "cash_conversion_question_seed"],
+      "not_usable_as": ["primary_accounting_standard", "audited_company_evidence", "empirical_validation"]
+    },
+    {
+      "source_id": "QXM-SRC-DCF-GRAND-UNIFICATION",
+      "path": "qin-xiao-ming/专题5-基本面分析入门到深入&DCF对投资的大一统.md",
+      "source_kind": "raw_course_transcript",
+      "authority_class": "practitioner_teaching_source",
+      "usable_for": ["cash_flow_discount_rate_bridge_seed", "investment_logic_seed", "price_expectation_question_seed"],
+      "not_usable_as": ["primary_asset_pricing_theory", "universal_pricing_model_authority"]
+    },
+    {
+      "source_id": "QXM-SRC-CREDIT-DEBT-CYCLE",
+      "path": "qin-xiao-ming/第二讲_经济分析II-人性_货币_信用创造_基于信贷和债务周期的宏观分析框架.md",
+      "source_kind": "raw_course_transcript",
+      "authority_class": "practitioner_teaching_source",
+      "usable_for": ["credit_transmission_seed", "balance_sheet_cycle_seed", "behavioral_mechanism_seed"],
+      "not_usable_as": ["primary_macro_theory", "causal_identification_proof", "live_regime_fact"]
+    },
+    {
+      "source_id": "QXM-SRC-ASSET-ALLOCATION",
+      "path": "qin-xiao-ming/专题6-大类资产配置逻辑（嘉宾分享）.md",
+      "source_kind": "raw_course_transcript_guest_share",
+      "authority_class": "practitioner_teaching_source",
+      "usable_for": ["cross_asset_discount_rate_seed", "liquidity_and_cash_flow_uncertainty_seed"],
+      "not_usable_as": ["current_market_fact", "primary_asset_allocation_theory", "empirical_validation"]
+    },
+    {
+      "source_id": "QXM-SRC-INVESTMENT-PRACTICE-HPR",
+      "path": "qin-xiao-ming/第十讲_投资实务.md",
+      "source_kind": "raw_course_transcript",
+      "authority_class": "practitioner_teaching_source",
+      "usable_for": ["holding_period_return_seed", "exit_liquidity_seed", "investment_process_seed"],
+      "not_usable_as": ["portfolio_policy_authority", "benchmark_result", "trading_authority"]
+    },
+    {
+      "source_id": "QXM-SRC-VCPE-EXIT-MECHANICS",
+      "path": "qin-xiao-ming/专题7-VC_PE的投资逻辑&训练营总结.md",
+      "source_kind": "raw_course_transcript",
+      "authority_class": "practitioner_teaching_source",
+      "usable_for": ["illiquidity_seed", "entry_exit_price_seed", "right_tail_portfolio_structure_seed"],
+      "not_usable_as": ["base_rate_authority_without_verification", "primary_private_market_theory", "empirical_validation"]
+    },
+    {
+      "source_id": "QXM-SRC-INTERNAL-SYNTHESIS",
+      "path": "qin-xiao-ming/03-投资分析框架-从宏观到实务.md",
+      "source_kind": "internal_synthesis_note",
+      "authority_class": "research_synthesis",
+      "usable_for": ["navigation", "crosswalk", "candidate_pack_structure"],
+      "not_usable_as": ["independent_evidence", "primary_theory_authority", "empirical_validation"]
+    }
+  ],
+  "promotion_requirements": {
+    "primary_source_research_required": true,
+    "independent_empirical_evidence_required_where_claimed": true,
+    "theory_registry_admission_separate": true,
+    "hypothesis_registry_admission_separate": true,
+    "provider_runtime_mapping_separate": true
+  },
+  "admission": {
+    "theory": "not_authorized",
+    "evidence": "not_authorized",
+    "outcome": "not_authorized",
+    "capability_promotion": "not_authorized"
+  }
+}
