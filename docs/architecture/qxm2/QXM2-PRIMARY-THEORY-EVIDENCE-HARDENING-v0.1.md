@@ -1,6 +1,6 @@
 # QXM2｜Primary Theory & Empirical Evidence Hardening v0.1
 
-Status: `evidence_compilation_complete`
+Status: `mechanism_compilation_complete`
 
 QXM2 implements **Evidence-First Shadow Admission** for the six accepted QXM1 Financial Mechanics candidates. This document is a research synthesis and authority map; the machine-readable source, evidence, claim, shadow-object and benchmark-seed files remain the operative staging artifacts.
 
@@ -40,6 +40,8 @@ Verified anchors:
 
 QXM2 therefore preserves a two-part proposition: economically meaningful decomposition may add information beyond headline metrics, but the driver graph must be sector-profiled, point-in-time, and benchmarked against simpler revenue/margin/consensus baselines before any forecasting authority is considered.
 
+Operationalization is staged through `HYP-P-201-DRIVER-INCREMENTAL-OOS` and `HYP-P-202-DRIVER-REGIME-STABILITY`, with `QXM2-BSEED-P003-DRIVER-OOS`. Human Review should ask whether the decomposition is economically primitive enough to generalize while remaining sector-profiled, and whether any claimed incremental information has been stated more strongly than the evidence permits.
+
 ### QXM1-CAND-02｜Three-Statement Integrity & Cash Conversion
 
 Verified anchors:
@@ -52,6 +54,8 @@ Verified anchors:
 - `QXM2-SRC-IAS7` — IAS 7 is normative reporting authority for operating/investing/financing cash-flow classification and cash reconciliation. It is deliberately excluded from predictive Shadow TheoryObjects.
 
 The resulting QXM2 boundary is permanent: **statement divergence is diagnostic, not proof of manipulation, fraud, insolvency, or future underperformance.**
+
+Operationalization is staged through `HYP-P-203-CASH-CONVERSION-PERSISTENCE` and `HYP-P-204-ACCRUAL-RELIABILITY`, with `QXM2-BSEED-P004-CASH-CONVERSION`. Human Review should inspect whether growth/investment and timing/matching explanations are sufficiently protected against false alarms, and whether IAS 7 remains reporting authority rather than predictive theory.
 
 ## Batch B｜Transmission & Pricing Mechanics
 
@@ -66,6 +70,8 @@ Verified anchors:
 
 The capability therefore cannot collapse to `credit growth -> asset price`. The QXM2 mechanism remains sectoral and balance-sheet based: borrower sector -> leverage/net worth -> collateral -> lending/funding conditions -> credit creation -> spending/investment -> cash flow -> financial-condition feedback. When the borrower/collateral/funding channel is not observed, output authority must degrade to `association_only` rather than causal transmission.
 
+Operationalization is staged through `HYP-P-205-CREDIT-SECTORAL-TRANSMISSION` and `HYP-P-206-COLLATERAL-FEEDBACK`, with `QXM2-BSEED-R01-CREDIT-TRANSMISSION`. Human Review should determine whether sectoral balance-sheet observables are sufficient to distinguish the proposed mechanisms from aggregate credit correlation and whether causal language is appropriately constrained.
+
 ### QXM1-CAND-04｜Opportunity-Cost / Discount-Rate Bridge
 
 Verified anchors:
@@ -76,6 +82,8 @@ Verified anchors:
 - `QXM2-SRC-WELCH-GOYAL-2008` — many published equity-premium predictors perform poorly or unstably out of sample relative to simple historical-mean baselines.
 
 This profile is therefore frozen as an **expectations-decomposition capability, not a market-timing oracle**. `Price-Implied Expectations != Target Price`; DCF is routed only to compatible asset forms; predictive status requires separate PIT/OOS evidence against simple baselines.
+
+Operationalization is staged through `HYP-V-201-EXPECTATION-DECOMPOSITION` and `HYP-V-202-OOS-DISCOUNT-RATE`, with `QXM2-BSEED-V01-EXPECTATION-DECOMPOSITION`. Human Review should separate interpretive decomposition value from forecasting authority and decide whether this candidate should remain `interpretation_only` unless later OOS tests clear simple baselines.
 
 ## Batch C｜Outcome & Survival Mechanics
 
@@ -90,6 +98,8 @@ Verified anchors:
 
 The permanent boundary is: **ADV or a narrow normal-state spread does not equal Stress Exit Liquidity.** A later implementation must compare simple ADV/spread baselines with a multidimensional state covering depth, price impact, volatility, order-size/ADV, margin/haircut and funding conditions, and settle against realized liquidation horizon, slippage, gap loss and funding breach.
 
+Operationalization is staged through `HYP-S-201-STRESS-LIQUIDITY-INCREMENTAL` and `HYP-S-202-FUNDING-LIQUIDITY-SPIRAL`, with `QXM2-BSEED-S004-STRESS-EXIT`. Human Review should test whether funding liquidity is truly observable with PIT discipline for the intended universes and whether the proposed state adds anything beyond simple ADV/spread during actual stress windows.
+
 ### QXM1-CAND-06｜Return Source Attribution
 
 Verified anchors:
@@ -101,8 +111,12 @@ Verified anchors:
 
 The permanent boundary is: **P&L identity or high explanatory R² does not equal causal explanation.** QXM2 therefore keeps two future tests separate: Accounting Identity Test (buckets plus residual reconstruct realized return) and Thesis Fidelity Test (compare realized sources with the immutable original ResearchReceipt without hindsight story rewrites).
 
+Operationalization is staged through `HYP-CROSS-201-RETURN-IDENTITY-RECONSTRUCTION` and `HYP-CROSS-202-THESIS-FIDELITY`, with `QXM2-BSEED-CROSS001-RETURN-ATTRIBUTION`. Human Review should confirm that asset-form routing is explicit, residual is preserved rather than forced into a story, and attribution cannot retroactively rewrite the original thesis.
+
 ## Current staging status
 
-Primary-source identity verification is complete for all six QXM1 candidates, and the minimum-sufficient EvidenceRelation layer now covers all six with explicit support plus boundary/competing evidence and replication status. This closes the QXM2 Source Verification stage. The next work is mechanism compilation: build the atomic Claim–Mechanism Crosswalk that links evidence to observables, proposed hypotheses, and later Benchmark Seeds.
+All six QXM1 candidates now have minimum-sufficient primary/seminal source coverage, independent empirical relations, explicit boundary or competing evidence, atomic Claim–Mechanism crosswalks, schema-compatible Shadow TheoryObjects, `proposed` Shadow HypothesisObjects, and non-executable Benchmark Seeds. The QXM2 mechanism chain is therefore structurally complete and is ready for machine qualification; scientific validity and admission recommendation remain Human Review responsibilities.
 
-No Registry admission, formal BenchmarkObject creation, benchmark execution, capability promotion, production runtime, target price, portfolio sizing, or trading authority is created by this document.
+The machine validator is deliberately limited to structural validity, referential integrity, schema compatibility, PIT/falsification discipline and authority guards. A green CI result must not be interpreted as scientific proof.
+
+No Registry admission, hypothesis preregistration, formal BenchmarkObject creation, benchmark execution, capability promotion, production runtime, target price, portfolio sizing, or trading authority is created by this document.
