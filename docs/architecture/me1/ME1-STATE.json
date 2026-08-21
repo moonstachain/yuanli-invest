@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
   "status": "candidate_started",
   "design_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN",
@@ -17,9 +17,16 @@
     "ME5": false
   },
   "migration": {
-    "M1_schema_parallel": "pending",
-    "M2_shadow_projection": "pending",
+    "M1_schema_parallel": "passed",
+    "M2_shadow_projection": "candidate_ready",
     "M3_authority_cutover": "not_authorized"
+  },
+  "shadow_qualification": {
+    "targets": ["RT2-NVDA","RT2-GOLD","RT2-UST30Y","RT2-COPPER","RT2-USDJPY"],
+    "multi_thesis_proof_target": "RT2-NVDA",
+    "explicit_theses": ["ET-NVDA-C-001","ET-NVDA-R-001"],
+    "legacy_engine_assignments_remain_unresolved": true,
+    "book_membership_is_passport_specific": true
   },
   "next_gate": "ME1_MACHINE_QUALIFICATION",
   "next_me_stage_authorized": false

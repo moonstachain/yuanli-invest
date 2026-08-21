@@ -1,17 +1,22 @@
 [
   {
-    "position_passport_id":"PP-NVDA-C-001",
-    "schema_version":"1.0.0",
-    "engine_thesis_id":"ET-NVDA-C-001",
-    "target_id":"RT2-NVDA",
-    "primary_engine":"ENG-C",
+    "position_passport_id":"PP-NVDA-C-001","schema_version":"1.0.0","engine_thesis_id":"ET-NVDA-C-001","target_id":"RT2-NVDA","primary_engine":"ENG-C",
     "expression":{"expression_type":"common_equity_shadow","instrument_ref":"NVDA","direction_semantics":"long_exposure_semantics_only"},
     "conditions":{"entry":"research threshold and admissible-price conditions satisfied","add":"thesis strengthens without authority regression","hold":"causal mechanism remains valid","trim":"risk or valuation conditions weaken","exit":"falsifier triggered or thesis invalidated"},
     "risk_contract":{"risk_budget_class":"research_shadow_only","max_loss_semantics":"not_a_live_risk_budget","path_risk_notes":"No position sizing or trading authority in ME1."},
-    "falsifier_refs":["F-NVDA-C-1"],
-    "settlement_basis":"linked EngineThesis settlement",
+    "falsifier_refs":["F-NVDA-C-1"],"settlement_basis":"linked EngineThesis settlement",
     "migration_policy":{"silent_migration_prohibited":true,"graduation_allowed":true,"governed_event_required":true},
     "lifecycle":{"status":"eligible","created_at":"2026-08-22T01:50:00+08:00","as_of":"2026-08-21T23:59:00+08:00","valid_from":"2026-08-21T23:59:00+08:00","valid_to":null,"closed_at":null},
+    "authority":{"portfolio_weight_authority":false,"position_sizing_authority":false,"trade_execution_authority":false,"live_execution_authority":false}
+  },
+  {
+    "position_passport_id":"PP-NVDA-R-001","schema_version":"1.0.0","engine_thesis_id":"ET-NVDA-R-001","target_id":"RT2-NVDA","primary_engine":"ENG-R",
+    "expression":{"expression_type":"common_equity_shadow","instrument_ref":"NVDA","direction_semantics":"long_exposure_semantics_only"},
+    "conditions":{"entry":"explicit repricing thesis qualified","add":"reflexive loop strengthens","hold":"belief/flow/price/reality loop remains intact","trim":"loop confirmation weakens","exit":"loop breaker or falsifier triggered"},
+    "risk_contract":{"risk_budget_class":"research_shadow_only","max_loss_semantics":"not_a_live_risk_budget","path_risk_notes":"No position sizing or trading authority in ME1."},
+    "falsifier_refs":["F-NVDA-R-1"],"settlement_basis":"linked EngineThesis settlement",
+    "migration_policy":{"silent_migration_prohibited":true,"graduation_allowed":true,"governed_event_required":true},
+    "lifecycle":{"status":"eligible","created_at":"2026-08-22T01:55:00+08:00","as_of":"2026-08-21T23:59:00+08:00","valid_from":"2026-08-21T23:59:00+08:00","valid_to":null,"closed_at":null},
     "authority":{"portfolio_weight_authority":false,"position_sizing_authority":false,"trade_execution_authority":false,"live_execution_authority":false}
   }
 ]
