@@ -37,5 +37,21 @@ class ME1ThesisPassportSchemaTests(unittest.TestCase):
         self.assertEqual(authority["trade_execution_authority"]["const"], False)
 
 
+class ME1BookCompatibilitySchemaTests(unittest.TestCase):
+    def test_book_state_requires_point_in_time(self):
+        schema = json.loads((VNEXT / "book-state.schema.json").read_text(encoding="utf-8"))
+        self.assertIn("as_of", schema["required"])
+        snapshot = schema["properties"]["snapshot"]["properties"]
+        self.assertEqual(snapshot["append_only"]["const"], True)
+        self.assertEqual(snapshot["point_in_time"]["const"], True)
+
+    def test_legacy_read_model_is_non_authoritative(self):
+        schema = json.loads((VNEXT / "legacy-rsv-read-model.schema.json").read_text(encoding="utf-8"))
+        props = schema["properties"]
+        self.assertEqual(props["projection_only"]["const"], True)
+        self.assertEqual(props["machine_authority"]["const"], False)
+        self.assertEqual(props["write_back_prohibited"]["const"], True)
+
+
 if __name__ == "__main__":
     unittest.main()
