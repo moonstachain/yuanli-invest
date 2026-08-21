@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Validate RIOS-0.1-C capability convergence and governance boundaries.
 
-Task 2 materializes the exact ten-row convergence matrix over the existing
-ResearchCapability registry. The Genesis orchestration pack remains deliberately
-absent until Task 3.
+Task 3 materializes a research-only Genesis orchestration pack over the Task 2
+convergence matrix. Agent routing is not Capability authority, Replay PASS,
+Runtime authority, portfolio action, or Trading authority.
 """
 
 from __future__ import annotations
@@ -40,6 +40,21 @@ EXPECTED_CLASSIFICATIONS = {
 }
 
 ALLOWED_CLASSIFICATIONS = {"reuse", "composite", "profile", "new_candidate", "reject"}
+ALLOWED_AGENT_ROUTES = {
+    "P_AGENT",
+    "N_AGENT",
+    "X_AGENT",
+    "E_AGENT",
+    "V_AGENT",
+    "S_AGENT",
+    "CHIEF_RESEARCH_COUNCIL",
+}
+REQUIRED_REPLAY_PREREQUISITES = {
+    "historical_case_required",
+    "pit_evidence_required",
+    "falsifier_required",
+    "benchmark_spec_required_before_execution",
+}
 REQUIRED_MATRIX_FIELDS = {
     "genesis_id",
     "human_name",
@@ -77,6 +92,16 @@ PROHIBITED_VALUE_KEYS = {
     "force_score",
 }
 
+PROVIDER_NATIVE_KEYS = {
+    "wind_field",
+    "wind_code",
+    "bloomberg_field",
+    "bloomberg_ticker",
+    "provider_native_identifier",
+    "vendor_field",
+    "vendor_code",
+}
+
 PRE_HUMAN_PROHIBITED_PREFIXES = ("registry/", "canon/", "runtime/")
 CAPABILITY_SCHEMA_PATH = "packages/contracts/schemas/research-capability.schema.json"
 
@@ -101,6 +126,17 @@ def assert_non_authority(obj):
     elif isinstance(obj, list):
         for value in obj:
             assert_non_authority(value)
+
+
+def assert_provider_neutral(obj):
+    """Reject provider-native identifiers from canonical orchestration semantics."""
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            assert key not in PROVIDER_NATIVE_KEYS, f"provider-native semantic key prohibited: {key}"
+            assert_provider_neutral(value)
+    elif isinstance(obj, list):
+        for value in obj:
+            assert_provider_neutral(value)
 
 
 def assert_pre_human_scope(paths):
@@ -174,6 +210,7 @@ def validate_convergence_matrix(root: Path):
         assert REQUIRED_MATRIX_FIELDS.issubset(row), row["genesis_id"]
         assert_classification(row)
         assert_non_authority(row)
+        assert_provider_neutral(row)
         assert row["benchmark_execution_authorized"] is False
         assert row["runtime_authorized"] is False
         assert row["trading_authorized"] is False
@@ -202,11 +239,60 @@ def validate_convergence_matrix(root: Path):
     }
 
 
+def validate_genesis_pack(root: Path):
+    root = Path(root)
+    rios = root / "docs" / "architecture" / "rios" / "0.1-c"
+    matrix = json.loads((rios / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json").read_text(encoding="utf-8"))
+    pack_path = rios / "RIOS-0.1-C-GENESIS-PACK-v0.1.json"
+    assert pack_path.exists(), f"Task 3 Genesis pack missing: {pack_path}"
+    pack = json.loads(pack_path.read_text(encoding="utf-8"))
+
+    assert pack["pack_id"] == "RIOS-GENESIS-PACK-001", pack["pack_id"]
+    assert pack["status"] == "candidate_orchestration_pack", pack["status"]
+    assert pack["genesis_count"] == 10, pack["genesis_count"]
+    assert_non_authority(pack)
+    assert_provider_neutral(pack)
+    for key in (
+        "registry_admission_authorized",
+        "benchmark_execution_authorized",
+        "runtime_authorized",
+        "trading_authorized",
+    ):
+        assert pack[key] is False, (key, pack[key])
+
+    entries = pack["entries"]
+    ids = [entry["genesis_id"] for entry in entries]
+    assert_exact_genesis_ids(ids)
+    matrix_by_id = {row["genesis_id"]: row for row in matrix["rows"]}
+
+    for entry in entries:
+        genesis_id = entry["genesis_id"]
+        matrix_row = matrix_by_id[genesis_id]
+        assert entry["classification"] == matrix_row["classification"], genesis_id
+        assert entry["canonical_capability_ids"] == matrix_row["canonical_capability_ids"], genesis_id
+        assert entry.get("candidate_capability_id") == matrix_row["candidate_capability_id"], genesis_id
+        routes = entry["agent_routes"]
+        assert routes, genesis_id
+        assert set(routes).issubset(ALLOWED_AGENT_ROUTES), (genesis_id, routes)
+        prereqs = entry["replay_prerequisites"]
+        assert set(prereqs) == REQUIRED_REPLAY_PREREQUISITES, (genesis_id, prereqs)
+        assert all(value is True for value in prereqs.values()), genesis_id
+        assert entry["replay_pass_claimed"] is False, genesis_id
+        assert_non_authority(entry)
+        assert_provider_neutral(entry)
+
+    return {
+        "pack_id": pack["pack_id"],
+        "entry_count": len(entries),
+        "agent_route_count": len({route for entry in entries for route in entry["agent_routes"]}),
+        "replay_pass_claims": 0,
+    }
+
+
 def validate_rios_0_1_c(root: Path):
     root = Path(root)
     rios = root / "docs" / "architecture" / "rios" / "0.1-c"
     state_path = rios / "RIOS-0.1-C-STATE.json"
-    pack_path = rios / "RIOS-0.1-C-GENESIS-PACK-v0.1.json"
 
     assert state_path.exists(), state_path
     state = json.loads(state_path.read_text(encoding="utf-8"))
@@ -222,10 +308,11 @@ def validate_rios_0_1_c(root: Path):
         assert state[field] == "none", (field, state[field])
 
     matrix_result = validate_convergence_matrix(root)
-    assert pack_path.exists(), f"Task 3 Genesis pack missing: {pack_path}"
+    pack_result = validate_genesis_pack(root)
 
     return {
         **matrix_result,
+        **pack_result,
         "registry_mutations": 0,
         "next_gate": state["next_gate"],
     }
@@ -235,6 +322,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--self-test-primitives", action="store_true")
     parser.add_argument("--matrix-only", action="store_true")
+    parser.add_argument("--pack-only", action="store_true")
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
@@ -242,11 +330,15 @@ def main() -> int:
         assert_exact_genesis_ids(EXPECTED_GENESIS_IDS)
         assert_classification({"classification": "profile"})
         assert_non_authority({"runtime_authorized": False, "trading_authorized": False})
+        assert_provider_neutral({"canonical_input": "provider-independent"})
         assert_pre_human_scope(["docs/architecture/rios/0.1-c/example.json"])
         print("RIOS-0.1-C primitive bootstrap: PASS")
         return 0
     if args.matrix_only:
         print(json.dumps(validate_convergence_matrix(root), ensure_ascii=False, sort_keys=True))
+        return 0
+    if args.pack_only:
+        print(json.dumps(validate_genesis_pack(root), ensure_ascii=False, sort_keys=True))
         return 0
 
     result = validate_rios_0_1_c(root)
