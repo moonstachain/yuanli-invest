@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.3.0",
+  "schema_version": "0.4.0",
   "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
-  "status": "human_accepted_pending_post_acceptance_ci",
+  "status": "human_accepted_ready_for_merge",
   "purpose": "Compile six Financial Mechanics candidates derived from Qin Xiaoming source seeds into the R2.3-B0 universal 11-block ResearchCapability contract without implementation, benchmark execution or Canon promotion.",
   "upstream_dependency": {
     "stage": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
@@ -89,9 +89,19 @@
     "acceptance_does_not_imply_promotion": true,
     "acceptance_does_not_imply_merge": true
   },
-  "post_acceptance_qualification": null,
+  "post_acceptance_qualification": {
+    "validated_head_sha": "47f0f5cfde489e11ed804f82264d8a44206546ed",
+    "workflow": "repository-gates",
+    "run_number": 176,
+    "run_id": 32439955420,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "qxm1_candidate_pack": "success",
+    "unit_tests": "success"
+  },
   "post_acceptance_ci_required": true,
-  "post_acceptance_ci_satisfied": false,
+  "post_acceptance_ci_satisfied": true,
   "merge_authority": "not_implied_by_acceptance",
   "non_goals": {
     "registry_admission": false,
@@ -105,5 +115,5 @@
     "rsi_promotion": false,
     "trading_or_portfolio_action": false
   },
-  "next_gate": "QXM1_POST_ACCEPTANCE_CI"
+  "next_gate": "QXM1_MERGE"
 }
