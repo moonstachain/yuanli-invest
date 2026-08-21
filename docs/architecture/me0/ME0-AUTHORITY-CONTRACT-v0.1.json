@@ -1,0 +1,136 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
+  "status": "candidate_successor_ontology_authority",
+  "mother_objective": "Lifetime Right-Tail Capture under Survival Constraints",
+  "ontology_distinctions": {
+    "asset_form_not_pricing_archetype": true,
+    "pricing_archetype_not_return_engine": true,
+    "return_engine_not_engine_thesis": true,
+    "engine_thesis_not_position_expression": true,
+    "target_identity_does_not_determine_thesis_identity": true,
+    "book_membership_is_thesis_position_specific": true
+  },
+  "authority_layers": [
+    {"layer_id": "L0", "name": "Philosophy Authority", "role": "upstream investment philosophy constraints"},
+    {"layer_id": "L1", "name": "Research Primitive / Service Authority", "role": "shared research states, evidence, price interpretation and survival constraints"},
+    {"layer_id": "L2", "name": "Return Engine Authority", "role": "mechanism expected to produce investor payoff"},
+    {"layer_id": "L3", "name": "Thesis Authority", "role": "target plus primary engine plus horizon, evidence, price semantics and falsifiers"},
+    {"layer_id": "L4", "name": "Capital Expression Authority", "role": "position, book, graduation and meta-allocation research objects under separate portfolio authority"},
+    {"layer_id": "L5", "name": "Runtime / Settlement Authority", "role": "implementation, replay, benchmark, failure and future settlement"}
+  ],
+  "genesis_engine_set": [
+    {
+      "engine_id": "ENG-C",
+      "name": "Compounding",
+      "stable_question": "Is the primary source of expected return durable economic value creation and high-return reinvestment that compounds through time, purchased at an admissible price?",
+      "primary_source_of_return": [
+        "durable_value_pool_growth",
+        "value_capture",
+        "high_return_reinvestment",
+        "owner_relevant_cashflow_growth",
+        "economic_duration"
+      ],
+      "price_semantics": "long_horizon_valuation_implied_operating_assumptions_and_expected_irr",
+      "not_this_engine": [
+        "generic_good_company_label",
+        "narrative_strength",
+        "short_term_multiple_expansion_as_primary_thesis",
+        "asset_can_rise_a_lot"
+      ]
+    },
+    {
+      "engine_id": "ENG-R",
+      "name": "Reflexive Repricing",
+      "stable_question": "Is the primary source of expected return a finite-horizon repricing process in which belief, capital flow, price, positioning and later reality reinforce or break one another?",
+      "primary_source_of_return": [
+        "change_in_market_implied_expectations",
+        "liquidity_capital_flow_and_positioning_feedback",
+        "narrative_expectation_diffusion",
+        "earnings_or_reality_realization",
+        "leadership_breadth_and_price_confirmation"
+      ],
+      "price_semantics": "price_as_sensor_participant_and_propagation_confirmation_in_reflexive_loop",
+      "not_this_engine": [
+        "all_market_price_movement",
+        "generic_momentum_without_mechanism",
+        "macro_regime_classification_itself",
+        "narrative_without_reality_evidence"
+      ]
+    },
+    {
+      "engine_id": "ENG-X",
+      "name": "Convexity",
+      "stable_question": "Is the primary source of expected portfolio payoff a deliberately asymmetric or nonlinear payoff structure in which conditional tail activation and expression geometry dominate the result?",
+      "primary_source_of_return": [
+        "conditional_tail_activation",
+        "optionality_and_nonlinear_payout",
+        "explicit_payoff_asymmetry",
+        "volatility_skew_path_and_timing_structure",
+        "bounded_or_engineered_left_tail_relative_to_open_right_tail"
+      ],
+      "price_semantics": "premium_implied_distribution_volatility_skew_decay_breakeven_and_cost_of_convexity",
+      "not_this_engine": [
+        "every_high_growth_company",
+        "every_monopoly_or_network_effect",
+        "durable_value_capture_without_convex_payoff_mechanism",
+        "uncalibrated_probability_of_being_right"
+      ]
+    }
+  ],
+  "research_primitives_services": {
+    "P": "reality_structural_state_family",
+    "N": "belief_expectation_state_family",
+    "E": "horizontal_evidence_authority_plane",
+    "V": "routed_price_interpretation_service_family",
+    "S": "horizontal_survival_constraint"
+  },
+  "book_roles": {
+    "BOOK-CASH": {
+      "name": "Liquidity Reserve",
+      "is_return_engine": false,
+      "roles": [
+        "survival_buffer",
+        "future_optionality",
+        "funding_resilience",
+        "forced_selling_avoidance"
+      ]
+    }
+  },
+  "migration_invariants": [
+    "NO_SILENT_THESIS_MIGRATION",
+    "HISTORICAL_IDENTITIES_IMMUTABLE",
+    "ENGINE_CHANGE_REQUIRES_GOVERNED_EVENT",
+    "RESEARCH_PASS_DOES_NOT_IMPLY_CAPITAL_PASS",
+    "CLAIM_AUTHORITY_LE_EVIDENCE_AUTHORITY"
+  ],
+  "historical_canon_policy": {
+    "policy": "semantic_successors_not_in_place_redefinition",
+    "receipts_are_immutable_ledger_facts": true,
+    "accepted_identity_meanings_are_preserved": true
+  },
+  "human_projection_policy": {
+    "human_navigation": "势 · 信 · 极｜真 · 价 · 生",
+    "golden_triangle_may_remain_human_projection": true,
+    "human_projection_is_machine_return_engine_ontology": false
+  },
+  "governance": {
+    "engine_registry_closed_world": false,
+    "historical_canon_mutation_authority": false,
+    "registry_admission_authority": false,
+    "capability_promotion_authority": false,
+    "position_sizing_authority": false,
+    "portfolio_weight_authority": false,
+    "buy_sell_hold_authority": false,
+    "live_execution_authority": false
+  },
+  "prohibited_interpretations": [
+    "C_R_X_are_proven_exhaustive_universal_ontology",
+    "CAP_R_01_means_ENG_R",
+    "cash_is_fourth_return_engine",
+    "human_PNX_projection_is_machine_return_engine_ontology",
+    "research_target_has_only_one_valid_thesis",
+    "engine_change_can_be_implicit",
+    "research_pass_implies_capital_pass"
+  ]
+}

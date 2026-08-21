@@ -1,0 +1,127 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
+  "policy": "semantic_successors_never_mutate_historical_receipts",
+  "historical_identities": [
+    {
+      "id": "CAP-R-01",
+      "historical_meaning": "Regime Causal Decomposition",
+      "historical_semantic_parent": "P.capital",
+      "redefined_in_place": false,
+      "future_successor_hint": "CAP-REG-01"
+    },
+    {
+      "id": "CAP-XS-01",
+      "historical_meaning": "Structural Asymmetry Source Mapper",
+      "redefined_in_place": false,
+      "future_action": "typed_successor_split_under_ME2"
+    },
+    {
+      "id": "CAP-V-01",
+      "historical_meaning": "Price-Implied Expectations",
+      "redefined_in_place": false,
+      "future_action": "routed_price_interpretation_successor"
+    }
+  ],
+  "successor_roles": [
+    {
+      "role_id": "ENG-C",
+      "meaning": "Compounding",
+      "namespace": "return_engine",
+      "implementation_authority_in_ME0": false
+    },
+    {
+      "role_id": "ENG-R",
+      "meaning": "Reflexive Repricing",
+      "namespace": "return_engine",
+      "must_not_alias": ["CAP-R-01"],
+      "implementation_authority_in_ME0": false
+    },
+    {
+      "role_id": "ENG-X",
+      "meaning": "Convexity",
+      "namespace": "return_engine",
+      "implementation_authority_in_ME0": false
+    },
+    {
+      "role_id": "A2_RETURN_ENGINE_ROUTE",
+      "meaning": "Return Engine Route",
+      "namespace": "router",
+      "implementation_authority_in_ME0": false
+    },
+    {
+      "role_id": "BOOK-C",
+      "meaning": "Compounder Book",
+      "namespace": "book_role",
+      "implementation_authority_in_ME0": false
+    },
+    {
+      "role_id": "BOOK-R",
+      "meaning": "Reflexive Book",
+      "namespace": "book_role",
+      "implementation_authority_in_ME0": false
+    },
+    {
+      "role_id": "BOOK-X",
+      "meaning": "Convexity Book",
+      "namespace": "book_role",
+      "implementation_authority_in_ME0": false
+    },
+    {
+      "role_id": "BOOK-CASH",
+      "meaning": "Liquidity Reserve",
+      "namespace": "book_role",
+      "is_return_engine": false,
+      "implementation_authority_in_ME0": false
+    }
+  ],
+  "future_object_identities": [
+    {
+      "object_identity": "EngineThesis",
+      "implementation_authority_in_ME0": false,
+      "schema_creation_deferred_to": "ME1_or_later"
+    },
+    {
+      "object_identity": "PositionPassport",
+      "implementation_authority_in_ME0": false,
+      "schema_creation_deferred_to": "ME1_or_later"
+    },
+    {
+      "object_identity": "AssetGraduationEvent",
+      "implementation_authority_in_ME0": false,
+      "schema_creation_deferred_to": "ME1_or_later"
+    },
+    {
+      "object_identity": "BookState",
+      "implementation_authority_in_ME0": false,
+      "schema_creation_deferred_to": "ME1_or_later"
+    },
+    {
+      "object_identity": "MetaAllocationResearchState",
+      "implementation_authority_in_ME0": false,
+      "schema_creation_deferred_to": "ME1_or_later"
+    }
+  ],
+  "deferred_migrations": [
+    {
+      "migration_id": "ME1_STATE_OBJECT_MODEL_REFRAME",
+      "authorized": false
+    },
+    {
+      "migration_id": "ME2_C_X_SEMANTIC_SEPARATION",
+      "authorized": false
+    },
+    {
+      "migration_id": "ME3_REFLEXIVE_ENGINE_MARKET_CLOCK_CONTRACT",
+      "authorized": false
+    },
+    {
+      "migration_id": "ME4_GRADUATION_META_ALLOCATOR",
+      "authorized": false
+    },
+    {
+      "migration_id": "ME5_THREE_ENGINE_GOLD_REPLAY_ABLATION",
+      "authorized": false
+    }
+  ]
+}

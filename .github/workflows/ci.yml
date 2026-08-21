@@ -40,6 +40,7 @@ jobs:
       - run: python scripts/validate_qxm2_evidence_hardening.py
       - run: python scripts/validate_qxm2_post_merge_closure.py
       - run: python scripts/validate_yip0_philosophy.py
+      - run: python scripts/validate_me0_multi_engine_ontology.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
 
   governance:
