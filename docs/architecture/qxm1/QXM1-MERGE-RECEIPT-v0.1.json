@@ -1,0 +1,58 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
+  "pr_number": 36,
+  "human_acceptance": "ACCEPT_QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
+  "merge_authorization": "AUTHORIZE_QXM1_MERGE",
+  "pre_merge_head_sha": "5e02e369328c355dc754d8eb2747652b7dd65eec",
+  "pre_merge_ci": {
+    "workflow": "repository-gates",
+    "run_number": 183,
+    "run_id": 32440277831,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "qxm1_candidate_pack": "success",
+    "unit_tests": "success"
+  },
+  "merge_method": "squash",
+  "merge_commit_sha": "81bf6d83da7463e31c58e2d35bcabc291b580546",
+  "merged_at": "2026-08-21T03:57:00Z",
+  "accepted_candidate_pack": {
+    "candidate_count": 6,
+    "new_capability_candidates": [
+      "CAP-P-003-FUNDAMENTAL-DRIVER-DECOMPOSITION",
+      "CAP-P-004-THREE-STATEMENT-INTEGRITY-CASH-CONVERSION",
+      "CAP-S-004-STRESS-EXIT-LIQUIDITY",
+      "CAP-CROSS-001-RETURN-SOURCE-ATTRIBUTION"
+    ],
+    "existing_capability_profiles": [
+      "CAP-R-01::QXM1-PROFILE-R-CREDIT-BALANCE-SHEET-TRANSMISSION",
+      "CAP-V-01::QXM1-PROFILE-V-OPPORTUNITY-COST-DISCOUNT-RATE-BRIDGE"
+    ],
+    "required_contract_blocks": 11,
+    "canonical_output_root": "ResearchState",
+    "point_in_time_required": true,
+    "provider_independent_identity": true,
+    "claim_authority_lte_evidence_authority": true,
+    "asset_form_is_not_pricing_model": true,
+    "r_remains_inside_p_capital": true,
+    "candidate_pack_is_canon": false
+  },
+  "boundaries_preserved": {
+    "registry_admission_authorized": false,
+    "capability_implementation_authorized": false,
+    "capability_promotion_authorized": false,
+    "benchmark_execution_authorized": false,
+    "shadow_qualification_authorized": false,
+    "wind_codex_production_runtime_authorized": false,
+    "evidence_or_outcome_admission_authorized": false,
+    "a9_operational_canon_switch": false,
+    "rsi_promotion": false,
+    "trading_action_authorized": false,
+    "target_price_authorized": false,
+    "recommended_weight_or_position_size_authorized": false,
+    "live_execution": false
+  },
+  "next_gate": "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING"
+}
