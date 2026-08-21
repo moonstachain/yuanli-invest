@@ -1,6 +1,6 @@
 {
   "stage": "ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
-  "status": "candidate_started",
+  "status": "candidate_ready_for_human_review",
   "repository_base_sha": "bd8931e1bf21dceb5e34a68ec41aa199b83e9410",
   "design_approval": {
     "token": "APPROVE_ME0_DESIGN_FOR_IMPLEMENTATION",
@@ -20,7 +20,12 @@
     "live_execution": false
   },
   "machine_qualification": {
-    "decision": "pending"
+    "decision": "passed",
+    "qualification_basis_sha": "226391a76c3e31128706594fe20c0ad9268971ba",
+    "qualification_run_number": 329,
+    "contracts_gate": "passed",
+    "governance_gate": "passed",
+    "candidate_head_requires_exact_head_green": true
   },
-  "next_gate": "ME0_MACHINE_QUALIFICATION"
+  "next_gate": "HUMAN_REVIEW"
 }
