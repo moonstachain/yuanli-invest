@@ -15,24 +15,43 @@ class ME1AcceptanceTests(unittest.TestCase):
         self.assertEqual(receipt["reviewed_ci"]["run_number"], 353)
         self.assertEqual(receipt["formal_review"], "13/13 PASS")
         self.assertEqual(state["human_acceptance"], receipt["decision"])
-        self.assertEqual(state["status"], "human_accepted_ready_for_merge_authorization")
-        self.assertEqual(state["next_gate"], "ME1_MERGE_AUTHORIZATION")
+        self.assertIn(state["status"], {"human_accepted_ready_for_merge_authorization", "human_accepted_merged_pending_post_merge_ci", "human_accepted_merged"})
         self.assertEqual(state["post_acceptance_qualification"]["validated_head_sha"], "bec2adcd58dbdfbfa9ee5ec3be062737ccafe795")
         self.assertEqual(state["post_acceptance_qualification"]["run_number"], 357)
         self.assertEqual(state["post_acceptance_qualification"]["contracts"], "success")
         self.assertEqual(state["post_acceptance_qualification"]["governance"], "success")
 
-    def test_acceptance_does_not_grant_merge_or_successor_authority(self):
+    def test_acceptance_does_not_grant_successor_authority(self):
         receipt = json.loads((ME1 / "ME1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json").read_text(encoding="utf-8"))
         state = json.loads((ME1 / "ME1-STATE.json").read_text(encoding="utf-8"))
         self.assertFalse(receipt["boundaries_preserved"]["merge_authorized"])
         self.assertEqual(receipt["merge_authority"], "not_implied_by_acceptance")
         self.assertEqual(receipt["required_merge_token"], "AUTHORIZE_ME1_MERGE")
-        self.assertFalse(state["merge_authorized"])
         self.assertFalse(state["next_me_stage_authorized"])
         self.assertEqual(state["migration"]["M3_authority_cutover"], "not_authorized")
         for key, value in state["implementation_authorities"].items():
             self.assertFalse(value, key)
+
+    def test_merge_receipt_matches_merged_state_when_present(self):
+        path = ME1 / "ME1-MERGE-RECEIPT-v0.1.json"
+        if not path.exists():
+            self.skipTest("merge receipt not present before merge authorization")
+        receipt = json.loads(path.read_text(encoding="utf-8"))
+        state = json.loads((ME1 / "ME1-STATE.json").read_text(encoding="utf-8"))
+        self.assertEqual(receipt["decision"], "AUTHORIZE_ME1_MERGE")
+        self.assertEqual(receipt["pr_number"], 50)
+        self.assertEqual(receipt["merge_method"], "squash")
+        self.assertEqual(receipt["accepted_head_sha"], "c6385a6697cd85fc786f0266d257ca82b45818a1")
+        self.assertEqual(receipt["pre_merge_ci"]["run_number"], 362)
+        self.assertEqual(receipt["pre_merge_ci"]["conclusion"], "success")
+        self.assertEqual(receipt["merge_commit"], "6f1e028831100f3e32575a8f6e5869e727d19271")
+        self.assertEqual(state["merge_authority"], receipt["merge_authorization_token"])
+        self.assertEqual(state["merge_commit"], receipt["merge_commit"])
+        self.assertEqual(state["status"], "human_accepted_merged_pending_post_merge_ci")
+        self.assertEqual(state["next_gate"], "ME1_POST_MERGE_CI")
+        self.assertTrue(state["post_merge_ci_required"])
+        self.assertFalse(state["next_me_stage_authorized"])
+        self.assertTrue(all(value is False for value in receipt["boundaries_preserved"].values()))
 
     def test_acceptance_preserves_core_semantics(self):
         receipt = json.loads((ME1 / "ME1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json").read_text(encoding="utf-8"))
