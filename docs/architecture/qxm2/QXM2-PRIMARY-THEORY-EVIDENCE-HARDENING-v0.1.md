@@ -1,6 +1,6 @@
 # QXM2｜Primary Theory & Empirical Evidence Hardening v0.1
 
-Status: `evidence_compilation_in_progress`
+Status: `evidence_compilation_complete`
 
 QXM2 implements **Evidence-First Shadow Admission** for the six accepted QXM1 Financial Mechanics candidates. This document is a research synthesis and authority map; the machine-readable source, evidence, claim, shadow-object and benchmark-seed files remain the operative staging artifacts.
 
@@ -77,8 +77,32 @@ Verified anchors:
 
 This profile is therefore frozen as an **expectations-decomposition capability, not a market-timing oracle**. `Price-Implied Expectations != Target Price`; DCF is routed only to compatible asset forms; predictive status requires separate PIT/OOS evidence against simple baselines.
 
+## Batch C｜Outcome & Survival Mechanics
+
+### QXM1-CAND-05｜Stress Exit Liquidity
+
+Verified anchors:
+
+- `QXM2-SRC-KYLE-1985` — market depth and price impact are distinct microstructure dimensions of liquidity.
+- `QXM2-SRC-AMIHUD-2002` — a price-impact-style illiquidity proxy captures a meaningful empirical liquidity dimension, while the source itself makes clear that liquidity is multidimensional.
+- `QXM2-SRC-PASTOR-STAMBAUGH-2003` — sensitivity to aggregate liquidity shocks is a systematic liquidity-risk dimension, distinct from an asset's own static spread or turnover.
+- `QXM2-SRC-BRUNNERMEIER-PEDERSEN-2009` — market liquidity and funding liquidity can reinforce one another through stress spirals when margins/funding constraints bind.
+
+The permanent boundary is: **ADV or a narrow normal-state spread does not equal Stress Exit Liquidity.** A later implementation must compare simple ADV/spread baselines with a multidimensional state covering depth, price impact, volatility, order-size/ADV, margin/haircut and funding conditions, and settle against realized liquidation horizon, slippage, gap loss and funding breach.
+
+### QXM1-CAND-06｜Return Source Attribution
+
+Verified anchors:
+
+- `QXM2-SRC-BRINSON-HOOD-BEEBOWER-1986` — portfolio performance can be attributed relative to an explicit policy benchmark across policy/timing/selection dimensions.
+- `QXM2-SRC-IBBOTSON-KAPLAN-2000` — attribution percentages depend on the question being asked: time-series variability, cross-fund differences and return level are not interchangeable.
+- `QXM2-SRC-CAMPBELL-1991` — unexpected equity returns can be decomposed, under a model, into revisions to future cash-flow and expected-return news.
+- `QXM2-SRC-FAMA-FRENCH-1993` — common-factor models provide a statistical basis for separating systematic shared return variation from residuals.
+
+The permanent boundary is: **P&L identity or high explanatory R² does not equal causal explanation.** QXM2 therefore keeps two future tests separate: Accounting Identity Test (buckets plus residual reconstruct realized return) and Thesis Fidelity Test (compare realized sources with the immutable original ResearchReceipt without hindsight story rewrites).
+
 ## Current staging status
 
-Primary-source identity verification is complete for all six QXM1 candidates. EvidenceRelations are complete at the minimum-sufficient level for Candidates 01-04. Stress Exit Liquidity and Return Source Attribution still require their EvidenceRelation batch before QXM2 can advance from source verification into full mechanism compilation.
+Primary-source identity verification is complete for all six QXM1 candidates, and the minimum-sufficient EvidenceRelation layer now covers all six with explicit support plus boundary/competing evidence and replication status. This closes the QXM2 Source Verification stage. The next work is mechanism compilation: build the atomic Claim–Mechanism Crosswalk that links evidence to observables, proposed hypotheses, and later Benchmark Seeds.
 
 No Registry admission, formal BenchmarkObject creation, benchmark execution, capability promotion, production runtime, target price, portfolio sizing, or trading authority is created by this document.
