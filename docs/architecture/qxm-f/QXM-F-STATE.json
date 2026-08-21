@@ -1,0 +1,34 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "QXM_F_FINANCIAL_MECHANICS_CAPABILITY_CLOSURE",
+  "status": "G0_QXM2_ACCEPTED_MERGED",
+  "program_formula": "Identity Settlement x Reality Settlement x Learning Settlement",
+  "upstream_qxm2": {
+    "status": "accepted_merged",
+    "semantic_merge_commit": "e1b7a65736c6f93089d7e635e5c72624345941fc",
+    "closure_merge_commit": "5143b3c141c712a58c9a0417ac6bb915882fa4d5",
+    "merge_receipt": "docs/architecture/qxm2/QXM2-MERGE-RECEIPT-v0.1.json",
+    "qxm_f_next_gate": "QXM_F_G1_SELECTIVE_ADMISSION",
+    "resolved": true
+  },
+  "approved_design": {
+    "spec_path": "docs/superpowers/specs/2026-08-21-qxm-f-financial-mechanics-capability-closure-design.md",
+    "plan_path": "docs/superpowers/plans/2026-08-21-qxm-f-financial-mechanics-capability-closure.md",
+    "written_spec_approval": "ACCEPT_QXM_F_WRITTEN_DESIGN_SPEC",
+    "approved_spec_sha256": "bc06e5b91cdf4ace24a228a691096ceb124285c8ae50fc8418905254a9abe8e2",
+    "approved_plan_sha256": "61db36bc9fc67365a9ba7e06a654d34563c83c659e9fd8480665b93056970da7",
+    "source_spec_git_blob_sha": "f2ab51b07e514e9dbf65061651ee800a89322db1",
+    "source_plan_git_blob_sha": "3e5cd9fa5fe2c1cab6a14d079da166e7cac43af4"
+  },
+  "identity_settlement": "not_started",
+  "reality_settlement": "not_started",
+  "learning_settlement": "not_started",
+  "registry_admission_authority": "none",
+  "hypothesis_preregistration_authority": "none",
+  "formal_benchmark_creation_authority": "none",
+  "benchmark_execution_authority": "none",
+  "capability_promotion_authority": "none",
+  "production_runtime_authority": "none",
+  "trading_authority": "none",
+  "next_gate": "QXM_F_G1_SELECTIVE_ADMISSION"
+}
