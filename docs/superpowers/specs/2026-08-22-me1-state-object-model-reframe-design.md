@@ -1,12 +1,15 @@
 # ME1 | State Object Model Reframe — Design Spec
 
-Status: `design_candidate_for_human_review`
+Status: `design_accepted_for_implementation_planning`
 Date: 2026-08-22
 Upstream authority: `ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE`
-Approved design sections:
+
+Approved design decisions:
 - `APPROVE_ME1_A_OBJECT_IDENTITY_AUTHORITY_MODEL`
 - `APPROVE_ME1_B_LIFECYCLE_VERSIONING_SETTLEMENT_ADAPTER_CONTRACT`
 - `APPROVE_ME1_C_SCHEMA_CARDINALITY_VALIDATION_MIGRATION_GATE`
+- `APPROVE_ME1_RESEARCH_TARGET_V2_SEMANTIC_SUCCESSOR`
+- `ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN`
 
 ## 0. Purpose
 
@@ -16,59 +19,69 @@ ME1 compiles the ME0 ontology into a machine-governed state model that replaces 
 
 with:
 
-`ResearchTarget -> EngineThesis[0..N] -> PositionPassport[0..N] -> BookState@PIT`
+`ResearchTarget v2 -> EngineThesis[0..N] -> PositionPassport[0..N] -> BookState@PIT`
 
 The mother distinction is:
 
 `Target != Thesis != Capital Expression != Book Membership`
 
-ME1 does not grant portfolio sizing, trading, execution, Registry promotion, Constitution mutation, ME2–ME5 authority, or live runtime authority.
+ME1 grants no portfolio sizing, trading, execution, Registry promotion, Constitution mutation, ME2–ME5 authority, or live runtime authority.
 
 ## 1. First-principles problem
 
-The historical `ResearchStateVector` binds `target_id` to a single object containing `P / Xs / N / V / Xa / Xp / S`. That structure is retained as historical evidence and compatibility surface, but it cannot remain the canonical write model after ME0 because ME0 freezes:
+The historical `ResearchStateVector` binds `target_id` to one object containing `P / Xs / N / V / Xa / Xp / S`. That object remains historical evidence and compatibility surface, but it cannot remain the canonical future write model after ME0 because ME0 freezes:
 
 - `target_identity_does_not_determine_thesis_identity = true`
 - `book_membership_is_thesis_position_specific = true`
 - `return_engine_not_engine_thesis = true`
 - `engine_thesis_not_position_expression = true`
 
-Therefore ME1 is an ontology-to-object-model migration, not an additive RSV field change.
+ME1 is therefore an ontology-to-object-model migration, not an additive RSV field change.
 
-## 2. Chosen migration strategy: Compatibility Projection
+## 2. Compatibility Projection strategy
 
-ME1 adopts `Compatibility Projection`.
-
-Historical RSV schemas, historical objects, and historical receipts remain immutable ledger facts. RSV becomes:
+Historical RSV schemas, objects, and receipts remain immutable ledger facts. RSV becomes:
 
 `legacy_authoritative_history / non_authoritative_future`
 
 Rules:
-
 1. Historical RSV identity and meaning are preserved.
-2. RSV receives no new future canonical write authority.
+2. RSV receives zero future canonical write authority.
 3. RSV cannot automatically create `EngineThesis`.
-4. New Canon may emit a read-only legacy projection for old Replay/UI consumers.
-5. Legacy projection cannot write back into the new Canon.
-6. Compatibility is a `Legacy Read Compatibility Plane`, not a dual-authority model.
+4. New Canon may emit read-only legacy projections for old Replay/UI consumers.
+5. Legacy projections cannot write back into the new Canon.
+6. Compatibility is a `Legacy Read Compatibility Plane`, not dual authority.
 
-## 3. Authority layers in ME1
+## 3. ResearchTarget v1 -> v2 semantic successor
 
-ME1 instantiates ME0 L3/L4 object identities without acquiring Portfolio OS authority.
+Repository reality discovered during implementation planning: `packages/contracts/schemas/vnext/research-target.schema.json` already exists as `urn:yuanli-invest:schema:vnext-research-target:1.0.0` with historical semantics around `target_type`, `target_id`, `display_name`, `parent_target_ids`, and `tags`.
 
-- `ResearchTarget`: target identity only.
+ME1 MUST NOT redefine this v1 identity in place.
+
+Therefore ME1 freezes:
+
+- `ResearchTarget v1.0.0` = historical / compatibility authority, immutable in identity and meaning.
+- `ResearchTarget v2.0.0` = ME1 canonical future write model.
+- v2 file path: `packages/contracts/schemas/vnext/research-target-v2.schema.json`.
+- v2 `$id`: `urn:yuanli-invest:schema:vnext-research-target:2.0.0`.
+- migration is explicit semantic succession, not in-place mutation.
+
+Human naming may continue to say `ResearchTarget`; machine contracts MUST distinguish v1 and v2.
+
+## 4. Authority layers in ME1
+
+- `ResearchTarget v2`: target identity only.
 - `EngineThesis`: governed return-mechanism thesis.
 - `PositionPassport`: capital-expression contract only; not capital authorization.
 - `BookState`: point-in-time book membership state; not sizing/execution authority.
 - `LegacyRSVProjection`: historical-to-new compatibility object; no thesis authority.
 - `LegacyRSVReadModel`: new-to-legacy projection; read-only, non-authoritative.
 
-## 4. ResearchTarget
+## 5. ResearchTarget v2
 
 Stable question: `What is being researched?`
 
 Minimum identity:
-
 - `target_id`
 - `schema_version`
 - `target_type`
@@ -82,10 +95,9 @@ Minimum identity:
 - `valid_from`
 - `valid_to`
 
-Known `target_type` values may include equity, rate, credit, commodity, FX, crypto, index, fund, theme, industry and macro reference, but this classification is **open-world**. ME1 must not encode the known values as proof of exhaustive ontology. Unknown/new target types require an explicit typed extension rather than silent coercion into the nearest known value.
+`target_type` is open-world. Known values may include equity, rate, credit, commodity, FX, crypto, index, fund, theme, industry and macro reference, but known values MUST NOT be encoded as proof of exhaustive ontology. Unknown/new types require an explicit typed extension rather than silent coercion.
 
 Forbidden target-level semantics:
-
 - return engine
 - unique thesis
 - buy/sell/hold
@@ -97,7 +109,7 @@ Invariant: `ResearchTarget != Investment Thesis`.
 
 Cardinality: `ResearchTarget : EngineThesis = 1 : 0..N`.
 
-## 5. EngineThesis
+## 6. EngineThesis
 
 Stable question: `For this target, what mechanism is expected to produce investor payoff?`
 
@@ -106,7 +118,6 @@ Canonical form:
 `EngineThesis = Target + PrimaryEngine + Horizon + CausalMechanism + Evidence + Falsifier + PriceSemantics`
 
 Minimum fields:
-
 - `engine_thesis_id`
 - `schema_version`
 - `target_id`
@@ -127,65 +138,48 @@ Minimum fields:
 - lifecycle/version/PIT fields
 - optional `settlement_ref`
 
-One target may simultaneously own independent C, R, X, or future registered-engine theses.
+One target may simultaneously host independent C, R, X, or future registered-engine theses.
 
-### 5.1 Engine resolution is open-world but fail-closed
+### 6.1 Engine resolution: open-world but fail-closed
 
-ME0 freezes C/R/X as the Genesis Engine Set, not a proven exhaustive ontology. Therefore ME1 must not hard-code `primary_engine` as a permanently closed enum.
+ME0 freezes C/R/X as Genesis Engine Set, not exhaustive ontology.
 
 Rules:
-
-- `ENG-C`, `ENG-R`, and `ENG-X` must resolve as known Genesis engines.
-- an unknown engine identifier must not be silently accepted;
-- a future engine may resolve only with an explicit governed engine-registry/authority reference;
+- `ENG-C`, `ENG-R`, `ENG-X` resolve as known Genesis engines.
+- unknown engine identifiers MUST NOT be silently accepted.
+- a future engine resolves only with an explicit governed engine authority reference.
 - ME1 itself does not create or promote future engines.
 
-Thus the engine namespace remains open-world while machine validation remains fail-closed.
+### 6.2 Immutable identity core
 
-### 5.2 Immutable identity core
-
-After a Thesis reaches `qualified`, the following are immutable inside that thesis identity:
-
+After a Thesis reaches `qualified`, these fields are immutable inside that identity:
 - `engine_thesis_id`
 - `target_id`
 - `primary_engine`
 - `thesis_origin`
 - `opened_at`
 
-Changing `primary_engine` is not a revision; it requires a new Thesis identity and, if applicable later, a governed graduation/migration event.
+Changing `primary_engine` requires a new Thesis identity. Revision is not migration.
 
-### 5.3 Lifecycle
+### 6.3 Lifecycle
 
-Allowed conceptual lifecycle:
+Conceptual lifecycle:
 
 `draft -> researching -> qualified -> active -> challenged -> {active | invalidated | closed}`
 
-`settled` is an evaluation terminal state reached after a governed evaluation of a closed/invalidated/completed thesis history. Once `settled`, the Thesis is immutable for further research revision; later learning must be represented by a new object or a separate lesson/failure record, not a rewritten Thesis.
-
-Semantics:
-
-- `qualified`: research threshold passed; no capital authority implied.
-- `active`: thesis remains valid for research and may be referenced by a Passport.
-- `challenged`: material counter-evidence exists; resolution pending.
-- `invalidated`: falsifier or causal failure has been triggered.
-- `closed`: intentionally ended without necessarily being falsified.
-- `settled`: evaluated against later reality/outcomes and no longer revisionable.
+`settled` is an evaluation terminal state. Once settled, no further research revision is permitted.
 
 Hard rules:
-
 - `qualified/active/challenged` requires at least one explicit falsifier.
 - `active` requires at least one evidence reference.
-- `invalidated` requires invalidation reason and triggered falsifier refs.
+- `invalidated` requires `invalidation_reason` and `triggered_falsifier_refs`.
 - `settled` requires `settlement_ref`.
-- `settled` forbids additional revisions.
-- no hard deletion.
+- `settled` forbids additional revision.
+- hard deletion is prohibited.
 
-### 5.4 Versioning
-
-Revision is allowed only when thesis identity is preserved.
+### 6.4 Versioning
 
 Required revision metadata:
-
 - `revision`
 - `supersedes_revision`
 - `revision_reason`
@@ -193,34 +187,28 @@ Required revision metadata:
 - `valid_from`
 - `valid_to`
 
-`Revision != Thesis Migration`.
+A major causal-mechanism replacement inside one Thesis identity is `migration_suspected` and requires Human Review even when `primary_engine` is unchanged.
 
-A major causal-mechanism rewrite without engine change is a semantic-risk event and must trigger human review rather than silently pass as a normal revision.
-
-## 6. Point-in-Time and knowledge-vintage semantics
-
-ME1 is Point-in-Time first. For replayable research, wall-clock recording time and historical knowledge availability must be separable.
+## 7. Point-in-Time and knowledge-vintage semantics
 
 Required semantics where applicable:
+- `recorded_at`: wall-clock time when system recorded the object/reference.
+- `known_as_of`: latest time at which referenced information was actually knowable.
+- `knowledge_cutoff`: explicit evidence cutoff for the replay/research snapshot.
+- `as_of`: represented state time.
+- `valid_from / valid_to`: validity interval.
 
-- `recorded_at`: when the system wrote/recorded the object or reference;
-- `known_as_of`: the latest time at which the referenced information was actually knowable to the research process;
-- `knowledge_cutoff`: the explicit evidence cutoff used for a replay/research snapshot;
-- `as_of`: the state time represented by the object;
-- `valid_from / valid_to`: validity interval of a mutable state or revision.
-
-Hard PIT rule:
+Hard PIT rule for replay evidence:
 
 `known_as_of <= knowledge_cutoff <= replay_cutoff`
 
-for evidence used in a Point-in-Time replay. `recorded_at` may be later than the historical replay date and must never be used as proof that information was knowable at that earlier date.
+`recorded_at` MUST NOT substitute for `known_as_of`.
 
-## 7. PositionPassport
+## 8. PositionPassport
 
 Stable question: `If this Thesis is capital-expressed, under what governed contract is it entered, held, reduced, exited, and settled?`
 
 Minimum fields:
-
 - `position_passport_id`
 - `schema_version`
 - `engine_thesis_id`
@@ -239,8 +227,7 @@ Authority invariant:
 
 `PositionPassport is a capital-expression contract, not capital authorization.`
 
-Therefore every ME1 Passport must retain:
-
+Every ME1 Passport retains:
 - `portfolio_weight_authority = false`
 - `trade_execution_authority = false`
 
@@ -254,29 +241,27 @@ Lifecycle:
 
 Additional end states: `cancelled`, `expired`.
 
-Thesis and Passport lifecycle are intentionally decoupled. An active Thesis may have zero active Passport. If a Thesis becomes invalidated while a Passport is active, ME1 emits a fail-closed capital-expression conflict state but does not execute a trade.
+If Thesis becomes invalidated while Passport is active, ME1 emits a fail-closed `capital_expression_conflict`; it does not execute a trade.
 
-## 8. BookState
+## 9. BookState
 
-Book membership belongs to PositionPassport, never directly to asset ticker or ResearchTarget.
+Book membership belongs to PositionPassport, never directly to ticker or ResearchTarget.
 
-Initial book identities:
-
+Initial books:
 - `BOOK-C`
 - `BOOK-R`
 - `BOOK-X`
 - `BOOK-CASH`
 
-`BOOK-CASH` is a liquidity-reserve role and must not require or invent `ENG-CASH`.
+`BOOK-CASH` is a liquidity-reserve role and MUST NOT invent `ENG-CASH`.
 
-BookState is point-in-time and append-first, not timeless mutable truth.
+BookState is point-in-time and append-first.
 
 Identity scope:
 
 `portfolio_namespace + book_id + as_of`
 
 Minimum fields:
-
 - `book_state_id`
 - `schema_version`
 - `book_id`
@@ -292,10 +277,9 @@ In one `portfolio_namespace + as_of`, one active PositionPassport may have at mo
 
 The same ResearchTarget may indirectly appear in multiple Books through different Theses and Passports.
 
-## 9. Minimal Book membership event
+## 10. Minimal PositionBookMembershipEvent
 
-ME1 may define a minimal `PositionBookMembershipEvent` interface for assignment/removal only:
-
+ME1 may define assignment/removal interface only:
 - `event_id`
 - `position_passport_id`
 - `from_book`
@@ -304,16 +288,13 @@ ME1 may define a minimal `PositionBookMembershipEvent` interface for assignment/
 - `reason`
 - `authority_ref`
 
-ME1 does not implement `AssetGraduationEvent`; R->C or other engine graduation remains deferred to ME4.
+ME1 does not implement `AssetGraduationEvent`; engine graduation remains deferred to ME4.
 
-## 10. Settlement
+## 11. Settlement
 
-Settlement applies to `EngineThesis`, not directly to ResearchTarget.
+Settlement applies to EngineThesis, not ResearchTarget.
 
-A target may host simultaneous Theses with different settlement outcomes.
-
-Minimum settlement semantics:
-
+Minimum semantics:
 - `settlement_id`
 - `engine_thesis_id`
 - evaluation window
@@ -329,62 +310,57 @@ Minimum settlement semantics:
 
 Law: `Settlement evaluates history; it never rewrites history.`
 
-Settlement cannot mutate earlier Thesis revisions.
+## 12. Research primitive and capability references
 
-## 11. Research primitive and capability references
+P/N/E/V/S and current/future Capability outputs are shared research primitives/services. EngineThesis references them; it does not own or copy them into target identity. ME1 MUST NOT recreate a new universal state vector inside EngineThesis.
 
-P/N/E/V/S and current/future Capability outputs are shared research primitives/services. They are referenced by EngineThesis; they are not owned by Thesis identity and must not be copied into ResearchTarget identity.
+## 13. Portfolio namespace
 
-This preserves reusability across targets and engines and prevents rebuilding a new universal state vector inside EngineThesis.
+ME1 freezes `portfolio_namespace` as a state-identity dimension without creating Portfolio OS authority. Possible future namespaces include research shadow, paper replay, model portfolio or other governed contexts. ME1 defines no live weights, rebalance, or execution behavior.
 
-## 12. Portfolio namespace
+## 14. Legacy compatibility contracts
 
-ME1 freezes `portfolio_namespace` as a state-identity dimension without creating Portfolio OS authority.
-
-Example future namespaces may include research shadow, paper replay, model portfolio, or other governed contexts. ME1 does not define live portfolio weights or rebalance/execution behavior.
-
-## 13. Legacy compatibility contracts
-
-### 13.1 Legacy -> New
+### 14.1 Legacy RSV -> New compatibility plane
 
 `Historical ResearchStateVector -> LegacyRSVProjectionAdapter -> LegacyRSVProjection`
 
-Projection output includes:
-
+Projection includes:
 - `legacy_projection_id`
 - `source_rsv_id`
 - `target_ref`
-- primitive-state refs to historical P/Xs/N/V/Xa/Xp/S
+- primitive-state refs to P/Xs/N/V/Xa/Xp/S
 - legacy force projection
 - migration confidence / warnings
 - `engine_assignment.status = unresolved` by default
 
-Historical RSV cannot automatically create any active or draft EngineThesis.
+Historical RSV cannot automatically create active or draft EngineThesis.
 
-A new Thesis requires a governed Engine Assignment Gate and explicit research decision.
+### 14.2 New -> Legacy read model
 
-### 13.2 New -> Legacy
-
-New Canon may emit `LegacyRSVReadModel` for compatibility.
-
-Required authority flags:
-
+Required flags:
 - `projection_only = true`
 - `machine_authority = false`
 - `write_back_prohibited = true`
 
-The adapter is authority-single-direction:
+Authority direction:
 
 `New Canon -> Legacy Read Model`
 
 never `New Canon <-> Legacy RSV`.
 
-## 14. Engine Assignment Gate
+### 14.3 ResearchTarget v1 -> v2 compatibility
 
-Legacy-to-new engine assignment is not inference-by-default.
+Existing `ResearchTarget v1.0.0` remains historical/compatibility authority. ME1 may create explicit v1->v2 adapter logic, but it MUST NOT mutate v1 objects or infer Thesis/Book semantics from v1.
+
+The valid identity migration is:
+
+`ResearchTarget v1 -> explicit semantic-successor mapping -> ResearchTarget v2`
+
+No v1 field obtains new Thesis or capital authority.
+
+## 15. Engine Assignment Gate
 
 Gate states:
-
 - `unresolved`
 - `candidate_C`
 - `candidate_R`
@@ -393,73 +369,75 @@ Gate states:
 - `human_review_required`
 - `resolved`
 
-Even a candidate assignment is not itself an EngineThesis. The valid migration chain is:
+A candidate assignment is not itself a Thesis.
+
+Valid chain:
 
 `Historical RSV -> Legacy Projection -> Engine Assignment Gate -> governed research decision -> EngineThesis:draft`
 
-## 15. Schema architecture
+## 16. Schema architecture
 
-ME1 implementation should create independent schemas for:
+ME1 implementation creates independent schemas:
+1. `research-target-v2.schema.json`
+2. `engine-thesis.schema.json`
+3. `position-passport.schema.json`
+4. `book-state.schema.json`
+5. `legacy-rsv-projection.schema.json`
+6. `legacy-rsv-read-model.schema.json`
 
-1. `research-target`
-2. `engine-thesis`
-3. `position-passport`
-4. `book-state`
-5. `legacy-rsv-projection`
-6. `legacy-rsv-read-model`
+Optional minimal interface schema may be added for `position-book-membership-event` if required by relational tests.
 
-The existing `research-state-vector.schema.json` remains unchanged in identity/meaning.
+Historical schemas remain unchanged in identity/meaning:
+- `research-target.schema.json` v1.0.0
+- `research-state-vector.schema.json`
 
-JSON Schema validates local object structure. A dedicated ME1 relational validator validates cross-object invariants.
+JSON Schema validates local structure. A dedicated ME1 relational validator validates cross-object invariants.
 
-## 16. Cardinality constitution
+## 17. Cardinality constitution
 
-- `ResearchTarget : EngineThesis = 1 : 0..N`
+- `ResearchTarget v2 : EngineThesis = 1 : 0..N`
 - `EngineThesis : PositionPassport = 1 : 0..N`
 - `PositionPassport : PrimaryBook = 1 : 0..1` per `portfolio_namespace + as_of`
 - `ResearchTarget : Book = indirect N:N` through Passport membership
 
 A target never belongs directly to a Book.
 
-## 17. Relational validation contract
+## 18. Relational validation contract
 
-The ME1 validator must be fail-closed across seven rule families.
+ME1 validator is fail-closed across eight rule families.
+
+### V0 Historical identity non-regression
+- existing ResearchTarget v1 `$id` and field semantics remain unchanged.
+- existing RSV `$id` and field semantics remain unchanged.
+- v1/v2 semantic successor mapping is explicit.
 
 ### V1 Identity Integrity
-
 Validate unique object IDs and immutable identity core.
 
 ### V2 Reference Integrity
-
 Validate:
-
-- Thesis target -> valid ResearchTarget
+- Thesis target -> valid ResearchTarget v2
 - Passport thesis -> valid EngineThesis
 - Book membership -> valid Passport
 - Settlement -> valid EngineThesis
 
 ### V3 Engine Consistency
-
 Validate:
-
 - `Passport.target_id == Thesis.target_id`
 - `Passport.primary_engine == Thesis.primary_engine`
-- `BOOK-C` accepts only ENG-C Passports
-- `BOOK-R` accepts only ENG-R Passports
-- `BOOK-X` accepts only ENG-X Passports
-- `BOOK-CASH` is a governed non-engine exception
-- a future engine identifier must resolve to an explicit governed authority reference before use
+- `BOOK-C` only ENG-C Passports
+- `BOOK-R` only ENG-R Passports
+- `BOOK-X` only ENG-X Passports
+- `BOOK-CASH` governed non-engine exception
+- future engine requires explicit governed authority reference
 
 ### V4 Lifecycle Consistency
-
-Reject, unless a separately governed reactivation mechanism exists later:
-
+Reject unless separately governed later:
 - archived Target -> new Thesis
 - invalidated Thesis -> new active Passport
 - settled Thesis -> new revision
 
 ### V5 No Silent Thesis Migration
-
 Hard failure:
 
 `same engine_thesis_id + changed primary_engine`
@@ -469,18 +447,14 @@ Human-review semantic gate:
 major causal-mechanism replacement inside same identity.
 
 ### V6 Point-in-Time Integrity
-
 Validate at minimum:
-
 - `valid_from <= as_of`
-- `known_as_of <= knowledge_cutoff <= replay_cutoff` for PIT evidence use
+- `known_as_of <= knowledge_cutoff <= replay_cutoff`
 - `recorded_at` is not substituted for `known_as_of`
-- no future information contamination in Point-in-Time Replay
+- no future information contamination
 
 ### V7 Authority Integrity
-
-All ME1 objects must fail if any ME1-owned field grants:
-
+Fail if any ME1-owned field grants:
 - portfolio weight authority
 - position sizing authority
 - buy/sell/hold authority
@@ -488,10 +462,9 @@ All ME1 objects must fail if any ME1-owned field grants:
 - live execution authority
 - ME2–ME5 authority
 
-## 18. Genesis hard-negative set
+## 19. Genesis hard-negative set
 
-The implementation must include negative tests that reject at least:
-
+Implementation MUST reject at least:
 1. same Thesis identity changes ENG-R -> ENG-C
 2. Passport engine differs from Thesis engine
 3. BOOK-C contains ENG-R Passport
@@ -501,42 +474,37 @@ The implementation must include negative tests that reject at least:
 7. invalidated Thesis creates a new active Passport
 8. one active Passport occupies BOOK-C and BOOK-R in same namespace/as-of
 9. BookState lacks `as_of`
-10. Replay uses evidence beyond `knowledge_cutoff`
+10. replay uses evidence beyond `knowledge_cutoff`
 11. an ME1 object grants trading authority
-12. Cash is assigned an invented `ENG-CASH`
-13. an unknown future engine is used without explicit governed engine authority
-14. `recorded_at` is incorrectly treated as historical `known_as_of`
+12. Cash is assigned invented `ENG-CASH`
+13. unknown future engine is used without governed engine authority
+14. `recorded_at` is treated as historical `known_as_of`
+15. ResearchTarget v1 schema is redefined in place
+16. v1 ResearchTarget automatically acquires Thesis or Book authority
 
-## 19. Migration strategy
-
-ME1 uses a staged migration.
+## 20. Migration strategy
 
 ### M1 Schema Parallel
-
-Introduce new schemas and validators. Preserve legacy RSV consumers. No bulk data migration.
+Introduce new schemas and validators. Preserve legacy RSV and ResearchTarget v1 consumers. No bulk migration.
 
 ### M2 Shadow Projection
+Use 3–5 historical Gold Cases, preferably NVDA, Gold, UST30Y, Copper, USDJPY, to construct:
 
-Use 3–5 historical Gold Cases, preferably the existing cross-asset set such as NVDA, Gold, UST30Y, Copper, USDJPY, to construct:
+`ResearchTarget v2 + LegacyRSVProjection`
 
-`ResearchTarget + LegacyRSVProjection`
-
-EngineThesis creation remains explicit/governed rather than inferred.
+EngineThesis creation remains explicit/governed.
 
 ### M3 Authority Cutover
-
 Deferred until Replay demonstrates:
-
 - historical truth preserved
 - multi-thesis capability added
 - no authority regression
 
-ME1 may become M2 candidate-ready but does not itself perform full M3 authority cutover unless separately accepted later.
+ME1 may become M2 candidate-ready; it does not perform full M3 cutover without later authority.
 
-## 20. Human Review dimensions
+## 21. Human Review dimensions
 
-ME1 final Human Review must reach 12/12 PASS:
-
+Final ME1 Human Review requires 13/13 PASS:
 - D1 Target / Thesis separation
 - D2 one Target supports multiple Theses
 - D3 Thesis / Passport separation
@@ -547,31 +515,32 @@ ME1 final Human Review must reach 12/12 PASS:
 - D8 PIT / revision / settlement correctness
 - D9 legacy RSV historical authority preserved
 - D10 legacy future write authority removed
-- D11 compatibility adapter is one-way and non-polluting
+- D11 compatibility adapter one-way and non-polluting
 - D12 no Portfolio / Trading / ME2–ME5 authority introduced
+- D13 ResearchTarget v1 preserved and v2 introduced as explicit semantic successor
 
-## 21. ME1 machine constitution
+## 22. ME1 machine constitution
 
-1. Canonical identity belongs to objects, not to one universal state vector.
+1. Canonical identity belongs to objects, not one universal state vector.
 2. Target-to-Thesis is one-to-many by design.
-3. Primary Engine is immutable within one Thesis identity.
-4. Engine namespace is open-world but fail-closed at resolution time.
-5. Revision is not Migration.
-6. Settlement evaluates history; it never rewrites history.
-7. Book membership belongs to PositionPassport, never directly to ticker or ResearchTarget.
-8. BookState is Point-in-Time, not mutable timeless truth.
-9. PIT evidence distinguishes `recorded_at`, `known_as_of`, and `knowledge_cutoff`.
-10. Legacy RSV preserves historical authority but has zero future canonical write authority.
-11. Legacy RSV cannot automatically create EngineThesis.
-12. Legacy compatibility is read-only and non-authoritative.
-13. PositionPassport is a capital-expression contract, not capital authorization.
-14. No ME1 schema grants portfolio sizing, trading, execution, or ME2–ME5 authority.
+3. ResearchTarget v1 is immutable historical/compatibility authority; v2 is the ME1 future write successor.
+4. Primary Engine is immutable within one Thesis identity.
+5. Engine namespace is open-world but fail-closed at resolution time.
+6. Revision is not Migration.
+7. Settlement evaluates history; it never rewrites history.
+8. Book membership belongs to PositionPassport, never directly to ticker or ResearchTarget.
+9. BookState is Point-in-Time, not mutable timeless truth.
+10. PIT evidence distinguishes `recorded_at`, `known_as_of`, and `knowledge_cutoff`.
+11. Legacy RSV preserves historical authority but has zero future canonical write authority.
+12. Legacy RSV cannot automatically create EngineThesis.
+13. Legacy compatibility is read-only and non-authoritative.
+14. PositionPassport is a capital-expression contract, not capital authorization.
+15. No ME1 schema grants portfolio sizing, trading, execution, or ME2–ME5 authority.
 
-## 22. Scope exclusions
+## 23. Scope exclusions
 
 ME1 does not implement:
-
-- C-specific economic value / ROIC / reinvestment schema refinement (ME2)
+- C-specific economic value / ROIC / reinvestment refinement (ME2)
 - X semantic split / Xa-Xp redesign (ME2)
 - R engine L/ERN/N state machine or Market Clock (ME3)
 - AssetGraduationEvent runtime (ME4)
@@ -581,22 +550,23 @@ ME1 does not implement:
 - automatic target price or buy/sell/hold recommendations
 - Constitution mutation
 - historical receipt rewrite
+- in-place mutation of ResearchTarget v1 or RSV
 
-## 23. Self-review result
+## 24. Self-review result
 
-Spec self-review completed after the A/B/C design approvals.
+- Placeholder scan: PASS.
+- Internal consistency: PASS after ResearchTarget v1/v2 semantic-successor correction.
+- Scope check: PASS; one implementation plan can cover ME1 candidate without ME2–ME5.
+- Ambiguity check: PASS; target and engine namespaces are open-world/fail-closed, legacy writes are prohibited, settled Thesis is non-revisionable, PIT timing fields are distinct, v1/v2 authority is explicit.
 
-- Placeholder scan: PASS — no TBD/TODO/open placeholder remains.
-- Internal consistency: PASS after clarifying open-world target/engine handling, terminal settlement behavior, Passport transition semantics, and PIT knowledge-vintage semantics.
-- Scope check: PASS — one implementation plan can cover the ME1 state-model candidate without implementing ME2–ME5.
-- Ambiguity check: PASS — future engine resolution is explicit/fail-closed; legacy RSV has no future canonical write authority; `settled` is non-revisionable; PIT timing fields have distinct semantics.
+## 25. Design acceptance and next gate
 
-## 24. Design acceptance and next gate
-
-This document is a design candidate only. It creates no production schema/runtime authority.
-
-Required written design acceptance token before implementation planning:
+Design accepted by:
 
 `ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN`
 
-After that acceptance, the only valid next workflow is to create a separate implementation plan via the Superpowers `writing-plans` process. Acceptance of the design does not imply implementation acceptance, merge authorization, or ME2 authorization.
+Accepted ResearchTarget correction:
+
+`APPROVE_ME1_RESEARCH_TARGET_V2_SEMANTIC_SUCCESSOR`
+
+This Design acceptance authorizes implementation planning only. It does not imply implementation acceptance, merge authorization, Registry promotion, Portfolio/Trading authority, or ME2 authorization.
