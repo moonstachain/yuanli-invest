@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.4.0",
+  "schema_version": "0.5.0",
   "stage": "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
-  "status": "shadow_admission_ready_for_human_review",
+  "status": "human_accepted_ready_for_merge",
   "upstream_dependency": {
     "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
     "required_status": "accepted_merged",
@@ -49,14 +49,49 @@
     "qxm2_evidence_hardening": "success",
     "unit_tests": "success"
   },
+  "human_review_qualification": {
+    "validated_head_sha": "cecbdee29f888a6d9ee5041af5e1ad6d6965fb54",
+    "workflow": "repository-gates",
+    "run_number": 217,
+    "run_id": 32461754235,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "qxm2_evidence_hardening": "success",
+    "unit_tests": "success"
+  },
+  "human_gate": {
+    "token": "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
+    "decision": "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
+    "accepted_at": "2026-08-21T05:14:00-03:00",
+    "acceptance_receipt": "docs/architecture/qxm2/QXM2-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+    "reviewed_head_sha": "cecbdee29f888a6d9ee5041af5e1ad6d6965fb54",
+    "reviewed_ci_run": 217,
+    "acceptance_does_not_imply_registry_admission": true,
+    "acceptance_does_not_imply_hypothesis_preregistration": true,
+    "acceptance_does_not_imply_formal_benchmark_creation": true,
+    "acceptance_does_not_imply_benchmark_execution": true,
+    "acceptance_does_not_imply_capability_promotion": true,
+    "acceptance_does_not_imply_merge": true
+  },
+  "post_acceptance_qualification": {
+    "validated_head_sha": "0c9cfb04793d0cc574bc3fbfbcd53420b9f36ff5",
+    "workflow": "repository-gates",
+    "run_number": 221,
+    "run_id": 32462349060,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "qxm2_evidence_hardening": "success",
+    "unit_tests": "success"
+  },
+  "post_acceptance_ci_required": true,
+  "post_acceptance_ci_satisfied": true,
   "admission_authority": "none",
   "hypothesis_preregistration_authority": "none",
   "formal_benchmark_creation_authority": "none",
   "benchmark_execution_authority": "none",
   "capability_promotion_authority": "none",
-  "human_gate": {
-    "token": "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
-    "decision": "pending"
-  },
-  "next_gate": "QXM2_HUMAN_REVIEW"
+  "merge_authority": "not_implied_by_acceptance",
+  "next_gate": "QXM2_MERGE"
 }
