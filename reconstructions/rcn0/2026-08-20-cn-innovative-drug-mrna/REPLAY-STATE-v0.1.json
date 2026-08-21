@@ -1,0 +1,90 @@
+{
+  "schema_version": "0.1.1",
+  "replay_id": "RCN-REPLAY-20260820-CN-INNOVATIVE-DRUG-MRNA",
+  "status": "shadow_replay_running_partial",
+  "human_authorization": "ACCEPT_RCN0_SHADOW_REPLAY_READY",
+  "as_of_date": "2026-08-20",
+  "scope": {
+    "levels": ["L2", "L3"],
+    "target": "China innovative-drug / vaccine / mRNA / CXO theme"
+  },
+  "t0_discipline": {
+    "future_outcome_leakage_allowed": false,
+    "known_leakage_violations": 0,
+    "source_claims_are_primary_evidence": false,
+    "independent_primary_verification": "partial"
+  },
+  "reality": {
+    "state": "mixed",
+    "transition": "external_platform_validation_domestic_reality_mixed",
+    "binding_capability": "CAP-P-01",
+    "shadow_status": "complete_provisional"
+  },
+  "capital": {
+    "state": "neutral_to_weak",
+    "transition": "no_broad_risk_on_confirmation",
+    "binding_capability": "CAP-R-01",
+    "shadow_status": "complete_provisional"
+  },
+  "narrative": {
+    "story": "mRNA oncology Phase 3 success -> mRNA platform option value -> domestic vaccine/mRNA platform repricing",
+    "phase": "ignition_to_acceleration",
+    "delta": "rising",
+    "delta2": "accelerating_candidate",
+    "counter_narrative": "fundamental_and_mapping_skepticism",
+    "binding_capability": "CAP-N-01",
+    "shadow_status": "complete_provisional"
+  },
+  "mapping": {
+    "nrg_state": "belief_leads_reality",
+    "narrative_distance": {
+      "type": "ordinal_only",
+      "vaccine_mrna_chain": "near",
+      "innovative_drug_chain": "medium",
+      "cxo_chain": "farther",
+      "posthoc_numeric_distance_prohibited": true
+    },
+    "industrial_distance": "target_specific_pending"
+  },
+  "attribution": {
+    "dominant_driver": "narrative_led",
+    "confidence": "moderate_to_high_provisional",
+    "gold_authorized": false
+  },
+  "valuation": {
+    "state": "not_simple_low_valuation_repair",
+    "binding_capability": "CAP-V-01",
+    "shadow_status": "complete_provisional"
+  },
+  "baselines": {
+    "B0_broad_beta": "weak",
+    "B1_fundamental": "weak_to_inverted_for_same_day_leadership",
+    "B2_valuation_repair": "weak_at_index_level_live_at_stock_level",
+    "B3_size_beta_momentum_microstructure": "blocking_unresolved",
+    "B4_narrative_only": "strong_descriptive_fit_not_causal",
+    "B5_composed_rcn": "best_current_qualitative_explanation_provisional"
+  },
+  "hypotheses": {
+    "H_RCN_01_narrative_proximity_gradient": "descriptively_supported_controls_pending",
+    "H_RCN_02_industrial_validation_mismatch": "supported_group_level_rights_mapping_pending",
+    "H_RCN_03_capital_insufficiency": "supported_provisionally",
+    "H_RCN_04_high_valuation_narrative_repricing": "supported_index_level"
+  },
+  "evidence_gate": "partial_gold_blocking",
+  "required_falsifiers": [
+    "narrative_distance_no_incremental_relation_after_controls",
+    "strongest_mapping_names_are_direct_economic_beneficiaries",
+    "broad_capital_shock_explains_cross_section",
+    "pre_registered_universe_removes_narrative_gradient",
+    "source_market_facts_fail_independent_verification"
+  ],
+  "blocking_next_steps": [
+    "freeze_full_universe_independent_of_returns",
+    "run_B3_size_beta_momentum_liquidity_price_limit_controls",
+    "complete_primary_evidence_admission",
+    "complete_target_level_industrial_distance_mapping",
+    "evaluate_falsifiers",
+    "second_human_review_for_shadow_pass_or_gold_admission"
+  ],
+  "non_authorization": "research_only"
+}
