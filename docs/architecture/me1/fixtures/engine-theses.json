@@ -1,0 +1,13 @@
+[
+  {
+    "engine_thesis_id":"ET-NVDA-C-001",
+    "schema_version":"1.0.0",
+    "target_id":"RT2-NVDA",
+    "identity_core":{"primary_engine":"ENG-C","engine_authority_ref":null,"thesis_origin":"explicit_me1_shadow_research","opened_at":"2026-08-22T01:50:00+08:00"},
+    "research_contract":{"source_of_return":["durable_value_pool_growth","high_return_reinvestment"],"time_horizon":"multi_year","thesis_statement":"NVDA may compound through durable AI infrastructure value capture and reinvestment.","causal_mechanism":"AI infrastructure demand -> value capture -> high-return reinvestment -> owner-relevant cash-flow growth","price_semantics":"long_horizon_valuation_and_expected_irr"},
+    "evidence":{"supporting_refs":["SHADOW-E-NVDA-C-1"],"counter_refs":[],"capability_output_refs":[],"primitive_state_refs":[],"recorded_at":"2026-08-22T01:50:00+08:00","known_as_of":"2026-08-21T23:59:00+08:00","knowledge_cutoff":"2026-08-21T23:59:00+08:00","replay_cutoff":"2026-08-21T23:59:00+08:00"},
+    "falsification":{"falsifier_refs":["F-NVDA-C-1"],"challenge_conditions":["durable value capture or reinvestment economics structurally deteriorate"],"invalidation_reason":null,"triggered_falsifier_refs":[]},
+    "lifecycle":{"status":"active","revision":1,"supersedes_revision":null,"revision_reason":"genesis shadow fixture","as_of":"2026-08-21T23:59:00+08:00","valid_from":"2026-08-21T23:59:00+08:00","valid_to":null,"closed_at":null,"settlement_ref":null},
+    "authority":{"capital_authority":false,"portfolio_weight_authority":false,"trading_authority":false,"live_execution_authority":false}
+  }
+]
