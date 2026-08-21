@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.0",
   "stage": "ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
-  "status": "human_accepted_ready_for_merge_authorization",
+  "status": "human_accepted_merged_pending_post_merge_ci",
   "repository_base_sha": "bd8931e1bf21dceb5e34a68ec41aa199b83e9410",
   "design_approval": {
     "token": "APPROVE_ME0_DESIGN_FOR_IMPLEMENTATION",
@@ -40,15 +40,6 @@
     "acceptance_does_not_imply_portfolio_authority": true,
     "acceptance_does_not_imply_trading_authority": true
   },
-  "implementation_authorities": {
-    "constitution_mutation": false,
-    "schema_migration": false,
-    "registry_admission": false,
-    "runtime": false,
-    "portfolio": false,
-    "live_execution": false
-  },
-  "post_acceptance_ci_required": true,
   "post_acceptance_qualification": {
     "validated_head_sha": "ab378aff7aea539aed79d4f158ba4da62e852143",
     "workflow": "repository-gates",
@@ -60,9 +51,32 @@
     "me0_validator": "success",
     "unit_tests": "success"
   },
-  "post_acceptance_ci_satisfied": true,
-  "merge_authority": "not_authorized",
+  "pre_merge_qualification": {
+    "validated_head_sha": "1557cc2e3fa108d9ab8b0c5df54c24459d0d5ee8",
+    "workflow": "repository-gates",
+    "run_number": 332,
+    "run_id": 32507487214,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "me0_validator": "success",
+    "unit_tests": "success"
+  },
+  "implementation_authorities": {
+    "constitution_mutation": false,
+    "schema_migration": false,
+    "registry_admission": false,
+    "runtime": false,
+    "portfolio": false,
+    "live_execution": false
+  },
+  "merge_authority": "AUTHORIZE_ME0_MERGE",
   "required_merge_token": "AUTHORIZE_ME0_MERGE",
-  "next_gate": "ME0_MERGE_AUTHORIZATION",
+  "merge_method": "squash",
+  "merge_commit": "7be7d81028addfffec2120fc306cfdc4da32c51f",
+  "merge_receipt": "docs/architecture/me0/ME0-MERGE-RECEIPT-v0.1.json",
+  "merged_at": "2026-08-22T01:22:38+08:00",
+  "post_merge_ci_required": true,
+  "next_gate": "ME0_POST_MERGE_CI",
   "next_me_stage_authorized": false
 }
