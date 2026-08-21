@@ -10,6 +10,7 @@ import subprocess
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
+from scripts.validate_qxm_f_closure import validate_qxm_f
 
 ROOT = Path(__file__).resolve().parents[1]
 G1 = ROOT / "docs" / "architecture" / "qxm-f" / "g1"
@@ -70,9 +71,21 @@ def assert_apply_scope(paths):
     assert not unexpected_registry, f"unexpected G1 Registry mutation: {unexpected_registry}"
 
 
+def validate_core_phase_aware():
+    """Run the full QXM-F core validator while delegating PR path authority to this G1 phase validator."""
+    original_base_ref = os.environ.pop("GITHUB_BASE_REF", None)
+    try:
+        validate_qxm_f(ROOT)
+    finally:
+        if original_base_ref is not None:
+            os.environ["GITHUB_BASE_REF"] = original_base_ref
+
+
 def main():
     for path in (STATE, LEDGER, REVIEW, ACCEPTANCE, ADMISSION, THEORY_PACK, HYP_PACK, SHADOW_THEORIES, SHADOW_HYPOTHESES):
         assert path.exists(), f"missing G1 apply artifact: {path.relative_to(ROOT)}"
+
+    validate_core_phase_aware()
 
     state = load_json(STATE)
     ledger = load_json(LEDGER)
@@ -83,6 +96,9 @@ def main():
 
     assert git_blob_sha(LEDGER) == ACCEPTED_LEDGER_BLOB, "Human-reviewed G1 ledger drift"
     assert git_blob_sha(REVIEW) == ACCEPTED_REVIEW_BLOB, "Human-reviewed G1 review card drift"
+    assert ledger["status"] == "candidate_ledger_human_pending"
+    assert all(row["human_disposition"] is None for row in ledger["objects"]), "candidate ledger must remain immutable machine proposal"
+
     assert acceptance["decision"] == HUMAN_TOKEN
     assert acceptance["accepted_candidate"]["admission_ledger_blob_sha"] == ACCEPTED_LEDGER_BLOB
     assert acceptance["accepted_candidate"]["human_review_card_blob_sha"] == ACCEPTED_REVIEW_BLOB
