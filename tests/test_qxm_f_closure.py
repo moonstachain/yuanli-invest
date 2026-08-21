@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "docs" / "superpowers" / "specs" / "2026-08-21-qxm-f-financial-mechanics-capability-closure-design.md"
 PLAN = ROOT / "docs" / "superpowers" / "plans" / "2026-08-21-qxm-f-financial-mechanics-capability-closure.md"
+STATE = ROOT / "docs" / "architecture" / "qxm-f" / "QXM-F-STATE.json"
 G1_LEDGER = ROOT / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-ADMISSION-LEDGER-v0.1.json"
 G1_ACCEPTANCE = ROOT / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 QXM2_EVIDENCE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json"
@@ -65,6 +66,15 @@ class QXMFClosureBootstrapTests(unittest.TestCase):
             else:
                 os.environ["GITHUB_BASE_REF"] = original_base_ref
         self.assertEqual(result["next_gate"], "QXM_F_G1_MERGE")
+
+    def test_post_acceptance_state_projection_points_to_merge_gate(self):
+        self.assertTrue(G1_ACCEPTANCE.exists(), "Human Acceptance receipt is required for post-Human projection")
+        state = json.loads(STATE.read_text(encoding="utf-8"))
+        self.assertEqual(state["status"], "G1_SELECTIVE_ADMISSION_READY_FOR_HUMAN_REVIEW")
+        self.assertEqual(state["identity_settlement"], "human_accepted_registry_identity_applied_pending_merge")
+        self.assertEqual(state["next_gate"], "QXM_F_G1_MERGE")
+        self.assertEqual(state["g1"]["registry_apply_state"], "human_accepted_ready_for_merge")
+        self.assertEqual(state["g1"]["required_merge_token"], "AUTHORIZE_QXM_F_G1_MERGE")
 
     def test_qxm2_stale_evidence_count_requires_explicit_reconciliation(self):
         evidence = json.loads(QXM2_EVIDENCE.read_text(encoding="utf-8"))
