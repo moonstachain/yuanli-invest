@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
+  "decision": "AUTHORIZE_ME0_MERGE",
+  "merged_at": "2026-08-22T01:22:38+08:00",
+  "pr_number": 47,
+  "merge_method": "squash",
+  "accepted_head_sha": "1557cc2e3fa108d9ab8b0c5df54c24459d0d5ee8",
+  "pre_merge_ci": {
+    "workflow": "repository-gates",
+    "run_number": 332,
+    "run_id": 32507487214,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "me0_validator": "success",
+    "unit_tests": "success"
+  },
+  "merge_commit": "7be7d81028addfffec2120fc306cfdc4da32c51f",
+  "human_acceptance_token": "ACCEPT_ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE",
+  "merge_authorization_token": "AUTHORIZE_ME0_MERGE",
+  "boundaries_preserved": {
+    "constitution_mutation_authorized": false,
+    "schema_migration_authorized": false,
+    "registry_admission_authorized": false,
+    "capability_promotion_authorized": false,
+    "runtime_authorized": false,
+    "portfolio_weight_authorized": false,
+    "position_sizing_authorized": false,
+    "buy_sell_hold_authorized": false,
+    "live_execution_authorized": false,
+    "ME1_authorized": false,
+    "ME2_authorized": false,
+    "ME3_authorized": false,
+    "ME4_authorized": false,
+    "ME5_authorized": false
+  },
+  "post_merge_ci": "required_on_merge_record_head",
+  "next_gate": "ME0_POST_MERGE_CI"
+}

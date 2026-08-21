@@ -1,6 +1,6 @@
 # ME0 | Human Review Card v0.1
 
-Status: `human_accepted_pending_post_acceptance_ci`
+Status: `human_accepted_merged_pending_post_merge_ci`
 
 Human Gate decision:
 
@@ -8,7 +8,7 @@ Human Gate decision:
 
 Decision recorded at `2026-08-22T01:13:00+08:00`.
 
-Acceptance froze the **ME0 multi-engine ontology and authority candidate only**. It did not itself authorize merge, Constitution mutation, schema migration, Registry admission, runtime, portfolio sizing, trading or live execution.
+Acceptance froze the **ME0 multi-engine ontology and authority candidate only**. Acceptance does not imply merge. Merge was later separately authorized by `AUTHORIZE_ME0_MERGE` and executed as a squash merge on PR #47.
 
 Human-review exact head:
 
@@ -19,6 +19,10 @@ Human-review exact head:
 Formal D1–D16 review on that exact head: **16 / 16 PASS**.
 
 Human Acceptance Receipt: `docs/architecture/me0/ME0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json`
+
+Post-acceptance qualification: Run #331 = **SUCCESS**.
+
+Final pre-merge qualification on accepted head `1557cc2e3fa108d9ab8b0c5df54c24459d0d5ee8`: Run #332 = **SUCCESS**.
 
 ## D1 | First-principles coherence — PASS
 The ontology distinguishes research target, pricing physics, return mechanism, thesis and capital expression.
@@ -74,12 +78,16 @@ ME0 grants no target-price, weighting, sizing, buy/sell/hold, Registry admission
 
 ## Merge Decision
 
-Not authorized. Required future token:
-
 `AUTHORIZE_ME0_MERGE`
+
+PR #47 squash merge commit:
+
+`7be7d81028addfffec2120fc306cfdc4da32c51f`
+
+Merge Receipt: `docs/architecture/me0/ME0-MERGE-RECEIPT-v0.1.json`
 
 ## Current gate
 
-`ME0_POST_ACCEPTANCE_CI`
+`ME0_POST_MERGE_CI`
 
-Acceptance does not imply merge.
+No ME1–ME5, schema migration, Registry admission, runtime, portfolio sizing, trading or live-execution authority is implied by merge.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed validation for ME0 multi-engine ontology and acceptance lifecycle."""
+"""Fail-closed validation for ME0 multi-engine ontology and acceptance/merge lifecycle."""
 
 from __future__ import annotations
 
@@ -13,9 +13,12 @@ SUCCESSOR_MAP_PATH = ME0_DIR / "ME0-SEMANTIC-SUCCESSOR-MAP-v0.1.json"
 STATE_PATH = ME0_DIR / "ME0-STATE.json"
 REVIEW_CARD_PATH = ME0_DIR / "ME0-HUMAN-REVIEW-CARD-v0.1.md"
 ACCEPTANCE_RECEIPT_PATH = ME0_DIR / "ME0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+MERGE_RECEIPT_PATH = ME0_DIR / "ME0-MERGE-RECEIPT-v0.1.json"
 
 EXPECTED_STAGE = "ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE"
 ACCEPT_TOKEN = "ACCEPT_ME0_MULTI_ENGINE_INVESTMENT_ONTOLOGY_AUTHORITY_FREEZE"
+MERGE_TOKEN = "AUTHORIZE_ME0_MERGE"
+MERGE_COMMIT = "7be7d81028addfffec2120fc306cfdc4da32c51f"
 EXPECTED_ENGINES = {"ENG-C": "Compounding", "ENG-R": "Reflexive Repricing", "ENG-X": "Convexity"}
 EXPECTED_FUTURE_OBJECTS = {"EngineThesis", "PositionPassport", "AssetGraduationEvent", "BookState", "MetaAllocationResearchState"}
 EXPECTED_MIGRATIONS = {
@@ -96,17 +99,30 @@ def validate_acceptance_receipt(receipt: dict) -> None:
     require(ci.get("conclusion") == "success", "reviewed CI must be success")
     require(receipt.get("formal_review") == "16/16 PASS", "formal review must be 16/16 PASS")
     require(receipt.get("merge_authority") == "not_implied_by_acceptance", "acceptance cannot imply merge")
-    require(receipt.get("required_merge_token") == "AUTHORIZE_ME0_MERGE", "merge token mismatch")
-    boundaries = receipt.get("boundaries_preserved", {})
-    for key, value in boundaries.items():
-        require(value is False, f"acceptance boundary {key} must remain false")
+    require(receipt.get("required_merge_token") == MERGE_TOKEN, "merge token mismatch")
+    require(all(value is False for value in receipt.get("boundaries_preserved", {}).values()), "acceptance boundaries must remain false")
 
 
-def validate_state(state: dict, receipt: dict | None = None) -> None:
+def validate_merge_receipt(receipt: dict) -> None:
+    require(receipt.get("stage") == EXPECTED_STAGE, "merge receipt stage mismatch")
+    require(receipt.get("decision") == MERGE_TOKEN, "merge receipt authorization mismatch")
+    require(receipt.get("pr_number") == 47, "merge receipt PR mismatch")
+    require(receipt.get("merge_method") == "squash", "ME0 merge method must be squash")
+    require(receipt.get("accepted_head_sha") == "1557cc2e3fa108d9ab8b0c5df54c24459d0d5ee8", "merge receipt accepted head mismatch")
+    require(receipt.get("merge_commit") == MERGE_COMMIT, "merge commit mismatch")
+    require(receipt.get("human_acceptance_token") == ACCEPT_TOKEN, "merge receipt Human token mismatch")
+    require(receipt.get("merge_authorization_token") == MERGE_TOKEN, "merge token missing")
+    require(receipt.get("pre_merge_ci", {}).get("run_number") == 332, "pre-merge CI run mismatch")
+    require(receipt.get("pre_merge_ci", {}).get("conclusion") == "success", "pre-merge CI must be success")
+    require(all(value is False for value in receipt.get("boundaries_preserved", {}).values()), "merge cannot authorize deferred/runtime/trading scope")
+
+
+def validate_state(state: dict, acceptance: dict | None = None, merge: dict | None = None) -> None:
     require(state.get("stage") == EXPECTED_STAGE, "state stage mismatch")
     allowed = {
         "candidate_started", "candidate_ready_for_human_review",
         "human_accepted_pending_post_acceptance_ci", "human_accepted_ready_for_merge_authorization",
+        "human_accepted_merged_pending_post_merge_ci", "human_accepted_merged",
     }
     require(state.get("status") in allowed, "invalid ME0 lifecycle status")
     require(state.get("repository_base_sha") == "bd8931e1bf21dceb5e34a68ec41aa199b83e9410", "base SHA mismatch")
@@ -119,22 +135,36 @@ def validate_state(state: dict, receipt: dict | None = None) -> None:
     status = state["status"]
     if status == "candidate_started":
         require(human.get("decision") == "pending" and state.get("next_gate") == "ME0_MACHINE_QUALIFICATION", "candidate_started gate mismatch")
-    elif status == "candidate_ready_for_human_review":
+        return
+    if status == "candidate_ready_for_human_review":
         require(human.get("decision") == "pending" and state.get("next_gate") == "HUMAN_REVIEW", "human review candidate gate mismatch")
         require(state.get("machine_qualification", {}).get("decision") == "passed", "machine qualification required")
+        return
+
+    require(human.get("decision") == ACCEPT_TOKEN, "accepted state requires exact Human token")
+    require(acceptance is not None, "accepted state requires acceptance receipt")
+    validate_acceptance_receipt(acceptance)
+    require(state.get("required_merge_token") == MERGE_TOKEN, "required merge token mismatch")
+    require(state.get("next_me_stage_authorized") is False, "ME0 cannot authorize successor stages")
+
+    if status == "human_accepted_pending_post_acceptance_ci":
+        require(state.get("next_gate") == "ME0_POST_ACCEPTANCE_CI", "post-acceptance gate mismatch")
+        return
+    if status == "human_accepted_ready_for_merge_authorization":
+        require(state.get("post_acceptance_qualification", {}).get("conclusion") == "success", "post-acceptance qualification required")
+        require(state.get("next_gate") == "ME0_MERGE_AUTHORIZATION", "ready-for-merge gate mismatch")
+        return
+
+    require(merge is not None, "merged state requires merge receipt")
+    validate_merge_receipt(merge)
+    require(state.get("merge_authority") == MERGE_TOKEN, "merged state must record merge authority")
+    require(state.get("merge_commit") == MERGE_COMMIT, "merged state commit mismatch")
+    require(state.get("merge_receipt") == "docs/architecture/me0/ME0-MERGE-RECEIPT-v0.1.json", "merge receipt path mismatch")
+    if status == "human_accepted_merged_pending_post_merge_ci":
+        require(state.get("next_gate") == "ME0_POST_MERGE_CI", "post-merge gate mismatch")
     else:
-        require(human.get("decision") == ACCEPT_TOKEN, "accepted state requires exact Human token")
-        require(receipt is not None, "accepted state requires acceptance receipt")
-        validate_acceptance_receipt(receipt)
-        require(human.get("acceptance_receipt") == "docs/architecture/me0/ME0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json", "acceptance receipt path mismatch")
-        require(state.get("required_merge_token") == "AUTHORIZE_ME0_MERGE", "required merge token mismatch")
-        require(state.get("next_me_stage_authorized") is False, "acceptance cannot authorize next ME stage")
-        if status == "human_accepted_pending_post_acceptance_ci":
-            require(state.get("next_gate") == "ME0_POST_ACCEPTANCE_CI", "post-acceptance gate mismatch")
-        else:
-            q = state.get("post_acceptance_qualification", {})
-            require(q.get("conclusion") == "success", "post-acceptance qualification required")
-            require(state.get("next_gate") == "ME0_MERGE_AUTHORIZATION", "ready-for-merge gate mismatch")
+        require(state.get("post_merge_qualification", {}).get("conclusion") == "success", "post-merge qualification required")
+        require(state.get("next_gate") == "ME0_COMPLETE", "completed ME0 gate mismatch")
 
 
 def validate_review_card(text: str, accepted: bool) -> None:
@@ -162,11 +192,13 @@ def main() -> int:
     contract = load_json(CONTRACT_PATH)
     successor_map = load_json(SUCCESSOR_MAP_PATH)
     state = load_json(STATE_PATH)
-    accepted = state.get("status", "").startswith("human_accepted_")
-    receipt = load_json(ACCEPTANCE_RECEIPT_PATH) if accepted else None
+    accepted = "accepted" in state.get("status", "")
+    merged = "_merged" in state.get("status", "")
+    acceptance = load_json(ACCEPTANCE_RECEIPT_PATH) if accepted else None
+    merge = load_json(MERGE_RECEIPT_PATH) if merged else None
     validate_contract(contract)
     validate_successor_map(successor_map)
-    validate_state(state, receipt)
+    validate_state(state, acceptance, merge)
     validate_review_card(REVIEW_CARD_PATH.read_text(encoding="utf-8"), accepted)
     validate_historical_non_regression()
     print(f"me0_engines={len(contract['genesis_engine_set'])} state={state['status']} status=valid")
