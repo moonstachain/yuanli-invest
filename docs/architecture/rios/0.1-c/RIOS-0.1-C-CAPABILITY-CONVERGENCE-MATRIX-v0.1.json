@@ -1,0 +1,210 @@
+{
+  "matrix_id": "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1",
+  "stage": "RIOS_0_1_C_CAPABILITY_REGISTRY_MATERIALIZATION_GOVERNANCE_GATE",
+  "status": "pre_human_convergence_candidate",
+  "genesis_count": 10,
+  "classification_policy": "Every Genesis concept is classified exactly once as reuse, composite, profile, new_candidate, or reject. Physical pack presence is not active Registry authority.",
+  "rows": [
+    {
+      "genesis_id": "RIOS-GEN-01-AI-INFRASTRUCTURE-REGIME-TRANSITION",
+      "human_name": "AI Infrastructure Regime Transition",
+      "classification": "profile",
+      "canonical_capability_ids": [
+        "CAP-P-001-TECHNOLOGY-COST-CURVE",
+        "CAP-P-002-ADOPTION-ACCELERATION",
+        "CAP-XS-001-MARKET-SHARE-ACCELERATION",
+        "CAP-XS-002-BOTTLENECK-SCARCITY",
+        "CAP-N-001-NARRATIVE-VELOCITY",
+        "CAP-N-002-NARRATIVE-SATURATION",
+        "CAP-V-001-REVERSE-DCF-EXPECTATIONS"
+      ],
+      "candidate_capability_id": null,
+      "rationale": "AI infrastructure is a thematic application profile over existing paradigm, narrative, value-capture, and valuation mothers rather than a new reusable mother capability.",
+      "semantic_overlap_notes": "The concept combines deployability, adoption acceleration, bottleneck control, market-share concentration, narrative dynamics, and price-implied expectations. Theme identity must not replace those canonical mothers.",
+      "authority_boundary": "Profile classification creates no Registry admission, no Canon promotion, no benchmark execution, and no investment action authority.",
+      "registry_mutation_required": false,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-02-ENERGY-BOTTLENECK-CAPTURE",
+      "human_name": "Energy Bottleneck Capture",
+      "classification": "profile",
+      "canonical_capability_ids": [
+        "CAP-P-001-TECHNOLOGY-COST-CURVE",
+        "CAP-P-002-ADOPTION-ACCELERATION",
+        "CAP-XS-002-BOTTLENECK-SCARCITY"
+      ],
+      "candidate_capability_id": null,
+      "rationale": "Energy bottlenecks are a domain profile that instantiates deployability, adoption-pressure, and bottleneck-scarcity mothers against power, grid, fuel, and infrastructure observables.",
+      "semantic_overlap_notes": "The scarce-resource thesis is already represented by CAP-XS-002; the energy theme supplies context and observables, not a new mother identity.",
+      "authority_boundary": "Profile status does not admit a new capability and does not authorize commodity, equity, or infrastructure positioning.",
+      "registry_mutation_required": false,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-03-NARRATIVE-DIFFUSION-ENGINE",
+      "human_name": "Narrative Diffusion Engine",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-N-001-NARRATIVE-VELOCITY",
+        "CAP-N-002-NARRATIVE-SATURATION"
+      ],
+      "candidate_capability_id": null,
+      "rationale": "Narrative diffusion is already decomposed into marginal velocity/acceleration and saturation/reversal pressure; a composite orchestration is sufficient.",
+      "semantic_overlap_notes": "Creating a third narrative mother would duplicate the existing N decomposition instead of improving it.",
+      "authority_boundary": "Composite routing is research orchestration only; it does not create a scalar N score or trading signal.",
+      "registry_mutation_required": false,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-04-NARRATIVE-BUBBLE-DETECTION",
+      "human_name": "Narrative Bubble Detection",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-N-002-NARRATIVE-SATURATION",
+        "CAP-V-001-REVERSE-DCF-EXPECTATIONS",
+        "CAP-XA-002-EXTREME-REGIME-SHIFT"
+      ],
+      "candidate_capability_id": null,
+      "rationale": "Bubble detection requires joint evidence on consensus saturation, expectations embedded in price, and extreme-regime change; no single new mother is necessary at this stage.",
+      "semantic_overlap_notes": "The label is intentionally not a deterministic bubble classifier. It composes saturation, valuation expectations, and tail-regime evidence with falsifiers.",
+      "authority_boundary": "Composite output may describe disagreement and regime risk but cannot issue a bubble certainty, target price, sell signal, or timing instruction.",
+      "registry_mutation_required": false,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-05-PLATFORM-WINNER-CAPTURE",
+      "human_name": "Platform Winner Capture",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-XS-001-MARKET-SHARE-ACCELERATION",
+        "CAP-XS-002-BOTTLENECK-SCARCITY"
+      ],
+      "candidate_capability_id": null,
+      "rationale": "Winner concentration is already represented by market-share acceleration plus scarce bottleneck control; platform language is a reusable research lens, not a distinct mother capability.",
+      "semantic_overlap_notes": "Network effects and lock-in are already embedded in the theory lineage of CAP-XS-002, while realized concentration is observed through CAP-XS-001.",
+      "authority_boundary": "Composite evidence can support or falsify value-capture concentration; it cannot declare a guaranteed winner or portfolio allocation.",
+      "registry_mutation_required": false,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-06-CONVEXITY-EXPRESSION-ENGINE",
+      "human_name": "Convexity Expression Engine",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-XA-001-CONDITIONAL-TAIL-ACTIVATION",
+        "CAP-XA-002-EXTREME-REGIME-SHIFT",
+        "CAP-XP-001-PAYOFF-CONVEXITY-GEOMETRY"
+      ],
+      "candidate_capability_id": null,
+      "rationale": "Convexity expression is an orchestration of tail activation/regime evidence with payoff geometry, preserving the Xs/Xa/Xp separation rather than collapsing it into one score.",
+      "semantic_overlap_notes": "Xa addresses whether tail conditions are changing; Xp addresses instrument payoff geometry. Combining them is a workflow, not a new causal mother.",
+      "authority_boundary": "The composite may compare payoff geometry under declared scenarios but cannot recommend a trade, position size, target weight, or live execution.",
+      "registry_mutation_required": false,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-07-EVIDENCE-AUTHORITY-ENGINE",
+      "human_name": "Evidence Authority Engine",
+      "classification": "new_candidate",
+      "canonical_capability_ids": [],
+      "candidate_capability_id": "CAP-E-001-EVIDENCE-AUTHORITY-VALIDATION",
+      "rationale": "The existing active Capability Registry has no E-domain mother capability that reusable research workflows can call to validate claim authority against evidence authority.",
+      "semantic_overlap_notes": "Evidence governance exists across Theory, Evidence, validators, and project gates, but it is not yet represented as an active ResearchCapability identity.",
+      "semantic_gap_statement": "No active ResearchCapability currently returns a reusable epistemic-admissibility result that compares claim authority with evidence authority while preserving source provenance, contradiction coverage, uncertainty, and explicit falsifiers.",
+      "why_existing_mothers_are_insufficient": "P/N/X/V/S mothers answer investment-world questions about structure, belief, asymmetry, price, and survival. Repository validators enforce governance at build time, but they are not callable ResearchCapability identities that can evaluate an arbitrary research claim as part of an agent workflow. This leaves a genuine E-layer orchestration gap. The gap supports an identity candidate, not automatic Registry admission.",
+      "required_dependency_types": {
+        "theory_ids": [],
+        "hypothesis_ids": [],
+        "factor_ids": [],
+        "algorithm_ids": [],
+        "benchmark_ids": [],
+        "canonical_input_fields": []
+      },
+      "candidate_readiness": "identity_candidate_only",
+      "registry_readiness_note": "No candidate-specific governed Theory, Hypothesis, Factor/Algorithm, Benchmark, or CanonicalDataField bindings have yet been selected and validated. Stub dependencies are prohibited, so Registry apply remains deferred.",
+      "authority_boundary": "This is identity-candidate status only. No Registry object may be created before Human Review and separate Registry-apply authority, and no evidence score may be treated as investment truth.",
+      "registry_mutation_required": true,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-08-NARRATIVE-PRICE-GAP",
+      "human_name": "Narrative Price Gap",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-N-002-NARRATIVE-SATURATION",
+        "CAP-V-001-REVERSE-DCF-EXPECTATIONS"
+      ],
+      "candidate_capability_id": null,
+      "rationale": "Narrative-price divergence is a composite of consensus saturation and current governed price-implied-expectations analysis, not a target-price capability.",
+      "semantic_overlap_notes": "CAP-V-002-PRICE-IMPLIED-EXPECTATIONS physically exists as an R2.3 successor identity but is not in the current governed capability index. Until separately admitted, active authority remains CAP-V-001.",
+      "authority_boundary": "The composite reports expectation gaps and uncertainty only; target price, buy/sell language, and entry commands remain prohibited.",
+      "registry_mutation_required": false,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-09-PORTFOLIO-SURVIVAL-ENGINE",
+      "human_name": "Portfolio Survival Engine",
+      "classification": "composite",
+      "canonical_capability_ids": [
+        "CAP-S-001-RUIN-AND-EXPECTED-SHORTFALL",
+        "CAP-S-002-ROBUST-FRACTIONAL-KELLY"
+      ],
+      "candidate_capability_id": null,
+      "rationale": "Portfolio survival is already decomposed into ruin/expected-shortfall constraints and uncertainty-aware growth/survival research; orchestration is sufficient.",
+      "semantic_overlap_notes": "CAP-S-003-GROWTH-OPTIMAL-RISK-BUDGET-UNDER-UNCERTAINTY physically exists as a successor identity but is not active in the governed index and is therefore not used as canonical authority here.",
+      "authority_boundary": "The composite may diagnose survival constraints and uncertainty; it cannot issue recommended weights, position sizes, leverage, or broker actions.",
+      "registry_mutation_required": false,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    },
+    {
+      "genesis_id": "RIOS-GEN-10-MARKET-CLOCK-REGIME-TRANSITION",
+      "human_name": "Market Clock Regime Transition",
+      "classification": "new_candidate",
+      "canonical_capability_ids": [
+        "CAP-N-001-NARRATIVE-VELOCITY",
+        "CAP-N-002-NARRATIVE-SATURATION",
+        "CAP-V-001-REVERSE-DCF-EXPECTATIONS",
+        "CAP-XA-002-EXTREME-REGIME-SHIFT"
+      ],
+      "candidate_capability_id": "CAP-CROSS-002-MARKET-CLOCK-REGIME-TRANSITION",
+      "rationale": "The current active mothers cover narrative, valuation expectations, and tail-regime change, but do not yet encode a reusable cross-domain Liquidity × Earnings × Narrative transition contract.",
+      "semantic_overlap_notes": "This candidate is deliberately provisional. If Human Review finds that Market Clock can be fully expressed as orchestration over existing mothers, classification must be downgraded to composite and no CROSS identity admitted.",
+      "semantic_gap_statement": "The active Capability Registry has no mother that jointly represents directional changes and ordering across liquidity conditions, earnings revisions, and narrative diffusion as a cross-domain regime-transition object.",
+      "why_existing_mothers_are_insufficient": "N001/N002 describe narrative dynamics, V001 describes price-implied expectations, and XA002 describes extreme-regime evidence. None owns liquidity-state semantics, earnings-revision semantics, or the ordered interaction L → E → N / N → E / liquidity break that Market Clock claims to study. The missing coupling is therefore a plausible CROSS identity gap. However the current repository has not yet bound this identity to dedicated governed theories, hypotheses, factors/algorithms, benchmarks, or canonical L/E/N input fields, so the gap remains an identity candidate rather than a Registry-ready capability.",
+      "required_dependency_types": {
+        "theory_ids": [],
+        "hypothesis_ids": [],
+        "factor_ids": [],
+        "algorithm_ids": [],
+        "benchmark_ids": [],
+        "canonical_input_fields": []
+      },
+      "candidate_readiness": "identity_candidate_only",
+      "registry_readiness_note": "Existing N/V/Xa mothers can participate as orchestration dependencies, but ResearchCapability schema readiness requires direct governed Theory, Hypothesis, Factor/Algorithm, Benchmark, and CanonicalDataField bindings for the CROSS identity. Those bindings are not yet qualified and will not be manufactured in this task.",
+      "authority_boundary": "Candidate identity does not authorize timing calls, benchmark execution, runtime state changes, allocation, or trading. Registry apply remains separately governed.",
+      "registry_mutation_required": true,
+      "benchmark_execution_authorized": false,
+      "runtime_authorized": false,
+      "trading_authorized": false
+    }
+  ]
+}
