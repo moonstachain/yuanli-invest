@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:vnext-research-target:2.0.0",
+  "title": "ResearchTargetV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "target_id",
+    "schema_version",
+    "target_type",
+    "canonical_name",
+    "asset_form",
+    "active_status",
+    "created_at",
+    "authority"
+  ],
+  "properties": {
+    "target_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "2.0.0"},
+    "target_type": {"type": "string", "minLength": 1},
+    "target_type_extension": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "namespace": {"type": "string", "minLength": 1},
+        "authority_ref": {"type": "string", "minLength": 1}
+      },
+      "required": ["namespace", "authority_ref"]
+    },
+    "canonical_name": {"type": "string", "minLength": 1},
+    "asset_form": {"type": "string", "minLength": 1},
+    "primary_market": {"type": ["string", "null"]},
+    "currency": {"type": ["string", "null"]},
+    "identifiers": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
+    "active_status": {"enum": ["candidate", "active", "inactive", "archived"]},
+    "created_at": {"type": "string", "format": "date-time"},
+    "valid_from": {"type": ["string", "null"], "format": "date-time"},
+    "valid_to": {"type": ["string", "null"], "format": "date-time"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["thesis_authority", "capital_authority", "trading_authority"],
+      "properties": {
+        "thesis_authority": {"const": false},
+        "capital_authority": {"const": false},
+        "trading_authority": {"const": false}
+      }
+    }
+  }
+}

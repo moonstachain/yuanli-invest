@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:vnext-engine-thesis:1.0.0",
+  "title": "EngineThesis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["engine_thesis_id","schema_version","target_id","identity_core","research_contract","evidence","falsification","lifecycle","authority"],
+  "properties": {
+    "engine_thesis_id": {"type":"string","pattern":"^ET-[A-Z0-9-]+$"},
+    "schema_version": {"const":"1.0.0"},
+    "target_id": {"type":"string","minLength":1},
+    "identity_core": {
+      "type":"object","additionalProperties":false,
+      "required":["primary_engine","thesis_origin","opened_at"],
+      "properties": {
+        "primary_engine":{"type":"string","pattern":"^ENG-[A-Z0-9-]+$"},
+        "engine_authority_ref":{"type":["string","null"]},
+        "thesis_origin":{"type":"string","minLength":1},
+        "opened_at":{"type":"string","format":"date-time"}
+      }
+    },
+    "research_contract": {
+      "type":"object","additionalProperties":false,
+      "required":["source_of_return","time_horizon","thesis_statement","causal_mechanism","price_semantics"],
+      "properties": {
+        "source_of_return":{"type":"array","minItems":1,"items":{"type":"string","minLength":1},"uniqueItems":true},
+        "time_horizon":{"type":"string","minLength":1},
+        "thesis_statement":{"type":"string","minLength":1},
+        "causal_mechanism":{"type":"string","minLength":1},
+        "price_semantics":{"type":"string","minLength":1}
+      }
+    },
+    "evidence": {
+      "type":"object","additionalProperties":false,
+      "required":["supporting_refs","counter_refs","capability_output_refs","primitive_state_refs"],
+      "properties": {
+        "supporting_refs":{"type":"array","items":{"type":"string","minLength":1}},
+        "counter_refs":{"type":"array","items":{"type":"string","minLength":1}},
+        "capability_output_refs":{"type":"array","items":{"type":"string","minLength":1}},
+        "primitive_state_refs":{"type":"array","items":{"type":"string","minLength":1}},
+        "recorded_at":{"type":["string","null"],"format":"date-time"},
+        "known_as_of":{"type":["string","null"],"format":"date-time"},
+        "knowledge_cutoff":{"type":["string","null"],"format":"date-time"},
+        "replay_cutoff":{"type":["string","null"],"format":"date-time"}
+      }
+    },
+    "falsification": {
+      "type":"object","additionalProperties":false,
+      "required":["falsifier_refs","challenge_conditions"],
+      "properties": {
+        "falsifier_refs":{"type":"array","items":{"type":"string","minLength":1}},
+        "challenge_conditions":{"type":"array","items":{"type":"string","minLength":1}},
+        "invalidation_reason":{"type":["string","null"]},
+        "triggered_falsifier_refs":{"type":"array","items":{"type":"string","minLength":1}}
+      }
+    },
+    "lifecycle": {
+      "type":"object","additionalProperties":false,
+      "required":["status","revision","as_of","valid_from"],
+      "properties": {
+        "status":{"enum":["draft","researching","qualified","active","challenged","invalidated","closed","settled"]},
+        "revision":{"type":"integer","minimum":1},
+        "supersedes_revision":{"type":["integer","null"],"minimum":1},
+        "revision_reason":{"type":"string"},
+        "as_of":{"type":"string","format":"date-time"},
+        "valid_from":{"type":"string","format":"date-time"},
+        "valid_to":{"type":["string","null"],"format":"date-time"},
+        "closed_at":{"type":["string","null"],"format":"date-time"},
+        "settlement_ref":{"type":["string","null"]}
+      }
+    },
+    "authority": {
+      "type":"object","additionalProperties":false,
+      "required":["capital_authority","portfolio_weight_authority","trading_authority","live_execution_authority"],
+      "properties": {
+        "capital_authority":{"const":false},
+        "portfolio_weight_authority":{"const":false},
+        "trading_authority":{"const":false},
+        "live_execution_authority":{"const":false}
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:vnext-position-passport:1.0.0",
+  "title": "PositionPassport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["position_passport_id","schema_version","engine_thesis_id","target_id","primary_engine","expression","conditions","risk_contract","migration_policy","lifecycle","authority"],
+  "properties": {
+    "position_passport_id":{"type":"string","pattern":"^PP-[A-Z0-9-]+$"},
+    "schema_version":{"const":"1.0.0"},
+    "engine_thesis_id":{"type":"string","pattern":"^ET-[A-Z0-9-]+$"},
+    "target_id":{"type":"string","minLength":1},
+    "primary_engine":{"type":"string","pattern":"^ENG-[A-Z0-9-]+$"},
+    "expression": {
+      "type":"object","additionalProperties":false,
+      "required":["expression_type","instrument_ref","direction_semantics"],
+      "properties": {
+        "expression_type":{"type":"string","minLength":1},
+        "instrument_ref":{"type":"string","minLength":1},
+        "direction_semantics":{"type":"string","minLength":1}
+      }
+    },
+    "conditions": {
+      "type":"object","additionalProperties":false,
+      "required":["entry","add","hold","trim","exit"],
+      "properties": {
+        "entry":{"type":"string","minLength":1},
+        "add":{"type":"string","minLength":1},
+        "hold":{"type":"string","minLength":1},
+        "trim":{"type":"string","minLength":1},
+        "exit":{"type":"string","minLength":1}
+      }
+    },
+    "risk_contract": {
+      "type":"object","additionalProperties":false,
+      "required":["risk_budget_class","max_loss_semantics","path_risk_notes"],
+      "properties": {
+        "risk_budget_class":{"type":"string","minLength":1},
+        "max_loss_semantics":{"type":"string","minLength":1},
+        "path_risk_notes":{"type":"string"}
+      }
+    },
+    "falsifier_refs":{"type":"array","items":{"type":"string","minLength":1}},
+    "settlement_basis":{"type":["string","null"]},
+    "migration_policy": {
+      "type":"object","additionalProperties":false,
+      "required":["silent_migration_prohibited","graduation_allowed","governed_event_required"],
+      "properties": {
+        "silent_migration_prohibited":{"const":true},
+        "graduation_allowed":{"type":"boolean"},
+        "governed_event_required":{"const":true}
+      }
+    },
+    "lifecycle": {
+      "type":"object","additionalProperties":false,
+      "required":["status","created_at","as_of","valid_from"],
+      "properties": {
+        "status":{"enum":["draft","eligible","active","reduce_only","closed","cancelled","expired"]},
+        "created_at":{"type":"string","format":"date-time"},
+        "as_of":{"type":"string","format":"date-time"},
+        "valid_from":{"type":"string","format":"date-time"},
+        "valid_to":{"type":["string","null"],"format":"date-time"},
+        "closed_at":{"type":["string","null"],"format":"date-time"}
+      }
+    },
+    "authority": {
+      "type":"object","additionalProperties":false,
+      "required":["portfolio_weight_authority","position_sizing_authority","trade_execution_authority","live_execution_authority"],
+      "properties": {
+        "portfolio_weight_authority":{"const":false},
+        "position_sizing_authority":{"const":false},
+        "trade_execution_authority":{"const":false},
+        "live_execution_authority":{"const":false}
+      }
+    }
+  }
+}

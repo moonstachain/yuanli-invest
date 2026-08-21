@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.7.0",
+  "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
+  "status": "human_accepted_ready_for_merge_authorization",
+  "design_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN",
+  "human_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME",
+  "human_acceptance_reviewed_head_sha": "dc2c41b4499871336aafc62100a126ce8cab1475",
+  "human_acceptance_reviewed_run_number": 353,
+  "research_target_v2_successor_approved": true,
+  "implementation_authorities": {
+    "portfolio": false,
+    "position_sizing": false,
+    "trading": false,
+    "live_execution": false,
+    "registry_promotion": false,
+    "constitution_mutation": false,
+    "ME2": false,
+    "ME3": false,
+    "ME4": false,
+    "ME5": false
+  },
+  "migration": {
+    "M1_schema_parallel": "passed",
+    "M2_shadow_projection": "candidate_ready",
+    "M3_authority_cutover": "not_authorized"
+  },
+  "shadow_qualification": {
+    "targets": ["RT2-NVDA","RT2-GOLD","RT2-UST30Y","RT2-COPPER","RT2-USDJPY"],
+    "multi_thesis_proof_target": "RT2-NVDA",
+    "explicit_theses": ["ET-NVDA-C-001","ET-NVDA-R-001"],
+    "legacy_engine_assignments_remain_unresolved": true,
+    "book_membership_is_passport_specific": true
+  },
+  "machine_qualification": {
+    "validated_head_sha": "66d9478438d11c19ef86a3a96316f5553f042976",
+    "run_number": 352,
+    "run_id": 32510838152,
+    "contracts": "success",
+    "governance": "success",
+    "me1_validator": "success",
+    "unit_tests": "success"
+  },
+  "human_review_qualification": {
+    "validated_head_sha": "dc2c41b4499871336aafc62100a126ce8cab1475",
+    "run_number": 353,
+    "run_id": 32510936828,
+    "contracts": "success",
+    "governance": "success",
+    "me1_validator": "success",
+    "unit_tests": "success",
+    "formal_review": "13/13 PASS"
+  },
+  "post_acceptance_qualification": {
+    "validated_head_sha": "bec2adcd58dbdfbfa9ee5ec3be062737ccafe795",
+    "run_number": 357,
+    "run_id": 32511222134,
+    "contracts": "success",
+    "governance": "success",
+    "me1_validator": "success",
+    "unit_tests": "success"
+  },
+  "acceptance_closure_qualification": {
+    "validated_head_sha": "68f823e80228b08891dffdc920c3c2f3636fb0c8",
+    "run_number": 361,
+    "run_id": 32511438447,
+    "contracts": "success",
+    "governance": "success",
+    "me1_validator": "success",
+    "unit_tests": "success"
+  },
+  "acceptance_receipt": "docs/architecture/me1/ME1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+  "merge_authorized": false,
+  "next_gate": "ME1_MERGE_AUTHORIZATION",
+  "next_me_stage_authorized": false
+}
