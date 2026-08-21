@@ -1,0 +1,77 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
+  "status": "candidate_started",
+  "purpose": "Compile six Financial Mechanics candidates derived from Qin Xiaoming source seeds into the R2.3-B0 universal 11-block ResearchCapability contract without implementation, benchmark execution or Canon promotion.",
+  "upstream_dependency": {
+    "stage": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
+    "required_status": "accepted_merged",
+    "merge_commit": "838a436d77932d07888ef15d1f8e937666dd4c82",
+    "merge_receipt": "docs/architecture/r2_3b0/R2-3B0-MERGE-RECEIPT-v0.1.json",
+    "resolved": true
+  },
+  "source_provenance": "docs/architecture/qxm1/QXM1-SOURCE-PROVENANCE-v0.1.json",
+  "candidate_contracts": "docs/architecture/qxm1/QXM1-CANDIDATE-CONTRACTS-v0.1.json",
+  "architecture_note": "docs/architecture/qxm1/QXM1-FINANCIAL-MECHANICS-CAPABILITY-CANDIDATE-PACK-v0.1.md",
+  "candidate_count": 6,
+  "candidate_roles": {
+    "new_capability_candidates": [
+      "CAP-P-003-FUNDAMENTAL-DRIVER-DECOMPOSITION",
+      "CAP-P-004-THREE-STATEMENT-INTEGRITY-CASH-CONVERSION",
+      "CAP-S-004-STRESS-EXIT-LIQUIDITY",
+      "CAP-CROSS-001-RETURN-SOURCE-ATTRIBUTION"
+    ],
+    "existing_capability_profile_candidates": [
+      "CAP-R-01::QXM1-PROFILE-R-CREDIT-BALANCE-SHEET-TRANSMISSION",
+      "CAP-V-01::QXM1-PROFILE-V-OPPORTUNITY-COST-DISCOUNT-RATE-BRIDGE"
+    ]
+  },
+  "contract_architecture": {
+    "required_blocks": 11,
+    "canonical_output_root": "ResearchState",
+    "point_in_time_required": true,
+    "provider_independent_identity": true,
+    "invocation_envelope_required": true,
+    "research_receipt_required": true
+  },
+  "source_authority": {
+    "qin_material_role": "practitioner_teaching_source_and_internal_synthesis",
+    "primary_theory_authority": false,
+    "independent_empirical_evidence": false,
+    "primary_source_research_required_before_promotion": true
+  },
+  "constitutional_invariants": {
+    "new_human_worlds_added": false,
+    "r_remains_inside_p_capital": true,
+    "asset_form_is_not_pricing_model": true,
+    "x_semantics": "X := (Xs, Xa, Xp)",
+    "claim_authority_lte_evidence_authority": true,
+    "scalar_master_score_prohibited": true,
+    "research_pass_implies_capital_pass": false,
+    "target_price_authorized": false,
+    "recommended_weight_authorized": false,
+    "position_size_authorized": false,
+    "trading_action_authorized": false,
+    "live_execution": false
+  },
+  "machine_qualification": null,
+  "human_gate": {
+    "token": "ACCEPT_QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
+    "decision": "pending",
+    "acceptance_does_not_imply_implementation": true,
+    "acceptance_does_not_imply_promotion": true
+  },
+  "non_goals": {
+    "registry_admission": false,
+    "capability_implementation": false,
+    "benchmark_execution": false,
+    "shadow_qualification": false,
+    "canon_promotion": false,
+    "wind_codex_production_runtime": false,
+    "evidence_outcome_admission": false,
+    "a9_switch": false,
+    "rsi_promotion": false,
+    "trading_or_portfolio_action": false
+  },
+  "next_gate": "QXM1_MACHINE_QUALIFICATION"
+}
