@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.3.0",
+  "schema_version": "0.4.0",
   "stage": "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
-  "status": "mechanism_compilation_complete",
+  "status": "shadow_admission_ready_for_human_review",
   "upstream_dependency": {
     "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
     "required_status": "accepted_merged",
@@ -38,7 +38,17 @@
     "shadow_hypothesis_status": "proposed_only",
     "formal_benchmark_status": "not_created"
   },
-  "machine_qualification": null,
+  "machine_qualification": {
+    "validated_head_sha": "706374a88252951bb48cb196f73a51c3662c4051",
+    "workflow": "repository-gates",
+    "run_number": 214,
+    "run_id": 32461641441,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "qxm2_evidence_hardening": "success",
+    "unit_tests": "success"
+  },
   "admission_authority": "none",
   "hypothesis_preregistration_authority": "none",
   "formal_benchmark_creation_authority": "none",
@@ -48,5 +58,5 @@
     "token": "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
     "decision": "pending"
   },
-  "next_gate": "QXM2_MACHINE_QUALIFICATION"
+  "next_gate": "QXM2_HUMAN_REVIEW"
 }
