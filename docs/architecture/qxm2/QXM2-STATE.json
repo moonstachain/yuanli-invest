@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.0",
   "stage": "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
-  "status": "source_verification_complete",
+  "status": "mechanism_compilation_complete",
   "upstream_dependency": {
     "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
     "required_status": "accepted_merged",
@@ -25,6 +25,20 @@
     "support_and_boundary_coverage_required": true,
     "replication_status_required": true
   },
+  "mechanism_compilation": {
+    "status": "complete",
+    "claim_crosswalk": "docs/architecture/qxm2/QXM2-CLAIM-MECHANISM-CROSSWALK-v0.1.json",
+    "claim_count": 24,
+    "shadow_theory_objects": "docs/architecture/qxm2/QXM2-SHADOW-THEORY-OBJECTS-v0.1.json",
+    "shadow_theory_count": 12,
+    "shadow_hypothesis_objects": "docs/architecture/qxm2/QXM2-SHADOW-HYPOTHESIS-OBJECTS-v0.1.json",
+    "shadow_hypothesis_count": 12,
+    "benchmark_seeds": "docs/architecture/qxm2/QXM2-BENCHMARK-SEEDS-v0.1.json",
+    "benchmark_seed_count": 6,
+    "shadow_hypothesis_status": "proposed_only",
+    "formal_benchmark_status": "not_created"
+  },
+  "machine_qualification": null,
   "admission_authority": "none",
   "hypothesis_preregistration_authority": "none",
   "formal_benchmark_creation_authority": "none",
@@ -34,5 +48,5 @@
     "token": "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
     "decision": "pending"
   },
-  "next_gate": "QXM2_MECHANISM_COMPILATION"
+  "next_gate": "QXM2_MACHINE_QUALIFICATION"
 }
