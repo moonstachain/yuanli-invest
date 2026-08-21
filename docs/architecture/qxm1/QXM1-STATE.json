@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.0",
   "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
-  "status": "candidate_ready_for_human_review",
+  "status": "human_accepted_pending_post_acceptance_ci",
   "purpose": "Compile six Financial Mechanics candidates derived from Qin Xiaoming source seeds into the R2.3-B0 universal 11-block ResearchCapability contract without implementation, benchmark execution or Canon promotion.",
   "upstream_dependency": {
     "stage": "R2_3B0_CAPABILITY_CONTRACT_ARCHITECTURE_FREEZE",
@@ -14,6 +14,7 @@
   "source_provenance": "docs/architecture/qxm1/QXM1-SOURCE-PROVENANCE-v0.1.json",
   "candidate_contracts": "docs/architecture/qxm1/QXM1-CANDIDATE-CONTRACTS-v0.1.json",
   "architecture_note": "docs/architecture/qxm1/QXM1-FINANCIAL-MECHANICS-CAPABILITY-CANDIDATE-PACK-v0.1.md",
+  "human_review_card": "docs/architecture/qxm1/QXM1-HUMAN-REVIEW-CARD-v0.1.md",
   "candidate_count": 6,
   "candidate_roles": {
     "new_capability_candidates": [
@@ -66,12 +67,32 @@
     "qxm1_candidate_pack": "success",
     "unit_tests": "success"
   },
+  "human_review_qualification": {
+    "validated_head_sha": "0b2ae99f3d5b38946e55cc600eb774831075e306",
+    "workflow": "repository-gates",
+    "run_number": 173,
+    "run_id": 32439720306,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "qxm1_candidate_pack": "success",
+    "unit_tests": "success"
+  },
   "human_gate": {
     "token": "ACCEPT_QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
-    "decision": "pending",
+    "decision": "ACCEPT_QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
+    "accepted_at": "2026-08-20T23:26:00-03:00",
+    "acceptance_receipt": "docs/architecture/qxm1/QXM1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+    "reviewed_head_sha": "0b2ae99f3d5b38946e55cc600eb774831075e306",
+    "reviewed_ci_run": 173,
     "acceptance_does_not_imply_implementation": true,
-    "acceptance_does_not_imply_promotion": true
+    "acceptance_does_not_imply_promotion": true,
+    "acceptance_does_not_imply_merge": true
   },
+  "post_acceptance_qualification": null,
+  "post_acceptance_ci_required": true,
+  "post_acceptance_ci_satisfied": false,
+  "merge_authority": "not_implied_by_acceptance",
   "non_goals": {
     "registry_admission": false,
     "capability_implementation": false,
@@ -84,5 +105,5 @@
     "rsi_promotion": false,
     "trading_or_portfolio_action": false
   },
-  "next_gate": "QXM1_HUMAN_REVIEW"
+  "next_gate": "QXM1_POST_ACCEPTANCE_CI"
 }
