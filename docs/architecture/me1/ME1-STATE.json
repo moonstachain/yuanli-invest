@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.4.0",
+  "schema_version": "0.5.0",
   "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
-  "status": "human_accepted_pending_post_acceptance_ci",
+  "status": "human_accepted_ready_for_merge_authorization",
   "design_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN",
   "human_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME",
   "human_acceptance_reviewed_head_sha": "dc2c41b4499871336aafc62100a126ce8cab1475",
@@ -52,8 +52,18 @@
     "unit_tests": "success",
     "formal_review": "13/13 PASS"
   },
+  "post_acceptance_qualification": {
+    "validated_head_sha": "bec2adcd58dbdfbfa9ee5ec3be062737ccafe795",
+    "workflow": "repository-gates",
+    "run_number": 357,
+    "run_id": 32511222134,
+    "contracts": "success",
+    "governance": "success",
+    "me1_validator": "success",
+    "unit_tests": "success"
+  },
   "acceptance_receipt": "docs/architecture/me1/ME1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
   "merge_authorized": false,
-  "next_gate": "ME1_POST_ACCEPTANCE_CI",
+  "next_gate": "ME1_MERGE_AUTHORIZATION",
   "next_me_stage_authorized": false
 }
