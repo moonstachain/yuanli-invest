@@ -252,8 +252,9 @@ class RIOS01CBootstrapTests(unittest.TestCase):
         self.assertEqual(result["replay_pass_claims"], 0)
         self.assertEqual(result["registry_mutations"], 0)
 
-    @unittest.expectedFailure
     def test_task4_new_candidates_have_semantic_gap_hardening(self):
+        module = load_validator_module()
+        self.assertTrue(hasattr(module, "validate_candidate_readiness"))
         matrix = json.loads(MATRIX.read_text(encoding="utf-8"))
         candidates = [row for row in matrix["rows"] if row["classification"] == "new_candidate"]
         self.assertEqual(len(candidates), 2)
@@ -263,6 +264,33 @@ class RIOS01CBootstrapTests(unittest.TestCase):
                 row["candidate_readiness"],
                 {"identity_candidate_only", "schema_dependencies_complete_candidate", "not_justified"},
             )
+            result = module.validate_candidate_readiness(ROOT, row)
+            self.assertEqual(result["candidate_readiness"], row["candidate_readiness"])
+            if row["candidate_readiness"] == "schema_dependencies_complete_candidate":
+                self.assertTrue(result["schema_dependencies_complete"])
+            else:
+                self.assertFalse(result["registry_apply_ready"])
+
+    def test_task4_incomplete_dependencies_cannot_claim_schema_ready(self):
+        module = load_validator_module()
+        bad = {
+            "genesis_id": "RIOS-GEN-TEST",
+            "classification": "new_candidate",
+            "candidate_capability_id": "CAP-E-999-TEST",
+            "semantic_gap_statement": "test gap",
+            "why_existing_mothers_are_insufficient": "test insufficiency",
+            "required_dependency_types": {
+                "theory_ids": [],
+                "hypothesis_ids": [],
+                "factor_ids": [],
+                "algorithm_ids": [],
+                "benchmark_ids": [],
+                "canonical_input_fields": [],
+            },
+            "candidate_readiness": "schema_dependencies_complete_candidate",
+        }
+        with self.assertRaises(AssertionError):
+            module.validate_candidate_readiness(ROOT, bad)
 
 
 if __name__ == "__main__":
