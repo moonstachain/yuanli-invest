@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.2.0",
+  "stage": "R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+  "reason": "main advanced in parallel through QXM1/QXM2/YIP0 after the original B1 Human Review",
+  "superseded_pr": 25,
+  "refresh_pr": 43,
+  "original_reviewed_head_sha": "35ef440055f676a049c959267886ebb5a6426237",
+  "original_reviewed_ci": {
+    "run_number": 148,
+    "run_id": 32368829541,
+    "conclusion": "success"
+  },
+  "human_acceptance_token": "ACCEPT_R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+  "refresh_base_main_sha": "f26fee209e0f5582d3c650b803a6c277da00d180",
+  "refresh_qualification": {
+    "validated_head_sha": "bd4cce348fd8091a099be6416c6741b8f2a0c02f",
+    "workflow": "repository-gates",
+    "run_number": 277,
+    "run_id": 32471919997,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "b1_specification": "success",
+    "qxm1": "success",
+    "qxm2": "success",
+    "yip0": "success",
+    "unit_tests": "success"
+  },
+  "semantic_preservation": {
+    "stable_questions_changed": false,
+    "p0_spec_blobs_preserved": true,
+    "human_acceptance_receipt_preserved": true,
+    "b2_authorization_preserved": true,
+    "global_canon_projection_overridden": false,
+    "parallel_main_tracks_preserved": ["QXM1", "QXM2", "YIP0"]
+  },
+  "current_main_files_intentionally_preserved": [
+    "scripts/build_canon_status.py",
+    "docs/architecture/CANON-STATUS.json",
+    "scripts/validate_r2_3b0_contract_architecture.py",
+    "docs/architecture/r2_3b0/R2-3B0-STATE.json"
+  ],
+  "next_gate_after_state_record": "R2_3B1_MERGE",
+  "merge_authority": "not_implied_by_acceptance"
+}

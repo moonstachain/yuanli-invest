@@ -1,0 +1,109 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+  "identity": {
+    "capability_id": "CAP-V-01",
+    "name": "Price-Implied Expectations",
+    "contract_version": "0.1.0",
+    "stable_question": "What future state or operating assumptions are already embedded in current price?",
+    "semantic_parent": "V",
+    "maturity_state": "specified",
+    "owner_scope": "Research OS"
+  },
+  "scope_routing": {
+    "asset_forms": ["equity", "sovereign_rates", "credit", "commodity", "FX", "monetary_asset", "crypto", "derivative"],
+    "pricing_archetypes": ["growth", "compounder", "cyclical", "duration", "scarcity", "event_optionality"],
+    "authority_levels": ["L0", "L1", "L2", "L3", "L4"],
+    "router_dependencies": ["A0_asset_form", "A1_pricing_archetype"],
+    "model_router_rule": "select inverse-pricing family by dominant pricing physics; never by sector label alone"
+  },
+  "theory_causal_mechanism": {
+    "theory_ids": ["PRESENT_VALUE", "EXPECTATIONS_HYPOTHESIS", "TERM_STRUCTURE", "NO_ARBITRAGE_FORWARD_PRICING", "OPTION_IMPLIED_DISTRIBUTION", "SCARCITY_CARRY_PRICING"],
+    "hypothesis_ids": ["H-V-IMPLIED-OPERATING", "H-V-IMPLIED-POLICY", "H-V-IMPLIED-DEFAULT", "H-V-IMPLIED-SCARCITY", "H-V-IMPLIED-CARRY", "H-V-IMPLIED-MONETARY", "H-V-IMPLIED-VOL"],
+    "causal_mechanism": "Observed price constrains a set of future states consistent with the relevant asset-pricing identity; inversion recovers implied parameter regions subject to model assumptions and identification limits.",
+    "assumptions": ["pricing identity appropriate to routed asset", "inputs are PIT consistent", "model uncertainty is explicit", "inverse problem may be under-identified"],
+    "competing_mechanisms": ["multiple_parameter_combinations", "liquidity_premium", "risk_premium_shift", "technical_flow", "model_misspecification"],
+    "claim_boundary": "An implied assumption is not a forecast and is not evidence that the market is correct."
+  },
+  "evidence": {
+    "evidence_policy": "price_and_model_inputs_must_share_as_of_semantics",
+    "minimum_evidence_authority": "observable price/curve plus auditable canonical model inputs",
+    "claim_types": ["event_fact", "mechanism_hypothesis", "expectation_interpretation", "asset_attribution"],
+    "source_requirements": ["timestamped_price", "PIT_fundamental_or_curve_inputs", "revision_metadata_when_applicable", "model_assumption_lineage"],
+    "as_of_required": true,
+    "point_in_time_required": true,
+    "evidence_cutoff_required": true,
+    "falsifier_required": true
+  },
+  "input": {
+    "canonical_input_fields": ["market_price_or_curve", "discounting_state", "cashflow_or_payoff_state", "forward_or_carry_state", "risk_premium_assumptions", "asset_specific_state_variables"],
+    "economic_definitions": "asset-specific canonical definitions separate from provider mappings",
+    "units": "asset_specific",
+    "frequency": "price_frequency_with_PIT_input_alignment",
+    "publication_lag": "explicit_for_nonprice_inputs",
+    "revision_semantics": "retain original vintages for replay",
+    "missingness_policy": "underidentified_or_fail_closed",
+    "allowed_transformations": ["discounting", "curve_bootstrap", "scenario_inversion", "sensitivity_analysis", "surface_interpolation_with_guardrails"]
+  },
+  "inference": {
+    "algorithm_families": ["reverse_dcf", "implied_operating_assumptions", "implied_policy_path", "inflation_term_premium_decomposition", "implied_default_spread_recovery", "futures_curve", "scarcity_marginal_cost", "forward_rate_differential", "carry", "real_rate_monetary_risk", "reserve_demand_interpretation", "implied_volatility_surface", "skew_term_structure", "implied_distribution", "network_liquidity_scarcity_scenario"],
+    "identification_assumptions": ["inverse solution may be nonunique", "risk premia and expectations can be observationally equivalent", "parameter restrictions must be disclosed"],
+    "state_transition_logic": "compare current implied parameter region with prior PIT region and explicit scenario families",
+    "uncertainty_representation": ["identification_status", "parameter_region", "sensitivity_map", "model_disagreement", "assumption_dependence"],
+    "simpler_baselines": ["historical_multiple", "yield_or_spread_percentile", "simple_forward_carry"],
+    "known_failure_modes": ["underidentification", "risk_premium_expectation_confounding", "stale_fundamentals", "curve_microstructure_noise", "nonstationary_terminal_assumptions", "option_surface_sparse_data"]
+  },
+  "output": {
+    "state_type": "PriceImpliedExpectationState",
+    "state_dimensions": ["model_family", "implied_parameters", "scenario_mapping", "identification_status", "identification_caveats", "sensitivity_map"],
+    "uncertainty_semantics": "identified_region_preferred_over_fake_point_precision",
+    "evidence_refs": "required",
+    "as_of": "required",
+    "degrade_state": ["valid", "underidentified", "insufficient_evidence", "research_only", "stale", "unsupported"],
+    "downstream_dependencies": ["N", "Xa", "Xp", "S"],
+    "prohibited_outputs": ["target_price", "canonical_upside_percentage", "recommended_weight", "position_size", "buy_sell_hold"]
+  },
+  "asset_model_families": {
+    "equity": ["reverse_dcf", "implied_operating_assumptions"],
+    "sovereign_rates": ["implied_policy_path", "inflation_term_premium_decomposition"],
+    "credit": ["implied_default_spread_recovery"],
+    "commodity": ["futures_curve", "scarcity_marginal_cost"],
+    "FX": ["forward_rate_differential", "carry"],
+    "monetary_asset": ["real_rate_monetary_risk", "reserve_demand_interpretation"],
+    "derivative": ["implied_volatility_surface", "skew_term_structure", "implied_distribution"],
+    "crypto": ["network_liquidity_scarcity_scenario"]
+  },
+  "falsification_failure": {
+    "falsification_rules": ["implied region inconsistent with pricing identity under declared assumptions", "subsequent audit reveals input not available at as_of", "identification caveat hidden by point estimate"],
+    "revision_triggers": ["material price move", "material input revision", "pricing-archetype switch", "expectation-regime break", "model-family disagreement"],
+    "known_failure_regimes": ["market_dislocation", "illiquid_curve", "nonfundamental_flow_dominance", "structural_accounting_change", "option_surface_break"],
+    "degrade_behavior": "expand parameter region, mark underidentified, or fail closed",
+    "fail_closed_states": ["underidentified", "insufficient_evidence", "research_only", "stale", "unsupported"]
+  },
+  "benchmark_qualification": {
+    "simpler_baselines": ["historical_multiple", "yield_or_spread_percentile", "simple_forward_carry"],
+    "point_in_time_split_policy": "mandatory",
+    "oos_policy": "walk_forward_or_predeclared_holdout",
+    "regime_holdout": "mandatory",
+    "false_alarm_accounting": "mandatory_for_implied_state_breaks",
+    "calibration_requirement": "required_for_probabilistic_or_distributional_outputs",
+    "multiple_testing_policy": "required_for_model_family_selection",
+    "complexity_penalty": "demote if inversion adds no stable information over simple baseline",
+    "failure_receipts": "mandatory"
+  },
+  "settlement_learning": {
+    "settlement_horizon": ["1m", "3m", "6m", "12m_when_asset_physics_requires"],
+    "settlement_observables": ["realized_operating_state", "realized_policy_path", "realized_inflation_term_premium", "realized_default_recovery", "realized_curve_scarcity_state", "realized_rate_differential", "realized_real_rate_reserve_state", "realized_volatility_distribution"],
+    "settlement_rule": "settle extraction quality and whether reality moved toward/away from the implied state; do not score target-price accuracy",
+    "replay_policy": "point_in_time_only_with_original_price_and_input_vintages",
+    "revision_rule": "revise identification restrictions/model router or demote complexity when repeated settlement fails"
+  },
+  "runtime_receipt_governance": {
+    "invocation_envelope_required": true,
+    "research_receipt_required": true,
+    "research_pass_implies_capital_pass": false,
+    "implementation_authority": "not_authorized_in_B1",
+    "promotion_authority": "none",
+    "execution_authority": "none"
+  }
+}

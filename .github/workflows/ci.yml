@@ -35,6 +35,7 @@ jobs:
       - run: python scripts/validate_r2_3a_architecture.py
       - run: python scripts/validate_r2_3a_cross_asset_stress.py
       - run: python scripts/validate_r2_3b0_contract_architecture.py
+      - run: python scripts/validate_r2_3b1_p0_specs.py
       - run: python scripts/validate_qxm1_candidate_pack.py
       - run: python scripts/validate_qxm2_evidence_hardening.py
       - run: python scripts/validate_qxm2_post_merge_closure.py
