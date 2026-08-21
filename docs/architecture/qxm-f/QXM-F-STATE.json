@@ -46,7 +46,7 @@
     "required_merge_token": "AUTHORIZE_QXM_F_G1_MERGE",
     "next_gate": "QXM_F_G1_MERGE"
   },
-  "identity_settlement": "g1_human_accepted_registry_applied_pending_merge",
+  "identity_settlement": "candidate_dispositions_complete_human_pending",
   "reality_settlement": "not_started",
   "learning_settlement": "not_started",
   "registry_admission_authority": "none",
