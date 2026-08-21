@@ -30,18 +30,7 @@ Post-acceptance qualification head:
 
 `repository-gates` Run #176 (`32439955420`) = **SUCCESS**.
 
-Merge-gate exact-head qualification before this review-card projection update:
-
-`68f9043c1963e958afe4ef08fe407a0388dda31f`
-
-`repository-gates` Run #178 (`32440072834`) = **SUCCESS**.
-
-All cited qualification runs report:
-
-- contracts = success
-- governance = success
-- QXM1 candidate-pack validator = success
-- unit tests = success
+All recorded qualification runs report contracts, governance, QXM1 candidate-pack validator and unit tests as success. Later exact-head CI remains an external Git runtime fact and is not recursively written into this immutable review decision.
 
 Human Acceptance Receipt: `docs/architecture/qxm1/QXM1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json`
 
@@ -66,115 +55,51 @@ Human decision: **ACCEPT** — through four new candidate identities and two pro
 
 ## D1 | Universal 11-block contract — PASS
 
-Each of the six objects contains all frozen R2.3-B0 blocks:
-
-1. Identity + stable question
-2. Scope + A0/A1 routing
-3. Theory + causal mechanism
-4. Evidence + PIT policy
-5. Provider-independent input contract
-6. Inference / identification contract
-7. Typed `ResearchState` output
-8. Falsification / failure / fail-closed behavior
-9. Benchmark / qualification
-10. Settlement / replay / revision
-11. `InvocationEnvelope` + `ResearchReceipt` + governance
+Each of the six objects contains all frozen R2.3-B0 blocks: Identity, Scope/Routing, Theory/Mechanism, Evidence/PIT, provider-independent Input, Inference/Identification, typed `ResearchState`, Falsification/Failure, Benchmark/Qualification, Settlement/Learning and `InvocationEnvelope` / `ResearchReceipt` / Governance.
 
 ## D2 | Ontology preservation — PASS
 
-QXM1 adds zero top-level human worlds.
-
-- `P.capital / P.asset` remain intact.
-- Credit mechanics remain a profile of `CAP-R-01`.
-- `R` remains typed machine decomposition/context for `P.capital`, not a fourth world.
-- `X := (Xs, Xa, Xp)` remains unchanged.
-- `E / V / S` semantics remain unchanged.
+QXM1 adds zero top-level human worlds. `P.capital / P.asset` remain intact; Credit remains a profile of `CAP-R-01`; `R` remains inside `P.capital`; `X := (Xs, Xa, Xp)` and `E / V / S` semantics remain unchanged.
 
 ## D3 | Fundamental Driver Decomposition — PASS
 
-The candidate decomposes business reality from economically primitive drivers toward reported outcomes:
-
 `demand -> penetration/share -> volume -> price/mix -> revenue -> unit cost/margin -> opex -> reinvestment/working capital -> FCF`.
 
-Arithmetic identities, observed facts and hypothesized causal edges remain distinct.
-
-Hard boundary: reported KPI correlation is not causal identification.
+Arithmetic identities, observed facts and hypothesized causal edges remain distinct. KPI correlation is not causal identification.
 
 ## D4 | Three-Statement Integrity — PASS
 
 The candidate separates stock/flow and reconciles earnings, balance-sheet changes, cash conversion, working-capital absorption, capitalization and external financing dependence.
 
-Hard boundary:
-
-> A reconciliation anomaly is not proof of fraud, manipulation or insolvency.
+A reconciliation anomaly is not proof of fraud, manipulation or insolvency.
 
 ## D5 | Credit / balance-sheet profile — PASS
 
-The profile studies sector credit creation, debt-service burden, intermediary funding, refinancing and policy offset within `CAP-R-01`.
-
-It rejects aggregate credit correlation as causal proof and requires PIT macro vintages.
+The profile studies sector credit creation, debt-service burden, intermediary funding, refinancing and policy offset within `CAP-R-01`; aggregate credit correlation is not causal proof and PIT macro vintages are required.
 
 ## D6 | Opportunity-cost / discount-rate profile — PASS
 
-The profile preserves `CAP-V-01 | Price-Implied Expectations` as mother identity.
-
-It permits different model families by asset/pricing archetype:
-
-- reverse DCF;
-- implied policy path;
-- spread / term-premium decomposition;
-- forward / carry;
-- real-rate / monetary-premium decomposition;
-- implied-volatility surfaces.
-
-Invariant:
-
-> **Asset form is not pricing model.**
+`CAP-V-01 | Price-Implied Expectations` remains the mother identity, with asset-routed model families. **Asset form is not pricing model.**
 
 ## D7 | Stress Exit Liquidity — PASS
 
-Liquidity is the ability to reduce or exit risk within the required horizon near economically defensible value, not merely the existence of a quote.
-
-The state separates normal/stress exit horizon, fair-value haircut, market impact, funding gap, settlement risk and unobservable components.
-
-Hard boundary: no recommended weight or position size.
+Liquidity means the ability to reduce or exit risk within the required horizon near economically defensible value, not merely the existence of a quote. No recommended weight or position-size authority is introduced.
 
 ## D8 | Return Source Attribution — PASS
 
-QXM1 converts HPR from a final outcome identity into a FutureSettlement learning object.
-
-It separates cash-flow/carry realization, fundamental revision, discount-rate/valuation revision, narrative/expectation repricing, FX, instrument geometry, benchmark/common component and unresolved residual.
-
-Arithmetic attribution does not self-promote into causal attribution.
+HPR becomes a FutureSettlement learning object. Arithmetic attribution does not self-promote into causal attribution; profitable outcomes do not automatically validate the thesis.
 
 ## D9 | Source authority — PASS
 
-Qin Xiaoming course transcripts and internal synthesis remain `practitioner_teaching_source` / `research_synthesis`.
-
-They can seed questions, decompositions, mechanism hypotheses and observables, but cannot self-promote into primary TheoryObject authority, independent empirical evidence, causal proof, live market fact, benchmark result or trading authority.
+Qin Xiaoming transcripts and internal synthesis remain `practitioner_teaching_source` / `research_synthesis`, not primary TheoryObject authority, independent empirical evidence, causal proof, live market fact, benchmark result or trading authority.
 
 ## D10 | Benchmark / settlement discipline — PASS
 
-Every candidate contains simpler baselines, PIT/OOS policy, failure receipts, settlement observables and revision rules. No benchmark PASS or empirical validation is claimed by QXM1.
+Each candidate contains simpler baselines, PIT/OOS policy, failure receipts, settlement observables and revision rules. No benchmark PASS or empirical validation is claimed by QXM1.
 
 ## D11 | Governance boundary — PASS
 
-Acceptance does not imply:
-
-- Registry admission;
-- implementation;
-- benchmark execution/PASS;
-- Shadow qualification;
-- Canon promotion;
-- Wind/Codex production runtime;
-- Evidence/Outcome admission;
-- A9 switch;
-- RSI promotion;
-- target price;
-- recommended weight or position size;
-- buy/sell/hold;
-- live execution;
-- merge authority.
+Acceptance does not imply Registry admission, implementation, benchmark execution/PASS, Shadow qualification, Canon promotion, Wind/Codex production runtime, Evidence/Outcome admission, A9 switch, RSI promotion, target price, recommended weight/position size, buy/sell/hold, live execution or merge authority.
 
 ## Human Decision
 
