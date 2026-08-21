@@ -14,6 +14,8 @@ QXM_F = ROOT / "docs" / "architecture" / "qxm-f"
 STATE = QXM_F / "QXM-F-STATE.json"
 QXM2_STATE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-STATE.json"
 QXM2_RECEIPT = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-MERGE-RECEIPT-v0.1.json"
+QXM2_EVIDENCE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json"
+QXM2_COUNT_RECONCILIATION = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json"
 REGISTRY_INDEX = ROOT / "registry" / "registry-index.json"
 SPEC = ROOT / "docs" / "superpowers" / "specs" / "2026-08-21-qxm-f-financial-mechanics-capability-closure-design.md"
 PLAN = ROOT / "docs" / "superpowers" / "plans" / "2026-08-21-qxm-f-financial-mechanics-capability-closure.md"
@@ -142,6 +144,53 @@ def assert_registry_counts_consistent(root: Path) -> None:
         assert subindex["object_type"] == item["object_type"], item["name"]
 
 
+def validate_qxm2_evidence_count_reconciliation(root: Path, qxm2_state) -> None:
+    evidence_path = root / "docs" / "architecture" / "qxm2" / "QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json"
+    reconciliation_path = root / "docs" / "architecture" / "qxm2" / "QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json"
+    evidence = load_json(evidence_path)
+    declared = evidence["relation_count"]
+    actual = len(evidence["relations"])
+
+    if declared == actual:
+        assert qxm2_state["evidence_compilation"]["relation_count"] == actual
+        return
+
+    assert reconciliation_path.exists(), "unreconciled QXM2 evidence relation_count drift"
+    reconciliation = load_json(reconciliation_path)
+    require_fields(
+        reconciliation,
+        [
+            "reconciliation_type", "stale_declared_relation_count", "actual_relation_array_count",
+            "corrected_authoritative_relation_count", "original_merge_receipt_rewritten",
+            "semantic_evidence_objects_changed", "relation_array_changed",
+            "source_or_claim_authority_changed", "human_acceptance_scope_changed",
+        ],
+        "QXM2 evidence count reconciliation",
+    )
+    assert reconciliation["reconciliation_type"] == "evidence_relation_count_metadata_drift"
+    assert reconciliation["stale_declared_relation_count"] == declared
+    assert reconciliation["actual_relation_array_count"] == actual
+    assert reconciliation["corrected_authoritative_relation_count"] == actual
+    assert reconciliation["original_merge_receipt_recorded_relation_count"] == declared
+    assert reconciliation["original_merge_receipt_rewritten"] is False
+    assert reconciliation["semantic_evidence_objects_changed"] is False
+    assert reconciliation["relation_array_changed"] is False
+    assert reconciliation["source_or_claim_authority_changed"] is False
+    assert reconciliation["human_acceptance_scope_changed"] is False
+    assert_no_authority_escalation(reconciliation)
+
+    compilation = qxm2_state["evidence_compilation"]
+    assert compilation["relation_count"] == actual
+    assert compilation["source_document_declared_relation_count"] == declared
+    assert compilation["count_reconciled"] is True
+    assert compilation["count_reconciliation_receipt"] == "docs/architecture/qxm2/QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json"
+    metadata = qxm2_state["metadata_reconciliation"]
+    assert metadata["stale_declared_count"] == declared
+    assert metadata["actual_relation_count"] == actual
+    assert metadata["semantic_evidence_changed"] is False
+    assert metadata["original_merge_receipt_rewritten"] is False
+
+
 def _pull_request_changed_paths(root: Path):
     base_ref = os.environ.get("GITHUB_BASE_REF")
     if not base_ref:
@@ -221,7 +270,6 @@ def validate_g1_admission_ledger(root: Path, ledger) -> None:
     assert v202["recommended_disposition"] == "KEEP_SHADOW"
     assert v202["downstream_authority_requested"] == "none"
 
-    # Upstream referential integrity: the ledger may not invent IDs.
     shadow_theories = load_json(root / "docs" / "architecture" / "qxm2" / "QXM2-SHADOW-THEORY-OBJECTS-v0.1.json")["shadow_theories"]
     shadow_hypotheses = load_json(root / "docs" / "architecture" / "qxm2" / "QXM2-SHADOW-HYPOTHESIS-OBJECTS-v0.1.json")["shadow_hypotheses"]
     seeds = load_json(root / "docs" / "architecture" / "qxm2" / "QXM2-BENCHMARK-SEEDS-v0.1.json")["benchmark_seeds"]
@@ -259,6 +307,7 @@ def validate_qxm_f(root: Path = ROOT):
     assert qxm2_state["status"] == "accepted_merged"
     assert qxm2_state["merge_commit"] == QXM2_SEMANTIC_MERGE
     assert qxm2_state["qxm_f_next_gate"] == "QXM_F_G1_SELECTIVE_ADMISSION"
+    validate_qxm2_evidence_count_reconciliation(root, qxm2_state)
     assert state["upstream_qxm2"]["status"] == "accepted_merged"
     assert state["upstream_qxm2"]["semantic_merge_commit"] == QXM2_SEMANTIC_MERGE
     assert state["upstream_qxm2"]["closure_merge_commit"] == QXM2_CLOSURE_MERGE
