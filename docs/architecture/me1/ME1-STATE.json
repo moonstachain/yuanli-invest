@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.5.0",
+  "schema_version": "0.6.0",
   "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
   "status": "human_accepted_ready_for_merge_authorization",
   "design_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN",
@@ -57,6 +57,16 @@
     "workflow": "repository-gates",
     "run_number": 357,
     "run_id": 32511222134,
+    "contracts": "success",
+    "governance": "success",
+    "me1_validator": "success",
+    "unit_tests": "success"
+  },
+  "final_acceptance_closure_qualification": {
+    "validated_head_sha": "d785dd527d072a13dea746557a607bad872e053e",
+    "workflow": "repository-gates",
+    "run_number": 360,
+    "run_id": 32511372727,
     "contracts": "success",
     "governance": "success",
     "me1_validator": "success",
