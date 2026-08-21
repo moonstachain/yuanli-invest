@@ -100,17 +100,6 @@
     "qxm1_candidate_pack": "success",
     "unit_tests": "success"
   },
-  "merge_gate_exact_head_qualification": {
-    "validated_head_sha": "6467d40ce51cd5e811c3c82bc475d18ad28bd4f6",
-    "workflow": "repository-gates",
-    "run_number": 177,
-    "run_id": 32440019993,
-    "conclusion": "success",
-    "contracts": "success",
-    "governance": "success",
-    "qxm1_candidate_pack": "success",
-    "unit_tests": "success"
-  },
   "post_acceptance_ci_required": true,
   "post_acceptance_ci_satisfied": true,
   "merge_authority": "not_implied_by_acceptance",
