@@ -10,6 +10,7 @@ VALIDATOR = ROOT / "scripts" / "validate_rios_0_1_c_capability_registry.py"
 STATE = ROOT / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-STATE.json"
 MATRIX = ROOT / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json"
 PACK = ROOT / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-GENESIS-PACK-v0.1.json"
+CI = ROOT / ".github" / "workflows" / "ci.yml"
 
 EXPECTED_GENESIS_IDS = [
     "RIOS-GEN-01-AI-INFRASTRUCTURE-REGIME-TRANSITION",
@@ -325,6 +326,15 @@ class RIOS01CBootstrapTests(unittest.TestCase):
         ):
             with self.assertRaises(AssertionError):
                 module.validate_rios_0_1_c(ROOT, changed_paths=bad)
+
+    def test_task6_ci_wires_exact_rios_gate_once(self):
+        command = "python scripts/validate_rios_0_1_c_capability_registry.py"
+        ci_text = CI.read_text(encoding="utf-8")
+        self.assertEqual(ci_text.count(command), 1)
+        self.assertLess(
+            ci_text.index(command),
+            ci_text.index("python -m unittest discover -s tests -p 'test_*.py' -v"),
+        )
 
 
 if __name__ == "__main__":
