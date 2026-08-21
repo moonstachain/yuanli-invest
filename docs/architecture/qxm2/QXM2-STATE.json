@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
+  "status": "shadow_compilation_started",
+  "upstream_dependency": {
+    "stage": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK",
+    "required_status": "accepted_merged",
+    "merge_commit": "81bf6d83da7463e31c58e2d35bcabc291b580546",
+    "merge_receipt": "docs/architecture/qxm1/QXM1-MERGE-RECEIPT-v0.1.json",
+    "resolved": true
+  },
+  "candidate_count": 6,
+  "admission_authority": "none",
+  "benchmark_execution_authority": "none",
+  "capability_promotion_authority": "none",
+  "human_gate": {
+    "token": "ACCEPT_QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
+    "decision": "pending"
+  },
+  "next_gate": "QXM2_SOURCE_VERIFICATION"
+}
