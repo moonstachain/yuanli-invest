@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Validate RIOS-0.1-C capability convergence and governance boundaries.
+"""Validate RIOS-0.1-C convergence before Human Review.
 
-Task 4 hardens semantic-gap candidates without admitting them to Registry.
-Identity plausibility and Registry readiness are deliberately separate claims.
+Task 5 closes the pre-Human machine gate. It validates the exact ten Genesis
+concepts, convergence classifications, governed dependencies, semantic-gap
+readiness, provider neutrality, orchestration non-authority, and changed-path
+scope. Registry/Canon/Runtime mutation remains forbidden.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
+import subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -105,7 +109,6 @@ PROHIBITED_TRUE_KEYS = {
     "trading_authorized",
     "live_execution",
 }
-
 PROHIBITED_VALUE_KEYS = {
     "target_price",
     "buy_signal",
@@ -117,7 +120,6 @@ PROHIBITED_VALUE_KEYS = {
     "pnx_score",
     "force_score",
 }
-
 PROVIDER_NATIVE_KEYS = {
     "wind_field",
     "wind_code",
@@ -127,7 +129,6 @@ PROVIDER_NATIVE_KEYS = {
     "vendor_field",
     "vendor_code",
 }
-
 PRE_HUMAN_PROHIBITED_PREFIXES = ("registry/", "canon/", "runtime/")
 CAPABILITY_SCHEMA_PATH = "packages/contracts/schemas/research-capability.schema.json"
 
@@ -147,7 +148,9 @@ def assert_non_authority(obj):
             if key in PROHIBITED_TRUE_KEYS:
                 assert value is False, f"authority escalation: {key}={value!r}"
             if key in PROHIBITED_VALUE_KEYS:
-                assert value in (None, False, "none", "not_authorized"), f"prohibited output: {key}={value!r}"
+                assert value in (None, False, "none", "not_authorized"), (
+                    f"prohibited output: {key}={value!r}"
+                )
             assert_non_authority(value)
     elif isinstance(obj, list):
         for value in obj:
@@ -155,7 +158,6 @@ def assert_non_authority(obj):
 
 
 def assert_provider_neutral(obj):
-    """Reject provider-native identifiers from canonical orchestration semantics."""
     if isinstance(obj, dict):
         for key, value in obj.items():
             assert key not in PROVIDER_NATIVE_KEYS, f"provider-native semantic key prohibited: {key}"
@@ -174,6 +176,27 @@ def assert_pre_human_scope(paths):
     assert not offenders, f"pre-Human authority paths changed: {offenders}"
 
 
+def detect_changed_paths(root: Path):
+    """Detect PR changed paths against the GitHub base ref; fail closed."""
+    root = Path(root)
+    base_ref = os.environ.get("GITHUB_BASE_REF", "").strip() or "main"
+    base = f"origin/{base_ref}"
+    proc = subprocess.run(
+        ["git", "diff", "--name-only", f"{base}...HEAD"],
+        cwd=root,
+        text=True,
+        capture_output=True,
+    )
+    assert proc.returncode == 0, (
+        "unable to establish pre-Human changed-path scope",
+        base,
+        proc.stderr.strip(),
+    )
+    paths = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+    assert paths, f"no changed paths detected against {base}; refusing ambiguous pre-Human scope"
+    return paths
+
+
 def _ids_from_pack(path: Path, id_key: str):
     payload = json.loads(path.read_text(encoding="utf-8"))
     return [
@@ -183,12 +206,7 @@ def _ids_from_pack(path: Path, id_key: str):
     ]
 
 
-def _capability_ids_from_pack(path: Path):
-    return _ids_from_pack(path, "capability_id")
-
-
 def load_active_registry_ids(root: Path, registry_name: str, id_key: str):
-    """Load governed IDs from a namespace index, never from physical presence alone."""
     root = Path(root)
     registry_dir = root / "registry" / registry_name
     index_path = registry_dir / "_index.json"
@@ -208,7 +226,6 @@ def load_active_registry_ids(root: Path, registry_name: str, id_key: str):
 
 
 def load_available_capability_ids(root: Path):
-    """Separate physical identity presence from governed active authority."""
     root = Path(root)
     registry_dir = root / "registry" / "capabilities"
     index = json.loads((registry_dir / "_index.json").read_text(encoding="utf-8"))
@@ -217,18 +234,20 @@ def load_available_capability_ids(root: Path):
     for path in sorted(registry_dir.glob("*.json")):
         if path.name == "_index.json":
             continue
-        physical_occurrences.extend(_capability_ids_from_pack(path))
+        physical_occurrences.extend(_ids_from_pack(path, "capability_id"))
 
     counts = Counter(physical_occurrences)
-    duplicate_physical_ids = {capability_id for capability_id, count in counts.items() if count > 1}
+    duplicate_physical_ids = {
+        capability_id for capability_id, count in counts.items() if count > 1
+    }
 
     active_ids = set()
     for pack_name in index.get("pack_files", []):
         pack_path = registry_dir / pack_name
         assert pack_path.exists(), f"governed capability pack missing: {pack_name}"
-        active_ids.update(_capability_ids_from_pack(pack_path))
-
+        active_ids.update(_ids_from_pack(pack_path, "capability_id"))
     assert len(active_ids) == index["entry_count"], (len(active_ids), index["entry_count"])
+
     return {
         "physical_ids": set(physical_occurrences),
         "active_ids": active_ids,
@@ -238,7 +257,6 @@ def load_available_capability_ids(root: Path):
 
 
 def validate_candidate_readiness(root: Path, row: dict):
-    """Separate semantic identity plausibility from ResearchCapability Registry readiness."""
     root = Path(root)
     assert row.get("classification") == "new_candidate", row.get("genesis_id")
     assert TASK4_NEW_CANDIDATE_FIELDS.issubset(row), row.get("genesis_id")
@@ -250,11 +268,8 @@ def validate_candidate_readiness(root: Path, row: dict):
     deps = row["required_dependency_types"]
     assert isinstance(deps, dict), row.get("genesis_id")
     assert set(deps) == REQUIRED_DEPENDENCY_KEYS, (row.get("genesis_id"), set(deps))
-
-    active_by_dependency = {}
     for dep_key, (registry_name, id_key) in REGISTRY_DEPENDENCY_CONFIG.items():
         active_ids = load_active_registry_ids(root, registry_name, id_key)
-        active_by_dependency[dep_key] = active_ids
         for object_id in deps[dep_key]:
             assert object_id in active_ids, (
                 row.get("genesis_id"),
@@ -284,43 +299,37 @@ def validate_candidate_readiness(root: Path, row: dict):
     if readiness == "schema_dependencies_complete_candidate":
         assert schema_dependencies_complete, (
             row.get("genesis_id"),
-            "schema-ready claim requires governed Theory + Hypothesis + Factor/Algorithm + Benchmark + CanonicalDataField + valid provider-independent output contract/prohibitions",
+            "schema-ready claim requires governed Theory + Hypothesis + Factor/Algorithm + Benchmark + CanonicalDataField + provider-independent output contract/prohibitions",
         )
-    elif readiness == "identity_candidate_only":
-        assert not registry_apply_ready
-    elif readiness == "not_justified":
+    else:
         assert not registry_apply_ready
 
     return {
         "candidate_readiness": readiness,
         "schema_dependencies_complete": schema_dependencies_complete,
         "registry_apply_ready": registry_apply_ready,
-        "missing_dependency_types": [
-            key for key in REQUIRED_DEPENDENCY_KEYS if not deps[key]
-        ],
+        "missing_dependency_types": [key for key in REQUIRED_DEPENDENCY_KEYS if not deps[key]],
     }
 
 
 def validate_convergence_matrix(root: Path):
     root = Path(root)
     matrix_path = root / "docs" / "architecture" / "rios" / "0.1-c" / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json"
-    assert matrix_path.exists(), f"Task 2 convergence matrix missing: {matrix_path}"
+    assert matrix_path.exists(), f"convergence matrix missing: {matrix_path}"
     matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
     rows = matrix["rows"]
-
-    assert matrix["genesis_count"] == 10, matrix["genesis_count"]
-    assert len(rows) == 10, len(rows)
+    assert matrix["genesis_count"] == 10
+    assert len(rows) == 10
     ids = [row["genesis_id"] for row in rows]
     assert_exact_genesis_ids(ids)
-    assert len(ids) == len(set(ids)), ids
-    actual_classifications = {row["genesis_id"]: row["classification"] for row in rows}
-    assert actual_classifications == EXPECTED_CLASSIFICATIONS, actual_classifications
+    assert len(ids) == len(set(ids))
+    actual = {row["genesis_id"]: row["classification"] for row in rows}
+    assert actual == EXPECTED_CLASSIFICATIONS, actual
 
     inventory = load_available_capability_ids(root)
     assert not inventory["duplicate_physical_ids"], inventory["duplicate_physical_ids"]
-
     candidate_ids = []
-    candidate_readiness = {}
+    readiness_results = []
     for row in rows:
         assert REQUIRED_MATRIX_FIELDS.issubset(row), row["genesis_id"]
         assert_classification(row)
@@ -336,25 +345,23 @@ def validate_convergence_matrix(root: Path):
             )
         candidate_id = row["candidate_capability_id"]
         if row["classification"] == "new_candidate":
-            assert candidate_id, row["genesis_id"]
+            assert candidate_id
             assert row["registry_mutation_required"] is True
-            candidate_readiness[row["genesis_id"]] = validate_candidate_readiness(root, row)
+            readiness_results.append(validate_candidate_readiness(root, row))
         else:
             assert candidate_id is None, (row["genesis_id"], candidate_id)
             assert row["registry_mutation_required"] is False
         if candidate_id:
             assert candidate_id not in inventory["physical_ids"], f"candidate ID collision: {candidate_id}"
             candidate_ids.append(candidate_id)
+    assert len(candidate_ids) == len(set(candidate_ids))
 
-    assert len(candidate_ids) == len(set(candidate_ids)), candidate_ids
     return {
-        "genesis_count": len(rows),
+        "genesis_count": 10,
         "new_candidate_count": len(candidate_ids),
         "active_capability_count": len(inventory["active_ids"]),
         "physical_capability_count": len(inventory["physical_ids"]),
-        "schema_ready_candidate_count": sum(
-            1 for result in candidate_readiness.values() if result["registry_apply_ready"]
-        ),
+        "schema_ready_candidate_count": sum(1 for result in readiness_results if result["registry_apply_ready"]),
     }
 
 
@@ -363,12 +370,12 @@ def validate_genesis_pack(root: Path):
     rios = root / "docs" / "architecture" / "rios" / "0.1-c"
     matrix = json.loads((rios / "RIOS-0.1-C-CAPABILITY-CONVERGENCE-MATRIX-v0.1.json").read_text(encoding="utf-8"))
     pack_path = rios / "RIOS-0.1-C-GENESIS-PACK-v0.1.json"
-    assert pack_path.exists(), f"Task 3 Genesis pack missing: {pack_path}"
+    assert pack_path.exists(), f"Genesis pack missing: {pack_path}"
     pack = json.loads(pack_path.read_text(encoding="utf-8"))
 
-    assert pack["pack_id"] == "RIOS-GENESIS-PACK-001", pack["pack_id"]
-    assert pack["status"] == "candidate_orchestration_pack", pack["status"]
-    assert pack["genesis_count"] == 10, pack["genesis_count"]
+    assert pack["pack_id"] == "RIOS-GENESIS-PACK-001"
+    assert pack["status"] == "candidate_orchestration_pack"
+    assert pack["genesis_count"] == 10
     assert_non_authority(pack)
     assert_provider_neutral(pack)
     for key in (
@@ -380,23 +387,19 @@ def validate_genesis_pack(root: Path):
         assert pack[key] is False, (key, pack[key])
 
     entries = pack["entries"]
-    ids = [entry["genesis_id"] for entry in entries]
-    assert_exact_genesis_ids(ids)
+    assert_exact_genesis_ids([entry["genesis_id"] for entry in entries])
     matrix_by_id = {row["genesis_id"]: row for row in matrix["rows"]}
-
     for entry in entries:
-        genesis_id = entry["genesis_id"]
-        matrix_row = matrix_by_id[genesis_id]
-        assert entry["classification"] == matrix_row["classification"], genesis_id
-        assert entry["canonical_capability_ids"] == matrix_row["canonical_capability_ids"], genesis_id
-        assert entry.get("candidate_capability_id") == matrix_row["candidate_capability_id"], genesis_id
+        row = matrix_by_id[entry["genesis_id"]]
+        assert entry["classification"] == row["classification"]
+        assert entry["canonical_capability_ids"] == row["canonical_capability_ids"]
+        assert entry.get("candidate_capability_id") == row["candidate_capability_id"]
         routes = entry["agent_routes"]
-        assert routes, genesis_id
-        assert set(routes).issubset(ALLOWED_AGENT_ROUTES), (genesis_id, routes)
+        assert routes and set(routes).issubset(ALLOWED_AGENT_ROUTES)
         prereqs = entry["replay_prerequisites"]
-        assert set(prereqs) == REQUIRED_REPLAY_PREREQUISITES, (genesis_id, prereqs)
-        assert all(value is True for value in prereqs.values()), genesis_id
-        assert entry["replay_pass_claimed"] is False, genesis_id
+        assert set(prereqs) == REQUIRED_REPLAY_PREREQUISITES
+        assert all(value is True for value in prereqs.values())
+        assert entry["replay_pass_claimed"] is False
         assert_non_authority(entry)
         assert_provider_neutral(entry)
 
@@ -408,15 +411,16 @@ def validate_genesis_pack(root: Path):
     }
 
 
-def validate_rios_0_1_c(root: Path):
+def validate_rios_0_1_c(root: Path, changed_paths=None):
     root = Path(root)
     rios = root / "docs" / "architecture" / "rios" / "0.1-c"
     state_path = rios / "RIOS-0.1-C-STATE.json"
-
     assert state_path.exists(), state_path
     state = json.loads(state_path.read_text(encoding="utf-8"))
+
     assert state["stage"] == "RIOS_0_1_C_CAPABILITY_REGISTRY_MATERIALIZATION_GOVERNANCE_GATE"
-    assert state["status"] == "convergence_compilation_started"
+    assert state["status"] == "candidate_ready_for_human_review", state["status"]
+    assert state["next_gate"] == "RIOS_0_1_C_HUMAN_REVIEW", state["next_gate"]
     assert state["genesis_concept_count"] == 10
     for field in (
         "registry_mutation_authority",
@@ -426,6 +430,8 @@ def validate_rios_0_1_c(root: Path):
     ):
         assert state[field] == "none", (field, state[field])
 
+    paths = list(changed_paths) if changed_paths is not None else detect_changed_paths(root)
+    assert_pre_human_scope(paths)
     matrix_result = validate_convergence_matrix(root)
     pack_result = validate_genesis_pack(root)
 
@@ -433,6 +439,8 @@ def validate_rios_0_1_c(root: Path):
         **matrix_result,
         **pack_result,
         "registry_mutations": 0,
+        "changed_path_count": len(paths),
+        "state_status": state["status"],
         "next_gate": state["next_gate"],
     }
 
@@ -443,8 +451,8 @@ def main() -> int:
     parser.add_argument("--matrix-only", action="store_true")
     parser.add_argument("--pack-only", action="store_true")
     args = parser.parse_args()
-
     root = Path(__file__).resolve().parents[1]
+
     if args.self_test_primitives:
         assert_exact_genesis_ids(EXPECTED_GENESIS_IDS)
         assert_classification({"classification": "profile"})
