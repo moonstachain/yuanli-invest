@@ -69,6 +69,13 @@ REQUIRED_REPLAY_PREREQUISITES = {
     "benchmark_spec_required_before_execution",
 }
 
+TASK4_NEW_CANDIDATE_FIELDS = {
+    "semantic_gap_statement",
+    "why_existing_mothers_are_insufficient",
+    "required_dependency_types",
+    "candidate_readiness",
+}
+
 
 def load_validator_module():
     spec = importlib.util.spec_from_file_location("rios_validator", VALIDATOR)
@@ -236,11 +243,26 @@ class RIOS01CBootstrapTests(unittest.TestCase):
             with self.assertRaises(AssertionError):
                 module.assert_provider_neutral(bad)
 
-    @unittest.expectedFailure
-    def test_full_pack_validates_after_task4(self):
+    def test_task3_full_pack_validates(self):
         module = load_validator_module()
         result = module.validate_rios_0_1_c(ROOT)
         self.assertEqual(result["genesis_count"], 10)
+        self.assertEqual(result["pack_id"], "RIOS-GENESIS-PACK-001")
+        self.assertEqual(result["entry_count"], 10)
+        self.assertEqual(result["replay_pass_claims"], 0)
+        self.assertEqual(result["registry_mutations"], 0)
+
+    @unittest.expectedFailure
+    def test_task4_new_candidates_have_semantic_gap_hardening(self):
+        matrix = json.loads(MATRIX.read_text(encoding="utf-8"))
+        candidates = [row for row in matrix["rows"] if row["classification"] == "new_candidate"]
+        self.assertEqual(len(candidates), 2)
+        for row in candidates:
+            self.assertTrue(TASK4_NEW_CANDIDATE_FIELDS.issubset(row), row["genesis_id"])
+            self.assertIn(
+                row["candidate_readiness"],
+                {"identity_candidate_only", "schema_dependencies_complete_candidate", "not_justified"},
+            )
 
 
 if __name__ == "__main__":
