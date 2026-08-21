@@ -35,6 +35,7 @@ jobs:
       - run: python scripts/validate_r2_3a_architecture.py
       - run: python scripts/validate_r2_3a_cross_asset_stress.py
       - run: python scripts/validate_r2_3b0_contract_architecture.py
+      - run: python scripts/validate_qxm1_candidate_pack.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
 
   governance:
