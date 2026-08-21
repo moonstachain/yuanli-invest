@@ -7,6 +7,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "docs" / "superpowers" / "specs" / "2026-08-21-qxm-f-financial-mechanics-capability-closure-design.md"
 PLAN = ROOT / "docs" / "superpowers" / "plans" / "2026-08-21-qxm-f-financial-mechanics-capability-closure.md"
 G1_LEDGER = ROOT / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-ADMISSION-LEDGER-v0.1.json"
+QXM2_EVIDENCE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json"
+QXM2_STATE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-STATE.json"
+QXM2_COUNT_RECONCILIATION = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json"
 
 
 def sha256(path: Path) -> str:
@@ -42,6 +45,20 @@ class QXMFClosureBootstrapTests(unittest.TestCase):
     def test_full_bootstrap_validates(self):
         result = validate_qxm_f(ROOT)
         self.assertEqual(result["stage"], "QXM_F_FINANCIAL_MECHANICS_CAPABILITY_CLOSURE")
+
+    def test_qxm2_stale_evidence_count_requires_explicit_reconciliation(self):
+        evidence = json.loads(QXM2_EVIDENCE.read_text(encoding="utf-8"))
+        state = json.loads(QXM2_STATE.read_text(encoding="utf-8"))
+        actual = len(evidence["relations"])
+        declared = evidence["relation_count"]
+        if declared != actual:
+            self.assertTrue(QXM2_COUNT_RECONCILIATION.exists(), "stale QXM2 relation_count requires immutable reconciliation receipt")
+            receipt = json.loads(QXM2_COUNT_RECONCILIATION.read_text(encoding="utf-8"))
+            self.assertEqual(receipt["stale_declared_relation_count"], declared)
+            self.assertEqual(receipt["actual_relation_array_count"], actual)
+            self.assertEqual(receipt["corrected_authoritative_relation_count"], actual)
+            self.assertEqual(state["evidence_compilation"]["relation_count"], actual)
+            self.assertEqual(state["evidence_compilation"]["count_reconciliation_receipt"], "docs/architecture/qxm2/QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json")
 
 
 class QXMFG1AdmissionLedgerTests(unittest.TestCase):
