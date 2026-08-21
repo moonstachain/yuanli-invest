@@ -96,5 +96,12 @@ class QXM2TransmissionPricingEvidenceTests(unittest.TestCase):
             assert_minimum_evidence(self, candidate_id, sources, relations)
 
 
+class QXM2OutcomeSurvivalEvidenceTests(unittest.TestCase):
+    def test_liquidity_and_attribution_minimum_evidence(self):
+        sources, relations = load_evidence()
+        for candidate_id in EXPECTED[4:6]:
+            assert_minimum_evidence(self, candidate_id, sources, relations)
+
+
 if __name__ == "__main__":
     unittest.main()
