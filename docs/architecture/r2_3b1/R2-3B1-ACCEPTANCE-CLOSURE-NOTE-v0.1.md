@@ -15,3 +15,5 @@ The owner also explicitly authorized the downstream B2 sequence, effective only 
 This downstream authorization does not authorize the B1 merge, Capability promotion, Evidence/Outcome admission, A9 switch, production runtime, portfolio action, or live execution.
 
 The implementation plan is `docs/superpowers/plans/2026-08-21-r2-3b2-p0-reference-implementation.md`.
+
+Execution after B1 merge must use an isolated feature branch, TDD, exact-head GitHub Actions qualification, and stop at the B2 Human Gate before promotion.
