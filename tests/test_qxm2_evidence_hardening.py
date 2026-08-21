@@ -8,8 +8,11 @@ from scripts.validate_qxm2_evidence_hardening import (
     assert_benchmark_seed_authority,
     assert_evidence_role,
     assert_expected_candidate_ids,
+    assert_no_authority_regression,
+    assert_no_prohibited_paths,
     assert_replication_status,
     assert_shadow_hypothesis_state,
+    validate_qxm2,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -82,6 +85,23 @@ class QXM2PrimitiveTests(unittest.TestCase):
 
     def test_benchmark_seed_has_no_execution_authority(self):
         assert_benchmark_seed_authority({"formal_benchmark_status": "not_created", "benchmark_execution_authorized": False, "benchmark_pass_claim_authorized": False})
+
+    def test_authority_regression_fails_closed(self):
+        assert_no_authority_regression({"registry_admission_authorized": False, "live_execution": False})
+        with self.assertRaises(AssertionError):
+            assert_no_authority_regression({"capability_promotion_authorized": True})
+
+    def test_registry_and_canon_paths_are_prohibited(self):
+        assert_no_prohibited_paths(["docs/architecture/qxm2/example.json", "scripts/validate_qxm2_evidence_hardening.py"])
+        for path in (
+            "registry/theories/new.json",
+            "registry/hypotheses/new.json",
+            "registry/benchmarks/new.json",
+            "registry/capabilities/new.json",
+            "canon/new.md",
+        ):
+            with self.assertRaises(AssertionError):
+                assert_no_prohibited_paths([path])
 
 
 class QXM2EvidenceCoverageTests(unittest.TestCase):
@@ -157,6 +177,14 @@ class QXM2BenchmarkSeedTests(unittest.TestCase):
                 self.assertTrue(seed[field], f"{seed['benchmark_seed_id']}::{field}")
             self.assertIn(seed["hypothesis_id"], hypothesis_ids)
             assert_benchmark_seed_authority(seed)
+
+
+class QXM2FullPackTests(unittest.TestCase):
+    def test_full_pack_validates(self):
+        result = validate_qxm2(ROOT)
+        self.assertEqual(result["candidate_count"], 6)
+        self.assertEqual(result["benchmark_seed_count"], 6)
+        self.assertEqual(result["registry_admissions"], 0)
 
 
 if __name__ == "__main__":
