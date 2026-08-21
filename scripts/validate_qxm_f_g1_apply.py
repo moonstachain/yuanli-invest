@@ -10,7 +10,7 @@ import subprocess
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
-from scripts.validate_qxm_f_closure import validate_qxm_f
+from validate_qxm_f_closure import validate_qxm_f
 
 ROOT = Path(__file__).resolve().parents[1]
 G1 = ROOT / "docs" / "architecture" / "qxm-f" / "g1"
