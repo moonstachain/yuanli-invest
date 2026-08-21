@@ -1,0 +1,33 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "R2_3B2_P0_REFERENCE_IMPLEMENTATION_REPLAY",
+  "status": "implementation_bootstrap",
+  "upstream": {
+    "stage": "R2_3B1_P0_CAPABILITY_CONTRACT_SPECIFICATION",
+    "merge_commit": "bd8931e1bf21dceb5e34a68ec41aa199b83e9410"
+  },
+  "authorized_scope": [
+    "B2-R_CAP-R-01_REFERENCE_IMPLEMENTATION_REPLAY",
+    "B2-V_CAP-V-01_CROSS-ASSET_REFERENCE_IMPLEMENTATION_REPLAY",
+    "B2-XS_CAP-XS-01_ROUTED_REFERENCE_IMPLEMENTATION_REPLAY",
+    "FIVE_ASSET_SHADOW_NVIDIA_UST30Y_COPPER_GOLD_USDJPY",
+    "BENCHMARK_ABLATION"
+  ],
+  "non_goals": [
+    "capability_promotion",
+    "live_execution",
+    "portfolio_action",
+    "target_price",
+    "recommended_weight"
+  ],
+  "execution_order": [
+    "contract_adapter_layer",
+    "point_in_time_data_layer",
+    "reference_algorithms",
+    "research_state_receipts",
+    "asset_shadow_replay",
+    "benchmark_ablation",
+    "human_review"
+  ],
+  "current_gate": "B2_IMPLEMENTATION_BOOTSTRAP"
+}
