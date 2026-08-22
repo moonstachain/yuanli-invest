@@ -1,0 +1,439 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "SDR0_SOVEREIGN_DEBT_REPRESSION_REAL_VALUE_DILUTION",
+  "status": "candidate_ready_for_human_review",
+  "upstream_contract": "docs/architecture/r2_3b0/R2-3B0-CONTRACT-SCHEMA-v0.1.json",
+  "mother_capability": "CAP-R-01",
+  "profile_id": "SDR0-PROFILE-SOVEREIGN-DEBT-REPRESSION-REAL-VALUE-DILUTION",
+  "required_blocks": [
+    "identity",
+    "scope_routing",
+    "theory_causal_mechanism",
+    "evidence",
+    "input",
+    "inference",
+    "output",
+    "falsification_failure",
+    "benchmark_qualification",
+    "settlement_learning",
+    "runtime_receipt_governance"
+  ],
+  "identity": {
+    "capability_id": "CAP-R-01",
+    "profile_id": "SDR0-PROFILE-SOVEREIGN-DEBT-REPRESSION-REAL-VALUE-DILUTION",
+    "name": "Sovereign Debt Repression & Real-Value Dilution",
+    "contract_version": "0.1.0-candidate",
+    "stable_question": "What causal capital regime currently governs discount rates, risk appetite, funding conditions and cross-asset capital allocation?",
+    "profile_stable_question": "When sovereign debt-service and refinancing pressure rises, are fiscal, monetary, regulatory and balance-sheet policies shifting from market-clearing adjustment toward mechanisms that suppress the real cost of government funding or transfer duration/inflation risk to creditors; and is that shift economically material enough to change the cross-asset regime?",
+    "semantic_parent": "P.capital",
+    "maturity_state": "candidate_profile_ready_for_human_review",
+    "owner_scope": "Research OS; specialized CAP-R-01 profile, not a new human world",
+    "new_top_level_capability": false
+  },
+  "scope_routing": {
+    "asset_forms": [
+      "sovereign_credit",
+      "rates",
+      "fx",
+      "inflation_linked_bonds",
+      "gold_and_real_assets",
+      "cross_asset"
+    ],
+    "pricing_archetypes": [
+      "sovereign_duration",
+      "real_rate",
+      "currency_credibility",
+      "macro_regime",
+      "event_optionality"
+    ],
+    "authority_levels": ["L2", "L3", "L4"],
+    "module_semantics": {
+      "P.capital": "binding",
+      "R": "binding",
+      "E": "binding",
+      "V": "downstream",
+      "Xa": "downstream",
+      "Xp": "downstream",
+      "S": "downstream"
+    },
+    "router_dependencies": [
+      "jurisdiction",
+      "sovereign_curve",
+      "monetary_regime",
+      "fiscal_framework",
+      "debt_management_framework",
+      "reserve_currency_status",
+      "capital_account_regime",
+      "as_of"
+    ],
+    "scope_boundary": "Profile diagnoses sovereign funding, repression and real-value dilution mechanics. It does not create a new Credit World, does not assign a legal default status and does not authorize a trade."
+  },
+  "theory_causal_mechanism": {
+    "theory_ids": [],
+    "hypothesis_ids": [],
+    "source_seed_refs": [
+      "SDR0-SRC-SARGENT-WALLACE-1981",
+      "SDR0-SRC-REINHART-KIRKEGAARD-SBRANCIA-2011",
+      "SDR0-SRC-US-TREASURY-FED-ACCORD",
+      "SDR0-SRC-BOJ-YCC-2016-2024",
+      "SDR0-SRC-FED-FIMA-REPO",
+      "SDR0-SRC-BIS-DSR-METHODOLOGY"
+    ],
+    "causal_mechanism": "Rising sovereign debt-service and refinancing pressure can raise issuance burden and marginal funding costs. If market-clearing adjustment becomes politically or financially costly, authorities may respond through fiscal adjustment, debt-management changes, liquidity backstops, central-bank duration absorption, yield caps, regulatory captive demand or greater inflation tolerance. Financial repression exists only when policy persistently channels savings toward sovereign funding or suppresses the government's real funding cost relative to a defensible counterfactual. Real-value dilution exists only when creditors experience material purchasing-power erosion through negative real returns, inflation surprise or an equivalent policy-induced transfer. These mechanisms can form a reflexive loop in which higher yields raise interest expense and issuance needs, which further raise term premium and yields, increasing pressure for policy intervention.",
+    "assumptions": [
+      "sovereign debt, maturity, fiscal and policy data are available with dated vintages",
+      "market-function interventions can be distinguished from persistent funding-cost suppression",
+      "real-return measures use declared inflation and horizon semantics",
+      "foreign-holder flows are treated as transmission variables rather than sufficient causal proof",
+      "reserve-currency status and capital controls are explicit routing variables"
+    ],
+    "competing_mechanisms": [
+      "standard cyclical monetary easing",
+      "safe-asset shortage",
+      "growth shock",
+      "temporary market dysfunction",
+      "reserve-management operations",
+      "debt-management liquidity operations",
+      "private-sector deleveraging",
+      "home-bias portfolio rebalancing",
+      "FX-hedging-cost changes",
+      "fiscal consolidation",
+      "productivity-led growth repair"
+    ],
+    "claim_boundary": "High debt, central-bank purchases, negative real yields, foreign selling, gold appreciation or Treasury buybacks are individually insufficient to prove financial repression or real-value dilution. SDR0 does not label an explicit legal default and prohibits unqualified 'soft_default' as a canonical state.",
+    "theory_gap": "Primary theory lineage is seeded but not automatically admitted as Canon TheoryObjects. Identification of fiscal dominance and repression remains episode-specific and must survive Gold Replay and hard negatives."
+  },
+  "evidence": {
+    "evidence_policy": "Use point-in-time primary policy documents and official fiscal, debt-management, market-operation, auction, holdings, inflation and real-yield data. Academic and central-bank research may support mechanism claims. Secondary commentary may seed event locators or competing explanations but cannot establish the live state.",
+    "minimum_evidence_authority": "primary_official_source_for_live_state_and_primary_research_for_mechanism_claims",
+    "claim_types": [
+      "event_fact",
+      "mechanism_hypothesis",
+      "expectation_interpretation",
+      "asset_attribution"
+    ],
+    "source_requirements": [
+      "official fiscal or budget source for debt, deficit and interest-cost facts",
+      "official debt-management or auction source for issuance and market-function facts",
+      "central-bank primary source for purchase, repo, yield-target and policy-reaction claims",
+      "official cross-border holdings source for foreign-holder facts",
+      "official or institutionally governed data for inflation, real yields and expectations",
+      "separate evidence for regulatory captive-demand claims",
+      "independent mechanism evidence before causal labels are promoted"
+    ],
+    "as_of_required": true,
+    "point_in_time_required": true,
+    "evidence_cutoff_required": true,
+    "falsifier_required": true,
+    "law": "Claim Authority <= Evidence Authority"
+  },
+  "input": {
+    "canonical_input_fields": [
+      "public_debt",
+      "marketable_debt",
+      "primary_balance",
+      "fiscal_balance",
+      "net_interest_expense",
+      "interest_to_revenue",
+      "interest_to_gdp",
+      "weighted_average_maturity",
+      "maturity_wall",
+      "gross_issuance",
+      "net_issuance",
+      "auction_tail",
+      "bid_to_cover",
+      "primary_dealer_takedown",
+      "foreign_official_holdings",
+      "foreign_private_holdings",
+      "home_foreign_yield_spread",
+      "fx_hedging_cost",
+      "term_premium",
+      "nominal_yield_curve",
+      "real_yield_curve",
+      "breakeven_inflation",
+      "realized_inflation",
+      "inflation_expectations",
+      "central_bank_government_bond_holdings",
+      "central_bank_purchase_flow",
+      "purchase_maturity_mix",
+      "yield_target_or_cap",
+      "repo_and_liquidity_facilities",
+      "debt_buyback_flow",
+      "regulatory_sovereign_demand_rules",
+      "bank_sovereign_holdings",
+      "pension_insurance_sovereign_holdings",
+      "currency_index",
+      "reserve_currency_share"
+    ],
+    "economic_definitions": {
+      "fiscal_constraint": "pressure created by primary balance, debt stock, interest burden and refinancing needs relative to fiscal capacity",
+      "debt_service_pressure": "interest and principal refinancing burden over the declared horizon, not debt stock alone",
+      "financial_repression": "persistent official policy that directs savings toward sovereign funding or suppresses sovereign borrowing costs relative to a defensible market-clearing counterfactual",
+      "real_value_dilution": "material creditor purchasing-power loss through negative real returns, inflation surprise or equivalent policy-induced transfer",
+      "liquidity_backstop": "temporary or standing facility designed primarily to prevent forced sales or restore market functioning",
+      "captive_demand": "regulatory, institutional or policy-induced demand that materially weakens normal price sensitivity for sovereign debt"
+    },
+    "units": "typed_per_field",
+    "frequency": "event_driven_daily_weekly_monthly_quarterly_annual_by_field",
+    "publication_lag": "explicit_per_source",
+    "revision_semantics": "preserve first release, revised vintage and policy-event timestamp separately",
+    "missingness_policy": "material missing fiscal, maturity, policy-objective or real-return evidence degrades the affected dimension to unknown; no silent imputation of repression state",
+    "allowed_transformations": [
+      "debt_service_ratio",
+      "interest_burden_ratio",
+      "refinancing_wall",
+      "maturity_waterfall",
+      "issuance_to_demand",
+      "auction_stress",
+      "term_premium_change",
+      "hedge_adjusted_yield_spread",
+      "foreign_holder_change",
+      "central_bank_duration_absorption",
+      "real_yield",
+      "ex_post_real_return",
+      "inflation_surprise",
+      "policy_event_window",
+      "vintage_normalization"
+    ],
+    "provider_independent_identity": true
+  },
+  "inference": {
+    "algorithm_families": [
+      "sovereign_debt_service_decomposition",
+      "refinancing_wall_waterfall",
+      "issuance_demand_balance_decomposition",
+      "term_premium_auction_stress_decomposition",
+      "foreign_holder_repatriation_pressure",
+      "balance_sheet_transmission_graph",
+      "policy_event_study_candidate",
+      "real_rate_suppression_decomposition",
+      "negative_real_return_liquidation_accounting",
+      "state_space_regime_candidate",
+      "local_projection_candidate"
+    ],
+    "identification_assumptions": [
+      "policy response may be endogenous to the same fiscal or macro shock",
+      "central-bank asset purchases require objective and maturity-mix identification before repression labels",
+      "foreign-holder changes are not causal proof without hedge-adjusted alternatives",
+      "negative real yields are not sufficient evidence of financial repression",
+      "counterfactual market-clearing yields are uncertain and must be represented as ranges or competing models",
+      "event-study timing is not structural causal proof"
+    ],
+    "state_transition_logic": "Track fiscal pressure, market-clearing stress, marginal demand, policy support, captive demand, real-rate suppression and creditor real loss as separate typed dimensions. A summary regime stage may be emitted only from declared AND gates; no majority vote or weighted master score.",
+    "uncertainty_representation": "vintage uncertainty, policy-objective ambiguity, counterfactual-yield range, identification status, competing mechanisms, horizon-specific confidence and unresolved-node flags",
+    "simpler_baselines": [
+      "debt_to_gdp_only",
+      "net_interest_to_gdp_only",
+      "real_yield_only",
+      "central_bank_balance_sheet_growth_only",
+      "foreign_holdings_change_only",
+      "narrative_keyword_count_only"
+    ],
+    "known_failure_modes": [
+      "reserve_currency_safe_asset_demand",
+      "capital_controls",
+      "war_finance",
+      "temporary_market_dysfunction",
+      "private_deleveraging",
+      "large_scale_fx_intervention",
+      "off_balance_sheet_sovereign_liabilities",
+      "central_bank_quasi_fiscal_operations",
+      "data_revision",
+      "policy_objective_misclassification"
+    ],
+    "prohibited_shortcuts": [
+      "high_debt_implies_repression",
+      "QE_implies_monetization",
+      "foreign_selling_implies_crisis",
+      "gold_up_implies_soft_default",
+      "correlation_implies_causality",
+      "feature_importance_implies_causality"
+    ]
+  },
+  "output": {
+    "state_type": "SovereignDebtRepressionStateProfile",
+    "state_dimensions": [
+      "fiscal_constraint",
+      "debt_service_pressure",
+      "refinancing_state",
+      "issuance_burden",
+      "marginal_demand_state",
+      "term_premium_market_stress",
+      "foreign_holder_pressure",
+      "liquidity_backstop_state",
+      "central_bank_duration_absorption",
+      "captive_demand_intensity",
+      "real_rate_suppression",
+      "inflation_tolerance_state",
+      "monetary_fiscal_boundary",
+      "real_value_dilution",
+      "currency_credibility_state",
+      "transmission_lag"
+    ],
+    "direction": "typed_per_dimension",
+    "magnitude_band": "typed_per_dimension",
+    "persistence_band": "typed_per_dimension",
+    "regime_stage_vocabulary": [
+      "market_financing_normal",
+      "fiscal_constraint_rising",
+      "funding_market_stress",
+      "liquidity_backstop_active",
+      "repression_candidate",
+      "repression_active",
+      "real_value_dilution_active",
+      "policy_normalization_or_exit",
+      "indeterminate"
+    ],
+    "real_value_dilution_active_gate": {
+      "logic": "AND",
+      "requirements": [
+        "fiscal_or_debt_service_pressure_elevated_and_persistent",
+        "policy_evidence_supports_systematic_suppression_or_captive_demand_beyond_market_function_support",
+        "creditor_real_returns_materially_negative_or_purchasing_power_dilution_observed_over_declared_horizon",
+        "at_least_one_major_competing_explanation_tested_and_bounded",
+        "minimum_evidence_authority_satisfied"
+      ],
+      "two_of_four_rule_prohibited": true
+    },
+    "uncertainty_semantics": "state authority is dimension-specific; summary stage cannot exceed the weakest binding evidence/identification requirement",
+    "confidence_semantics": "high confidence requires primary policy/fiscal evidence, explicit objective classification, real-return evidence and bounded competing mechanisms",
+    "evidence_refs": "required",
+    "as_of": "required",
+    "degrade_state": ["insufficient_evidence", "research_only", "stale", "unsupported"],
+    "downstream_dependencies": [
+      "CAP-V-01",
+      "CAP-XA-01",
+      "CAP-XP-01",
+      "CAP-S-01",
+      "CAP-CROSS-001-RETURN-SOURCE-ATTRIBUTION"
+    ],
+    "prohibited_outputs": [
+      "soft_default",
+      "target_price",
+      "recommended_portfolio_weight",
+      "position_size",
+      "buy_sell_hold",
+      "live_execution_instruction",
+      "weighted_master_score"
+    ]
+  },
+  "falsification_failure": {
+    "falsification_rules": [
+      "debt_service burden stabilizes or falls through fiscal adjustment, growth or maturity management without repression",
+      "auction and marginal-demand conditions remain healthy despite higher issuance",
+      "long real yields remain positive and market-clearing while central-bank support is absent or clearly temporary",
+      "policy interventions prove time-limited market-function operations and exit without persistent suppression",
+      "no material new captive-demand mechanism appears",
+      "inflation expectations remain anchored and creditor real returns are not persistently negative",
+      "foreign-holder reductions are absorbed without material term-premium or funding stress",
+      "the candidate fiscal-dominance episode is better explained by a standard cyclical monetary-policy shock"
+    ],
+    "revision_triggers": [
+      "new fiscal framework",
+      "debt-management regime change",
+      "central-bank mandate or operating-framework change",
+      "yield-target installation or exit",
+      "material regulatory change affecting sovereign demand",
+      "capital-control change",
+      "reserve-currency regime change",
+      "historical data revision that changes a Gold Replay classification"
+    ],
+    "known_failure_regimes": [
+      "wartime_controls",
+      "capital_controls",
+      "hyperinflation_or_currency_substitution",
+      "monetary_union_without_full_fiscal_union",
+      "default_or_restructuring_event",
+      "very_shallow_sovereign_market",
+      "large_off_balance_sheet_sovereign_sector",
+      "temporary_market_function_crisis"
+    ],
+    "degrade_behavior": "downgrade only affected dimensions, preserve contradictory evidence, and force summary regime_stage to indeterminate when a binding gate is unresolved",
+    "fail_closed_states": ["insufficient_evidence", "research_only", "stale", "unsupported"]
+  },
+  "benchmark_qualification": {
+    "simpler_baselines": [
+      "debt_to_gdp_threshold",
+      "net_interest_to_gdp_threshold",
+      "ten_year_real_yield_threshold",
+      "central_bank_balance_sheet_growth",
+      "foreign_holdings_change",
+      "soft_default_keyword_count"
+    ],
+    "point_in_time_split_policy": "freeze fiscal vintages, policy documents, market data and event knowledge exactly as available at each replay cut",
+    "oos_policy": "walk-forward episode replay and jurisdiction holdout where comparable data exist",
+    "regime_holdout": "at least one hard negative and one policy-exit episode must remain outside initial mechanism tuning",
+    "false_alarm_accounting": "count repression or real-value-dilution flags that later settle as temporary liquidity support, cyclical easing or ordinary market clearing",
+    "calibration_requirement": "required only if probabilistic transition outputs are introduced later",
+    "multiple_testing_policy": "pre-register primary state dimensions and event windows; penalize post-hoc threshold mining",
+    "complexity_penalty": "profile must improve state-transition discipline or false-positive control beyond debt, real-yield and balance-sheet-growth baselines",
+    "failure_receipts": "required",
+    "gold_replays": [
+      "US_1942_1951_TREASURY_FED_PEG",
+      "JAPAN_2016_2024_YCC"
+    ],
+    "hard_negatives": [
+      "US_2020_PANDEMIC_QE",
+      "UK_2022_LDI_GILT_INTERVENTION",
+      "FIMA_REPO_LIQUIDITY_BACKSTOP"
+    ],
+    "shadow": "US_JAPAN_2026_POINT_IN_TIME"
+  },
+  "settlement_learning": {
+    "settlement_horizon": "days_to_multi_year_by_mechanism",
+    "settlement_observables": [
+      "realized_debt_service_burden",
+      "refinancing_and_maturity_outcomes",
+      "auction_outcomes",
+      "term_premium",
+      "central_bank_duration_absorption",
+      "yield_target_persistence",
+      "captive_demand_changes",
+      "real_yields",
+      "realized_inflation",
+      "inflation_expectations",
+      "creditor_real_return",
+      "foreign_official_holdings",
+      "currency_response",
+      "policy_normalization_or_escalation"
+    ],
+    "settlement_rule": "settle fiscal constraint, policy support, repression and real-value dilution as separate mechanism claims with supported, partially_supported, falsified or indeterminate outcomes; do not infer mechanism correctness from asset P&L alone",
+    "replay_policy": "preserve original policy text, fiscal data vintage, market data and knowledge cutoff; no future-policy backfill into earlier states",
+    "revision_rule": "revise profile semantics only after repeated Replay/Shadow evidence shows a state dimension or gate is unstable; breaking changes require a new contract version",
+    "outcome_leakage_prohibited": true
+  },
+  "runtime_receipt_governance": {
+    "invocation_envelope_required": true,
+    "invocation_envelope_fields": [
+      "canon_revision",
+      "canon_hash",
+      "capability_id",
+      "capability_contract_version",
+      "profile_id",
+      "research_target",
+      "jurisdiction",
+      "sovereign_curve",
+      "A0_asset_form",
+      "A1_pricing_archetype",
+      "as_of",
+      "evidence_cutoff",
+      "fiscal_data_vintage",
+      "policy_event_cutoff",
+      "replay_or_shadow_mode",
+      "provider_runtime"
+    ],
+    "research_receipt_required": true,
+    "research_receipt_fields": [
+      "invocation_envelope",
+      "algorithm_family",
+      "evidence_refs",
+      "output_state_version",
+      "degrade_state"
+    ],
+    "research_pass_implies_capital_pass": false,
+    "capability_acceptance_implies_promotion": false,
+    "promotion_implies_evidence_admission": false,
+    "execution_authority": "none"
+  },
+  "human_gate_token": "ACCEPT_SDR0_SOVEREIGN_DEBT_REPRESSION_REAL_VALUE_DILUTION_DESIGN"
+}
