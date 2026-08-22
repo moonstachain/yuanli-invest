@@ -3,6 +3,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 MAP = ROOT / "docs/human-projection/YUANLI-INVESTMENT-METHODOLOGY-MAP-v1.md"
+README = ROOT / "docs/os-vnext/README.md"
 
 
 class YIM0HumanProjectionTests(unittest.TestCase):
@@ -78,6 +79,18 @@ class YIM0HumanProjectionTests(unittest.TestCase):
         )
         for phrase in forbidden_affirmative_claims:
             self.assertNotIn(phrase, text)
+
+
+class YIM0ReadmeBridgeTests(unittest.TestCase):
+    def text(self):
+        return README.read_text(encoding="utf-8")
+
+    def test_successor_bridge_exists_without_rewriting_human_grammar(self):
+        text = self.text()
+        self.assertIn("## Successor Architecture Bridge", text)
+        self.assertIn("势 · 信 · 极｜真 · 价 · 生", text)
+        self.assertIn("ENG-C / ENG-R / ENG-X", text)
+        self.assertIn("ResearchTarget → EngineThesis → PositionPassport → BookState@PIT", text)
 
 
 if __name__ == "__main__":
