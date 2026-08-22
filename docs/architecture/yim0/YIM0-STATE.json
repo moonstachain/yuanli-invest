@@ -1,0 +1,82 @@
+{
+  "schema_version": "0.4.0",
+  "stage": "YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE",
+  "status": "human_accepted",
+  "repository_base_sha": "877c3bbc59fb6fc01b586b554930bdaca5db4c59",
+  "design_acceptance": "ACCEPT_YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE_DESIGN",
+  "purpose": "Create a zero-new-authority Human Methodology Map, bridge accepted OS semantics to ME0/ME1 successor architecture, and eliminate top-level projection drift without creating ontology, schema, portfolio, trading or successor-stage authority.",
+  "authority": {
+    "human_projection_only": true,
+    "ontology": false,
+    "schema": false,
+    "registry": false,
+    "portfolio": false,
+    "position_sizing": false,
+    "trading": false,
+    "live_execution": false,
+    "constitution_mutation": false,
+    "M3_cutover": false,
+    "A9_switch": false,
+    "ME2": false,
+    "ME3": false,
+    "ME4": false,
+    "ME5": false
+  },
+  "deliverables": {
+    "human_projection": "docs/human-projection/YUANLI-INVESTMENT-METHODOLOGY-MAP-v1.md",
+    "os_readme_bridge": "docs/os-vnext/README.md",
+    "canon_status_generator": "scripts/build_canon_status.py",
+    "canon_status_projection": "docs/architecture/CANON-STATUS.json",
+    "validator": "scripts/validate_yim0_methodology_projection.py",
+    "human_review_card": "docs/architecture/yim0/YIM0-HUMAN-REVIEW-CARD-v0.1.md",
+    "human_acceptance_receipt": "docs/architecture/yim0/YIM0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+  },
+  "machine_qualification": {
+    "validated_head_sha": "384e9ed341c5f5dc5b840ed3803e4c7168c3a734",
+    "workflow": "repository-gates",
+    "run_number": 384,
+    "run_id": 32552594042,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "canon_status_check": "success",
+    "yim0_validator": "success",
+    "unit_tests": "success"
+  },
+  "human_review_qualification": {
+    "validated_head_sha": "d041fc69bfefe9664fe4ee352b89d3feee8aa204",
+    "workflow": "repository-gates",
+    "run_number": 386,
+    "run_id": 32552659610,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "canon_status_check": "success",
+    "yim0_validator": "success",
+    "unit_tests": "success",
+    "formal_review": "10/10 PASS"
+  },
+  "human_gate": {
+    "token": "ACCEPT_YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE",
+    "decision": "ACCEPT_YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE",
+    "acceptance_receipt": "docs/architecture/yim0/YIM0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+    "acceptance_does_not_imply_merge": true,
+    "acceptance_does_not_authorize_ME2": true
+  },
+  "human_review_threshold": "10/10 PASS",
+  "merge_authority": "not_implied_by_acceptance",
+  "required_merge_token": "AUTHORIZE_YIM0_MERGE",
+  "post_acceptance_qualification": {
+    "validated_head_sha": "7b4da3fb0f4d4adc0036a6dba0bfc3f9a350fad2",
+    "workflow": "repository-gates",
+    "run_number": 389,
+    "run_id": 32552911520,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "canon_status_check": "success",
+    "yim0_validator": "success",
+    "unit_tests": "success"
+  },
+  "next_gate": "YIM0_MERGE_AUTHORIZATION"
+}
