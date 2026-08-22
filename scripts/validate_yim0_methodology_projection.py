@@ -146,19 +146,29 @@ def validate_builder_source(source: str) -> None:
         require(token in source, f"N9: builder missing state-source token {token}")
 
 
-def validate_scope_paths(paths: list[str]) -> None:
-    violations = []
-    for path in paths:
-        if path in ALLOWED_EXACT or any(path.startswith(prefix) for prefix in ALLOWED_PREFIXES):
-            continue
-        violations.append(path)
-    require(not violations, f"N11/N12: YIM0 scope violation {violations}")
+def validate_scope_paths(paths: list[str], *, enforce_yim0_scope: bool = True) -> None:
+    """Protect YIM0 authority files without scope-locking the repository after YIM0 completion.
+
+    During the YIM0 construction phase we fail closed unless every changed path is part of the
+    approved YIM0 surface. After YIM0 is completed, unrelated future PRs are allowed, while the
+    authority-bearing upstream artifacts remain protected.
+    """
     require("README.md" not in paths, "N12: repository root README modification prohibited")
     require("docs/os-vnext/CONSTITUTION.md" not in paths, "N11: Constitution modification prohibited")
     require(not any(path.startswith("packages/contracts/schemas/") for path in paths), "N11: production schema modification prohibited")
     require(not any(path.startswith("docs/architecture/yip0/") for path in paths), "N11: accepted YIP0 artifacts modification prohibited")
     require(not any(path.startswith("docs/architecture/me0/") for path in paths), "N11: accepted ME0 artifacts modification prohibited")
     require(not any(path.startswith("docs/architecture/me1/") for path in paths), "N11: accepted ME1 artifacts modification prohibited")
+
+    if not enforce_yim0_scope:
+        return
+
+    violations = []
+    for path in paths:
+        if path in ALLOWED_EXACT or any(path.startswith(prefix) for prefix in ALLOWED_PREFIXES):
+            continue
+        violations.append(path)
+    require(not violations, f"N11/N12: YIM0 scope violation {violations}")
 
 
 def changed_paths_from_git() -> list[str]:
@@ -205,7 +215,11 @@ def main() -> int:
     validate_canon_status_data(status)
     validate_state_source_alignment_data(status, yip0, me0, me1, qxm2)
     validate_builder_source(builder_source)
-    validate_scope_paths(changed_paths_from_git())
+    enforce_yim0_scope = not (
+        yim0_state.get("status") == "human_accepted_merged"
+        and yim0_state.get("next_gate") == "YIM0_COMPLETE"
+    )
+    validate_scope_paths(changed_paths_from_git(), enforce_yim0_scope=enforce_yim0_scope)
     validate_authority_boundaries(yim0_state, review_card)
     print("YIM0 methodology projection validation: PASS")
     return 0
