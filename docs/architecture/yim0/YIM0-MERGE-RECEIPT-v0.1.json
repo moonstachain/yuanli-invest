@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE",
+  "decision": "YIM0_MERGED_PENDING_POST_MERGE_CI",
+  "pr_number": 53,
+  "merge_authorization": "AUTHORIZE_YIM0_MERGE",
+  "merge_method": "squash",
+  "pre_merge_head_sha": "e011981e97d4757afa6c90bdec29a31ba66b3a4a",
+  "pre_merge_exact_head_ci": {
+    "workflow": "repository-gates",
+    "run_number": 390,
+    "run_id": 32552945595,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "canon_status_check": "success",
+    "yim0_validator": "success",
+    "unit_tests": "success"
+  },
+  "semantic_merge_commit": "4399a427425ff35f089f212a55faf1632bc1a13f",
+  "human_acceptance": "ACCEPT_YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE",
+  "formal_human_review": "10/10 PASS",
+  "boundaries_preserved": {
+    "ontology_authorized": false,
+    "schema_authorized": false,
+    "registry_authorized": false,
+    "portfolio_authorized": false,
+    "position_sizing_authorized": false,
+    "trading_authorized": false,
+    "live_execution_authorized": false,
+    "constitution_mutation_authorized": false,
+    "M3_cutover_authorized": false,
+    "A9_switch_authorized": false,
+    "ME2_authorized": false,
+    "ME3_authorized": false,
+    "ME4_authorized": false,
+    "ME5_authorized": false
+  },
+  "post_merge_ci_required": true,
+  "post_merge_ci_satisfied": false,
+  "next_gate": "YIM0_POST_MERGE_CI"
+}
