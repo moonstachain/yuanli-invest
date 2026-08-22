@@ -15,7 +15,7 @@ The three approved changes are:
 
 1. create `docs/human-projection/YUANLI-INVESTMENT-METHODOLOGY-MAP-v1.md`;
 2. add a successor-architecture bridge to `docs/os-vnext/README.md` without changing the Constitution or root README;
-3. update `scripts/build_canon_status.py` and generated `docs/architecture/CANON-STATUS.json` so ME0/ME1 and their authority boundaries are projected correctly.
+3. update `scripts/build_canon_status.py` and generated `docs/architecture/CANON-STATUS.json` so YIP0/ME0/ME1 and their authority boundaries are projected correctly.
 
 ## 1. Authority architecture
 
@@ -166,7 +166,7 @@ Current `scripts/build_canon_status.py` hard-codes:
 - `center_object = ResearchCapability`
 - `canonical_state = ResearchStateVector`
 
-and only reads the R0–R2.3B0 family. It does not read accepted ME0 / ME1 state files. This is the identified projection-drift source.
+and only reads the R0–R2.3B0 family. It does not read accepted YIP0 / ME0 / ME1 state files. This is the identified projection-drift source.
 
 ### 4.2 Generator-first correction
 
@@ -174,14 +174,17 @@ The implementation must modify `scripts/build_canon_status.py` first and regener
 
 The generator must read at least:
 
+- `docs/architecture/yip0/YIP0-STATE.json`
 - `docs/architecture/me0/ME0-STATE.json`
 - `docs/architecture/me1/ME1-STATE.json`
 
-and project their accepted factual states without hard-coding completion facts.
+and project their factual states without hard-coding acceptance/completion outcomes.
 
-### 4.3 Layered system identity
+The OS vNext human-grammar identity may remain a stable semantic constant derived from its accepted Constitution/README; it must not be represented as a fabricated lifecycle receipt.
 
-Replace the single-center abstraction with an authority-aware projection equivalent to:
+### 4.3 Layered system identity and compatibility transition
+
+The authoritative projection moves from a single-center abstraction to layered system identity:
 
 ```json
 {
@@ -203,16 +206,18 @@ Replace the single-center abstraction with an authority-aware projection equival
 }
 ```
 
-Exact field naming may be implementation-tuned, but the semantics above are normative.
+Repository search found no active code consumer of top-level `center_object` / `canonical_state` beyond the builder and projection itself. Even so, YIM0 will not require an abrupt compatibility break. If those legacy top-level fields are retained during the transition, they must be explicitly marked `legacy_compatibility_only` and must not be documented or validated as the unique current architecture.
+
+The new `system_identity` and `state_architecture` semantics are normative. The implementation plan must choose one deterministic compatibility representation and test it; it may not leave two equally authoritative interpretations.
 
 ### 4.4 Architecture lineage
 
 Add a deterministic `architecture_lineage` projection that exposes:
 
-- YIP0: accepted philosophy authority;
-- OS vNext: active human research grammar;
-- ME0: completed multi-engine ontology;
-- ME1: completed state object model;
+- YIP0: factual status sourced from `YIP0-STATE.json`;
+- OS vNext: active human research grammar, represented as semantic authority rather than a fabricated stage receipt;
+- ME0: factual completed state sourced from `ME0-STATE.json`;
+- ME1: factual completed state sourced from `ME1-STATE.json`;
 - ME2–ME5: visible roadmap entries with `authorized=false`.
 
 `ME2–ME5` visibility cannot modify any state file or authorize work.
@@ -221,7 +226,7 @@ Add a deterministic `architecture_lineage` projection that exposes:
 
 A single global `next_gate` is insufficient once capability and multi-engine programs coexist.
 
-The projection should distinguish:
+The projection must distinguish:
 
 - `latest_completed_architecture_stage`
 - `roadmap_next_unapproved_stage`
@@ -258,7 +263,7 @@ YIM0 passes only if all five results hold:
 
 1. Human Projection exists and coherently maps YIP0 → OS → ME0 → ME1 → roadmap.
 2. OS README gains a bridge without rewriting the upstream grammar or Constitution.
-3. CANON-STATUS is generator-derived and accurately projects ME0/ME1 plus historical/successor state semantics.
+3. CANON-STATUS is generator-derived and accurately projects YIP0/ME0/ME1 plus historical/successor state semantics.
 4. CI detects future projection drift.
 5. YIM0 grants zero ontology/schema/portfolio/trading/execution/ME2–ME5 authority.
 
@@ -297,6 +302,7 @@ YIM0 must fail closed against at least these classes:
 - Single-center regression replaces RSV with one new universal center.
 - Existing research-capability/QXM program disappears from projection.
 - CANON-STATUS is hand-edited without generator convergence.
+- YIP0/ME0/ME1 lifecycle outcomes are hard-coded rather than sourced from their state artifacts.
 
 ## 8. Genesis hard negatives
 
@@ -306,13 +312,13 @@ The implementation test pack must include at least these twelve negatives:
 2. Human Projection claims ontology/portfolio/trading authority → FAIL.
 3. README removes or redefines `势·信·极｜真·价·生` → FAIL.
 4. README states Human Grammar equals Machine Engine ontology → FAIL.
-5. CANON-STATUS omits ME0 or ME1 → FAIL.
+5. CANON-STATUS omits YIP0, ME0, or ME1 → FAIL.
 6. RSV remains the only future canonical state → FAIL.
 7. ME2 appears as next stage without explicit `authorized=false` → FAIL.
 8. QXM/R2.3 parallel program is erased → FAIL.
-9. Generator hard-codes ME0/ME1 completion instead of reading state → FAIL.
+9. Generator hard-codes YIP0/ME0/ME1 lifecycle outcomes instead of reading state → FAIL.
 10. Human Projection defines a new machine object or engine authority → FAIL.
-11. YIM0 changes Constitution, production schema, or ME0/ME1 receipts → FAIL.
+11. YIM0 changes Constitution, production schema, or YIP0/ME0/ME1 accepted receipts → FAIL.
 12. Repository root README is modified → FAIL.
 
 ## 9. Human Review Gate
@@ -336,7 +342,7 @@ After written-spec acceptance, the implementation plan should contain four main 
 
 1. **Human Projection** — create the methodology map.
 2. **OS README Bridge** — add the non-destructive successor bridge.
-3. **CANON-STATUS Generator Convergence** — update generator and regenerated output.
+3. **CANON-STATUS Generator Convergence** — update generator and regenerated output, including the explicit compatibility transition for legacy singular fields.
 4. **Validator / Negatives / Human Gate** — add fail-closed tests, run CI, and prepare governance state.
 
 Each task should be independently reviewable and use test-first development where executable behavior is involved.
