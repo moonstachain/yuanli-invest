@@ -44,6 +44,19 @@
       "notes": "Records the 3/8 percent Treasury-bill peg, implicit 2.5 percent long-bond cap, forced Fed purchases and 1951 Accord exit."
     },
     {
+      "source_id": "SDR0-SRC-BOJ-YCC-2016-2024",
+      "title": "Bank of Japan YCC installation-to-exit primary-source bundle",
+      "authors": ["Bank of Japan"],
+      "year": "2016-2024",
+      "publisher": "Bank of Japan",
+      "source_kind": "primary_policy_source_bundle",
+      "authority": "primary_policy",
+      "role": ["JAPAN_2016_2024_YCC_gold_replay", "yield_target_installation", "policy_exit"],
+      "components": ["SDR0-SRC-BOJ-YCC-2016", "SDR0-SRC-BOJ-YCC-2024-EXIT"],
+      "theoryobject_admitted": false,
+      "notes": "Composite locator only; Replay must cite the dated primary BOJ documents individually."
+    },
+    {
       "source_id": "SDR0-SRC-BOJ-YCC-2016",
       "title": "Comprehensive Assessment of Monetary Easing and QQE with Yield Curve Control",
       "authors": ["Bank of Japan"],
