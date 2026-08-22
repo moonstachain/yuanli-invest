@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.8.0",
+  "schema_version": "0.9.0",
   "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
-  "status": "human_accepted_merged_pending_post_merge_ci",
+  "status": "human_accepted_merged",
   "design_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME_DESIGN",
   "human_acceptance": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME",
   "human_acceptance_reviewed_head_sha": "dc2c41b4499871336aafc62100a126ce8cab1475",
@@ -75,7 +75,15 @@
   "merge_commit": "6f1e028831100f3e32575a8f6e5869e727d19271",
   "merge_receipt": "docs/architecture/me1/ME1-MERGE-RECEIPT-v0.1.json",
   "merged_at": "2026-08-22T02:06:00+08:00",
+  "post_merge_qualification": {
+    "validated_main_head_sha": "46c985154238f3abd93c2d61e4892134f14ffc5a",
+    "evidence_source": "explicit_user_confirmation",
+    "contracts": "success",
+    "governance": "success"
+  },
+  "completion_receipt": "docs/architecture/me1/ME1-COMPLETION-RECEIPT-v0.1.json",
   "post_merge_ci_required": true,
-  "next_gate": "ME1_POST_MERGE_CI",
+  "post_merge_ci_satisfied": true,
+  "next_gate": "ME1_COMPLETE",
   "next_me_stage_authorized": false
 }

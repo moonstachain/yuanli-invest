@@ -47,9 +47,24 @@ class ME1AcceptanceTests(unittest.TestCase):
         self.assertEqual(receipt["merge_commit"], "6f1e028831100f3e32575a8f6e5869e727d19271")
         self.assertEqual(state["merge_authority"], receipt["merge_authorization_token"])
         self.assertEqual(state["merge_commit"], receipt["merge_commit"])
-        self.assertEqual(state["status"], "human_accepted_merged_pending_post_merge_ci")
-        self.assertEqual(state["next_gate"], "ME1_POST_MERGE_CI")
+        self.assertIn(state["status"], {"human_accepted_merged_pending_post_merge_ci", "human_accepted_merged"})
         self.assertTrue(state["post_merge_ci_required"])
+        self.assertFalse(state["next_me_stage_authorized"])
+        self.assertTrue(all(value is False for value in receipt["boundaries_preserved"].values()))
+
+    def test_completion_receipt_matches_completed_state_when_present(self):
+        path = ME1 / "ME1-COMPLETION-RECEIPT-v0.1.json"
+        if not path.exists():
+            self.skipTest("completion receipt not present before post-merge qualification")
+        receipt = json.loads(path.read_text(encoding="utf-8"))
+        state = json.loads((ME1 / "ME1-STATE.json").read_text(encoding="utf-8"))
+        self.assertEqual(receipt["decision"], "ME1_COMPLETE")
+        self.assertEqual(receipt["post_merge_qualification"]["validated_main_head_sha"], "46c985154238f3abd93c2d61e4892134f14ffc5a")
+        self.assertEqual(receipt["post_merge_qualification"]["contracts"], "success")
+        self.assertEqual(receipt["post_merge_qualification"]["governance"], "success")
+        self.assertEqual(state["status"], "human_accepted_merged")
+        self.assertTrue(state["post_merge_ci_satisfied"])
+        self.assertEqual(state["next_gate"], "ME1_COMPLETE")
         self.assertFalse(state["next_me_stage_authorized"])
         self.assertTrue(all(value is False for value in receipt["boundaries_preserved"].values()))
 
