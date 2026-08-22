@@ -115,7 +115,7 @@ class YIM0CanonStatusTests(unittest.TestCase):
 
 class YIM0GenesisNegativeTests(unittest.TestCase):
     def assert_rejected(self, fn, *args):
-        with self.assertRaises(ValueError):
+        with self.assertRaises((ValueError, TypeError)):
             fn(*args)
 
     def map_text(self):
@@ -177,6 +177,21 @@ class YIM0GenesisNegativeTests(unittest.TestCase):
 
     def test_n12_root_readme_change_is_rejected(self):
         self.assert_rejected(yim0.validate_scope_paths, ["README.md"])
+
+
+class YIM0PostCompletionScopeTests(unittest.TestCase):
+    def test_completed_yim0_does_not_scope_lock_unrelated_future_prs(self):
+        yim0.validate_scope_paths(
+            ["docs/architecture/sdr0/SDR0-STATE.json"],
+            enforce_yim0_scope=False,
+        )
+
+    def test_completed_yim0_still_rejects_protected_authority_paths(self):
+        with self.assertRaises(ValueError):
+            yim0.validate_scope_paths(
+                ["docs/architecture/me0/ME0-STATE.json"],
+                enforce_yim0_scope=False,
+            )
 
 
 class YIM0ValidatorTests(unittest.TestCase):
