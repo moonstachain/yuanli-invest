@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.5.0",
+  "schema_version": "0.6.0",
   "stage": "YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE",
-  "status": "human_accepted_merged_pending_post_merge_ci",
+  "status": "human_accepted_merged",
   "repository_base_sha": "877c3bbc59fb6fc01b586b554930bdaca5db4c59",
   "design_acceptance": "ACCEPT_YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE_DESIGN",
   "purpose": "Create a zero-new-authority Human Methodology Map, bridge accepted OS semantics to ME0/ME1 successor architecture, and eliminate top-level projection drift without creating ontology, schema, portfolio, trading or successor-stage authority.",
@@ -30,7 +30,8 @@
     "validator": "scripts/validate_yim0_methodology_projection.py",
     "human_review_card": "docs/architecture/yim0/YIM0-HUMAN-REVIEW-CARD-v0.1.md",
     "human_acceptance_receipt": "docs/architecture/yim0/YIM0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
-    "merge_receipt": "docs/architecture/yim0/YIM0-MERGE-RECEIPT-v0.1.json"
+    "merge_receipt": "docs/architecture/yim0/YIM0-MERGE-RECEIPT-v0.1.json",
+    "completion_receipt": "docs/architecture/yim0/YIM0-COMPLETION-RECEIPT-v0.1.json"
   },
   "machine_qualification": {
     "validated_head_sha": "384e9ed341c5f5dc5b840ed3803e4c7168c3a734",
@@ -95,7 +96,14 @@
     "unit_tests": "success"
   },
   "post_merge_ci_required": true,
-  "post_merge_ci_satisfied": false,
-  "post_merge_qualification": null,
-  "next_gate": "YIM0_POST_MERGE_CI"
+  "post_merge_ci_satisfied": true,
+  "post_merge_qualification": {
+    "validated_main_head_sha": "3c3e28a24014e12e0e49ef035e297ea8e4062ef1",
+    "evidence_source": "explicit_user_confirmation",
+    "contracts": "success",
+    "governance": "success"
+  },
+  "completion_receipt": "docs/architecture/yim0/YIM0-COMPLETION-RECEIPT-v0.1.json",
+  "next_gate": "YIM0_COMPLETE",
+  "next_me_stage_authorized": false
 }
