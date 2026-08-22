@@ -1,0 +1,48 @@
+{
+  "stage": "SDR0_SOVEREIGN_DEBT_REPRESSION_REAL_VALUE_DILUTION",
+  "status": "candidate_ready_for_human_review",
+  "branch": "sdr0-sovereign-debt-repression",
+  "mother_capability": "CAP-R-01",
+  "profile_id": "SDR0-PROFILE-SOVEREIGN-DEBT-REPRESSION-REAL-VALUE-DILUTION",
+  "new_top_level_capability": false,
+  "artifacts": [
+    "docs/architecture/sdr0/SDR0-SOVEREIGN-DEBT-REPRESSION-REAL-VALUE-DILUTION-v0.1.md",
+    "docs/architecture/sdr0/SDR0-CAPABILITY-PROFILE-CONTRACT-v0.1.json",
+    "docs/architecture/sdr0/SDR0-SOURCE-PROVENANCE-v0.1.json",
+    "docs/architecture/sdr0/SDR0-HUMAN-REVIEW-CARD-v0.1.md"
+  ],
+  "completed": [
+    "stable_question_frozen",
+    "ontology_boundary_frozen",
+    "liquidity_repression_real_dilution_separated",
+    "real_value_dilution_and_gate_defined",
+    "typed_state_model_defined",
+    "evidence_hierarchy_defined",
+    "initial_theory_lineage_seeded",
+    "gold_replay_architecture_defined",
+    "hard_negatives_defined",
+    "us_japan_2026_shadow_defined",
+    "benchmark_baselines_defined",
+    "settlement_rules_defined",
+    "trading_authority_denied"
+  ],
+  "not_authorized": [
+    "theoryobject_admission",
+    "hypothesisobject_admission",
+    "factor_or_algorithm_promotion",
+    "gold_replay_settlement",
+    "shadow_qualification",
+    "canon_promotion",
+    "portfolio_action",
+    "live_execution"
+  ],
+  "next_battle_after_acceptance": "SDR0-A_HISTORICAL_GOLD_REPLAY",
+  "next_battle_sequence": [
+    "SDR0-A1_US_1942_1951_TREASURY_FED_PEG",
+    "SDR0-A2_JAPAN_2016_2024_YCC",
+    "SDR0-A3_HARD_NEGATIVE_CHALLENGE",
+    "SDR0-B_US_JAPAN_2026_POINT_IN_TIME_SHADOW",
+    "SDR0-C_BENCHMARK_ABLATION_SETTLEMENT"
+  ],
+  "human_gate_token": "ACCEPT_SDR0_SOVEREIGN_DEBT_REPRESSION_REAL_VALUE_DILUTION_DESIGN"
+}
