@@ -1,9 +1,11 @@
 from pathlib import Path
+import json
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 MAP = ROOT / "docs/human-projection/YUANLI-INVESTMENT-METHODOLOGY-MAP-v1.md"
 README = ROOT / "docs/os-vnext/README.md"
+STATUS = ROOT / "docs/architecture/CANON-STATUS.json"
 
 
 class YIM0HumanProjectionTests(unittest.TestCase):
@@ -110,6 +112,51 @@ class YIM0ReadmeBridgeTests(unittest.TestCase):
         self.assertIn("does not create schema, registry, portfolio, trading, execution, m3 cutover, or me2–me5 program authority", text)
         self.assertNotIn("human grammar = c/r/x", text)
         self.assertNotIn("researchstatevector is obsolete", text)
+
+
+class YIM0CanonStatusTests(unittest.TestCase):
+    def status(self):
+        return json.loads(STATUS.read_text(encoding="utf-8"))
+
+    def test_layered_system_identity_and_successor_state_model(self):
+        s = self.status()
+        self.assertEqual(s["system_identity"]["mission_center"], "ResearchCapability")
+        self.assertEqual(s["system_identity"]["return_reasoning_center"], "EngineThesis")
+        self.assertEqual(s["system_identity"]["capital_expression_center"], "PositionPassport")
+        self.assertEqual(s["state_architecture"]["historical_canonical_state"], "ResearchStateVector")
+        self.assertEqual(
+            s["state_architecture"]["successor_state_model"],
+            ["ResearchTarget", "EngineThesis", "PositionPassport", "BookState"],
+        )
+        self.assertFalse(s["state_architecture"]["legacy_future_write_authority"])
+        self.assertEqual(s["legacy_compatibility"]["authority"], "legacy_compatibility_only")
+        self.assertEqual(s["legacy_compatibility"]["fields"], ["center_object", "canonical_state"])
+
+    def test_architecture_lineage_projects_accepted_states_without_authorizing_roadmap(self):
+        s = self.status()
+        lineage = s["architecture_lineage"]
+        self.assertEqual(lineage["YIP0"]["status"], "accepted_merged")
+        self.assertEqual(lineage["ME0"]["status"], "human_accepted_merged")
+        self.assertEqual(lineage["ME0"]["completion_gate"], "ME0_COMPLETE")
+        self.assertEqual(lineage["ME1"]["status"], "human_accepted_merged")
+        self.assertEqual(lineage["ME1"]["completion_gate"], "ME1_COMPLETE")
+        for stage in ("ME2", "ME3", "ME4", "ME5"):
+            self.assertFalse(lineage[stage]["authorized"])
+
+    def test_multi_program_projection_uses_current_qxm_gate(self):
+        s = self.status()
+        self.assertEqual(s["latest_completed_architecture_stage"], "ME1_COMPLETE")
+        self.assertEqual(s["roadmap_next_unapproved_stage"], "ME2")
+        self.assertFalse(s["next_stage_authorized"])
+        programs = s["parallel_programs"]
+        self.assertEqual(programs["research_capability_program"]["last_authoritative_stage"], "QXM2")
+        self.assertEqual(
+            programs["research_capability_program"]["next_gate"],
+            "QXM3_THEORY_HYPOTHESIS_REGISTRY_ADMISSION_BENCHMARK_PREREGISTRATION",
+        )
+        self.assertEqual(programs["multi_engine_program"]["last_completed_stage"], "ME1")
+        self.assertEqual(programs["multi_engine_program"]["next_stage"], "ME2")
+        self.assertFalse(programs["multi_engine_program"]["authorized"])
 
 
 if __name__ == "__main__":
