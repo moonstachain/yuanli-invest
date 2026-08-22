@@ -1,0 +1,60 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "QXM_F_G1_SELECTIVE_REGISTRY_ADMISSION",
+  "human_acceptance": "ACCEPT_QXM_F_G1_SELECTIVE_ADMISSION",
+  "human_acceptance_receipt": "docs/architecture/qxm-f/g1/QXM-F-G1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json",
+  "apply_status": "applied_on_branch_pending_exact_head_ci_and_merge_authority",
+  "registry_delta": {
+    "theories_before": 19,
+    "theories_added": 12,
+    "theories_after": 31,
+    "hypotheses_before": 12,
+    "hypotheses_added": 11,
+    "hypotheses_after": 23,
+    "registry_total_before": 99,
+    "registry_total_added": 23,
+    "registry_total_after": 122
+  },
+  "materialized_packs": {
+    "theories": "registry/theories/qxm-f-financial-mechanics-v0.1.json",
+    "theory_count": 12,
+    "hypotheses": "registry/hypotheses/qxm-f-financial-mechanics-v0.1.json",
+    "hypothesis_count": 11,
+    "hypothesis_status": "proposed_only"
+  },
+  "non_admitted_hypothesis": {
+    "hypothesis_id": "HYP-V-202-OOS-DISCOUNT-RATE",
+    "disposition": "KEEP_SHADOW",
+    "reason": "Predictive discount-rate authority remains unsupported until a later frozen PIT/OOS benchmark beats simple baselines after declared penalties."
+  },
+  "benchmark_seed_dispositions": {
+    "QXM2-BSEED-P003-DRIVER-OOS": "FORMALIZE_IN_G2",
+    "QXM2-BSEED-P004-CASH-CONVERSION": "FORMALIZE_IN_G2",
+    "QXM2-BSEED-R01-CREDIT-TRANSMISSION": "FORMALIZE_IN_G2",
+    "QXM2-BSEED-V01-EXPECTATION-DECOMPOSITION": "FORMALIZE_IN_G2_INTERPRETATION_ONLY",
+    "QXM2-BSEED-S004-STRESS-EXIT": "FORMALIZE_IN_G2",
+    "QXM2-BSEED-CROSS001-RETURN-ATTRIBUTION": "FORMALIZE_IN_G2"
+  },
+  "formal_benchmark_objects_created": 0,
+  "hypotheses_preregistered": 0,
+  "capabilities_promoted": 0,
+  "production_runtime_activated": false,
+  "discount_rate_bridge_authority": "interpretation_only",
+  "qin_material_authority": "practitioner_provenance_only",
+  "boundaries_preserved": {
+    "merge_authorized": false,
+    "hypothesis_preregistration_authorized": false,
+    "formal_benchmark_creation_authorized": false,
+    "benchmark_execution_authorized": false,
+    "benchmark_pass_claim_authorized": false,
+    "capability_promotion_authorized": false,
+    "production_runtime_authorized": false,
+    "target_price_authorized": false,
+    "recommended_weight_authorized": false,
+    "position_size_authorized": false,
+    "trading_action_authorized": false,
+    "live_execution": false
+  },
+  "required_next_authority": "AUTHORIZE_QXM_F_G1_MERGE",
+  "post_merge_next_gate": "QXM_F_G2_PREREGISTRATION"
+}

@@ -1,0 +1,120 @@
+import hashlib
+import json
+import os
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = ROOT / "docs" / "superpowers" / "specs" / "2026-08-21-qxm-f-financial-mechanics-capability-closure-design.md"
+PLAN = ROOT / "docs" / "superpowers" / "plans" / "2026-08-21-qxm-f-financial-mechanics-capability-closure.md"
+STATE = ROOT / "docs" / "architecture" / "qxm-f" / "QXM-F-STATE.json"
+G1_LEDGER = ROOT / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-ADMISSION-LEDGER-v0.1.json"
+G1_ACCEPTANCE = ROOT / "docs" / "architecture" / "qxm-f" / "g1" / "QXM-F-G1-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
+QXM2_EVIDENCE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json"
+QXM2_STATE = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-STATE.json"
+QXM2_COUNT_RECONCILIATION = ROOT / "docs" / "architecture" / "qxm2" / "QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json"
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+from scripts.validate_qxm_f_closure import (
+    LEGAL_STATES,
+    assert_no_authority_escalation,
+    assert_state,
+    validate_qxm_f,
+)
+
+
+class QXMFClosureBootstrapTests(unittest.TestCase):
+    def test_state_enum_is_closed(self):
+        for state in LEGAL_STATES:
+            assert_state(state)
+        with self.assertRaises(AssertionError):
+            assert_state("G1_MAGIC_AUTO_ADMISSION")
+
+    def test_trading_and_silent_authority_escalation_fail_closed(self):
+        assert_no_authority_escalation({
+            "registry_admission_authorized": False,
+            "benchmark_execution_authorized": False,
+            "trading_action_authorized": False,
+        })
+        with self.assertRaises(AssertionError):
+            assert_no_authority_escalation({"trading_action_authorized": True})
+        with self.assertRaises(AssertionError):
+            assert_no_authority_escalation({"capability_promotion_authorized": True})
+
+    def test_full_bootstrap_validates(self):
+        original_base_ref = os.environ.pop("GITHUB_BASE_REF", None)
+        try:
+            result = validate_qxm_f(ROOT)
+        finally:
+            if original_base_ref is not None:
+                os.environ["GITHUB_BASE_REF"] = original_base_ref
+        self.assertEqual(result["stage"], "QXM_F_FINANCIAL_MECHANICS_CAPABILITY_CLOSURE")
+
+    def test_post_acceptance_core_validation_is_phase_aware_under_pr_diff(self):
+        self.assertTrue(G1_ACCEPTANCE.exists(), "Human Acceptance receipt is required for post-Human routing")
+        original_base_ref = os.environ.get("GITHUB_BASE_REF")
+        os.environ["GITHUB_BASE_REF"] = "main"
+        try:
+            result = validate_qxm_f(ROOT)
+        finally:
+            if original_base_ref is None:
+                os.environ.pop("GITHUB_BASE_REF", None)
+            else:
+                os.environ["GITHUB_BASE_REF"] = original_base_ref
+        self.assertEqual(result["next_gate"], "QXM_F_G1_MERGE")
+
+    def test_post_acceptance_state_projection_points_to_merge_gate(self):
+        self.assertTrue(G1_ACCEPTANCE.exists(), "Human Acceptance receipt is required for post-Human projection")
+        state = json.loads(STATE.read_text(encoding="utf-8"))
+        self.assertEqual(state["status"], "G1_SELECTIVE_ADMISSION_READY_FOR_HUMAN_REVIEW")
+        self.assertEqual(state["identity_settlement"], "human_accepted_registry_identity_applied_pending_merge")
+        self.assertEqual(state["next_gate"], "QXM_F_G1_MERGE")
+        self.assertEqual(state["g1"]["registry_apply_state"], "human_accepted_ready_for_merge")
+        self.assertEqual(state["g1"]["required_merge_token"], "AUTHORIZE_QXM_F_G1_MERGE")
+
+    def test_qxm2_stale_evidence_count_requires_explicit_reconciliation(self):
+        evidence = json.loads(QXM2_EVIDENCE.read_text(encoding="utf-8"))
+        state = json.loads(QXM2_STATE.read_text(encoding="utf-8"))
+        actual = len(evidence["relations"])
+        declared = evidence["relation_count"]
+        if declared != actual:
+            self.assertTrue(QXM2_COUNT_RECONCILIATION.exists(), "stale QXM2 relation_count requires immutable reconciliation receipt")
+            receipt = json.loads(QXM2_COUNT_RECONCILIATION.read_text(encoding="utf-8"))
+            self.assertEqual(receipt["stale_declared_relation_count"], declared)
+            self.assertEqual(receipt["actual_relation_array_count"], actual)
+            self.assertEqual(receipt["corrected_authoritative_relation_count"], actual)
+            self.assertEqual(state["evidence_compilation"]["relation_count"], actual)
+            self.assertEqual(state["evidence_compilation"]["count_reconciliation_receipt"], "docs/architecture/qxm2/QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json")
+
+
+class QXMFG1AdmissionLedgerTests(unittest.TestCase):
+    def test_g1_ledger_has_exact_30_source_objects_and_no_human_decisions_yet(self):
+        self.assertTrue(G1_LEDGER.exists(), "G1 admission ledger must exist before Human Review")
+        ledger = json.loads(G1_LEDGER.read_text(encoding="utf-8"))
+        rows = ledger["objects"]
+        self.assertEqual(len(rows), 30)
+        self.assertEqual(sum(r["object_class"] == "TheoryObject" for r in rows), 12)
+        self.assertEqual(sum(r["object_class"] == "HypothesisObject" for r in rows), 12)
+        self.assertEqual(sum(r["object_class"] == "BenchmarkSeed" for r in rows), 6)
+        for row in rows:
+            self.assertIsNone(row["human_disposition"], row["source_shadow_id"])
+            self.assertTrue(row["recommended_disposition"], row["source_shadow_id"])
+
+    def test_g1_closed_disposition_enums_and_discount_rate_boundary(self):
+        self.assertTrue(G1_LEDGER.exists(), "G1 admission ledger must exist before Human Review")
+        rows = json.loads(G1_LEDGER.read_text(encoding="utf-8"))["objects"]
+        theory_hyp_legal = {"ADMIT", "ADMIT_WITH_BOUNDARY", "KEEP_SHADOW", "REJECT"}
+        seed_legal = {"FORMALIZE", "DEFER", "REJECT"}
+        for row in rows:
+            legal = seed_legal if row["object_class"] == "BenchmarkSeed" else theory_hyp_legal
+            self.assertIn(row["recommended_disposition"], legal, row["source_shadow_id"])
+            if row["candidate_id"] == "QXM1-CAND-04-OPPORTUNITY-COST-DISCOUNT-RATE-BRIDGE":
+                self.assertFalse(row["predictive_or_timing_authority_requested"], row["source_shadow_id"])
+
+
+if __name__ == "__main__":
+    unittest.main()
