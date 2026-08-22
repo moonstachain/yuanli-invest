@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "ME1_STATE_OBJECT_MODEL_REFRAME",
+  "decision": "ME1_COMPLETE",
+  "completed_at": "2026-08-22T09:55:00+08:00",
+  "post_merge_qualification": {
+    "validated_main_head_sha": "46c985154238f3abd93c2d61e4892134f14ffc5a",
+    "evidence_source": "explicit_user_confirmation",
+    "contracts": "success",
+    "governance": "success"
+  },
+  "semantic_merge_commit": "6f1e028831100f3e32575a8f6e5869e727d19271",
+  "post_merge_closure_commit": "46c985154238f3abd93c2d61e4892134f14ffc5a",
+  "human_acceptance_token": "ACCEPT_ME1_STATE_OBJECT_MODEL_REFRAME",
+  "merge_authorization_token": "AUTHORIZE_ME1_MERGE",
+  "boundaries_preserved": {
+    "constitution_mutation_authorized": false,
+    "registry_promotion_authorized": false,
+    "portfolio_weight_authorized": false,
+    "position_sizing_authorized": false,
+    "buy_sell_hold_authorized": false,
+    "trade_execution_authorized": false,
+    "live_runtime_authorized": false,
+    "M3_authority_cutover_authorized": false,
+    "ME2_authorized": false,
+    "ME3_authorized": false,
+    "ME4_authorized": false,
+    "ME5_authorized": false
+  },
+  "next_gate": "ME1_COMPLETE",
+  "next_me_stage_authorized": false
+}
