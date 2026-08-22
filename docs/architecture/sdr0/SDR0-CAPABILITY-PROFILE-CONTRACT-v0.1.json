@@ -23,10 +23,11 @@
     "profile_id": "SDR0-PROFILE-SOVEREIGN-DEBT-REPRESSION-REAL-VALUE-DILUTION",
     "name": "Sovereign Debt Repression & Real-Value Dilution",
     "contract_version": "0.1.0-candidate",
-    "stable_question": "When sovereign debt-service and refinancing pressure rises, are fiscal, monetary, regulatory and balance-sheet policies shifting from market-clearing adjustment toward mechanisms that suppress the real cost of government funding or transfer duration/inflation risk to creditors; and is that shift economically material enough to change the cross-asset regime?",
-    "semantic_parent": "P.capital/R",
-    "maturity_state": "candidate_ready_for_human_review",
-    "owner_scope": "Research OS",
+    "stable_question": "What causal capital regime currently governs discount rates, risk appetite, funding conditions and cross-asset capital allocation?",
+    "profile_stable_question": "When sovereign debt-service and refinancing pressure rises, are fiscal, monetary, regulatory and balance-sheet policies shifting from market-clearing adjustment toward mechanisms that suppress the real cost of government funding or transfer duration/inflation risk to creditors; and is that shift economically material enough to change the cross-asset regime?",
+    "semantic_parent": "P.capital",
+    "maturity_state": "candidate_profile_ready_for_human_review",
+    "owner_scope": "Research OS; specialized CAP-R-01 profile, not a new human world",
     "new_top_level_capability": false
   },
   "scope_routing": {
