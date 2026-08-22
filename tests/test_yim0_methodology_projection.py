@@ -91,6 +91,25 @@ class YIM0ReadmeBridgeTests(unittest.TestCase):
         self.assertIn("势 · 信 · 极｜真 · 价 · 生", text)
         self.assertIn("ENG-C / ENG-R / ENG-X", text)
         self.assertIn("ResearchTarget → EngineThesis → PositionPassport → BookState@PIT", text)
+        self.assertIn("Human Grammar is not Return Engine ontology", text)
+        self.assertIn("Genesis Engine Set, not a proven exhaustive ontology", text)
+
+    def test_upstream_os_semantics_remain_intact(self):
+        text = self.text()
+        for invariant in (
+            "one_core_three_worlds_three_gates_one_loop",
+            "X | 极 := (Xs, Xa, Xp)",
+            "顺大势 · 乘共识 · 押极值｜凭真据 · 买好价 · 永不死",
+            "R | Regime Causal Decomposition",
+            "Asset form is not pricing model.",
+        ):
+            self.assertIn(invariant, text)
+
+    def test_bridge_does_not_claim_downstream_authority(self):
+        text = self.text().lower()
+        self.assertIn("does not create schema, registry, portfolio, trading, execution, m3 cutover, or me2–me5 program authority", text)
+        self.assertNotIn("human grammar = c/r/x", text)
+        self.assertNotIn("researchstatevector is obsolete", text)
 
 
 if __name__ == "__main__":
