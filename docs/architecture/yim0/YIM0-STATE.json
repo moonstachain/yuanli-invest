@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE",
+  "status": "candidate_implementation",
+  "repository_base_sha": "877c3bbc59fb6fc01b586b554930bdaca5db4c59",
+  "design_acceptance": "ACCEPT_YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE_DESIGN",
+  "purpose": "Create a zero-new-authority Human Methodology Map, bridge accepted OS semantics to ME0/ME1 successor architecture, and eliminate top-level projection drift without creating ontology, schema, portfolio, trading or successor-stage authority.",
+  "authority": {
+    "human_projection_only": true,
+    "ontology": false,
+    "schema": false,
+    "registry": false,
+    "portfolio": false,
+    "position_sizing": false,
+    "trading": false,
+    "live_execution": false,
+    "constitution_mutation": false,
+    "M3_cutover": false,
+    "A9_switch": false,
+    "ME2": false,
+    "ME3": false,
+    "ME4": false,
+    "ME5": false
+  },
+  "deliverables": {
+    "human_projection": "docs/human-projection/YUANLI-INVESTMENT-METHODOLOGY-MAP-v1.md",
+    "os_readme_bridge": "docs/os-vnext/README.md",
+    "canon_status_generator": "scripts/build_canon_status.py",
+    "canon_status_projection": "docs/architecture/CANON-STATUS.json",
+    "validator": "scripts/validate_yim0_methodology_projection.py",
+    "human_review_card": "docs/architecture/yim0/YIM0-HUMAN-REVIEW-CARD-v0.1.md"
+  },
+  "human_gate": {
+    "token": "ACCEPT_YIM0_YUANLI_INVESTMENT_METHODOLOGY_MAP_PROJECTION_CONVERGENCE",
+    "decision": "pending",
+    "acceptance_does_not_imply_merge": true,
+    "acceptance_does_not_authorize_ME2": true
+  },
+  "machine_qualification": null,
+  "human_review_threshold": "10/10 PASS",
+  "next_gate": "YIM0_MACHINE_QUALIFICATION"
+}
