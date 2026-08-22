@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "projection_semantics": "deterministic_non_authoritative_projection",
   "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
   "mission": "Yuanli Investment Research Intelligence Canon",
@@ -7,8 +7,70 @@
   "objective": "Lifetime Right-Tail Capture under Survival Constraints",
   "center_object": "ResearchCapability",
   "canonical_state": "ResearchStateVector",
+  "legacy_compatibility": {
+    "authority": "legacy_compatibility_only",
+    "fields": ["center_object", "canonical_state"],
+    "normative_replacement": ["system_identity", "state_architecture"]
+  },
+  "system_identity": {
+    "mission_center": "ResearchCapability",
+    "return_reasoning_center": "EngineThesis",
+    "capital_expression_center": "PositionPassport"
+  },
+  "state_architecture": {
+    "historical_canonical_state": "ResearchStateVector",
+    "successor_state_model": ["ResearchTarget", "EngineThesis", "PositionPassport", "BookState"],
+    "legacy_future_write_authority": false,
+    "successor_policy": "semantic_successors_not_in_place_redefinition"
+  },
   "os_model": "one_core_three_worlds_three_gates_one_loop",
   "human_navigation": "势信极_真价生",
+  "architecture_lineage": {
+    "YIP0": {
+      "role": "philosophy_authority",
+      "status": "accepted_merged",
+      "completion_gate": "YIP0_COMPLETE"
+    },
+    "OS_VNEXT": {
+      "role": "human_research_grammar",
+      "status": "active_semantic_authority",
+      "human_navigation": "势信极_真价生",
+      "fabricated_lifecycle_receipt": false
+    },
+    "ME0": {
+      "role": "return_engine_ontology",
+      "status": "human_accepted_merged",
+      "completion_gate": "ME0_COMPLETE",
+      "next_me_stage_authorized": false
+    },
+    "ME1": {
+      "role": "state_object_model",
+      "status": "human_accepted_merged",
+      "completion_gate": "ME1_COMPLETE",
+      "next_me_stage_authorized": false
+    },
+    "ME2": {"role": "c_x_economic_mechanism_separation", "status": "roadmap_only", "authorized": false},
+    "ME3": {"role": "reflexive_repricing_market_clock", "status": "roadmap_only", "authorized": false},
+    "ME4": {"role": "graduation_meta_allocation", "status": "roadmap_only", "authorized": false},
+    "ME5": {"role": "replay_benchmark_ablation_reality_gate", "status": "roadmap_only", "authorized": false}
+  },
+  "latest_completed_architecture_stage": "ME1_COMPLETE",
+  "roadmap_next_unapproved_stage": "ME2",
+  "next_stage_authorized": false,
+  "parallel_programs": {
+    "research_capability_program": {
+      "last_authoritative_stage": "QXM2",
+      "status": "accepted_merged",
+      "next_gate": "QXM3_THEORY_HYPOTHESIS_REGISTRY_ADMISSION_BENCHMARK_PREREGISTRATION",
+      "qxm_f_next_gate": "QXM_F_G1_SELECTIVE_ADMISSION"
+    },
+    "multi_engine_program": {
+      "last_completed_stage": "ME1",
+      "completion_gate": "ME1_COMPLETE",
+      "next_stage": "ME2",
+      "authorized": false
+    }
+  },
   "architecture_extensions": {
     "P": {"human_subspaces": ["P.capital", "P.asset"]},
     "R": "typed_machine_decomposition_and_context_for_P.capital_not_fourth_human_world",
@@ -89,6 +151,10 @@
       "merge_authority": "AUTHORIZE_R2_3B0_MERGE",
       "upstream_dependency_resolved": true
     },
+    "QXM2": {"status": "accepted_merged", "next_gate": "QXM3_THEORY_HYPOTHESIS_REGISTRY_ADMISSION_BENCHMARK_PREREGISTRATION", "merge_commit": "e1b7a65736c6f93089d7e635e5c72624345941fc"},
+    "YIP0": {"status": "accepted_merged", "next_gate": "YIP0_COMPLETE", "merge_commit": "b79581c82ca7197a9ce078baa6f3b5e8708a1e17"},
+    "ME0": {"status": "human_accepted_merged", "next_gate": "ME0_COMPLETE", "merge_commit": "7be7d81028addfffec2120fc306cfdc4da32c51f"},
+    "ME1": {"status": "human_accepted_merged", "next_gate": "ME1_COMPLETE", "merge_commit": "6f1e028831100f3e32575a8f6e5869e727d19271"},
     "R3A": {"status": "paused_not_started", "reason": "await_r2_3b0_contract_architecture_and_capability_implementation_authorization"},
     "R4A": {"status": "not_authorized", "purpose": "Benchmark Closure"}
   },
@@ -143,6 +209,7 @@
   "r2_1_merge_fact": {"pr": 20, "merge_commit": "19c2088231edde3bf5f8a4c70051c2f6506625db", "post_acceptance_ci_run": 89},
   "r2_2_merge_fact": {"pr": 21, "merge_commit": "3bccf723c301f77364c198b9a7b1282c340f5534", "post_acceptance_ci_run": 96},
   "r2_3_merge_fact": {"pr": 22, "merge_commit": "418f06200cde16173743454d506ee946bbc572fc", "merge_method": "squash", "post_acceptance_ci_run": 118},
-  "pending_gate_chain": ["QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK"],
-  "next_gate": "QXM1_FINANCIAL_MECHANICS_CAPABILITY_CANDIDATE_PACK"
+  "pending_gate_chain": ["QXM3_THEORY_HYPOTHESIS_REGISTRY_ADMISSION_BENCHMARK_PREREGISTRATION"],
+  "next_gate": "QXM3_THEORY_HYPOTHESIS_REGISTRY_ADMISSION_BENCHMARK_PREREGISTRATION",
+  "gate_projection_semantics": "legacy_single_gate_compatibility_only_use_parallel_programs"
 }
