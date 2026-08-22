@@ -26,18 +26,85 @@ def build():
     r23am = load(ARCH / "r2_3a" / "R2-3A-MERGE-RECEIPT-v0.1.json")
     r23b0 = load(ARCH / "r2_3b0" / "R2-3B0-STATE.json")
     r23b0r = load(ARCH / "r2_3b0" / "R2-3B0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json")
+    qxm2 = load(ARCH / "qxm2" / "QXM2-STATE.json")
+    yip0 = load(ARCH / "yip0" / "YIP0-STATE.json")
+    me0 = load(ARCH / "me0" / "ME0-STATE.json")
+    me1 = load(ARCH / "me1" / "ME1-STATE.json")
 
     return {
-        "schema_version": "1.1.0",
+        "schema_version": "1.2.0",
         "projection_semantics": "deterministic_non_authoritative_projection",
         "factual_authority": "immutable_receipts_and_external_git_runtime_facts",
         "mission": "Yuanli Investment Research Intelligence Canon",
         "north_star": "Compile investment knowledge into reality-tested, machine-callable research intelligence.",
         "objective": "Lifetime Right-Tail Capture under Survival Constraints",
+        # Compatibility-only singular fields. Normative semantics are system_identity/state_architecture.
         "center_object": "ResearchCapability",
         "canonical_state": "ResearchStateVector",
+        "legacy_compatibility": {
+            "authority": "legacy_compatibility_only",
+            "fields": ["center_object", "canonical_state"],
+            "normative_replacement": ["system_identity", "state_architecture"],
+        },
+        "system_identity": {
+            "mission_center": "ResearchCapability",
+            "return_reasoning_center": "EngineThesis",
+            "capital_expression_center": "PositionPassport",
+        },
+        "state_architecture": {
+            "historical_canonical_state": "ResearchStateVector",
+            "successor_state_model": ["ResearchTarget", "EngineThesis", "PositionPassport", "BookState"],
+            "legacy_future_write_authority": False,
+            "successor_policy": "semantic_successors_not_in_place_redefinition",
+        },
         "os_model": "one_core_three_worlds_three_gates_one_loop",
         "human_navigation": "势信极_真价生",
+        "architecture_lineage": {
+            "YIP0": {
+                "role": "philosophy_authority",
+                "status": yip0["status"],
+                "completion_gate": yip0["next_gate"],
+            },
+            "OS_VNEXT": {
+                "role": "human_research_grammar",
+                "status": "active_semantic_authority",
+                "human_navigation": "势信极_真价生",
+                "fabricated_lifecycle_receipt": False,
+            },
+            "ME0": {
+                "role": "return_engine_ontology",
+                "status": me0["status"],
+                "completion_gate": me0["next_gate"],
+                "next_me_stage_authorized": me0["next_me_stage_authorized"],
+            },
+            "ME1": {
+                "role": "state_object_model",
+                "status": me1["status"],
+                "completion_gate": me1["next_gate"],
+                "next_me_stage_authorized": me1["next_me_stage_authorized"],
+            },
+            "ME2": {"role": "c_x_economic_mechanism_separation", "status": "roadmap_only", "authorized": False},
+            "ME3": {"role": "reflexive_repricing_market_clock", "status": "roadmap_only", "authorized": False},
+            "ME4": {"role": "graduation_meta_allocation", "status": "roadmap_only", "authorized": False},
+            "ME5": {"role": "replay_benchmark_ablation_reality_gate", "status": "roadmap_only", "authorized": False},
+        },
+        "latest_completed_architecture_stage": me1["next_gate"],
+        "roadmap_next_unapproved_stage": "ME2",
+        "next_stage_authorized": me1["next_me_stage_authorized"],
+        "parallel_programs": {
+            "research_capability_program": {
+                "last_authoritative_stage": "QXM2",
+                "status": qxm2["status"],
+                "next_gate": qxm2["next_gate"],
+                "qxm_f_next_gate": qxm2.get("qxm_f_next_gate"),
+            },
+            "multi_engine_program": {
+                "last_completed_stage": "ME1",
+                "completion_gate": me1["next_gate"],
+                "next_stage": "ME2",
+                "authorized": me1["implementation_authorities"]["ME2"],
+            },
+        },
         "architecture_extensions": {
             "P": {"human_subspaces": ["P.capital", "P.asset"]},
             "R": "typed_machine_decomposition_and_context_for_P.capital_not_fourth_human_world",
@@ -87,6 +154,10 @@ def build():
                 "merge_authority": r23b0.get("merge_authority", "not_implied_by_acceptance"),
                 "upstream_dependency_resolved": r23b0["upstream_dependency"]["resolved"],
             },
+            "QXM2": {"status": qxm2["status"], "next_gate": qxm2["next_gate"], "merge_commit": qxm2["merge_commit"]},
+            "YIP0": {"status": yip0["status"], "next_gate": yip0["next_gate"], "merge_commit": yip0["merge_commit"]},
+            "ME0": {"status": me0["status"], "next_gate": me0["next_gate"], "merge_commit": me0["merge_commit"]},
+            "ME1": {"status": me1["status"], "next_gate": me1["next_gate"], "merge_commit": me1["merge_commit"]},
             "R3A": {"status": "paused_not_started", "reason": "await_r2_3b0_contract_architecture_and_capability_implementation_authorization"},
             "R4A": {"status": "not_authorized", "purpose": "Benchmark Closure"},
         },
@@ -157,8 +228,10 @@ def build():
         "r2_1_merge_fact": {"pr": r21r["pr_number"], "merge_commit": r21r["merge_commit_sha"], "post_acceptance_ci_run": r21r["post_acceptance_ci"]["run_number"]},
         "r2_2_merge_fact": {"pr": r22r["pr_number"], "merge_commit": r22r["merge_commit_sha"], "post_acceptance_ci_run": r22r["post_acceptance_ci"]["run_number"]},
         "r2_3_merge_fact": {"pr": r23r["pr_number"], "merge_commit": r23r["merge_commit_sha"], "merge_method": r23r["merge_method"], "post_acceptance_ci_run": r23r["post_acceptance_ci"]["run_number"]},
-        "pending_gate_chain": [r23b0["next_gate"]],
-        "next_gate": r23b0["next_gate"],
+        # Legacy global gate remains current for backward compatibility only; normative consumers use parallel_programs.
+        "pending_gate_chain": [qxm2["next_gate"]],
+        "next_gate": qxm2["next_gate"],
+        "gate_projection_semantics": "legacy_single_gate_compatibility_only_use_parallel_programs",
     }
 
 
