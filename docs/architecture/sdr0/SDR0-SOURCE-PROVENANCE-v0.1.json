@@ -1,0 +1,112 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "SDR0_SOVEREIGN_DEBT_REPRESSION_REAL_VALUE_DILUTION",
+  "status": "candidate_source_seed_registry",
+  "epistemic_law": "Claim Authority <= Evidence Authority",
+  "sources": [
+    {
+      "source_id": "SDR0-SRC-SARGENT-WALLACE-1981",
+      "title": "Some Unpleasant Monetarist Arithmetic",
+      "authors": ["Thomas J. Sargent", "Neil Wallace"],
+      "year": 1981,
+      "publisher": "Federal Reserve Bank of Minneapolis",
+      "url": "https://www.minneapolisfed.org/research/quarterly-review/some-unpleasant-monetarist-arithmetic",
+      "source_kind": "primary_research",
+      "authority": "mechanism_seed_high",
+      "role": ["fiscal_monetary_interaction", "fiscal_dominance_mechanism_seed"],
+      "theoryobject_admitted": false,
+      "notes": "Seeds monetary-fiscal interaction mechanics; does not itself identify any live episode."
+    },
+    {
+      "source_id": "SDR0-SRC-REINHART-KIRKEGAARD-SBRANCIA-2011",
+      "title": "Financial Repression Redux",
+      "authors": ["Carmen M. Reinhart", "Jacob F. Kirkegaard", "M. Belen Sbrancia"],
+      "year": 2011,
+      "publisher": "International Monetary Fund, Finance & Development",
+      "url": "https://www.imf.org/external/pubs/ft/fandd/2011/06/reinhart.htm",
+      "source_kind": "institutional_research",
+      "authority": "mechanism_seed_high",
+      "role": ["financial_repression_definition", "negative_real_rate_debt_liquidation", "captive_demand_mechanism"],
+      "theoryobject_admitted": false,
+      "notes": "Defines financial repression as official direction of funds toward government use, usually below market rates, and discusses inflation/negative real rates as debt-liquidation mechanisms."
+    },
+    {
+      "source_id": "SDR0-SRC-US-TREASURY-FED-ACCORD",
+      "title": "The Treasury-Fed Accord",
+      "authors": ["Federal Reserve History"],
+      "year": 1951,
+      "publisher": "Federal Reserve System historical resource",
+      "url": "https://www.federalreservehistory.org/essays/treasury-fed-accord",
+      "source_kind": "official_historical_record",
+      "authority": "historical_event_primary_secondary_official",
+      "role": ["US_1942_1951_gold_replay", "yield_peg", "government_financing_support", "policy_exit"],
+      "theoryobject_admitted": false,
+      "notes": "Records the 3/8 percent Treasury-bill peg, implicit 2.5 percent long-bond cap, forced Fed purchases and 1951 Accord exit."
+    },
+    {
+      "source_id": "SDR0-SRC-BOJ-YCC-2016",
+      "title": "Comprehensive Assessment of Monetary Easing and QQE with Yield Curve Control",
+      "authors": ["Bank of Japan"],
+      "year": 2016,
+      "publisher": "Bank of Japan",
+      "url": "https://www.boj.or.jp/en/about/press/koen_2016/ko160926a.htm",
+      "source_kind": "primary_policy_source",
+      "authority": "primary_policy",
+      "role": ["JAPAN_2016_2024_YCC_gold_replay", "yield_target_installation"],
+      "theoryobject_admitted": false,
+      "notes": "Official BOJ description of the YCC framework and 10-year JGB operating target."
+    },
+    {
+      "source_id": "SDR0-SRC-BOJ-YCC-2024-EXIT",
+      "title": "On the Recent Changes in the Bank of Japan's Monetary Policy Framework",
+      "authors": ["UEDA Kazuo"],
+      "year": 2024,
+      "publisher": "Bank of Japan",
+      "url": "https://www.boj.or.jp/en/about/press/koen_2024/ko240502a.htm",
+      "source_kind": "primary_policy_source",
+      "authority": "primary_policy",
+      "role": ["JAPAN_2016_2024_YCC_gold_replay", "policy_exit"],
+      "theoryobject_admitted": false,
+      "notes": "Official account of discontinuing QQE with YCC in March 2024."
+    },
+    {
+      "source_id": "SDR0-SRC-FED-FIMA-REPO",
+      "title": "FIMA Repo Facility FAQs",
+      "authors": ["Board of Governors of the Federal Reserve System"],
+      "year": 2024,
+      "publisher": "Federal Reserve",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fima-repo-facility-faqs.htm",
+      "source_kind": "primary_policy_source",
+      "authority": "primary_policy",
+      "role": ["hard_negative", "liquidity_backstop_boundary", "foreign_official_treasury_sales_alternative"],
+      "theoryobject_admitted": false,
+      "notes": "Officially describes FIMA as a temporary dollar-liquidity alternative to open-market Treasury sales; used to prevent misclassifying liquidity plumbing as monetization."
+    },
+    {
+      "source_id": "SDR0-SRC-BIS-DSR-METHODOLOGY",
+      "title": "How much income is used for debt payments? A new database for debt service ratios",
+      "authors": ["Mathias Drehmann", "Anamaria Illes", "Mikael Juselius", "Marjorie Santos"],
+      "year": 2015,
+      "publisher": "Bank for International Settlements",
+      "url": "https://www.bis.org/publ/qtrpdf/r_qt1509h.htm",
+      "source_kind": "institutional_methodology",
+      "authority": "methodology_seed_high",
+      "role": ["debt_service_methodology_seed", "stock_vs_service_burden"],
+      "theoryobject_admitted": false,
+      "notes": "Private-sector DSR methodology is not directly transplanted to sovereigns; it seeds the distinction between debt stock and income/service burden."
+    }
+  ],
+  "live_state_source_classes_required": [
+    "official_fiscal_budget_source",
+    "official_debt_management_and_auction_source",
+    "central_bank_policy_and_balance_sheet_source",
+    "official_inflation_and_real_yield_source",
+    "official_cross_border_holdings_source",
+    "regulatory_primary_source_for_captive_demand_claims"
+  ],
+  "explicit_non_admission": [
+    "No source in this registry is automatically admitted as a Canon TheoryObject.",
+    "No historical analogy proves the 2026 live state.",
+    "No media narrative can establish financial repression without primary evidence."
+  ]
+}
