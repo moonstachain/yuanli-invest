@@ -163,7 +163,7 @@ RTDB0 freezes these laws:
 
 `RightTailGenerator` is a reusable mechanism object, not a score and not an asset label.
 
-Initial generator families may include, subject to Canon review:
+The initial **candidate** generator registry may include the following families. Candidate presence in RTDB0 does not grant Canon status; only the later implementation/governance acceptance process may promote a definition:
 
 - Structural Expansion
 - Value Concentration / Bottleneck Control
@@ -452,7 +452,7 @@ RTDB0 creates seven specialized Notion databases:
 6. Replay Dossier
 7. Reality Settlement & Learning
 
-Not every specialized object is globally registered. Global Registry admission requires a separate eligibility gate.
+Not every specialized object is globally registered. Global Registry admission is derived from the implementation-time eligibility contract rather than from manual one-off promotion.
 
 ### 7.3 Page system
 
@@ -631,7 +631,7 @@ Projector never hard-deletes Notion pages automatically. Upstream deprecation ch
 
 ### 9.1 Initial Gold set
 
-RTDB0 targets 12 Gold episodes/case families for the Genesis corpus:
+RTDB0 targets 12 Genesis **case families**, each with one initial canonical Gold episode selected during implementation:
 
 1. Amazon
 2. Apple
@@ -650,7 +650,7 @@ These are research starting points, not investment recommendations.
 
 ### 9.2 Matched hard negatives
 
-Each Gold must receive at least one matched hard negative, boundary case, or control based on ex-ante similarity rather than ex-post failure knowledge.
+Each initial Gold episode must receive at least one matched hard negative, boundary case, or control based on ex-ante similarity rather than ex-post failure knowledge.
 
 Candidate pairs include, subject to research validation:
 
@@ -664,7 +664,7 @@ Pair identity is not accepted until matching dimensions and confounders are revi
 
 ### 9.3 PIT density
 
-Genesis aims for approximately 3–5 meaningful PIT snapshots per Gold episode, producing roughly 100 historical knowledge slices across Gold and contrast cases.
+Genesis aims for approximately 3–5 meaningful PIT snapshots per initial Gold episode plus the PIT snapshots required for matched contrasts, producing roughly 100 historical knowledge slices across the first qualified corpus.
 
 Quality dominates quantity.
 
@@ -723,7 +723,12 @@ RTDB0 replaces many micro-gates with six Gold Acceptance Gates.
 
 ### G4 — Reproducibility
 
-- Same Canon revision, capability version, code commit, PIT input, and evidence cutoff can reproduce an auditable replay result/receipt within the defined deterministic tolerance.
+A replay is reproducible when the same Canon revision, capability version, code commit, PIT input IDs, evidence cutoff, and frozen fixtures produce:
+
+- exact equality for object identity, evidence bundle hash, receipt lineage, categorical verdicts, and benchmark pass/fail state;
+- fixture-defined numeric tolerances for model/provider outputs where exact floating-point equality is not guaranteed.
+
+The tolerance value must live in the executable test fixture/contract; it may not be chosen after seeing the rerun result.
 
 ### G5 — Projection Integrity
 
@@ -771,7 +776,7 @@ Implementation must fail closed against at least these classes:
 
 ## 12. Implementation decomposition
 
-After written-spec Human Acceptance, implementation planning must decompose work into eight battles:
+After written-spec Human Acceptance, implementation planning must decompose work into eight battles under one master execution plan:
 
 1. **Battle 0 — Master Plan / Environment Qualification**
    - implementation plan;
@@ -824,8 +829,8 @@ After written-spec Human Acceptance, implementation planning must decompose work
    - exact receipts.
 
 8. **Battle 7 — 12+12 Genesis Expansion + Qualification**
-   - remaining cases;
-   - hard negatives;
+   - remaining case families and initial Gold episodes;
+   - matched hard negatives / boundary cases;
    - replay/settlement coverage;
    - six acceptance gates;
    - Human Review package.
@@ -919,7 +924,7 @@ The review passes when all of the following are accepted:
 9. NVIDIA E2E is a sufficient Genesis proof before bulk expansion.
 10. Six Gold Acceptance Gates are sufficient to qualify the system.
 11. Scope excludes portfolio/trading and unrelated Canon mutation.
-12. The design is focused enough for one implementation plan, decomposed into eight reviewable battles.
+12. The design is focused enough for one master implementation plan with eight independently reviewable battles.
 
 ### Requested written-spec acceptance token
 
