@@ -35,7 +35,7 @@
 - Settlement resolves claims/mechanisms separately from raw return and ends in `REVISION_REQUIRED`, `NO_REVISION_REQUIRED`, or `DESCRIPTIVE_ONLY`.
 - RTDB data must not be placed in the existing `yuanli-health` Supabase project.
 - Target Supabase project name: `yuanli-invest-data`.
-- Creating a billable Supabase project requires one explicit owner confirmation of the exact platform-reported cost before creation.
+- Creating a billable Supabase project or enabling a billable backup/PITR upgrade requires one explicit owner confirmation of the exact platform-reported cost before the side effect.
 - Supabase secrets and Notion tokens never enter GitHub.
 - V1 is `GitHub → Supabase → Notion`; automatic Notion → Supabase truth mutation is out of scope.
 - Projector may update MACHINE-owned Notion properties but never overwrite human long-form page body after initial template installation.
@@ -500,15 +500,17 @@ git add docs/architecture/rtdb0/RTDB0-ENVIRONMENT.json docs/architecture/rtdb0/R
 git commit -m "RTDB0: record isolated Supabase project"
 ```
 
-### Task 2.2: Create namespace/core migrations with SQL RED test
+### Task 2.2: Create namespace/core migrations, operator README, and generator seed
 
 **Files:**
+- Create: `infra/supabase/rtdb/README.md`
 - Create: `infra/supabase/rtdb/migrations/202608230001_extensions_and_namespaces.sql`
 - Create: `infra/supabase/rtdb/migrations/202608230002_core.sql`
+- Create: `infra/supabase/rtdb/seeds/right-tail-generators-v0.1.sql`
 - Create: `tests/sql/rtdb_schema_contract.sql`
 
 **Interfaces:**
-- Produces: seven namespaces and core identity/mechanism/pair tables.
+- Produces: seven namespaces, core identity/mechanism/pair tables, and deterministic generator seed sourced from GitHub registry.
 
 - [ ] **Step 1: Write RED SQL assertions**
 
@@ -544,14 +546,22 @@ rt_core.matched_case_pairs
 
 Every domain table has UUID PK, unique `object_key`, creation timestamp, and revision metadata. Pair table stores pair type, pair decision timestamp, matching dimensions, confounders, discriminator hypothesis, admission state, and review receipt reference.
 
-- [ ] **Step 4: Run GREEN and commit**
+- [ ] **Step 4: Generate `right-tail-generators-v0.1.sql` from the accepted registry**
+
+The SQL must reproduce the same object keys and mechanism metadata as `registry/rtdb/right-tail-generators-v0.1.json`; the validator compares the registry keys to seed keys and fails on drift.
+
+- [ ] **Step 5: Write operator README**
+
+Document lexical migration order, seed order, no-Dashboard-drift rule, live negative-test commands, and secret-handling rules.
+
+- [ ] **Step 6: Run GREEN and commit**
 
 ```bash
-git add infra/supabase/rtdb/migrations/202608230001_extensions_and_namespaces.sql infra/supabase/rtdb/migrations/202608230002_core.sql tests/sql/rtdb_schema_contract.sql
+git add infra/supabase/rtdb/README.md infra/supabase/rtdb/migrations/202608230001_extensions_and_namespaces.sql infra/supabase/rtdb/migrations/202608230002_core.sql infra/supabase/rtdb/seeds/right-tail-generators-v0.1.sql tests/sql/rtdb_schema_contract.sql
 git commit -m "feat: add RTDB Supabase core schema"
 ```
 
-### Task 2.3: Add epistemic, experiment, and ledger migrations
+### Task 2.3: Add epistemic, experiment, ledger, and retrieval indexes
 
 **Files:**
 - Create: `infra/supabase/rtdb/migrations/202608230003_epistemic.sql`
@@ -559,7 +569,7 @@ git commit -m "feat: add RTDB Supabase core schema"
 - Modify: `tests/sql/rtdb_schema_contract.sql`
 
 **Interfaces:**
-- Produces: PIT/evidence/outcome, replay/benchmark/settlement, append-only receipts.
+- Produces: PIT/evidence/outcome, replay/benchmark/settlement, append-only receipts, and structured/full-text retrieval indexes.
 
 - [ ] **Step 1: Extend RED assertions**
 
@@ -596,7 +606,11 @@ Replay runs bind exact Canon revision, capability version, code commit, evidence
 
 Create `private.reject_ledger_mutation()` and attach it to UPDATE/DELETE on all `rt_ledger` receipt tables; exact exception token `RTDB_LEDGER_APPEND_ONLY`.
 
-- [ ] **Step 5: Run GREEN and commit**
+- [ ] **Step 5: Add V1 retrieval indexes**
+
+Create normal indexes on stable keys/time/FKs and a Postgres full-text GIN index over curated claim text. Do not enable pgvector in V1 migration unless a real semantic-retrieval consumer is introduced; vector similarity remains optional retrieval metadata, never evidence authority.
+
+- [ ] **Step 6: Run GREEN and commit**
 
 ```bash
 git add infra/supabase/rtdb/migrations/202608230003_epistemic.sql infra/supabase/rtdb/migrations/202608230004_experiment_and_ledger.sql tests/sql/rtdb_schema_contract.sql
@@ -678,6 +692,8 @@ Unique `(target_database_key, object_key)`. Store desired/applied source revisio
 
 `notion_pit_blind_projection_v1` is physically forbidden from exposing columns whose normalized names contain `future_return`, `settlement_verdict`, `future_settlement`, `final_gold_role`, `post_pit_generator`, `later_engine_transition`, `outcome_observation`.
 
+Every case/episode/generator/replay/settlement view also exposes a boolean `global_registry_eligible`; default false. The flag may be true only for the RTDB portal, accepted Generator objects, accepted Gold/Hard-Negative/Boundary Episodes, selected accepted Replay Dossiers, or material Settlements under the registry eligibility rules. This permits later projection into the existing Knowledge Object Registry without creating an eighth specialized RTDB database.
+
 - [ ] **Step 5: Run GREEN and commit**
 
 ```bash
@@ -685,15 +701,16 @@ git add infra/supabase/rtdb/migrations/202608230006_projection_and_sync.sql infr
 git commit -m "feat: add RTDB projection and sync ledger"
 ```
 
-### Task 3.3: Deploy and qualify Supabase data plane
+### Task 3.3: Deploy, qualify data plane, and record backup status
 
 **Files:**
 - Modify: `docs/architecture/rtdb0/RTDB0-STATE.json`
+- Modify: `docs/architecture/rtdb0/RTDB0-ENVIRONMENT.json`
 
 **Interfaces:**
-- Produces: live migration qualification receipt.
+- Produces: live migration qualification and backup/PITR capability record.
 
-- [ ] **Step 1: Apply migrations in lexical order**
+- [ ] **Step 1: Apply migrations and generator seed in lexical order**
 
 Use Supabase SQL/migration connector. No Dashboard-only divergence.
 
@@ -701,14 +718,18 @@ Use Supabase SQL/migration connector. No Dashboard-only divergence.
 
 Verify exact future-evidence, frozen-PIT, and append-only errors; inspect PIT blind view columns.
 
-- [ ] **Step 3: Record migration file SHA-256 values and live results**
+- [ ] **Step 3: Inspect backup/PITR status**
 
-Write project ref, migration hashes, and `pit_negative_tests: PASS` into RTDB0 state.
+Record the platform’s actual daily-backup/PITR capability for the new project. If enabling PITR requires a new billable upgrade, request explicit exact-cost confirmation before changing the plan; otherwise enable the production-appropriate available setting. This side effect follows the same cost rule as project creation.
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 4: Record migration hashes/live results**
+
+Write project ref, SHA-256 for each applied migration/seed, `pit_negative_tests: PASS`, and backup/PITR status into RTDB0 state/environment.
+
+- [ ] **Step 5: Commit**
 
 ```bash
-git add docs/architecture/rtdb0/RTDB0-STATE.json
+git add docs/architecture/rtdb0/RTDB0-STATE.json docs/architecture/rtdb0/RTDB0-ENVIRONMENT.json
 git commit -m "RTDB0: qualify Supabase data plane"
 ```
 
@@ -716,7 +737,7 @@ git commit -m "RTDB0: qualify Supabase data plane"
 
 # Battle 4 — Notion Think-Tank
 
-### Task 4.1: Freeze Notion manifest and ownership model
+### Task 4.1: Freeze Notion manifest, ownership, registry eligibility, learning journeys
 
 **Files:**
 - Create: `infra/supabase/rtdb/projection/notion/notion-rtdb-v1.json`
@@ -727,7 +748,7 @@ git commit -m "RTDB0: qualify Supabase data plane"
 - Modify: `tests/test_rtdb0_architecture.py`
 
 **Interfaces:**
-- Produces: deterministic `1 + 7` DB and `1 + 6` page-template contract.
+- Produces: deterministic `1 + 7` DB, `1 + 6` page-template, global-registry eligibility, and three-journey contract.
 
 - [ ] **Step 1: Write RED manifest tests**
 
@@ -761,7 +782,9 @@ Sync Status
 
 Human long-form body is never MACHINE-owned. Encode template keys `research_passport`, `gold_episode`, `generator`, `pit_blind`, `contrast_pair`, `replay_dossier`, `reality_settlement`.
 
-- [ ] **Step 3: Encode portal doors**
+- [ ] **Step 3: Encode portal doors, learning journeys, and KOR eligibility**
+
+Portal doors:
 
 ```text
 Thirty-Year Right-Tail Map
@@ -772,6 +795,16 @@ PIT Replay Lab
 Reality Settlement
 From History to Now
 ```
+
+Learning journeys:
+
+```text
+BEGINNER: Map → Case → Generator → Contrast
+EXPERT_ENTREPRENEUR: Generator → Value Concentration → Case → Business Transfer
+LAB: Generator → PIT → Pair → Replay → Benchmark → Settlement → Revision
+```
+
+Global Registry eligibility is explicit and default-deny; PIT snapshots and ordinary runtime runs are not eligible.
 
 - [ ] **Step 4: Implement validator and CI**
 
@@ -821,7 +854,7 @@ Case→Episode, Episode↔Generator, Episode→PIT, pair relations, replay relat
 
 - [ ] **Step 5: Create portal views and `1+6` skeletons**
 
-PIT Blind views hide settlement/outcome/final Gold role. Backend operational views remain separate from public-facing Think Tank views.
+PIT Blind views hide settlement/outcome/final Gold role. Backend operational views remain separate from Think Tank views. Audience views use existing Yuanli Portal vocabulary `BEGINNER`, `EXPERT_ENTREPRENEUR`, `LAB` rather than inventing new labels.
 
 - [ ] **Step 6: Verify existing Knowledge Object Registry still owns global identity**
 
@@ -891,15 +924,15 @@ git add infra/supabase/rtdb/functions/_shared .github/workflows/ci.yml
 git commit -m "feat: add deterministic RTDB projection core"
 ```
 
-### Task 5.2: Implement idempotent Notion projector
+### Task 5.2: Implement idempotent Notion projector including selected KOR projection
 
 **Files:**
 - Create: `infra/supabase/rtdb/functions/notion-projector/index.ts`
 - Modify: `infra/supabase/rtdb/functions/_shared/projection_test.ts`
 
 **Interfaces:**
-- Consumes: outbox, seven projection views, ownership manifest, Notion secret, projection map.
-- Produces: CREATE/PATCH/NOOP/DEPRECATE/RELATION_REFRESH plus append-only receipts.
+- Consumes: outbox, seven projection views, ownership manifest, Notion secret, projection map, verified KOR ID.
+- Produces: CREATE/PATCH/NOOP/DEPRECATE/RELATION_REFRESH plus append-only receipts; eligible accepted objects may also project identity metadata into existing KOR.
 
 - [ ] **Step 1: Add RED decision tests**
 
@@ -916,6 +949,8 @@ duplicate key mapping           → BLOCKED_CONFLICT
 source deprecated               → DEPRECATE state, never hard delete
 ```
 
+Also prove `global_registry_eligible=false` never writes KOR and eligible=true can enqueue an identity-only KOR projection after specialized-page identity exists.
+
 - [ ] **Step 2: Implement worker flow**
 
 ```text
@@ -926,6 +961,7 @@ claim job
 → lookup map
 → create or patch machine properties
 → relation refresh only after dependency mappings exist
+→ selected KOR identity projection when eligible
 → verify observed machine state
 → append projection/sync receipt
 → complete or classify job
@@ -1113,7 +1149,7 @@ git commit -m "RTDB0: run NVIDIA Genesis replay settlement"
 
 - [ ] **Step 1: Enqueue topologically**
 
-Case + Generator → Episode → PIT + Contrast → Replay → Settlement → relation refresh.
+Case + Generator → Episode → PIT + Contrast → Replay → Settlement → relation refresh → selected KOR identity projection.
 
 - [ ] **Step 2: Run projector to convergence**
 
@@ -1146,11 +1182,11 @@ git commit -m "RTDB0: qualify NVIDIA Genesis E2E"
 
 # Battle 7 — Genesis Expansion and Final Human Review
 
-### Task 7.1: Settle 12 matched-contrast admissions
+### Task 7.1: Create Genesis-set doc and settle 12 matched-contrast admissions
 
 **Files:**
 - Modify: `reconstructions/rtdb/genesis-manifest-v0.1.json`
-- Modify: `docs/rtdb/genesis-set.md`
+- Create: `docs/rtdb/genesis-set.md`
 - Modify: `tests/test_rtdb0_genesis.py`
 
 **Interfaces:**
@@ -1172,7 +1208,11 @@ class RTDB0GenesisCoverageTests(unittest.TestCase):
 
 Starting candidates may include Amazon↔Webvan, Apple↔Nokia/BlackBerry, Tencent↔Renren, and validated boundary/negative analogues for remaining families. Record matching dimensions, confounders, minimum discriminator, pair-decision date, and review receipt. No defensible pair → `PAIR_BLOCKED`.
 
-- [ ] **Step 3: Run GREEN and commit**
+- [ ] **Step 3: Write `genesis-set.md`**
+
+For all 12 families, show Gold episode scope, candidate/accepted contrast, PIT milestones, pair admission state, replay state, settlement state, and explicit blockers. It is a status/readability projection, not a second source of truth.
+
+- [ ] **Step 4: Run GREEN and commit**
 
 ```bash
 python -m unittest tests.test_rtdb0_genesis.RTDB0GenesisCoverageTests -v
@@ -1243,7 +1283,7 @@ Require existing `contracts` and `governance` green on PR head.
 
 - [ ] **Step 3: Build Human Review Card**
 
-Include exact commit SHA, non-secret Supabase ref, migration hashes, PIT leakage count, replay receipts, projection receipts, Notion portal IDs, unresolved/blocked cases, and capability deltas.
+Include exact commit SHA, non-secret Supabase ref, migration hashes, backup/PITR status, PIT leakage count, replay receipts, projection receipts, Notion portal IDs, unresolved/blocked cases, and capability deltas.
 
 - [ ] **Step 4: Set final machine-qualified state only when all six pass**
 
@@ -1296,12 +1336,16 @@ No protected-branch merge and no final Canon promotion without explicit owner au
 | Baseline/ablation | Replay/benchmark receipts |
 | Outcome != settlement | Separate tables/objects |
 | Receipt append-only | SQL mutation-negative tests |
+| Structured/full-text retrieval | Index contract + query smoke test |
 | Seven Notion DBs | Live IDs in environment file |
 | Research Passport + six templates | Manifest + live portal |
+| Three learning journeys | Manifest + live audience views |
+| Existing KOR preserved | Verified KOR ID + eligibility projection test |
 | Human body preserved | Projector smoke-test receipt |
 | Idempotent projection | CREATE then NOOP proof |
 | PIT blind no future fields | SQL view audit + Notion inspection |
 | Daily reconciliation | Scheduled job + reconcile receipt |
+| Backup/PITR status | Environment/state record |
 | NVIDIA E2E | G1–G6 evidence |
 | 12+12 quality | Accepted pairs or explicit blocks |
 | Protected CI | Exact-head `contracts` + `governance` green |
@@ -1310,7 +1354,7 @@ No protected-branch merge and no final Canon promotion without explicit owner au
 
 Execution stops rather than improvises if:
 
-- billable Supabase creation lacks explicit cost confirmation;
+- billable Supabase creation or backup/PITR upgrade lacks explicit exact-cost confirmation;
 - exact main baseline fails before RTDB changes and cannot be proven unrelated;
 - a PIT source lacks defensible `first_available_at`;
 - a Gold/contrast pair cannot be justified ex ante;
