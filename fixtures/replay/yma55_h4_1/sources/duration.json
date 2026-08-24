@@ -1,0 +1,423 @@
+{
+  "schema_version": "0.2.0",
+  "mechanism_family": "MRM-D",
+  "sources": [
+    {
+      "source_id": "S-D82-FED-19810721",
+      "title": "Semiannual Monetary Policy Report to Congress testimony",
+      "publisher": "Federal Reserve Board / FRASER",
+      "canonical_url": "https://fraser.stlouisfed.org/title/statements-speeches-paul-a-volcker-451/semiannual-monetary-policy-report-congress-8239/fulltext",
+      "document_date": "1981-07-21",
+      "published_at": "1981-07-21T16:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E0",
+      "producer_class": "central_bank",
+      "originating_source_id": "FED-BOARD",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Contemporaneous Federal Reserve policy testimony available before the H4.1 T0 cutoff.",
+      "claims": [
+        "Federal Reserve policy remained restrictive and credibility restoration was an explicit objective."
+      ],
+      "signals": [
+        {
+          "observable": "credibility_improves",
+          "state": "TRUE"
+        },
+        {
+          "observable": "policy_restriction",
+          "state": "TRUE"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D82-BLS-198111",
+      "title": "CPI Detailed Report, November 1981",
+      "publisher": "Bureau of Labor Statistics / FRASER",
+      "canonical_url": "https://fraser.stlouisfed.org/title/cpi-detailed-report-58/november-1981-19209",
+      "document_date": "1981-11-01",
+      "published_at": "1981-12-23T17:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E1",
+      "producer_class": "statistical_agency",
+      "originating_source_id": "BLS-CPI",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Independent contemporaneous BLS inflation data published before the T0 cutoff.",
+      "claims": [
+        "Inflation readings were decelerating from prior extremes by late 1981."
+      ],
+      "signals": [
+        {
+          "observable": "disinflation_persists",
+          "state": "TRUE"
+        },
+        {
+          "observable": "inflation",
+          "state": "DOWN"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D82-STL-19821026",
+      "title": "Monetary Trends, October 26 1982",
+      "publisher": "Federal Reserve Bank of St. Louis / FRASER",
+      "canonical_url": "https://fraser.stlouisfed.org/files/docs/publications/frbsl_mt/frbsl_mt_19821026.pdf",
+      "document_date": "1982-10-26",
+      "published_at": "1982-10-26T17:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E1",
+      "producer_class": "regional_central_bank",
+      "originating_source_id": "FRBSTL-MT",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Forward observation used only under the resolver cutoff; broad long-yield decline is used as an operational term-premium proxy, not an ACM decomposition.",
+      "claims": [
+        "Long-term yields had declined materially by late 1982."
+      ],
+      "signals": [
+        {
+          "observable": "long_yield",
+          "state": "DOWN"
+        },
+        {
+          "observable": "term_premium",
+          "state": "DOWN",
+          "note": "Operational proxy from the broad decline in long-term yields; not an ACM term-premium estimate."
+        }
+      ]
+    },
+    {
+      "source_id": "S-D94-FED-19931223",
+      "title": "Minutes of the Federal Open Market Committee, November 16 1993",
+      "publisher": "Federal Reserve Board",
+      "canonical_url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical1993.htm",
+      "document_date": "1993-11-16",
+      "published_at": "1993-12-23T19:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E0",
+      "producer_class": "central_bank",
+      "originating_source_id": "FED-FOMC",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Contemporaneous FOMC record available before the January 1994 cutoff.",
+      "claims": [
+        "Policy had not yet entered the aggressive tightening cycle later seen in 1994."
+      ],
+      "signals": [
+        {
+          "observable": "policy_not_tightening_aggressively",
+          "state": "TRUE"
+        },
+        {
+          "observable": "policy_rate",
+          "state": "STABLE"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D94-BEA-199312",
+      "title": "Survey of Current Business, December 1993",
+      "publisher": "Bureau of Economic Analysis",
+      "canonical_url": "https://apps-fd.bea.gov/scb/pdf/1993/1293cont.pdf",
+      "document_date": "1993-12-01",
+      "published_at": "1993-12-20T17:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E1",
+      "producer_class": "statistical_agency",
+      "originating_source_id": "BEA-SCB",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Independent BEA macro data available before the H4.1 cutoff.",
+      "claims": [
+        "Economic activity was strengthening while contemporaneous inflation remained comparatively benign."
+      ],
+      "signals": [
+        {
+          "observable": "growth_firms",
+          "state": "TRUE"
+        },
+        {
+          "observable": "inflation_benign",
+          "state": "TRUE"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D94-FED-19940325",
+      "title": "Minutes of the Federal Open Market Committee, February 3-4 1994",
+      "publisher": "Federal Reserve Board",
+      "canonical_url": "https://www.federalreserve.gov/fomc/MINUTES/1994/19940204min.htm",
+      "document_date": "1994-02-04",
+      "published_at": "1994-03-25T19:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E0",
+      "producer_class": "central_bank",
+      "originating_source_id": "FED-FOMC-1994",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Forward observation admitted only under the resolver cutoff.",
+      "claims": [
+        "The Federal Reserve began tightening in February 1994."
+      ],
+      "signals": [
+        {
+          "observable": "policy_rate",
+          "state": "UP"
+        },
+        {
+          "observable": "tightening_cycle",
+          "state": "TRUE"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D94-STL-199412",
+      "title": "Monetary Trends, December 1994",
+      "publisher": "Federal Reserve Bank of St. Louis / FRASER",
+      "canonical_url": "https://fraser.stlouisfed.org/title/monetary-trends-6264/december-1994-681442",
+      "document_date": "1994-12-01",
+      "published_at": "1994-12-20T17:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E1",
+      "producer_class": "regional_central_bank",
+      "originating_source_id": "FRBSTL-MT-1994",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Forward observation admitted only under the resolver cutoff; term-premium direction is operationally proxied by broad long-yield repricing.",
+      "claims": [
+        "Long-term Treasury yields rose substantially during 1994."
+      ],
+      "signals": [
+        {
+          "observable": "long_yield",
+          "state": "UP"
+        },
+        {
+          "observable": "term_premium",
+          "state": "UP"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D08-FED-20080805",
+      "title": "FOMC statement, August 5 2008",
+      "publisher": "Federal Reserve Board",
+      "canonical_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20080805a.htm",
+      "document_date": "2008-08-05",
+      "published_at": "2008-08-05T18:15:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E0",
+      "producer_class": "central_bank",
+      "originating_source_id": "FED-FOMC-2008",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Contemporaneous FOMC statement before the September 1 replay cutoff.",
+      "claims": [
+        "Financial-market strains remained significant while inflation risks were still elevated."
+      ],
+      "signals": [
+        {
+          "observable": "credit_stress",
+          "state": "TRUE"
+        },
+        {
+          "observable": "disinflation",
+          "state": "FALSE"
+        },
+        {
+          "observable": "inflation",
+          "state": "HIGH"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D08-BEA-20080828",
+      "title": "Gross Domestic Product: Second Quarter 2008 (Preliminary)",
+      "publisher": "Bureau of Economic Analysis",
+      "canonical_url": "https://www.bea.gov/system/files/2019-02/gdp208p_fax.pdf",
+      "document_date": "2008-08-28",
+      "published_at": "2008-08-28T12:30:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E1",
+      "producer_class": "statistical_agency",
+      "originating_source_id": "BEA-GDP-2008Q2",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Independent macro release published before the replay cutoff.",
+      "claims": [
+        "Headline real GDP did not yet show the later crisis collapse, while corporate profits were weakening."
+      ],
+      "signals": [
+        {
+          "observable": "growth",
+          "state": "MIXED"
+        },
+        {
+          "observable": "corporate_profit",
+          "state": "DOWN"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D08-FED-20080916",
+      "title": "FOMC statement, September 16 2008",
+      "publisher": "Federal Reserve Board",
+      "canonical_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20080916a.htm",
+      "document_date": "2008-09-16",
+      "published_at": "2008-09-16T18:15:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E0",
+      "producer_class": "central_bank",
+      "originating_source_id": "FED-FOMC-2008-SEP",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Forward observation admitted only at the resolver cutoff.",
+      "claims": [
+        "Financial strains intensified and the growth outlook weakened materially after the T0 freeze."
+      ],
+      "signals": [
+        {
+          "observable": "credit_spread",
+          "state": "UP"
+        },
+        {
+          "observable": "credit_stress",
+          "state": "TRUE"
+        },
+        {
+          "observable": "growth",
+          "state": "DOWN"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D08-FED-20080918",
+      "title": "Federal Reserve and other central banks announce coordinated measures to address elevated pressures in short-term U.S. dollar funding markets",
+      "publisher": "Federal Reserve Board",
+      "canonical_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20080918a.htm",
+      "document_date": "2008-09-18",
+      "published_at": "2008-09-18T07:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E0",
+      "producer_class": "central_bank",
+      "originating_source_id": "FED-FUNDING-2008-SEP",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Forward observation of acute funding stress and policy response, admitted only after T0.",
+      "claims": [
+        "Dollar funding stress became acute enough to trigger coordinated central-bank measures."
+      ],
+      "signals": [
+        {
+          "observable": "credit_spread",
+          "state": "UP"
+        },
+        {
+          "observable": "safe_haven_flow",
+          "state": "TRUE"
+        },
+        {
+          "observable": "long_yield",
+          "state": "DOWN"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D20-FED-20200729",
+      "title": "FOMC statement, July 29 2020",
+      "publisher": "Federal Reserve Board",
+      "canonical_url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20200729a.htm",
+      "document_date": "2020-07-29",
+      "published_at": "2020-07-29T18:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E0",
+      "producer_class": "central_bank",
+      "originating_source_id": "FED-FOMC-2020-JUL",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Contemporaneous Fed policy statement before the August 1 T0 cutoff.",
+      "claims": [
+        "Rates remained at the effective lower bound and asset purchases continued amid subdued inflation."
+      ],
+      "signals": [
+        {
+          "observable": "policy_stays_easy",
+          "state": "TRUE"
+        },
+        {
+          "observable": "low_inflation_persists",
+          "state": "TRUE"
+        },
+        {
+          "observable": "central_bank_flow",
+          "state": "HIGH"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D20-BEA-20200730",
+      "title": "Gross Domestic Product, 2nd Quarter 2020 (Advance Estimate) and Annual Update",
+      "publisher": "Bureau of Economic Analysis",
+      "canonical_url": "https://www.bea.gov/index.php/news/2020/gross-domestic-product-2nd-quarter-2020-advance-estimate-and-annual-update",
+      "document_date": "2020-07-30",
+      "published_at": "2020-07-30T12:30:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E1",
+      "producer_class": "statistical_agency",
+      "originating_source_id": "BEA-GDP-2020Q2",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Independent macro release before T0 documenting the unprecedented Q2 contraction.",
+      "claims": [
+        "Real GDP collapsed in the second quarter of 2020."
+      ],
+      "signals": [
+        {
+          "observable": "weak_growth",
+          "state": "TRUE"
+        },
+        {
+          "observable": "growth",
+          "state": "DOWN"
+        }
+      ]
+    },
+    {
+      "source_id": "S-D20-FED-20210219",
+      "title": "Monetary Policy Report, February 19 2021",
+      "publisher": "Federal Reserve Board",
+      "canonical_url": "https://www.federalreserve.gov/monetarypolicy/files/20210219_mprfullreport.pdf",
+      "document_date": "2021-02-19",
+      "published_at": "2021-02-19T15:00:00Z",
+      "retrieved_at": "2026-08-24T06:20:00Z",
+      "evidence_tier": "E0",
+      "producer_class": "central_bank",
+      "originating_source_id": "FED-MPR-2021FEB",
+      "public_at_t0": true,
+      "admissible_at_cutoff": true,
+      "provenance_note": "Forward observation admitted only at the resolver cutoff; the report documents a rebound in inflation compensation and longer-term yields.",
+      "claims": [
+        "Inflation compensation and longer-term Treasury yields had risen from pandemic lows by early 2021."
+      ],
+      "signals": [
+        {
+          "observable": "long_yield",
+          "state": "UP"
+        },
+        {
+          "observable": "breakeven",
+          "state": "UP"
+        },
+        {
+          "observable": "term_premium",
+          "state": "UP"
+        },
+        {
+          "observable": "reflation",
+          "state": "TRUE"
+        }
+      ]
+    }
+  ]
+}
