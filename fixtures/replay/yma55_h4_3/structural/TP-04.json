@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.1.0",
+  "opaque_pair_id": "TP-04",
+  "mechanism_family": "MRM-CR",
+  "source_prior_eligible": true,
+  "structural_evidence_authority": "CANDIDATE_DERIVED_FROM_H4_H41",
+  "structural_evidence_at_t0": {
+    "as_of": "2015-08-01T23:59:59Z",
+    "dimensions": [
+      {"name":"monetary_regime","state":"MATCHED","blocking_if_mismatched":false,"mechanism_relevance":"critical","evidence_refs":["derived:h43:tp04:monetary_regime"]},
+      {"name":"fiscal_capacity","state":"MATCHED","blocking_if_mismatched":false,"mechanism_relevance":"secondary","evidence_refs":["derived:h43:tp04:fiscal_capacity"]},
+      {"name":"market_structure","state":"PARTIAL","blocking_if_mismatched":false,"mechanism_relevance":"material","evidence_refs":["derived:h43:tp04:market_structure"]},
+      {"name":"global_order","state":"MATCHED","blocking_if_mismatched":false,"mechanism_relevance":"secondary","evidence_refs":["derived:h43:tp04:global_order"]},
+      {"name":"policy_toolkit","state":"PARTIAL","blocking_if_mismatched":false,"mechanism_relevance":"material","evidence_refs":["derived:h43:tp04:policy_toolkit"]}
+    ]
+  },
+  "transported_diagnostic": {
+    "transport_id": "TR-04",
+    "source_prior_ref": "SP-04",
+    "source_mechanism_family": "MRM-CR",
+    "target_case_ref_opaque": "TC-04",
+    "as_of": "2015-08-01T23:59:59Z",
+    "frozen_at": "2015-08-01T23:59:59Z",
+    "observation_window_start": "2015-08-02T00:00:00Z",
+    "observation_window_end": "2016-03-31T23:59:59Z",
+    "target_required_conditions": ["contagion_broadens"],
+    "target_expected_observables": {"broad_credit_spread":"UP","system_funding":"STRESSED"},
+    "target_expected_sequence": ["broad_credit_spread","system_funding"],
+    "target_feasible_policy_set": ["hold","tighten","market_adjustment"],
+    "supporting_evidence_refs": ["derived:h43:tp04:transport_mapping"],
+    "pit_frozen": true,
+    "version": 1
+  },
+  "historical_gold_admission": false,
+  "capital_authority": false
+}
