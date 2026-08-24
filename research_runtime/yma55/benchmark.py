@@ -169,3 +169,35 @@ def score_variant(outputs: list[dict[str, Any]], settlements: list[dict[str, Any
     }
     assert_no_capital_outputs(result)
     return result
+
+
+def run_benchmark_matrix(
+    blind_packets: list[dict[str, Any]],
+    settlements: list[dict[str, Any]],
+) -> dict[str, Any]:
+    ids = [packet["blind_case_id"] for packet in blind_packets]
+    if len(ids) != len(set(ids)) or len(ids) != 12:
+        raise ValueError("H4.2 requires exactly 12 unique same-case blind packets")
+    settlement_ids = [row["blind_case_id"] for row in settlements]
+    if set(ids) != set(settlement_ids):
+        raise ValueError("H4.2 requires identical case identity across blind packets and settlements")
+
+    scores: dict[str, dict[str, Any]] = {}
+    resolutions: dict[str, list[dict[str, Any]]] = {}
+    for variant in BENCHMARK_VARIANTS:
+        outputs = [resolve_variant(packet, variant) for packet in blind_packets]
+        resolutions[variant] = outputs
+        scores[variant] = score_variant(outputs, settlements)
+
+    result = {
+        "variants": list(BENCHMARK_VARIANTS),
+        "case_count": 12,
+        "same_case_same_evidence": True,
+        "scores": scores,
+        "resolutions": resolutions,
+        "h3_incremental_contribution": "NOT_IDENTIFIABLE_IN_HISTORICAL_ONLY_REPLAY",
+        "old_yma55_replication_claim": "NOT_CLAIMED",
+        "capital_authority": False,
+    }
+    assert_no_capital_outputs(result)
+    return result
