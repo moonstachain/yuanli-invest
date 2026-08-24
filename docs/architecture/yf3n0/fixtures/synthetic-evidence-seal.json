@@ -1,0 +1,28 @@
+{
+  "evidence_seal_id": "SYN-ES-001",
+  "case_id": "SYN-001",
+  "schema_version": "1.0.0",
+  "sealed_at": "2026-08-24T00:05:00Z",
+  "knowledge_cutoff": "2026-08-24T00:00:00Z",
+  "evidence_manifest": [
+    {
+      "evidence_ref": "SYN-EV-001",
+      "source_type": "non_self_report",
+      "known_as_of": "2026-08-23T22:00:00Z",
+      "description": "Synthetic repeated-output record."
+    },
+    {
+      "evidence_ref": "SYN-EV-002",
+      "source_type": "self_report",
+      "known_as_of": "2026-08-23T23:00:00Z",
+      "description": "Synthetic actor statement, explicitly lower authority."
+    }
+  ],
+  "unknowns": ["Future mechanism state is unknown at seal time."],
+  "excluded_future_information": ["Any evidence known after 2026-08-24T00:00:00Z."],
+  "evidence_digest_sha256": "e1cc65b3ff45073957d5e7efbd57fdb1acb3a7a671ecdc2014951e5c04aa97eb",
+  "authority": {
+    "future_evidence_writeback_authority": false,
+    "capital_authority": false
+  }
+}
