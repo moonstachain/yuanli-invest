@@ -4,7 +4,11 @@ import re
 from datetime import datetime
 from typing import Any, Mapping, Sequence
 
-from .types import TRANSFERABILITY_DIMENSIONS
+from .types import (
+    TRANSFERABILITY_DIMENSIONS,
+    MechanismHypothesis,
+    MechanismHypothesisSet,
+)
 
 TRANSFER_VARIANTS = (
     "T0_UNCONDITIONAL_TRANSPORT",
@@ -96,6 +100,69 @@ def validate_transported_diagnostic(contract: Mapping[str, Any]) -> None:
     window_end = _parse_iso(str(contract["observation_window_end"]))
     _require(frozen_at <= window_start, "transported diagnostic must freeze before forward observation window")
     _require(window_start <= window_end, "observation window start must not follow end")
+
+
+def build_hypothesis_set_from_transport(contract: Mapping[str, Any]) -> MechanismHypothesisSet:
+    validate_transported_diagnostic(contract)
+    transport_id = str(contract["transport_id"])
+    mechanism_family = str(contract["source_mechanism_family"])
+    support_refs = tuple(str(x) for x in contract["supporting_evidence_refs"])
+    expected = dict(contract["target_expected_observables"])
+    expected_sequence = tuple(str(x) for x in contract["target_expected_sequence"])
+    required_conditions = tuple(str(x) for x in contract["target_required_conditions"])
+    horizon = f"through:{contract['observation_window_end']}"
+
+    primary = MechanismHypothesis(
+        hypothesis_id=f"transported:{transport_id}",
+        role="PRIMARY",
+        mechanism_family=mechanism_family,
+        causal_chain=("transported_source_prior", "target_diagnostic_transmission"),
+        required_conditions=required_conditions,
+        predicted_observables=expected,
+        expected_sequence=expected_sequence,
+        expected_horizon=horizon,
+        falsifiers=("transported_required_diagnostic_break",),
+        breaker="transported_prior_break",
+        supporting_evidence_refs=support_refs,
+        contradicting_evidence_refs=(),
+    )
+    alternative = MechanismHypothesis(
+        hypothesis_id=f"transported-alt:{transport_id}",
+        role="ALTERNATIVE",
+        mechanism_family="TRANSPORT_COMPETING_REVIEW",
+        causal_chain=("target_evidence", "competing_mechanism_review"),
+        required_conditions=("competing_mechanism_supported",),
+        predicted_observables={"competing_mechanism_signal": "PRESENT"},
+        expected_sequence=("competing_mechanism_signal",),
+        expected_horizon=horizon,
+        falsifiers=("competing_mechanism_not_supported",),
+        breaker="alternative_review_break",
+        supporting_evidence_refs=support_refs,
+        contradicting_evidence_refs=(),
+    )
+    null = MechanismHypothesis(
+        hypothesis_id=f"transported-null:{transport_id}",
+        role="NULL",
+        mechanism_family="TRANSPORT_NULL",
+        causal_chain=("non_mechanistic_explanation", "target_observation"),
+        required_conditions=("null_explanation_supported",),
+        predicted_observables={"null_signal": "PRESENT"},
+        expected_sequence=("null_signal",),
+        expected_horizon=horizon,
+        falsifiers=("mechanistic_confirmation_present",),
+        breaker="null_review_break",
+        supporting_evidence_refs=support_refs,
+        contradicting_evidence_refs=(),
+    )
+    return MechanismHypothesisSet(
+        hypothesis_set_id=f"transport-set:{transport_id}",
+        as_of=str(contract["as_of"]),
+        primary=primary,
+        alternatives=(alternative,),
+        null=null,
+        pit_frozen=True,
+        version=int(contract["version"]),
+    )
 
 
 def validate_structural_packet(packet: Mapping[str, Any]) -> None:
