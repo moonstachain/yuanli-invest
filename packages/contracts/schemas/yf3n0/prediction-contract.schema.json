@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yf3n0-prediction-contract:1.0.0",
+  "title": "YF3N0 PredictionContract",
+  "$defs": {
+    "binaryForecast": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome_definition_id", "resolution_rule_id", "probability"],
+      "properties": {
+        "outcome_definition_id": {"type": "string", "minLength": 1},
+        "resolution_rule_id": {"type": "string", "minLength": 1},
+        "probability": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "causalForecast": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome_definition_id", "resolution_rule_id", "expected_state"],
+      "properties": {
+        "outcome_definition_id": {"type": "string", "minLength": 1},
+        "resolution_rule_id": {"type": "string", "minLength": 1},
+        "expected_state": {"enum": ["SUPPORTED", "PARTIALLY_SUPPORTED", "FALSIFIED", "INDETERMINATE"]}
+      }
+    },
+    "forecast": {"oneOf": [{"$ref": "#/$defs/binaryForecast"}, {"$ref": "#/$defs/causalForecast"}]},
+    "prediction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prediction_id", "hypothesis_id", "role", "outcome_definition_id", "resolution_rule_id", "forecast_channel", "full_forecast", "ablation_forecasts", "baseline_forecast", "falsifiers", "source_evidence_refs"],
+      "properties": {
+        "prediction_id": {"type": "string", "minLength": 1},
+        "hypothesis_id": {"enum": ["H1_DURATION", "H2_EDGE", "H3_LEVERAGE", "H4_CONJUNCTIVE", "H5_WEAKEST_LINK"]},
+        "role": {"enum": ["PRIMARY", "SECONDARY"]},
+        "outcome_definition_id": {"type": "string", "minLength": 1},
+        "resolution_rule_id": {"type": "string", "minLength": 1},
+        "forecast_channel": {"enum": ["binary", "causal"]},
+        "full_forecast": {"$ref": "#/$defs/forecast"},
+        "ablation_forecasts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ABLATE_PIP", "ABLATE_EAA", "ABLATE_NLP"],
+          "properties": {
+            "ABLATE_PIP": {"$ref": "#/$defs/forecast"},
+            "ABLATE_EAA": {"$ref": "#/$defs/forecast"},
+            "ABLATE_NLP": {"$ref": "#/$defs/forecast"}
+          }
+        },
+        "baseline_forecast": {"$ref": "#/$defs/forecast"},
+        "falsifiers": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "source_evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["prediction_contract_id", "case_id", "schema_version", "sealed_at", "evidence_digest_sha256", "predictions", "authority"],
+  "properties": {
+    "prediction_contract_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.0.0"},
+    "sealed_at": {"type": "string", "format": "date-time"},
+    "evidence_digest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "predictions": {"type": "array", "minItems": 4, "maxItems": 6, "items": {"$ref": "#/$defs/prediction"}},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capital_authority", "trading_authority", "canon_authority"],
+      "properties": {
+        "capital_authority": {"const": false},
+        "trading_authority": {"const": false},
+        "canon_authority": {"const": false}
+      }
+    }
+  }
+}
