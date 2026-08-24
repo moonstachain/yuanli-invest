@@ -1,0 +1,102 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.2",
+  "title": "Same-Case Baseline Benchmark & H1/H2/H3 Ablation",
+  "status": "qualification_candidate_pending_final_exact_head",
+  "parent_program": "YMA55-H4.1",
+  "execution_authorized": true,
+  "experiment_design": {
+    "case_count": 12,
+    "same_case_same_evidence": true,
+    "same_settlement": true,
+    "historical_challenge_set_only": true,
+    "iid_or_out_of_sample_claim": false,
+    "exact_old_yma55_replication_claim": false
+  },
+  "variants": [
+    "B0_NAIVE_PRIMARY_PRIOR",
+    "B1_EVIDENCE_GATED_PRIMARY",
+    "B2_COMPETING_NO_BREAKER",
+    "B3_H1_H2_FULL_RESOLVER",
+    "B4_H1_H2_H3_HISTORICAL_ONLY"
+  ],
+  "benchmark_results": {
+    "B0_NAIVE_PRIMARY_PRIOR": {
+      "fully_hydrated_mechanism_accuracy": "3/11",
+      "hard_negative_discrimination": "0/8",
+      "matches": 4,
+      "mismatches": 8,
+      "abstentions": 0,
+      "partial_case_forced_resolution": true
+    },
+    "B1_EVIDENCE_GATED_PRIMARY": {
+      "fully_hydrated_mechanism_accuracy": "3/11",
+      "hard_negative_discrimination": "0/8",
+      "matches": 3,
+      "mismatches": 8,
+      "abstentions": 1,
+      "partial_case_forced_resolution": false
+    },
+    "B2_COMPETING_NO_BREAKER": {
+      "fully_hydrated_mechanism_accuracy": "9/10",
+      "hard_negative_discrimination": "6/8",
+      "matches": 9,
+      "mismatches": 1,
+      "abstentions": 2,
+      "partial_case_forced_resolution": false
+    },
+    "B3_H1_H2_FULL_RESOLVER": {
+      "fully_hydrated_mechanism_accuracy": "10/11",
+      "hard_negative_discrimination": "7/8",
+      "matches": 10,
+      "mismatches": 1,
+      "abstentions": 1,
+      "partial_case_forced_resolution": false
+    },
+    "B4_H1_H2_H3_HISTORICAL_ONLY": {
+      "fully_hydrated_mechanism_accuracy": "10/11",
+      "hard_negative_discrimination": "7/8",
+      "matches": 10,
+      "mismatches": 1,
+      "abstentions": 1,
+      "partial_case_forced_resolution": false
+    }
+  },
+  "epistemic_settlement": {
+    "incremental_superiority_vs_frozen_naive_baselines": "SUPPORTED_WITHIN_CONSTRUCTED_CHALLENGE_SET",
+    "incremental_superiority_vs_exact_pre_h1_h2_h3_yma55": "NOT_ESTABLISHED",
+    "evidence_gate_value": "SUPPORTED_AS_ABSTENTION_DISCIPLINE_NOT_MECHANISM_ACCURACY",
+    "competing_mechanism_contribution": "STRONGLY_SUPPORTED_WITHIN_CHALLENGE_SET",
+    "falsifier_breaker_coverage_contribution": "SUPPORTED_WITHIN_CHALLENGE_SET",
+    "h1_individual_contribution": "PARTIALLY_IDENTIFIED_NOT_CLEANLY_ISOLATED",
+    "h2_individual_contribution": "DOMINANT_MEASURED_INCREMENT_WITHIN_CHALLENGE_SET",
+    "h3_incremental_contribution": "NOT_IDENTIFIABLE_IN_HISTORICAL_ONLY_REPLAY",
+    "out_of_sample_predictive_superiority": "NOT_ESTABLISHED"
+  },
+  "critical_failures_preserved": {
+    "mechanism_miss": "H41-B11 / 2020 Gold remains a mechanism mismatch under B3/B4",
+    "evidence_abstention": "H41-B09 / 1971 Gold remains an evidence abstention under evidence-gated variants"
+  },
+  "authority_freeze": {
+    "historical_gold_admission": false,
+    "constitution_mutation": false,
+    "engine_registry_mutation": false,
+    "canon_promotion": false,
+    "portfolio_authority": false,
+    "position_sizing": false,
+    "trade_signal_authority": false,
+    "live_execution": false,
+    "merge_authority": false
+  },
+  "qualification_checkpoint": {
+    "benchmark_gate_commit_sha": "32e5bba519d9b7eb1139a5dbd2a9d4ca2b90ce19",
+    "repository_gates_run": 470,
+    "dedicated_h4_2_gate": "PASS",
+    "contracts": "PASS",
+    "governance": "PASS",
+    "full_unit_suite": "PASS",
+    "unit_test_count": 167
+  },
+  "final_exact_head_verification_required": true,
+  "recommended_next_gate_not_authorized": "YMA55-H4.3 | H3 Transferability & Prior-Violation Paired Challenge"
+}
