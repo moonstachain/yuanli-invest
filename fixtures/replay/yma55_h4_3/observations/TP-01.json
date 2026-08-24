@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1.0",
+  "opaque_pair_id": "TP-01",
+  "observation_stream": [
+    {
+      "known_at": "2020-04-09T12:00:00Z",
+      "signals": [
+        {"observable":"credible_policy_backstop","state":"TRUE"},
+        {"observable":"market_liquidity","state":"UP"},
+        {"observable":"credit_spread","state":"DOWN"}
+      ]
+    }
+  ],
+  "observed_sequence": ["market_liquidity","credit_spread"],
+  "policy_reaction": "credit_facilities",
+  "window_closed": true,
+  "historical_gold_admission": false,
+  "capital_authority": false
+}
