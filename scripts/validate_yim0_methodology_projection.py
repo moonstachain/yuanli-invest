@@ -161,9 +161,14 @@ def validate_scope_paths(paths: list[str]) -> None:
     require(not any(path.startswith("docs/architecture/me1/") for path in paths), "N11: accepted ME1 artifacts modification prohibited")
 
 
-def changed_paths_from_git() -> list[str]:
+def scope_end_ref_for_state(state: dict) -> str:
+    semantic_merge_commit = state.get("semantic_merge_commit")
+    return semantic_merge_commit if semantic_merge_commit else "HEAD"
+
+
+def changed_paths_from_git(end_ref: str = "HEAD") -> list[str]:
     proc = subprocess.run(
-        ["git", "diff", "--name-only", f"{BASE_SHA}...HEAD"],
+        ["git", "diff", "--name-only", f"{BASE_SHA}...{end_ref}"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -205,7 +210,8 @@ def main() -> int:
     validate_canon_status_data(status)
     validate_state_source_alignment_data(status, yip0, me0, me1, qxm2)
     validate_builder_source(builder_source)
-    validate_scope_paths(changed_paths_from_git())
+    scope_end_ref = scope_end_ref_for_state(yim0_state)
+    validate_scope_paths(changed_paths_from_git(scope_end_ref))
     validate_authority_boundaries(yim0_state, review_card)
     print("YIM0 methodology projection validation: PASS")
     return 0
