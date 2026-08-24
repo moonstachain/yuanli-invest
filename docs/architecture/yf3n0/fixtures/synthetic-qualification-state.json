@@ -1,0 +1,16 @@
+{
+  "qualification_state_id":"SYN-QS-001",
+  "schema_version":"1.0.0",
+  "as_of":"2027-08-24T00:12:00Z",
+  "gate_states":{
+    "C_G1_PROTOCOL_INTEGRITY":"PASS",
+    "C_G2_NO_RESOLUTION_DRIFT":"PASS",
+    "C_G3_PRIMITIVE_DISCRIMINATION":"PASS",
+    "C_G4_ABLATION_VALUE":"INDETERMINATE",
+    "C_G5_CROSS_DOMAIN_ROBUSTNESS":"INDETERMINATE",
+    "C_G6_NO_CONSTITUTIONAL_BREACH":"PASS"
+  },
+  "final_outcome":"INSUFFICIENT_EVIDENCE",
+  "evidence_matrix_ref":"SYN-EVIDENCE-MATRIX-001",
+  "authority":{"canon_promotion_authority":false,"capital_authority":false,"psychometric_authority":false}
+}
