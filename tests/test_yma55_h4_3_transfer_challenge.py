@@ -1,4 +1,6 @@
+import json
 import unittest
+from pathlib import Path
 
 from research_runtime.yma55.transfer_challenge import (
     TRANSFER_VARIANTS,
@@ -9,6 +11,8 @@ from research_runtime.yma55.transfer_challenge import (
     validate_transported_diagnostic,
 )
 
+ROOT = Path(__file__).resolve().parents[1]
+H43 = ROOT / "fixtures" / "replay" / "yma55_h4_3"
 
 DIMENSION_NAMES = (
     "monetary_regime",
@@ -17,6 +21,10 @@ DIMENSION_NAMES = (
     "global_order",
     "policy_toolkit",
 )
+
+
+def load(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def dims(overrides=None):
@@ -40,6 +48,8 @@ def valid_structural_packet():
         "schema_version": "0.1.0",
         "opaque_pair_id": "TP-XX",
         "mechanism_family": "MRM-D",
+        "source_prior_eligible": True,
+        "structural_evidence_authority": "CANDIDATE_DERIVED_FROM_H4_H41",
         "structural_evidence_at_t0": {
             "as_of": "1994-01-01T23:59:59Z",
             "dimensions": dims(),
@@ -150,6 +160,82 @@ class H43TransferabilityContractTests(unittest.TestCase):
         packet["opaque_pair_id"] = "D1982-GOLD-TO-1994"
         with self.assertRaises(ValueError):
             validate_structural_packet(packet)
+
+
+class H43FixtureIntegrityTests(unittest.TestCase):
+    def manifest(self):
+        return load(H43 / "blind_manifest.json")
+
+    def test_exact_six_opaque_pairs_with_one_to_one_files(self):
+        manifest = self.manifest()
+        self.assertEqual(manifest["pair_ids"], ["TP-01", "TP-02", "TP-03", "TP-04", "TP-05", "TP-06"])
+        self.assertEqual(len(manifest["structural_files"]), 6)
+        self.assertEqual(len(manifest["observation_files"]), 6)
+        for pair_id, structural_rel, observation_rel in zip(
+            manifest["pair_ids"], manifest["structural_files"], manifest["observation_files"]
+        ):
+            structural = load(H43 / structural_rel)
+            observation = load(H43 / observation_rel)
+            self.assertEqual(structural["opaque_pair_id"], pair_id)
+            self.assertEqual(observation["opaque_pair_id"], pair_id)
+            validate_structural_packet(structural)
+
+    def test_blind_packets_preserve_identity_and_outcome_firewalls(self):
+        forbidden = {
+            "source_episode_id",
+            "target_episode_id",
+            "settlement",
+            "expected_h3_settlement",
+            "challenge_role",
+            "case_type",
+        }
+        for rel in self.manifest()["structural_files"] + self.manifest()["observation_files"]:
+            packet = load(H43 / rel)
+            self.assertFalse(forbidden & set(packet))
+            self.assertRegex(packet["opaque_pair_id"], r"^TP-\d{2}$")
+
+    def test_structural_packets_are_candidate_derived_not_primary_gold_evidence(self):
+        for rel in self.manifest()["structural_files"]:
+            packet = load(H43 / rel)
+            self.assertEqual(packet["structural_evidence_authority"], "CANDIDATE_DERIVED_FROM_H4_H41")
+            self.assertTrue(packet["source_prior_eligible"])
+            self.assertFalse(packet["historical_gold_admission"])
+            self.assertFalse(packet["capital_authority"])
+            dimensions = packet["structural_evidence_at_t0"]["dimensions"]
+            self.assertEqual({d["name"] for d in dimensions}, set(DIMENSION_NAMES))
+            self.assertEqual(len(dimensions), 5)
+
+    def test_forward_observation_packets_are_post_freeze_and_non_authoritative(self):
+        structural_by_id = {
+            load(H43 / rel)["opaque_pair_id"]: load(H43 / rel)
+            for rel in self.manifest()["structural_files"]
+        }
+        for rel in self.manifest()["observation_files"]:
+            observation = load(H43 / rel)
+            structural = structural_by_id[observation["opaque_pair_id"]]
+            frozen_at = structural["transported_diagnostic"]["frozen_at"]
+            self.assertGreater(observation["observation_stream"][0]["known_at"], frozen_at)
+            self.assertFalse(observation["historical_gold_admission"])
+            self.assertFalse(observation["capital_authority"])
+
+    def test_sealed_mapping_is_only_identity_and_role_decryption_point(self):
+        mapping = load(H43 / "sealed_mapping.json")
+        self.assertEqual(len(mapping["pairs"]), 6)
+        self.assertEqual({p["opaque_pair_id"] for p in mapping["pairs"]}, set(self.manifest()["pair_ids"]))
+        for pair in mapping["pairs"]:
+            self.assertIn("source_episode_id", pair)
+            self.assertIn("target_episode_id", pair)
+            self.assertIn("challenge_role", pair)
+
+    def test_post_resolution_settlement_is_complete_and_non_capital(self):
+        settlement = load(H43 / "post_resolution_settlement.json")
+        self.assertEqual({p["opaque_pair_id"] for p in settlement["pairs"]}, set(self.manifest()["pair_ids"]))
+        self.assertFalse(settlement["historical_gold_admission"])
+        self.assertFalse(settlement["capital_authority"])
+        self.assertEqual(
+            {p["expected_transferability"] for p in settlement["pairs"]},
+            {"PARTIAL_TRANSFERABILITY", "NON_TRANSFERABLE", "WEAK_TRANSFERABILITY"},
+        )
 
 
 if __name__ == "__main__":
