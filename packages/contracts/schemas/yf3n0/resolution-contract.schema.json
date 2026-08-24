@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yf3n0-resolution-contract:1.0.0",
+  "title": "YF3N0 ResolutionContract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["resolution_contract_id", "case_id", "schema_version", "sealed_at", "evidence_digest_sha256", "rules", "authority"],
+  "properties": {
+    "resolution_contract_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.0.0"},
+    "sealed_at": {"type": "string", "format": "date-time"},
+    "evidence_digest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "rules": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["resolution_rule_id", "outcome_definition_id", "event_definition", "resolution_source_rule", "resolution_cutoff_rule", "allowed_binary_states", "allowed_causal_states", "indeterminate_rule"],
+        "properties": {
+          "resolution_rule_id": {"type": "string", "minLength": 1},
+          "outcome_definition_id": {"type": "string", "minLength": 1},
+          "event_definition": {"type": "string", "minLength": 1},
+          "resolution_source_rule": {"type": "string", "minLength": 1},
+          "resolution_cutoff_rule": {"type": "string", "minLength": 1},
+          "allowed_binary_states": {"const": ["YES", "NO", "INDETERMINATE"]},
+          "allowed_causal_states": {"const": ["SUPPORTED", "PARTIALLY_SUPPORTED", "FALSIFIED", "INDETERMINATE"]},
+          "indeterminate_rule": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["post_seal_rule_mutation_authority", "capital_authority"],
+      "properties": {
+        "post_seal_rule_mutation_authority": {"const": false},
+        "capital_authority": {"const": false}
+      }
+    }
+  }
+}
