@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.1",
+  "artifact": "Blind Resolution Freeze",
+  "source_head_before_freeze": "b6b97c809165b40efa111aa7b5f5d86e1ad126f3",
+  "resolver_contract": "research_runtime.yma55.blind.resolve_blind_packet",
+  "blindness_grade": "B_PIPELINE_BLIND",
+  "historical_role_mapping_exposed": false,
+  "capital_authority": false,
+  "resolutions": [
+    {"blind_case_id": "H41-B01", "resolution": "PRIMARY_LEADS"},
+    {"blind_case_id": "H41-B02", "resolution": "ALTERNATIVE_LEADS"},
+    {"blind_case_id": "H41-B03", "resolution": "ALTERNATIVE_LEADS"},
+    {"blind_case_id": "H41-B04", "resolution": "ALTERNATIVE_LEADS"},
+    {"blind_case_id": "H41-B05", "resolution": "PRIMARY_LEADS"},
+    {"blind_case_id": "H41-B06", "resolution": "ALTERNATIVE_LEADS"},
+    {"blind_case_id": "H41-B07", "resolution": "ALTERNATIVE_LEADS"},
+    {"blind_case_id": "H41-B08", "resolution": "PRIMARY_LEADS"},
+    {"blind_case_id": "H41-B09", "resolution": "INSUFFICIENT_EVIDENCE"},
+    {"blind_case_id": "H41-B10", "resolution": "ALTERNATIVE_LEADS"},
+    {"blind_case_id": "H41-B11", "resolution": "PRIMARY_LEADS"},
+    {"blind_case_id": "H41-B12", "resolution": "ALTERNATIVE_LEADS"}
+  ]
+}
