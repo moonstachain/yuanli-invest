@@ -1,11 +1,20 @@
 {
-  "schema_version": "0.2.0",
+  "schema_version": "0.3.0",
   "stage": "YMA55_H4_REFERENCE_IMPLEMENTATION_GOLD_REPLAY_MIGRATION",
-  "status": "machine_qualified_reference_candidate",
+  "status": "human_accepted_reference_implementation_replay_candidate",
   "repository": "moonstachain/yuanli-invest",
   "branch": "yma55-h1-h3-causal-prior-hardening",
   "implementation_authorized": true,
   "authorization_basis": "explicit user authorization of IMPLEMENTATION_PLAN_AND_CI_SCOPE_BLOCKER_RESOLUTION on 2026-08-24",
+  "human_acceptance": {
+    "token": "ACCEPT_YMA55_H4_REFERENCE_IMPLEMENTATION_REPLAY_CANDIDATE",
+    "accepted_at": "2026-08-24T13:54:00+08:00",
+    "review_threshold": "23/23 PASS",
+    "reviewed_subject_sha": "c6bd05b5bfab6951704195180e4297f82fa2bdea",
+    "acceptance_does_not_imply_merge": true,
+    "acceptance_does_not_grant_gold_admission": true,
+    "acceptance_does_not_grant_capital_authority": true
+  },
   "dependencies": {
     "H1": "human_accepted_written_spec",
     "H2": "human_accepted_written_spec",
@@ -48,26 +57,18 @@
   },
   "qualification": {
     "h0_1_ci_run": 408,
-    "h0_1_ci_conclusion": "success",
     "h4_contract_ci_run": 414,
-    "h4_contract_ci_conclusion": "success",
     "prior_violation_ci_run": 416,
-    "prior_violation_ci_conclusion": "success",
     "twelve_case_replay_ci_run": 431,
-    "twelve_case_replay_ci_conclusion": "success",
     "h4_validator_green_ci_run": 433,
-    "h4_validator_green_ci_conclusion": "success",
-    "dedicated_h4_ci_first_run": 436,
-    "dedicated_h4_ci_first_conclusion": "failure",
-    "dedicated_h4_ci_first_root_cause": "direct scripts execution did not include repository root on sys.path; research_runtime import failed",
     "dedicated_h4_ci_repaired_run": 437,
-    "dedicated_h4_ci_repaired_conclusion": "success",
-    "qualified_subject_sha": "54d518d15472ccf65626785f05f1f912bc5492ef",
+    "final_exact_head_ci_run": 439,
+    "final_exact_head_ci_run_id": 32694060523,
     "governance": "success",
     "contracts": "success",
     "dedicated_h4_validator": "success",
     "full_unit_tests": "success"
   },
-  "next_gate": "H4_HUMAN_REVIEW_THEN_PRIMARY_EVIDENCE_HYDRATION_AND_BLIND_REPLAY",
+  "next_gate": "YMA55_H4_1_PRIMARY_EVIDENCE_HYDRATION_AND_BLIND_REPLAY_QUALIFICATION",
   "merge_authorized": false
 }
