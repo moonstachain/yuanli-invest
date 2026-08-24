@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.2",
+  "required_review_score": "20/20",
+  "recommended_acceptance_token": "ACCEPT_YMA55_H4_2_SAME_CASE_BASELINE_ABLATION_SETTLEMENT",
+  "accepted": false,
+  "reviewed_head_sha": null,
+  "acceptance_does_not_authorize": [
+    "merge",
+    "historical_gold_admission",
+    "canon_promotion",
+    "engine_registry_mutation",
+    "portfolio_authority",
+    "position_sizing",
+    "trade_signal_authority",
+    "live_execution",
+    "YMA55-H4.3 execution"
+  ]
+}
