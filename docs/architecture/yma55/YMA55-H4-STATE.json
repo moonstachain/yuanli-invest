@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "stage": "YMA55_H4_REFERENCE_IMPLEMENTATION_GOLD_REPLAY_MIGRATION",
-  "status": "reference_candidate_pending_dedicated_ci_gate",
+  "status": "machine_qualified_reference_candidate",
   "repository": "moonstachain/yuanli-invest",
   "branch": "yma55-h1-h3-causal-prior-hardening",
   "implementation_authorized": true,
@@ -57,8 +57,17 @@
     "twelve_case_replay_ci_conclusion": "success",
     "h4_validator_green_ci_run": 433,
     "h4_validator_green_ci_conclusion": "success",
-    "dedicated_h4_ci_gate": "pending"
+    "dedicated_h4_ci_first_run": 436,
+    "dedicated_h4_ci_first_conclusion": "failure",
+    "dedicated_h4_ci_first_root_cause": "direct scripts execution did not include repository root on sys.path; research_runtime import failed",
+    "dedicated_h4_ci_repaired_run": 437,
+    "dedicated_h4_ci_repaired_conclusion": "success",
+    "qualified_subject_sha": "54d518d15472ccf65626785f05f1f912bc5492ef",
+    "governance": "success",
+    "contracts": "success",
+    "dedicated_h4_validator": "success",
+    "full_unit_tests": "success"
   },
-  "next_gate": "DEDICATED_H4_CI_GATE_THEN_HUMAN_REVIEW",
+  "next_gate": "H4_HUMAN_REVIEW_THEN_PRIMARY_EVIDENCE_HYDRATION_AND_BLIND_REPLAY",
   "merge_authorized": false
 }
