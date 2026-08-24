@@ -7,6 +7,8 @@ from research_runtime.yma55.transfer_challenge import (
     active_prior_allowed,
     build_hypothesis_set_from_transport,
     resolve_transferability_state,
+    run_h43_matrix,
+    run_transfer_variant,
     validate_structural_packet,
     validate_transported_diagnostic,
 )
@@ -236,6 +238,66 @@ class H43FixtureIntegrityTests(unittest.TestCase):
             {p["expected_transferability"] for p in settlement["pairs"]},
             {"PARTIAL_TRANSFERABILITY", "NON_TRANSFERABLE", "WEAK_TRANSFERABILITY"},
         )
+
+
+class H43VariantAndMatrixTests(unittest.TestCase):
+    def inputs(self):
+        manifest = load(H43 / "blind_manifest.json")
+        structural = [load(H43 / rel) for rel in manifest["structural_files"]]
+        observations = [load(H43 / rel) for rel in manifest["observation_files"]]
+        settlement = load(H43 / "post_resolution_settlement.json")["pairs"]
+        return structural, observations, settlement
+
+    def test_t0_exposes_unconditional_transport_overreach(self):
+        structural, observations, _ = self.inputs()
+        packet = structural[2]  # TP-03 is structurally blocked by a policy-toolkit mismatch.
+        result = run_transfer_variant(packet, observations[2], "T0_UNCONDITIONAL_TRANSPORT")
+        self.assertEqual(result["authority_settlement"], "ACTIVE_PRIOR_ALLOWED")
+        self.assertTrue(result["unsafe_prior_application"])
+        self.assertFalse(result["capital_authority"])
+
+    def test_t1_blocks_weak_nontransferable_and_unresolved_without_using_forward_evidence(self):
+        structural, observations, _ = self.inputs()
+        for index in (2, 4, 5):
+            poisoned_observation = dict(observations[index])
+            poisoned_observation["settlement"] = "must_not_be_read_by_t1"
+            result = run_transfer_variant(structural[index], poisoned_observation, "T1_TRANSFERABILITY_GATE_ONLY")
+            self.assertEqual(result["authority_settlement"], "ACTIVE_PRIOR_BLOCKED")
+            self.assertEqual(result["observation_settlement"], "NOT_APPLICABLE")
+            self.assertFalse(result["weak_prior_active_authority_leak"])
+
+    def test_t2_maintains_compatible_prior_and_detects_two_active_prior_violations(self):
+        structural, observations, _ = self.inputs()
+        tp01 = run_transfer_variant(structural[0], observations[0], "T2_H3_FULL")
+        tp02 = run_transfer_variant(structural[1], observations[1], "T2_H3_FULL")
+        tp04 = run_transfer_variant(structural[3], observations[3], "T2_H3_FULL")
+        self.assertEqual(tp01["observation_settlement"], "MAINTAIN_PRIOR")
+        self.assertEqual(tp02["observation_settlement"], "REOPEN_MECHANISM_COMPETITION")
+        self.assertEqual(tp04["observation_settlement"], "REOPEN_MECHANISM_COMPETITION")
+
+    def test_ineligible_source_prior_is_never_laundered_into_active_authority(self):
+        packet = valid_structural_packet()
+        packet["source_prior_eligible"] = False
+        result = run_transfer_variant(packet, {}, "T0_UNCONDITIONAL_TRANSPORT")
+        self.assertEqual(result["authority_settlement"], "ACTIVE_PRIOR_BLOCKED")
+        self.assertFalse(result["source_prior_laundering_event"])
+
+    def test_matrix_reports_counts_without_probability_or_win_rate(self):
+        structural, observations, settlement = self.inputs()
+        matrix = run_h43_matrix(structural, observations, settlement)
+        self.assertEqual(matrix["pair_count"], 6)
+        self.assertEqual(tuple(matrix["variants"]), TRANSFER_VARIANTS)
+        self.assertEqual(matrix["metrics"]["T0_UNCONDITIONAL_TRANSPORT"]["unsafe_prior_applications"], 3)
+        self.assertEqual(matrix["metrics"]["T1_TRANSFERABILITY_GATE_ONLY"]["correct_structural_blocks"], 3)
+        self.assertEqual(matrix["metrics"]["T1_TRANSFERABILITY_GATE_ONLY"]["eligible_prior_violations_missed"], 2)
+        self.assertEqual(matrix["metrics"]["T2_H3_FULL"]["eligible_prior_violations_detected"], 2)
+        self.assertEqual(matrix["metrics"]["T2_H3_FULL"]["eligible_prior_violations_missed"], 0)
+        self.assertEqual(matrix["metrics"]["T2_H3_FULL"]["false_breakers"], 0)
+        self.assertEqual(matrix["metrics"]["T2_H3_FULL"]["weak_prior_active_authority_leaks"], 0)
+        self.assertEqual(matrix["metrics"]["T2_H3_FULL"]["source_prior_laundering_events"], 0)
+        self.assertEqual(matrix["metrics"]["T2_H3_FULL"]["capital_authority_events"], 0)
+        self.assertNotIn("win_rate", matrix)
+        self.assertNotIn("probability", matrix)
 
 
 if __name__ == "__main__":
