@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YMA55_H1_H3_CAUSAL_HISTORICAL_PRIOR_HARDENING",
+  "decision": "HUMAN_ACCEPTED_WRITTEN_SPEC_PACKAGE",
+  "accepted_at": "2026-08-24T12:23:00+08:00",
+  "repository": "moonstachain/yuanli-invest",
+  "branch": "yma55-h1-h3-causal-prior-hardening",
+  "reviewed_head_sha": "a2c8aa5ca9c76fd1e579e47d2e9e4f4396824077",
+  "pull_request": 57,
+  "human_review": {
+    "threshold": "30/30 PASS",
+    "decision_basis": "explicit_user_acceptance_tokens",
+    "result": "30/30 PASS"
+  },
+  "accepted_tokens": [
+    "ACCEPT_YMA55_H1_FIVE_LAYER_DECISION_KERNEL_FREEZE",
+    "ACCEPT_YMA55_H2_COMPETING_MECHANISM_NULL_HYPOTHESIS_CONTRACT",
+    "ACCEPT_YMA55_H3_TRANSFERABILITY_PRIOR_VIOLATION_ENGINE"
+  ],
+  "accepted_battles": {
+    "YMA55-H1": "Five-Layer Decision Kernel Freeze",
+    "YMA55-H2": "Competing Mechanism & Null Hypothesis Contract",
+    "YMA55-H3": "Transferability × Prior Violation Engine"
+  },
+  "authority": {
+    "written_spec_accepted": true,
+    "implementation": false,
+    "merge": false,
+    "canon_promotion": false,
+    "portfolio": false,
+    "position_sizing": false,
+    "trading": false,
+    "live_execution": false,
+    "constitution_mutation": false,
+    "engine_registry_mutation": false
+  },
+  "ci_observation_at_acceptance": {
+    "workflow_run_id": 32689731485,
+    "run_number": 403,
+    "conclusion": "failure",
+    "contracts_job": "failure",
+    "governance_job": "success",
+    "failure_step": "python scripts/validate_yim0_methodology_projection.py",
+    "root_cause": "YIM0 validator computes scope from its historical BASE_SHA to current HEAD, so any legitimate post-YIM0 files are misclassified as YIM0 scope violations.",
+    "h1_h3_semantic_failure_observed": false
+  },
+  "next_gate": "IMPLEMENTATION_PLAN_AND_CI_SCOPE_BLOCKER_RESOLUTION",
+  "note": "Human acceptance freezes the written specifications only. It does not authorize implementation, merge, Canon promotion, portfolio authority, sizing, trading or live execution."
+}
