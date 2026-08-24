@@ -4,8 +4,13 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from research_runtime.yma55.replay import (
     REQUIRED_CASE_TYPES,
@@ -16,7 +21,6 @@ from research_runtime.yma55.replay import (
 )
 from research_runtime.yma55.validation import assert_no_capital_outputs
 
-ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "fixtures" / "replay" / "yma55_h4" / "manifest.json"
 REQUIRED_HYPOTHESIS_FIELDS = {
     "hypothesis_id",
