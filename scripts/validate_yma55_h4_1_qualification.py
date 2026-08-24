@@ -13,6 +13,8 @@ from research_runtime.yma55.blind import resolve_blind_packet, validate_blind_pa
 
 H41 = ROOT / "fixtures" / "replay" / "yma55_h4_1"
 H4 = ROOT / "fixtures" / "replay" / "yma55_h4"
+STATE = ROOT / "docs" / "architecture" / "yma55" / "YMA55-H4.1-STATE.json"
+REPORT = ROOT / "docs" / "architecture" / "yma55" / "YMA55-H4.1-PRIMARY-EVIDENCE-BLIND-REPLAY-QUALIFICATION-REPORT-v0.1.md"
 FREEZE_COMMIT = "805a5c52f6918c0f4339128ef5e95883de5fbf89"
 
 
@@ -121,11 +123,31 @@ def validate_hydration_and_authority(unblind: dict) -> None:
     require(unblind["capital_authority"] is False, "capital authority remains zero")
 
 
+def validate_state_and_report() -> None:
+    require(STATE.exists(), "H4.1 state artifact required")
+    require(REPORT.exists(), "H4.1 qualification report required")
+    state = load(STATE)
+    require(state["status"] == "machine_qualified_blind_replay_candidate", "state must use machine-qualified blind replay candidate status")
+    require(state["blind_resolution_freeze"]["commit_sha"] == FREEZE_COMMIT, "state must bind blind freeze commit")
+    require(state["blind_replay_results"]["fully_hydrated_mechanism_accuracy"] == "10/11", "state must preserve 10/11 fully hydrated result")
+    require(state["blind_replay_results"]["safe_or_correct_outcomes"] == "11/12", "state must preserve abstention-aware outcome")
+    require(state["epistemic_conclusion"]["incremental_superiority_vs_pre_h1_h2_h3_or_simple_baseline"] == "NOT_YET_ESTABLISHED", "state cannot claim incremental superiority without same-case baseline")
+    require(state["epistemic_conclusion"]["individual_causal_contribution_of_h1_h2_h3"] == "NOT_IDENTIFIED_WITHOUT_ABLATION", "state must preserve ablation blocker")
+    for value in state["authority_freeze"].values():
+        require(value is False, "all authority-freeze fields must remain false")
+    report = REPORT.read_text(encoding="utf-8")
+    require("10/11" in report, "report must disclose fully hydrated mechanism result")
+    require("2020 Gold" in report, "report must disclose critical mismatch")
+    require("1971 Gold" in report, "report must disclose evidence abstention")
+    require("incremental superiority" in report.lower(), "report must disclose incremental-value blocker")
+
+
 def main() -> None:
     validate_freeze_sequence()
     freeze = validate_blind_freeze()
     unblind = validate_unblinding(freeze)
     validate_hydration_and_authority(unblind)
+    validate_state_and_report()
     print(
         "YMA55-H4.1 qualification: PASS "
         "cases=12 hydrated=11 partial=1 matches=10 mismatch=1 abstention=1 "
