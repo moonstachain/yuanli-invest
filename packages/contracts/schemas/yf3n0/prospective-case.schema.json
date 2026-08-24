@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yf3n0-prospective-case:1.0.0",
+  "title": "YF3N0 ProspectiveCase",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["case_id", "schema_version", "slot_id", "actor_label", "problem_domain", "context", "reference_group", "structural_type", "recorded_at", "known_as_of", "real_case", "private_secret_required", "observable_365d", "authority"],
+  "properties": {
+    "case_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.0.0"},
+    "slot_id": {"type": "string", "minLength": 1},
+    "actor_label": {"type": "string", "minLength": 1},
+    "problem_domain": {"enum": ["entrepreneurship", "investment_capital", "ai_native_os"]},
+    "context": {"type": "string", "minLength": 1},
+    "reference_group": {"type": "string", "minLength": 1},
+    "structural_type": {"enum": ["full_candidate", "ablation_candidate", "uncertain_candidate", "exogenous_control"]},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "known_as_of": {"type": "string", "format": "date-time"},
+    "real_case": {"type": "boolean"},
+    "private_secret_required": {"type": "boolean"},
+    "observable_365d": {"type": "boolean"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capital_authority", "trading_authority", "psychometric_authority"],
+      "properties": {
+        "capital_authority": {"const": false},
+        "trading_authority": {"const": false},
+        "psychometric_authority": {"const": false}
+      }
+    }
+  }
+}
