@@ -44,6 +44,7 @@ jobs:
       - run: python scripts/validate_me1_state_object_model.py
       - run: python scripts/validate_yim0_methodology_projection.py
       - run: python scripts/validate_yma55_h4_reference.py
+      - run: python scripts/validate_yma55_h4_1_qualification.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
 
   governance:
