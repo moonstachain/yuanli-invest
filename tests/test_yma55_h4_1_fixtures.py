@@ -22,21 +22,32 @@ def dt(value: str):
 
 class H41FixtureIntegrityTests(unittest.TestCase):
     def sources(self):
-        data = load(H41_ROOT / "sources.json")
-        return {item["source_id"]: item for item in data["sources"]}
+        index = load(H41_ROOT / "sources.json")
+        rows = []
+        for rel in index["source_files"]:
+            rows.extend(load(H41_ROOT / rel)["sources"])
+        ids = [row["source_id"] for row in rows]
+        self.assertEqual(len(ids), len(set(ids)))
+        return {item["source_id"]: item for item in rows}
 
     def hydration_packets(self):
         return sorted((H41_ROOT / "hydration").glob("*.json"))
 
+    def blind_cases(self):
+        manifest = load(H41_ROOT / "blind_manifest.json")
+        cases = [load(H41_ROOT / rel) for rel in manifest["case_files"]]
+        return manifest, cases
+
     def test_exact_twelve_hydration_packets_and_blind_cases(self):
         packets = self.hydration_packets()
         self.assertEqual(len(packets), 12)
-        blind = load(H41_ROOT / "blind_manifest.json")
-        self.assertEqual(len(blind["cases"]), 12)
-        ids = [case["blind_case_id"] for case in blind["cases"]]
+        manifest, cases = self.blind_cases()
+        self.assertEqual(len(manifest["case_files"]), 12)
+        self.assertEqual(len(cases), 12)
+        ids = [case["blind_case_id"] for case in cases]
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(set(ids), {f"H41-B{i:02d}" for i in range(1, 13)})
-        for case in blind["cases"]:
+        for case in cases:
             validate_blind_packet(case)
 
     def test_sealed_mapping_is_one_to_one_and_only_place_with_case_roles(self):
@@ -50,7 +61,8 @@ class H41FixtureIntegrityTests(unittest.TestCase):
         for item in mapping["cases"]:
             self.assertIn(item["case_type"], {"GOLD", "NEAR_MISS", "WRONG_MECHANISM", "WRONG_STRIKE"})
 
-        blind_text = (H41_ROOT / "blind_manifest.json").read_text(encoding="utf-8")
+        manifest, cases = self.blind_cases()
+        blind_text = json.dumps({"manifest": manifest, "cases": cases}, ensure_ascii=False)
         for token in ("case_type", "settlement", "outcome_class", "GOLD", "NEAR_MISS", "WRONG_MECHANISM", "WRONG_STRIKE"):
             self.assertNotIn(token, blind_text)
 
@@ -112,8 +124,8 @@ class H41FixtureIntegrityTests(unittest.TestCase):
                 self.assertEqual(case["evidence_status"], "needs_primary_hydration")
 
     def test_blind_manifest_never_exposes_role_bearing_episode_identity_or_paths(self):
-        blind = load(H41_ROOT / "blind_manifest.json")
-        text = json.dumps(blind, ensure_ascii=False)
+        manifest, cases = self.blind_cases()
+        text = json.dumps({"manifest": manifest, "cases": cases}, ensure_ascii=False)
         self.assertIsNone(re.search(r"YMA55-H4-", text))
         self.assertNotIn("fixtures/replay/yma55_h4/", text)
 
