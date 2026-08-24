@@ -20,7 +20,6 @@ QXM2_STATE = ARCH / "qxm2" / "QXM2-STATE.json"
 YIM0_STATE = ARCH / "yim0" / "YIM0-STATE.json"
 HUMAN_REVIEW_CARD = ARCH / "yim0" / "YIM0-HUMAN-REVIEW-CARD-v0.1.md"
 BUILDER = ROOT / "scripts" / "build_canon_status.py"
-BASE_SHA = "877c3bbc59fb6fc01b586b554930bdaca5db4c59"
 
 GENESIS_ENGINES = {"ENG-C", "ENG-R", "ENG-X"}
 SUCCESSOR_STATE_MODEL = ["ResearchTarget", "EngineThesis", "PositionPassport", "BookState"]
@@ -161,15 +160,20 @@ def validate_scope_paths(paths: list[str]) -> None:
     require(not any(path.startswith("docs/architecture/me1/") for path in paths), "N11: accepted ME1 artifacts modification prohibited")
 
 
-def changed_paths_from_git() -> list[str]:
+def changed_paths_from_yim0_merge(state: dict) -> list[str]:
+    """Return only the frozen YIM0 semantic-merge diff, not every later repo change."""
+    commit = state.get("semantic_merge_commit")
+    require(bool(commit), "YIM0 semantic merge commit missing")
     proc = subprocess.run(
-        ["git", "diff", "--name-only", f"{BASE_SHA}...HEAD"],
+        ["git", "diff-tree", "--no-commit-id", "--name-only", "-r", commit],
         cwd=ROOT,
         check=True,
         capture_output=True,
         text=True,
     )
-    return [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+    paths = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+    require(bool(paths), "YIM0 semantic merge diff unavailable")
+    return paths
 
 
 def validate_authority_boundaries(state: dict, review_card: str) -> None:
@@ -205,7 +209,7 @@ def main() -> int:
     validate_canon_status_data(status)
     validate_state_source_alignment_data(status, yip0, me0, me1, qxm2)
     validate_builder_source(builder_source)
-    validate_scope_paths(changed_paths_from_git())
+    validate_scope_paths(changed_paths_from_yim0_merge(yim0_state))
     validate_authority_boundaries(yim0_state, review_card)
     print("YIM0 methodology projection validation: PASS")
     return 0
