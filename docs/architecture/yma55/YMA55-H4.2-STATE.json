@@ -2,7 +2,7 @@
   "schema_version": "0.1.0",
   "program": "YMA55-H4.2",
   "title": "Same-Case Baseline Benchmark & H1/H2/H3 Ablation",
-  "status": "qualification_candidate_pending_final_exact_head",
+  "status": "machine_qualified_same_case_benchmark_candidate",
   "parent_program": "YMA55-H4.1",
   "execution_authorized": true,
   "experiment_design": {
@@ -91,6 +91,8 @@
   "qualification_checkpoint": {
     "benchmark_gate_commit_sha": "32e5bba519d9b7eb1139a5dbd2a9d4ca2b90ce19",
     "repository_gates_run": 470,
+    "state_and_report_bound_commit_sha": "b9d21df269414b943b08af2669020e1f93ef8c2a",
+    "state_and_report_bound_run": 473,
     "dedicated_h4_2_gate": "PASS",
     "contracts": "PASS",
     "governance": "PASS",
@@ -98,5 +100,6 @@
     "unit_test_count": 167
   },
   "final_exact_head_verification_required": true,
+  "final_exact_head_verification_policy": "Machine-qualified claims are valid only if repository-gates succeeds on the exact commit containing this promoted state; record that run in the PR settlement comment rather than mutating this state recursively.",
   "recommended_next_gate_not_authorized": "YMA55-H4.3 | H3 Transferability & Prior-Violation Paired Challenge"
 }
