@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.1",
+  "status": "POST_RESOLUTION_UNBLINDED",
+  "blind_freeze_commit_sha": "805a5c52f6918c0f4339128ef5e95883de5fbf89",
+  "historical_gold_admission": false,
+  "capital_authority": false,
+  "incremental_value_claim": "NOT_YET_ESTABLISHED",
+  "incremental_value_blocker": "No same-case pre-H1/H2/H3 or simpler-baseline replay has yet been frozen for direct incremental-value comparison.",
+  "cases": [
+    {"blind_case_id":"H41-B01","episode_id":"YMA55-H4-D-GOLD-1982-UST","case_type":"GOLD","mechanism_family":"MRM-D","machine_resolution":"PRIMARY_LEADS","settlement_expected_resolution":"PRIMARY_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Duration/disinflation positive-pattern mechanism discriminated correctly."},
+    {"blind_case_id":"H41-B02","episode_id":"YMA55-H4-D-NEAR-1994-UST","case_type":"NEAR_MISS","mechanism_family":"MRM-D","machine_resolution":"ALTERNATIVE_LEADS","settlement_expected_resolution":"ALTERNATIVE_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Pre-emptive tightening alternative displaced benign-duration primary."},
+    {"blind_case_id":"H41-B03","episode_id":"YMA55-H4-D-WM-2008-UST","case_type":"WRONG_MECHANISM","mechanism_family":"MRM-D","machine_resolution":"ALTERNATIVE_LEADS","settlement_expected_resolution":"ALTERNATIVE_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Safe-haven/credit-crisis alternative beat simple disinflation attribution."},
+    {"blind_case_id":"H41-B04","episode_id":"YMA55-H4-D-WS-2020-UST","case_type":"WRONG_STRIKE","mechanism_family":"MRM-D","machine_resolution":"ALTERNATIVE_LEADS","settlement_expected_resolution":"ALTERNATIVE_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Reflation repricing beat the low-rate duration primary; case role also contains expression/path failure."},
+    {"blind_case_id":"H41-B05","episode_id":"YMA55-H4-CR-GOLD-2009","case_type":"GOLD","mechanism_family":"MRM-CR","machine_resolution":"PRIMARY_LEADS","settlement_expected_resolution":"PRIMARY_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Credit-stabilization primary discriminated correctly."},
+    {"blind_case_id":"H41-B06","episode_id":"YMA55-H4-CR-NEAR-2015","case_type":"NEAR_MISS","mechanism_family":"MRM-CR","machine_resolution":"ALTERNATIVE_LEADS","settlement_expected_resolution":"ALTERNATIVE_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Sector-specific energy-credit stress beat systemic-contagion primary."},
+    {"blind_case_id":"H41-B07","episode_id":"YMA55-H4-CR-WM-2020","case_type":"WRONG_MECHANISM","mechanism_family":"MRM-CR","machine_resolution":"ALTERNATIVE_LEADS","settlement_expected_resolution":"ALTERNATIVE_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Policy-backstop mechanism beat premature fundamental-repair attribution."},
+    {"blind_case_id":"H41-B08","episode_id":"YMA55-H4-CR-WS-2006","case_type":"WRONG_STRIKE","mechanism_family":"MRM-CR","machine_resolution":"PRIMARY_LEADS","settlement_expected_resolution":"PRIMARY_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Clean thesis-versus-expression separation: credit deterioration mechanism led, while early protection timing/carry remained a wrong strike."},
+    {"blind_case_id":"H41-B09","episode_id":"YMA55-H4-SC-GOLD-1971-GOLD","case_type":"GOLD","mechanism_family":"MRM-SC","machine_resolution":"INSUFFICIENT_EVIDENCE","settlement_expected_resolution":"PRIMARY_LEADS","adjudication":"EVIDENCE_ABSTENTION","hydration_status":"PARTIAL_HYDRATION","note":"Resolver refused to force a mechanism because T0 evidence lacked an independent E1; abstention is preserved rather than imputed as a miss or win."},
+    {"blind_case_id":"H41-B10","episode_id":"YMA55-H4-SC-NEAR-2008-OIL","case_type":"NEAR_MISS","mechanism_family":"MRM-SC","machine_resolution":"ALTERNATIVE_LEADS","settlement_expected_resolution":"ALTERNATIVE_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Demand-destruction alternative beat persistent scarcity primary."},
+    {"blind_case_id":"H41-B11","episode_id":"YMA55-H4-SC-WM-2020-GOLD","case_type":"WRONG_MECHANISM","mechanism_family":"MRM-SC","machine_resolution":"PRIMARY_LEADS","settlement_expected_resolution":"ALTERNATIVE_LEADS","adjudication":"MISMATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Material epistemic miss: blind resolver attributed the move to scarcity/monetary expansion rather than the settlement-favored real-rate/liquidity alternative."},
+    {"blind_case_id":"H41-B12","episode_id":"YMA55-H4-SC-WS-1980-GOLD","case_type":"WRONG_STRIKE","mechanism_family":"MRM-SC","machine_resolution":"ALTERNATIVE_LEADS","settlement_expected_resolution":"ALTERNATIVE_LEADS","adjudication":"MATCH","hydration_status":"EVIDENCE_HYDRATED","note":"Real-rate regime-reversal alternative beat persistent scarcity primary; late-entry path failure remains separately relevant."}
+  ],
+  "summary": {
+    "total_cases": 12,
+    "matches": 10,
+    "mismatches": 1,
+    "evidence_abstentions": 1,
+    "fully_hydrated_cases": 11,
+    "fully_hydrated_matches": 10,
+    "fully_hydrated_mismatches": 1,
+    "fully_hydrated_mechanism_accuracy": "10/11",
+    "safe_or_correct_outcomes": "11/12",
+    "critical_miss": "H41-B11 / 2020 Gold wrong-mechanism case",
+    "critical_abstention": "H41-B09 / 1971 Gold partial-hydration case"
+  }
+}
