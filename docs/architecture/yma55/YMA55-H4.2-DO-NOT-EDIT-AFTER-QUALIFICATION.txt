@@ -1,0 +1,1 @@
+H4.2 qualification branch content is frozen after this marker. Any further branch mutation requires a new exact-head verification and must not be described as already qualified.
