@@ -9,7 +9,10 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 
-from scripts import yf3n0_prospective as yf3
+try:
+    from scripts import yf3n0_prospective as yf3
+except ModuleNotFoundError:  # direct execution: python scripts/validate_yf3n0_c_prospective.py
+    import yf3n0_prospective as yf3
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMAS = ROOT / "packages" / "contracts" / "schemas" / "yf3n0"
@@ -46,8 +49,7 @@ def validate_instance(schema_name: str, value, label: str) -> None:
     validator = Draft202012Validator(schema, format_checker=FormatChecker())
     errors = sorted(validator.iter_errors(value), key=lambda error: list(error.path))
     if errors:
-        detail = "; ".join(error.message for error in errors[:8])
-        raise ValueError(f"{label}: {detail}")
+        raise ValueError(f"{label}: " + "; ".join(error.message for error in errors[:8]))
 
 
 def assert_all_false(values: dict, label: str) -> None:
@@ -56,18 +58,15 @@ def assert_all_false(values: dict, label: str) -> None:
 
 def assert_no_global_score(value: dict) -> None:
     forbidden = {"global_accuracy", "overall_score", "three_non_accuracy", "global_accuracy_score"}
-    found = forbidden.intersection(value)
-    require(not found, "global accuracy score prohibited")
+    require(not forbidden.intersection(value), "global accuracy score prohibited")
 
 
 def validate_schemas() -> None:
     found = {path.name for path in SCHEMAS.glob("*.json")}
     require(found == SCHEMA_FILES, "YF3N0-C schema set mismatch")
     for path in SCHEMAS.glob("*.json"):
-        schema = load_json(path)
-        Draft202012Validator.check_schema(schema)
-        text = path.read_text(encoding="utf-8")
-        require('"const": true' not in text, f"{path.name}: authority or immutable boolean unexpectedly true")
+        Draft202012Validator.check_schema(load_json(path))
+        require('"const": true' not in path.read_text(encoding="utf-8"), f"{path.name}: authority or immutable boolean unexpectedly true")
 
 
 def validate_protocol() -> dict:
@@ -163,9 +162,9 @@ def _run_attack(attack_id: str, case: dict, seal: dict, bundle: dict, slots: dic
             item["resolution_rule_id"] = f"RULE-OUT-SECONDARY-{index + 1}"
             item["full_forecast"]["outcome_definition_id"] = item["outcome_definition_id"]
             item["full_forecast"]["resolution_rule_id"] = item["resolution_rule_id"]
-            for value in item["ablation_forecasts"].values():
-                value["outcome_definition_id"] = item["outcome_definition_id"]
-                value["resolution_rule_id"] = item["resolution_rule_id"]
+            for forecast in item["ablation_forecasts"].values():
+                forecast["outcome_definition_id"] = item["outcome_definition_id"]
+                forecast["resolution_rule_id"] = item["resolution_rule_id"]
             item["baseline_forecast"]["outcome_definition_id"] = item["outcome_definition_id"]
             item["baseline_forecast"]["resolution_rule_id"] = item["resolution_rule_id"]
             bad["predictions"].append(item)
@@ -225,8 +224,7 @@ def validate_state_and_projection() -> None:
 
 
 def validate_no_authority_leakage() -> None:
-    protocol = load_json(PROTOCOL_PATH)
-    assert_all_false(protocol["authority"], "protocol")
+    assert_all_false(load_json(PROTOCOL_PATH)["authority"], "protocol")
     state = load_json(STATE_PATH)
     require(state["real_case_enrollment_authorized"] is False, "real-case authority leakage")
     require(state["prediction_clock_start_authorized"] is False, "clock authority leakage")
@@ -239,7 +237,7 @@ def main() -> int:
     validate_schemas()
     protocol = validate_protocol()
     slots = validate_slots()
-    case, seal, bundle, settlements, qualification = validate_fixtures(protocol, slots)
+    case, seal, bundle, _, _ = validate_fixtures(protocol, slots)
     validate_hard_negatives(case, seal, bundle, slots, protocol)
     validate_state_and_projection()
     validate_no_authority_leakage()
