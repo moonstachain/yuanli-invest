@@ -5,6 +5,7 @@ from pathlib import Path
 from research_runtime.yma55.benchmark import (
     BENCHMARK_VARIANTS,
     resolve_variant,
+    run_benchmark_matrix,
     score_variant,
 )
 
@@ -37,7 +38,7 @@ class H42SameCaseBenchmarkTests(unittest.TestCase):
         )
 
     def test_b0_is_a_naive_primary_prior_not_a_claimed_old_yma55_replica(self):
-        packet = self.blind_packets()[8]  # partial-hydration 1971 case, still role-blind here
+        packet = self.blind_packets()[8]
         result = resolve_variant(packet, "B0_NAIVE_PRIMARY_PRIOR")
         self.assertEqual(result["resolution"], "PRIMARY_LEADS")
         self.assertEqual(result["baseline_semantics"], "naive_primary_prior")
@@ -77,6 +78,17 @@ class H42SameCaseBenchmarkTests(unittest.TestCase):
         self.assertIn("partial_case_forced_resolution", score)
         self.assertNotIn("win_rate", score)
         self.assertNotIn("probability", score)
+
+    def test_matrix_is_same_case_same_evidence_and_keeps_h3_unidentified(self):
+        matrix = run_benchmark_matrix(self.blind_packets(), self.settlements())
+        self.assertEqual(tuple(matrix["variants"]), BENCHMARK_VARIANTS)
+        self.assertEqual(matrix["case_count"], 12)
+        self.assertTrue(matrix["same_case_same_evidence"])
+        self.assertEqual(matrix["scores"]["B3_H1_H2_FULL_RESOLVER"]["fully_hydrated_mechanism_accuracy"], "10/11")
+        self.assertTrue(matrix["scores"]["B0_NAIVE_PRIMARY_PRIOR"]["partial_case_forced_resolution"])
+        self.assertEqual(matrix["scores"]["B4_H1_H2_H3_HISTORICAL_ONLY"], matrix["scores"]["B3_H1_H2_FULL_RESOLVER"])
+        self.assertEqual(matrix["h3_incremental_contribution"], "NOT_IDENTIFIABLE_IN_HISTORICAL_ONLY_REPLAY")
+        self.assertEqual(matrix["old_yma55_replication_claim"], "NOT_CLAIMED")
 
 
 if __name__ == "__main__":
