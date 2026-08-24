@@ -22,7 +22,7 @@
     "schema_version":"1.0.0",
     "horizon":"T180",
     "settled_at":"2027-02-20T00:11:00Z",
-    "binary_resolutions":[{"outcome_definition_id":"OUT-FORCE","resolution":"YES","model_brier_scores":{"FULL":0.0625,"ABLATE_PIP":0.2025,"ABLATE_EAA":0.16,"ABLATE_NLP":0.1225,"BASELINE":0.25}}],
+    "binary_resolutions":[{"outcome_definition_id":"OUT-FORCE","resolution":"YES","model_brier_scores":{"FULL":0.0625,"ABLATE_PIP":0.20249999999999996,"ABLATE_EAA":0.16000000000000003,"ABLATE_NLP":0.12249999999999998,"BASELINE":0.25}}],
     "causal_settlements":[
       {"outcome_definition_id":"OUT-PIP","state":"SUPPORTED"},
       {"outcome_definition_id":"OUT-EAA","state":"SUPPORTED"},
@@ -38,7 +38,7 @@
     "schema_version":"1.0.0",
     "horizon":"T365",
     "settled_at":"2027-08-24T00:11:00Z",
-    "binary_resolutions":[{"outcome_definition_id":"OUT-FORCE","resolution":"NO","model_brier_scores":{"FULL":0.5625,"ABLATE_PIP":0.3025,"ABLATE_EAA":0.36,"ABLATE_NLP":0.4225,"BASELINE":0.25}}],
+    "binary_resolutions":[{"outcome_definition_id":"OUT-FORCE","resolution":"NO","model_brier_scores":{"FULL":0.5625,"ABLATE_PIP":0.30250000000000005,"ABLATE_EAA":0.36,"ABLATE_NLP":0.42250000000000004,"BASELINE":0.25}}],
     "causal_settlements":[
       {"outcome_definition_id":"OUT-PIP","state":"FALSIFIED"},
       {"outcome_definition_id":"OUT-EAA","state":"FALSIFIED"},
