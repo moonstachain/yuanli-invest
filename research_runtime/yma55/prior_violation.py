@@ -52,18 +52,26 @@ def evaluate_prior_violation(
             notes="PIT-frozen diagnostic expectations are required",
         )
 
-    if transferability.overall_transferability in {"NON_TRANSFERABLE", "UNRESOLVED"}:
-        response = (
-            "RETIRE_CURRENT_PRIOR_APPLICATION"
-            if transferability.overall_transferability == "NON_TRANSFERABLE"
-            else "UNRESOLVED_NEEDS_EVIDENCE"
-        )
+    if transferability.overall_transferability in {
+        "WEAK_TRANSFERABILITY",
+        "NON_TRANSFERABLE",
+        "UNRESOLVED",
+    }:
+        if transferability.overall_transferability == "UNRESOLVED":
+            response = "UNRESOLVED_NEEDS_EVIDENCE"
+            notes = "historical prior transferability=UNRESOLVED"
+        elif transferability.overall_transferability == "WEAK_TRANSFERABILITY":
+            response = "RETIRE_CURRENT_PRIOR_APPLICATION"
+            notes = "historical prior transferability=WEAK_TRANSFERABILITY; stress-reference only"
+        else:
+            response = "RETIRE_CURRENT_PRIOR_APPLICATION"
+            notes = "historical prior transferability=NON_TRANSFERABLE"
         return _record(
             hypothesis_set,
             as_of,
             status="NOT_EVALUABLE",
             research_response=response,
-            notes=f"historical prior transferability={transferability.overall_transferability}",
+            notes=notes,
         )
 
     feasible_policy_set = tuple(observations.get("feasible_policy_set", ()))
