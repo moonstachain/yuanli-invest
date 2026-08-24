@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.3",
+  "status": "PRE_REGISTERED_POST_RESOLUTION_SETTLEMENT",
+  "pairs": [
+    {"opaque_pair_id":"TP-01","expected_transferability":"PARTIAL_TRANSFERABILITY","expected_authority_settlement":"ACTIVE_PRIOR_ALLOWED","expected_observation_settlement":"MAINTAIN_PRIOR"},
+    {"opaque_pair_id":"TP-02","expected_transferability":"PARTIAL_TRANSFERABILITY","expected_authority_settlement":"ACTIVE_PRIOR_ALLOWED","expected_observation_settlement":"REOPEN_MECHANISM_COMPETITION"},
+    {"opaque_pair_id":"TP-03","expected_transferability":"NON_TRANSFERABLE","expected_authority_settlement":"ACTIVE_PRIOR_BLOCKED","expected_observation_settlement":"NOT_APPLICABLE"},
+    {"opaque_pair_id":"TP-04","expected_transferability":"PARTIAL_TRANSFERABILITY","expected_authority_settlement":"ACTIVE_PRIOR_ALLOWED","expected_observation_settlement":"REOPEN_MECHANISM_COMPETITION"},
+    {"opaque_pair_id":"TP-05","expected_transferability":"NON_TRANSFERABLE","expected_authority_settlement":"ACTIVE_PRIOR_BLOCKED","expected_observation_settlement":"NOT_APPLICABLE"},
+    {"opaque_pair_id":"TP-06","expected_transferability":"WEAK_TRANSFERABILITY","expected_authority_settlement":"ACTIVE_PRIOR_BLOCKED","expected_observation_settlement":"NOT_APPLICABLE"}
+  ],
+  "challenge_set_is_iid": false,
+  "out_of_sample_claim": "NOT_ESTABLISHED",
+  "exact_old_yma55_replication": "NOT_CLAIMED",
+  "historical_gold_admission": false,
+  "capital_authority": false
+}
