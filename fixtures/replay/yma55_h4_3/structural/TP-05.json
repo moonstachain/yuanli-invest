@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.1.0",
+  "opaque_pair_id": "TP-05",
+  "mechanism_family": "MRM-CR",
+  "source_prior_eligible": true,
+  "structural_evidence_authority": "CANDIDATE_DERIVED_FROM_H4_H41",
+  "structural_evidence_at_t0": {
+    "as_of": "2020-03-23T23:59:59Z",
+    "dimensions": [
+      {"name":"monetary_regime","state":"PARTIAL","blocking_if_mismatched":false,"mechanism_relevance":"critical","evidence_refs":["derived:h43:tp05:monetary_regime"]},
+      {"name":"fiscal_capacity","state":"PARTIAL","blocking_if_mismatched":false,"mechanism_relevance":"material","evidence_refs":["derived:h43:tp05:fiscal_capacity"]},
+      {"name":"market_structure","state":"PARTIAL","blocking_if_mismatched":false,"mechanism_relevance":"material","evidence_refs":["derived:h43:tp05:market_structure"]},
+      {"name":"global_order","state":"PARTIAL","blocking_if_mismatched":false,"mechanism_relevance":"secondary","evidence_refs":["derived:h43:tp05:global_order"]},
+      {"name":"policy_toolkit","state":"MISMATCHED","blocking_if_mismatched":true,"mechanism_relevance":"critical","evidence_refs":["derived:h43:tp05:policy_toolkit"]}
+    ]
+  },
+  "transported_diagnostic": {
+    "transport_id": "TR-05",
+    "source_prior_ref": "SP-05",
+    "source_mechanism_family": "MRM-CR",
+    "target_case_ref_opaque": "TC-05",
+    "as_of": "2020-03-23T23:59:59Z",
+    "frozen_at": "2020-03-23T23:59:59Z",
+    "observation_window_start": "2020-03-24T00:00:00Z",
+    "observation_window_end": "2020-06-30T23:59:59Z",
+    "target_required_conditions": ["housing_credit_deteriorates","contagion_emerges"],
+    "target_expected_observables": {"delinquency":"UP","credit_spread":"UP"},
+    "target_expected_sequence": ["delinquency","credit_spread"],
+    "target_feasible_policy_set": ["hold","tighten","market_adjustment"],
+    "supporting_evidence_refs": ["derived:h43:tp05:transport_mapping"],
+    "pit_frozen": true,
+    "version": 1
+  },
+  "historical_gold_admission": false,
+  "capital_authority": false
+}
