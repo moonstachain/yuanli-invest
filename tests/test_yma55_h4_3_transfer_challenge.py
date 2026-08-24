@@ -3,6 +3,7 @@ import unittest
 from research_runtime.yma55.transfer_challenge import (
     TRANSFER_VARIANTS,
     active_prior_allowed,
+    build_hypothesis_set_from_transport,
     resolve_transferability_state,
     validate_structural_packet,
     validate_transported_diagnostic,
@@ -134,6 +135,15 @@ class H43TransferabilityContractTests(unittest.TestCase):
         validate_transported_diagnostic(contract)
         self.assertNotEqual(contract["transport_id"], contract["source_prior_ref"])
         self.assertTrue(contract["pit_frozen"])
+
+    def test_transported_contract_compiles_to_new_hypothesis_identity(self):
+        contract = valid_structural_packet()["transported_diagnostic"]
+        hypothesis_set = build_hypothesis_set_from_transport(contract)
+        self.assertEqual(hypothesis_set.primary.hypothesis_id, "transported:TR-XX")
+        self.assertNotEqual(hypothesis_set.primary.hypothesis_id, contract["source_prior_ref"])
+        self.assertEqual(dict(hypothesis_set.primary.predicted_observables), contract["target_expected_observables"])
+        self.assertEqual(tuple(hypothesis_set.primary.expected_sequence), tuple(contract["target_expected_sequence"]))
+        self.assertTrue(hypothesis_set.pit_frozen)
 
     def test_opaque_pair_id_cannot_bear_historical_role_or_year(self):
         packet = valid_structural_packet()
