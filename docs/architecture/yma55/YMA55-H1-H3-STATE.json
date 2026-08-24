@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YMA55_H1_H3_CAUSAL_HISTORICAL_PRIOR_HARDENING",
+  "status": "design_candidate_for_human_review",
+  "repository_base_sha": "bd18ec6f92131ddb6948b07973a98d1fe69d5cbb",
+  "branch": "yma55-h1-h3-causal-prior-hardening",
+  "purpose": "Freeze a five-layer human decision kernel over the full machine causal ontology, require competing mechanisms plus a null hypothesis, and bound historical-prior authority through transferability and prior-violation rules.",
+  "battles": {
+    "YMA55-H1": {
+      "name": "Five-Layer Decision Kernel Freeze",
+      "status": "written_spec_complete_candidate",
+      "spec": "docs/architecture/yma55/YMA55-H1-FIVE-LAYER-DECISION-KERNEL-FREEZE-v0.1.md",
+      "acceptance_token": "ACCEPT_YMA55_H1_FIVE_LAYER_DECISION_KERNEL_FREEZE"
+    },
+    "YMA55-H2": {
+      "name": "Competing Mechanism & Null Hypothesis Contract",
+      "status": "written_spec_complete_candidate",
+      "spec": "docs/architecture/yma55/YMA55-H2-COMPETING-MECHANISM-NULL-HYPOTHESIS-CONTRACT-v0.1.md",
+      "acceptance_token": "ACCEPT_YMA55_H2_COMPETING_MECHANISM_NULL_HYPOTHESIS_CONTRACT"
+    },
+    "YMA55-H3": {
+      "name": "Transferability × Prior Violation Engine",
+      "status": "written_spec_complete_candidate",
+      "spec": "docs/architecture/yma55/YMA55-H3-TRANSFERABILITY-PRIOR-VIOLATION-ENGINE-v0.1.md",
+      "acceptance_token": "ACCEPT_YMA55_H3_TRANSFERABILITY_PRIOR_VIOLATION_ENGINE"
+    }
+  },
+  "machine_contract": "docs/architecture/yma55/YMA55-H1-H3-CONTRACT-v0.1.json",
+  "authority": {
+    "historical_prior_research": true,
+    "human_projection": true,
+    "domain_ontology_candidate": true,
+    "engine_registry_mutation": false,
+    "constitution_mutation": false,
+    "portfolio": false,
+    "position_sizing": false,
+    "trading": false,
+    "live_execution": false,
+    "canon_promotion": false,
+    "merge": false
+  },
+  "qualification": {
+    "machine_validation": "not_run",
+    "ci": "not_run",
+    "human_review": "pending",
+    "human_review_threshold": "30/30 PASS across three 10-point battle gates"
+  },
+  "next_gate": "HUMAN_REVIEW_OF_H1_H2_H3_WRITTEN_SPEC_PACKAGE",
+  "implementation_authorized": false,
+  "merge_authorized": false
+}
