@@ -1,0 +1,42 @@
+{
+  "protocol_id": "YF3N0-C-v0.1",
+  "schema_version": "1.0.0",
+  "hypotheses": [
+    "H1_DURATION",
+    "H2_EDGE",
+    "H3_LEVERAGE",
+    "H4_CONJUNCTIVE",
+    "H5_WEAKEST_LINK"
+  ],
+  "primary_prediction_ids": [
+    "P1_PIP_PERSISTENCE",
+    "P2_EAA_PERSISTENCE_OR_DECAY",
+    "P3_NLP_ACTIVATION_OR_FAILURE",
+    "P4_INTEGRATED_FORCE_POTENTIAL"
+  ],
+  "max_secondary_predictions_per_case": 2,
+  "model_variants": ["FULL", "ABLATE_PIP", "ABLATE_EAA", "ABLATE_NLP", "BASELINE"],
+  "required_horizons": ["T90", "T180", "T365"],
+  "optional_horizons": ["T730"],
+  "binary_resolution_states": ["YES", "NO", "INDETERMINATE"],
+  "causal_settlement_states": ["SUPPORTED", "PARTIALLY_SUPPORTED", "FALSIFIED", "INDETERMINATE"],
+  "qualification_outcomes": ["CANON_PROMOTION_READY", "PARTIAL_CANON_REFRAME_REQUIRED", "FIRST_PRINCIPLES_CANON_REJECTED", "INSUFFICIENT_EVIDENCE"],
+  "promotion_gates": [
+    "C_G1_PROTOCOL_INTEGRITY",
+    "C_G2_NO_RESOLUTION_DRIFT",
+    "C_G3_PRIMITIVE_DISCRIMINATION",
+    "C_G4_ABLATION_VALUE",
+    "C_G5_CROSS_DOMAIN_ROBUSTNESS",
+    "C_G6_NO_CONSTITUTIONAL_BREACH"
+  ],
+  "authority": {
+    "real_case_enrollment_authority": false,
+    "prediction_clock_start_authority": false,
+    "canon_promotion_authority": false,
+    "psychometric_authority": false,
+    "security_recommendation_authority": false,
+    "portfolio_sizing_authority": false,
+    "trade_execution_authority": false,
+    "manager_approval_authority": false
+  }
+}

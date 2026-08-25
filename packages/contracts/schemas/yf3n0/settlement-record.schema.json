@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yf3n0-settlement-record:1.0.0",
+  "title": "YF3N0 SettlementRecord",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["settlement_record_id", "case_id", "preregistration_bundle_id", "schema_version", "horizon", "settled_at", "binary_resolutions", "causal_settlements", "new_evidence_refs", "authority"],
+  "properties": {
+    "settlement_record_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string", "minLength": 1},
+    "preregistration_bundle_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.0.0"},
+    "horizon": {"enum": ["T90", "T180", "T365", "T730"]},
+    "settled_at": {"type": "string", "format": "date-time"},
+    "binary_resolutions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["outcome_definition_id", "resolution", "model_brier_scores"],
+        "properties": {
+          "outcome_definition_id": {"type": "string", "minLength": 1},
+          "resolution": {"enum": ["YES", "NO", "INDETERMINATE"]},
+          "model_brier_scores": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["FULL", "ABLATE_PIP", "ABLATE_EAA", "ABLATE_NLP", "BASELINE"],
+            "properties": {
+              "FULL": {"type": ["number", "null"]},
+              "ABLATE_PIP": {"type": ["number", "null"]},
+              "ABLATE_EAA": {"type": ["number", "null"]},
+              "ABLATE_NLP": {"type": ["number", "null"]},
+              "BASELINE": {"type": ["number", "null"]}
+            }
+          }
+        }
+      }
+    },
+    "causal_settlements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["outcome_definition_id", "state"],
+        "properties": {
+          "outcome_definition_id": {"type": "string", "minLength": 1},
+          "state": {"enum": ["SUPPORTED", "PARTIALLY_SUPPORTED", "FALSIFIED", "INDETERMINATE"]}
+        }
+      }
+    },
+    "new_evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prediction_mutation_authority", "capital_authority", "canon_authority"],
+      "properties": {
+        "prediction_mutation_authority": {"const": false},
+        "capital_authority": {"const": false},
+        "canon_authority": {"const": false}
+      }
+    }
+  }
+}

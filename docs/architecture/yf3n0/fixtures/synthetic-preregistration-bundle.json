@@ -1,0 +1,102 @@
+{
+  "preregistration_bundle_id": "SYN-PRB-001",
+  "case_id": "SYN-001",
+  "schema_version": "1.0.0",
+  "sealed_at": "2026-08-24T00:10:00Z",
+  "evidence_digest_sha256": "e1cc65b3ff45073957d5e7efbd57fdb1acb3a7a671ecdc2014951e5c04aa97eb",
+  "prediction_contract": {
+    "prediction_contract_id": "SYN-PC-001",
+    "case_id": "SYN-001",
+    "schema_version": "1.0.0",
+    "sealed_at": "2026-08-24T00:10:00Z",
+    "evidence_digest_sha256": "e1cc65b3ff45073957d5e7efbd57fdb1acb3a7a671ecdc2014951e5c04aa97eb",
+    "predictions": [
+      {
+        "prediction_id": "P1_PIP_PERSISTENCE",
+        "hypothesis_id": "H1_DURATION",
+        "role": "PRIMARY",
+        "outcome_definition_id": "OUT-PIP",
+        "resolution_rule_id": "RULE-OUT-PIP",
+        "forecast_channel": "causal",
+        "full_forecast": {"outcome_definition_id": "OUT-PIP", "resolution_rule_id": "RULE-OUT-PIP", "expected_state": "SUPPORTED"},
+        "ablation_forecasts": {
+          "ABLATE_PIP": {"outcome_definition_id": "OUT-PIP", "resolution_rule_id": "RULE-OUT-PIP", "expected_state": "PARTIALLY_SUPPORTED"},
+          "ABLATE_EAA": {"outcome_definition_id": "OUT-PIP", "resolution_rule_id": "RULE-OUT-PIP", "expected_state": "PARTIALLY_SUPPORTED"},
+          "ABLATE_NLP": {"outcome_definition_id": "OUT-PIP", "resolution_rule_id": "RULE-OUT-PIP", "expected_state": "PARTIALLY_SUPPORTED"}
+        },
+        "baseline_forecast": {"outcome_definition_id": "OUT-PIP", "resolution_rule_id": "RULE-OUT-PIP", "expected_state": "INDETERMINATE"},
+        "falsifiers": ["OUT-PIP mechanism fails under frozen rule"],
+        "source_evidence_refs": ["SYN-EV-001"]
+      },
+      {
+        "prediction_id": "P2_EAA_PERSISTENCE_OR_DECAY",
+        "hypothesis_id": "H2_EDGE",
+        "role": "PRIMARY",
+        "outcome_definition_id": "OUT-EAA",
+        "resolution_rule_id": "RULE-OUT-EAA",
+        "forecast_channel": "causal",
+        "full_forecast": {"outcome_definition_id": "OUT-EAA", "resolution_rule_id": "RULE-OUT-EAA", "expected_state": "SUPPORTED"},
+        "ablation_forecasts": {
+          "ABLATE_PIP": {"outcome_definition_id": "OUT-EAA", "resolution_rule_id": "RULE-OUT-EAA", "expected_state": "PARTIALLY_SUPPORTED"},
+          "ABLATE_EAA": {"outcome_definition_id": "OUT-EAA", "resolution_rule_id": "RULE-OUT-EAA", "expected_state": "PARTIALLY_SUPPORTED"},
+          "ABLATE_NLP": {"outcome_definition_id": "OUT-EAA", "resolution_rule_id": "RULE-OUT-EAA", "expected_state": "PARTIALLY_SUPPORTED"}
+        },
+        "baseline_forecast": {"outcome_definition_id": "OUT-EAA", "resolution_rule_id": "RULE-OUT-EAA", "expected_state": "INDETERMINATE"},
+        "falsifiers": ["OUT-EAA mechanism fails under frozen rule"],
+        "source_evidence_refs": ["SYN-EV-001"]
+      },
+      {
+        "prediction_id": "P3_NLP_ACTIVATION_OR_FAILURE",
+        "hypothesis_id": "H3_LEVERAGE",
+        "role": "PRIMARY",
+        "outcome_definition_id": "OUT-NLP",
+        "resolution_rule_id": "RULE-OUT-NLP",
+        "forecast_channel": "causal",
+        "full_forecast": {"outcome_definition_id": "OUT-NLP", "resolution_rule_id": "RULE-OUT-NLP", "expected_state": "SUPPORTED"},
+        "ablation_forecasts": {
+          "ABLATE_PIP": {"outcome_definition_id": "OUT-NLP", "resolution_rule_id": "RULE-OUT-NLP", "expected_state": "PARTIALLY_SUPPORTED"},
+          "ABLATE_EAA": {"outcome_definition_id": "OUT-NLP", "resolution_rule_id": "RULE-OUT-NLP", "expected_state": "PARTIALLY_SUPPORTED"},
+          "ABLATE_NLP": {"outcome_definition_id": "OUT-NLP", "resolution_rule_id": "RULE-OUT-NLP", "expected_state": "PARTIALLY_SUPPORTED"}
+        },
+        "baseline_forecast": {"outcome_definition_id": "OUT-NLP", "resolution_rule_id": "RULE-OUT-NLP", "expected_state": "INDETERMINATE"},
+        "falsifiers": ["OUT-NLP mechanism fails under frozen rule"],
+        "source_evidence_refs": ["SYN-EV-001"]
+      },
+      {
+        "prediction_id": "P4_INTEGRATED_FORCE_POTENTIAL",
+        "hypothesis_id": "H4_CONJUNCTIVE",
+        "role": "PRIMARY",
+        "outcome_definition_id": "OUT-FORCE",
+        "resolution_rule_id": "RULE-OUT-FORCE",
+        "forecast_channel": "binary",
+        "full_forecast": {"outcome_definition_id": "OUT-FORCE", "resolution_rule_id": "RULE-OUT-FORCE", "probability": 0.75},
+        "ablation_forecasts": {
+          "ABLATE_PIP": {"outcome_definition_id": "OUT-FORCE", "resolution_rule_id": "RULE-OUT-FORCE", "probability": 0.55},
+          "ABLATE_EAA": {"outcome_definition_id": "OUT-FORCE", "resolution_rule_id": "RULE-OUT-FORCE", "probability": 0.60},
+          "ABLATE_NLP": {"outcome_definition_id": "OUT-FORCE", "resolution_rule_id": "RULE-OUT-FORCE", "probability": 0.65}
+        },
+        "baseline_forecast": {"outcome_definition_id": "OUT-FORCE", "resolution_rule_id": "RULE-OUT-FORCE", "probability": 0.50},
+        "falsifiers": ["OUT-FORCE fails frozen event definition"],
+        "source_evidence_refs": ["SYN-EV-001"]
+      }
+    ],
+    "authority": {"capital_authority": false, "trading_authority": false, "canon_authority": false}
+  },
+  "resolution_contract": {
+    "resolution_contract_id": "SYN-RC-001",
+    "case_id": "SYN-001",
+    "schema_version": "1.0.0",
+    "sealed_at": "2026-08-24T00:10:00Z",
+    "evidence_digest_sha256": "e1cc65b3ff45073957d5e7efbd57fdb1acb3a7a671ecdc2014951e5c04aa97eb",
+    "rules": [
+      {"resolution_rule_id":"RULE-OUT-PIP","outcome_definition_id":"OUT-PIP","event_definition":"Resolve OUT-PIP using only prospectively eligible evidence.","resolution_source_rule":"Use dated non-self-report evidence where available.","resolution_cutoff_rule":"Use evidence known by the declared horizon.","allowed_binary_states":["YES","NO","INDETERMINATE"],"allowed_causal_states":["SUPPORTED","PARTIALLY_SUPPORTED","FALSIFIED","INDETERMINATE"],"indeterminate_rule":"Return INDETERMINATE when evidence cannot decide the frozen rule."},
+      {"resolution_rule_id":"RULE-OUT-EAA","outcome_definition_id":"OUT-EAA","event_definition":"Resolve OUT-EAA using only prospectively eligible evidence.","resolution_source_rule":"Use dated non-self-report evidence where available.","resolution_cutoff_rule":"Use evidence known by the declared horizon.","allowed_binary_states":["YES","NO","INDETERMINATE"],"allowed_causal_states":["SUPPORTED","PARTIALLY_SUPPORTED","FALSIFIED","INDETERMINATE"],"indeterminate_rule":"Return INDETERMINATE when evidence cannot decide the frozen rule."},
+      {"resolution_rule_id":"RULE-OUT-NLP","outcome_definition_id":"OUT-NLP","event_definition":"Resolve OUT-NLP using only prospectively eligible evidence.","resolution_source_rule":"Use dated non-self-report evidence where available.","resolution_cutoff_rule":"Use evidence known by the declared horizon.","allowed_binary_states":["YES","NO","INDETERMINATE"],"allowed_causal_states":["SUPPORTED","PARTIALLY_SUPPORTED","FALSIFIED","INDETERMINATE"],"indeterminate_rule":"Return INDETERMINATE when evidence cannot decide the frozen rule."},
+      {"resolution_rule_id":"RULE-OUT-FORCE","outcome_definition_id":"OUT-FORCE","event_definition":"Resolve OUT-FORCE using only prospectively eligible evidence.","resolution_source_rule":"Use dated non-self-report evidence where available.","resolution_cutoff_rule":"Use evidence known by the declared horizon.","allowed_binary_states":["YES","NO","INDETERMINATE"],"allowed_causal_states":["SUPPORTED","PARTIALLY_SUPPORTED","FALSIFIED","INDETERMINATE"],"indeterminate_rule":"Return INDETERMINATE when evidence cannot decide the frozen rule."}
+    ],
+    "authority": {"post_seal_rule_mutation_authority": false, "capital_authority": false}
+  },
+  "optional_horizons": [],
+  "bundle_digest_sha256": "6062ea41280f6da5795e9818f8a73b74e5fc61762711cec7df70847dda4ba6f1",
+  "authority": {"post_seal_mutation_authority": false, "clock_start_authority": false, "capital_authority": false}
+}

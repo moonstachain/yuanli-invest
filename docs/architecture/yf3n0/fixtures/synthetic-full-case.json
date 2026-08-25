@@ -1,0 +1,20 @@
+{
+  "case_id": "SYN-001",
+  "schema_version": "1.0.0",
+  "slot_id": "ENT-FULL-01",
+  "actor_label": "SYNTHETIC-ACTOR-ALPHA",
+  "problem_domain": "entrepreneurship",
+  "context": "Synthetic prospective protocol fixture; no real-world actor or outcome.",
+  "reference_group": "SYNTHETIC-BENCHMARK-GROUP",
+  "structural_type": "full_candidate",
+  "recorded_at": "2026-08-23T23:30:00Z",
+  "known_as_of": "2026-08-23T23:30:00Z",
+  "real_case": false,
+  "private_secret_required": false,
+  "observable_365d": true,
+  "authority": {
+    "capital_authority": false,
+    "trading_authority": false,
+    "psychometric_authority": false
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "registry_id": "YF3N0-C-GENESIS-COHORT-SLOTS-v0.1",
+  "schema_version": "1.0.0",
+  "slots": [
+    {"slot_id":"ENT-FULL-01","domain":"entrepreneurship","structural_type":"full_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"ENT-ABL-01","domain":"entrepreneurship","structural_type":"ablation_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"ENT-UNC-01","domain":"entrepreneurship","structural_type":"uncertain_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"ENT-EXO-01","domain":"entrepreneurship","structural_type":"exogenous_control","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"INV-FULL-01","domain":"investment_capital","structural_type":"full_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"INV-ABL-01","domain":"investment_capital","structural_type":"ablation_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"INV-UNC-01","domain":"investment_capital","structural_type":"uncertain_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"INV-EXO-01","domain":"investment_capital","structural_type":"exogenous_control","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"AIO-FULL-01","domain":"ai_native_os","structural_type":"full_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"AIO-ABL-01","domain":"ai_native_os","structural_type":"ablation_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"AIO-UNC-01","domain":"ai_native_os","structural_type":"uncertain_candidate","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false},
+    {"slot_id":"AIO-EXO-01","domain":"ai_native_os","structural_type":"exogenous_control","actor_ref":null,"enrollment_status":"UNFILLED","real_case":false}
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yf3n0-evidence-seal:1.0.0",
+  "title": "YF3N0 EvidenceSeal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidence_seal_id", "case_id", "schema_version", "sealed_at", "knowledge_cutoff", "evidence_manifest", "unknowns", "excluded_future_information", "evidence_digest_sha256", "authority"],
+  "properties": {
+    "evidence_seal_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.0.0"},
+    "sealed_at": {"type": "string", "format": "date-time"},
+    "knowledge_cutoff": {"type": "string", "format": "date-time"},
+    "evidence_manifest": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["evidence_ref", "source_type", "known_as_of"],
+        "properties": {
+          "evidence_ref": {"type": "string", "minLength": 1},
+          "source_type": {"enum": ["self_report", "non_self_report"]},
+          "known_as_of": {"type": "string", "format": "date-time"},
+          "description": {"type": "string"}
+        }
+      }
+    },
+    "unknowns": {"type": "array", "items": {"type": "string"}},
+    "excluded_future_information": {"type": "array", "items": {"type": "string"}},
+    "evidence_digest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["future_evidence_writeback_authority", "capital_authority"],
+      "properties": {
+        "future_evidence_writeback_authority": {"const": false},
+        "capital_authority": {"const": false}
+      }
+    }
+  }
+}

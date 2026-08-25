@@ -1,0 +1,10 @@
+{
+  "program": "YF3N0-C",
+  "status": "IMPLEMENTED_CANDIDATE_AWAITING_HUMAN_REVIEW",
+  "parent_written_spec_accepted": true,
+  "protocol_implemented": true,
+  "real_case_enrollment_authorized": false,
+  "prediction_clock_start_authorized": false,
+  "canon_promotion_authorized": false,
+  "merge_authorized": false
+}

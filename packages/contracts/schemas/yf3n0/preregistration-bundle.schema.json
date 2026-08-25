@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yf3n0-preregistration-bundle:1.0.0",
+  "title": "YF3N0 PreregistrationBundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["preregistration_bundle_id", "case_id", "schema_version", "sealed_at", "evidence_digest_sha256", "prediction_contract", "resolution_contract", "optional_horizons", "bundle_digest_sha256", "authority"],
+  "properties": {
+    "preregistration_bundle_id": {"type": "string", "minLength": 1},
+    "case_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.0.0"},
+    "sealed_at": {"type": "string", "format": "date-time"},
+    "evidence_digest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "prediction_contract": {"type": "object"},
+    "resolution_contract": {"type": "object"},
+    "optional_horizons": {"type": "array", "uniqueItems": true, "items": {"enum": ["T730"]}},
+    "bundle_digest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["post_seal_mutation_authority", "clock_start_authority", "capital_authority"],
+      "properties": {
+        "post_seal_mutation_authority": {"const": false},
+        "clock_start_authority": {"const": false},
+        "capital_authority": {"const": false}
+      }
+    }
+  }
+}

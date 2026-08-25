@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yf3n0-qualification-state:1.0.0",
+  "title": "YF3N0 QualificationState",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["qualification_state_id", "schema_version", "as_of", "gate_states", "final_outcome", "evidence_matrix_ref", "authority"],
+  "properties": {
+    "qualification_state_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.0.0"},
+    "as_of": {"type": "string", "format": "date-time"},
+    "gate_states": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["C_G1_PROTOCOL_INTEGRITY", "C_G2_NO_RESOLUTION_DRIFT", "C_G3_PRIMITIVE_DISCRIMINATION", "C_G4_ABLATION_VALUE", "C_G5_CROSS_DOMAIN_ROBUSTNESS", "C_G6_NO_CONSTITUTIONAL_BREACH"],
+      "properties": {
+        "C_G1_PROTOCOL_INTEGRITY": {"enum": ["PASS", "FAIL", "INDETERMINATE"]},
+        "C_G2_NO_RESOLUTION_DRIFT": {"enum": ["PASS", "FAIL", "INDETERMINATE"]},
+        "C_G3_PRIMITIVE_DISCRIMINATION": {"enum": ["PASS", "FAIL", "INDETERMINATE"]},
+        "C_G4_ABLATION_VALUE": {"enum": ["PASS", "FAIL", "INDETERMINATE"]},
+        "C_G5_CROSS_DOMAIN_ROBUSTNESS": {"enum": ["PASS", "FAIL", "INDETERMINATE"]},
+        "C_G6_NO_CONSTITUTIONAL_BREACH": {"enum": ["PASS", "FAIL", "INDETERMINATE"]}
+      }
+    },
+    "final_outcome": {"enum": ["CANON_PROMOTION_READY", "PARTIAL_CANON_REFRAME_REQUIRED", "FIRST_PRINCIPLES_CANON_REJECTED", "INSUFFICIENT_EVIDENCE"]},
+    "evidence_matrix_ref": {"type": "string", "minLength": 1},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canon_promotion_authority", "capital_authority", "psychometric_authority"],
+      "properties": {
+        "canon_promotion_authority": {"const": false},
+        "capital_authority": {"const": false},
+        "psychometric_authority": {"const": false}
+      }
+    }
+  }
+}

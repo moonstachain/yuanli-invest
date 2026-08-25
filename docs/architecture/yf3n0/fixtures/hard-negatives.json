@@ -1,0 +1,14 @@
+[
+  {"attack_id":"HN01_POST_CUTOFF_EVIDENCE","description":"Inject evidence known after the sealed cutoff.","mutated_object":{"mutation":"POST_CUTOFF_EVIDENCE"},"expected_error_substring":"post-cutoff evidence prohibited"},
+  {"attack_id":"HN02_PREDICTION_MUTATION_AFTER_SEAL","description":"Change a frozen prediction after bundle sealing.","mutated_object":{"mutation":"PREDICTION_AFTER_SEAL"},"expected_error_substring":"preregistration bundle digest mismatch"},
+  {"attack_id":"HN03_RESOLUTION_DRIFT_AFTER_SEAL","description":"Change a frozen resolution rule after bundle sealing.","mutated_object":{"mutation":"RESOLUTION_AFTER_SEAL"},"expected_error_substring":"preregistration bundle digest mismatch"},
+  {"attack_id":"HN04_TOO_MANY_SECONDARY_PREDICTIONS","description":"Add more than two secondary predictions.","mutated_object":{"mutation":"THREE_SECONDARIES"},"expected_error_substring":"secondary prediction limit exceeded"},
+  {"attack_id":"HN05_ABLATION_OUTCOME_MISMATCH","description":"Give an ablation a different outcome definition.","mutated_object":{"mutation":"ABLATION_OUTCOME_MISMATCH"},"expected_error_substring":"model outcome definition mismatch"},
+  {"attack_id":"HN06_INDETERMINATE_AS_SUPPORT","description":"Rename indeterminate as a supportive causal state.","mutated_object":{"mutation":"INDETERMINATE_AS_SUPPORT"},"expected_error_substring":"invalid causal settlement state"},
+  {"attack_id":"HN07_EARLY_T365_SETTLEMENT","description":"Claim a T365 settlement before the 365-day due timestamp.","mutated_object":{"mutation":"EARLY_T365"},"expected_error_substring":"early T365 settlement"},
+  {"attack_id":"HN08_UNDECLARED_T730_EXTENSION","description":"Extend to T730 without preregistration.","mutated_object":{"mutation":"UNDECLARED_T730"},"expected_error_substring":"T730 was not preregistered"},
+  {"attack_id":"HN09_REAL_CASE_ENROLLMENT_WITHOUT_GATE","description":"Enroll a real actor while real-case authority is false.","mutated_object":{"mutation":"REAL_CASE_WITHOUT_GATE"},"expected_error_substring":"real case enrollment not authorized"},
+  {"attack_id":"HN10_GLOBAL_ACCURACY_SCORE","description":"Collapse evidence into a global Three-Non score.","mutated_object":{"mutation":"GLOBAL_ACCURACY_SCORE"},"expected_error_substring":"global accuracy score prohibited"},
+  {"attack_id":"HN11_CAPITAL_AUTHORITY_LEAKAGE","description":"Flip a zero-authority flag to true.","mutated_object":{"mutation":"CAPITAL_AUTHORITY_TRUE"},"expected_error_substring":"authority must remain false"},
+  {"attack_id":"HN12_H5_COMPENSATION_VIOLATION","description":"Claim full force despite one falsified primitive.","mutated_object":{"mutation":"H5_COMPENSATION"},"expected_error_substring":"H5 compensation violation"}
+]
