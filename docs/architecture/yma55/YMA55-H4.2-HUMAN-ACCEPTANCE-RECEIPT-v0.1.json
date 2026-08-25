@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.2",
+  "accepted": true,
+  "acceptance_token": "ACCEPT_YMA55_H4_2_SAME_CASE_BASELINE_ABLATION_SETTLEMENT",
+  "required_review_score": "20/20",
+  "review_result": "20/20_PASS_BY_EXPLICIT_ACCEPTANCE_TOKEN",
+  "reviewed_head_sha": "d298ce49ffb8bc2f8661eff0c9b90fc582614141",
+  "reviewed_repository_gates_run": 478,
+  "accepted_at": "2026-08-24T21:19:00+08:00",
+  "human_settlement": "ACCEPTED",
+  "acceptance_does_not_authorize": [
+    "merge",
+    "historical_gold_admission",
+    "canon_promotion",
+    "engine_registry_mutation",
+    "portfolio_authority",
+    "position_sizing",
+    "trade_signal_authority",
+    "live_execution"
+  ],
+  "successor_authority": {
+    "YMA55-H4.3": "SEPARATELY_AUTHORIZED_BY_USER_IN_SAME_TURN",
+    "merge_authority": false
+  },
+  "notes": "H4.2 epistemic settlement accepted. H4.3 execution authority is recorded as a separate user authorization, not inferred from H4.2 acceptance."
+}

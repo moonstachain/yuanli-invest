@@ -1,0 +1,69 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.1",
+  "title": "Primary Evidence Hydration & Blind Replay Qualification",
+  "status": "machine_qualified_blind_replay_candidate",
+  "parent_program": "YMA55-H4",
+  "parent_human_acceptance_token": "ACCEPT_YMA55_H4_REFERENCE_IMPLEMENTATION_REPLAY_CANDIDATE",
+  "scope": {
+    "mechanism_families": ["MRM-D", "MRM-CR", "MRM-SC"],
+    "candidate_cases": 12,
+    "roles_per_mechanism": ["GOLD", "NEAR_MISS", "WRONG_MECHANISM", "WRONG_STRIKE"]
+  },
+  "evidence_hydration": {
+    "fully_hydrated": 11,
+    "partial_hydration": 1,
+    "insufficient": 0,
+    "partial_case": "H41-B09 / 1971 Gold",
+    "policy": "No synthetic independence and no forced full hydration."
+  },
+  "blind_resolution_freeze": {
+    "commit_sha": "805a5c52f6918c0f4339128ef5e95883de5fbf89",
+    "repository_gates_run": 456,
+    "historical_role_mapping_exposed": false,
+    "immutable_after_unblinding": true
+  },
+  "post_resolution_unblinding": {
+    "commit_sha": "39328242f84af399c2f2f7b87b321fc8e63eba68",
+    "repository_gates_run": 458,
+    "performed_after_blind_freeze": true
+  },
+  "qualification_checkpoint": {
+    "commit_sha": "b8f7edc48d809a741cbee3032e9fc386a13619e5",
+    "repository_gates_run": 461,
+    "dedicated_h4_1_gate": "PASS",
+    "contracts": "PASS",
+    "governance": "PASS",
+    "full_unit_suite": "PASS"
+  },
+  "blind_replay_results": {
+    "matches": 10,
+    "mismatches": 1,
+    "evidence_abstentions": 1,
+    "fully_hydrated_mechanism_accuracy": "10/11",
+    "safe_or_correct_outcomes": "11/12",
+    "critical_miss": "H41-B11 / 2020 Gold: PRIMARY_LEADS vs settlement-favored ALTERNATIVE_LEADS",
+    "critical_abstention": "H41-B09 / 1971 Gold: INSUFFICIENT_EVIDENCE under partial hydration"
+  },
+  "epistemic_conclusion": {
+    "competing_mechanism_discrimination": "SUPPORTED_WITHIN_CHALLENGE_SET",
+    "forced_explanation_reduction": "SUPPORTED_WITHIN_CHALLENGE_SET",
+    "evidence_abstention_discipline": "SUPPORTED",
+    "post_hoc_role_leakage_control": "SUPPORTED_BY_COMMIT_ORDER_AND_IMMUTABLE_FREEZE",
+    "incremental_superiority_vs_pre_h1_h2_h3_or_simple_baseline": "NOT_YET_ESTABLISHED",
+    "individual_causal_contribution_of_h1_h2_h3": "NOT_IDENTIFIED_WITHOUT_ABLATION"
+  },
+  "authority_freeze": {
+    "historical_gold_admission": false,
+    "constitution_mutation": false,
+    "engine_registry_mutation": false,
+    "canon_promotion": false,
+    "portfolio_authority": false,
+    "position_sizing": false,
+    "trade_signal_authority": false,
+    "live_execution": false,
+    "merge_authority": false
+  },
+  "final_exact_head_verification_required": true,
+  "recommended_next_gate_not_authorized": "YMA55-H4.2 | Same-Case Baseline Benchmark & H1/H2/H3 Ablation"
+}

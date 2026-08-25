@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1.0",
+  "opaque_pair_id": "TP-04",
+  "observation_stream": [
+    {
+      "known_at": "2015-12-31T12:00:00Z",
+      "signals": [
+        {"observable":"broad_credit_spread","state":"STABLE"},
+        {"observable":"system_funding","state":"STABLE"},
+        {"observable":"energy_credit_spread","state":"UP"}
+      ]
+    }
+  ],
+  "observed_sequence": ["broad_credit_spread","system_funding"],
+  "window_closed": true,
+  "historical_gold_admission": false,
+  "capital_authority": false
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YMA55_H4_REFERENCE_IMPLEMENTATION_GOLD_REPLAY_MIGRATION",
+  "decision": "HUMAN_ACCEPTED_REFERENCE_IMPLEMENTATION_REPLAY_CANDIDATE",
+  "acceptance_token": "ACCEPT_YMA55_H4_REFERENCE_IMPLEMENTATION_REPLAY_CANDIDATE",
+  "accepted_at": "2026-08-24T13:54:00+08:00",
+  "review_threshold": "23/23 PASS",
+  "reviewed_subject_sha": "c6bd05b5bfab6951704195180e4297f82fa2bdea",
+  "qualification_evidence": {
+    "repository_gates_run": 439,
+    "repository_gates_run_id": 32694060523,
+    "governance": "success",
+    "contracts": "success",
+    "yim0_validator": "success",
+    "h4_validator": "success",
+    "full_unit_tests": "success"
+  },
+  "accepted_scope": {
+    "reference_runtime": true,
+    "replay_candidate_matrix": "Duration x Credit x Scarcity x {GOLD-role, NEAR_MISS, WRONG_MECHANISM, WRONG_STRIKE}",
+    "candidate_count": 12,
+    "historical_gold_admission_count": 0
+  },
+  "authority_not_granted": {
+    "merge": true,
+    "canon_promotion": true,
+    "engine_registry_mutation": true,
+    "historical_gold_admission": true,
+    "portfolio": true,
+    "position_sizing": true,
+    "trading": true,
+    "live_execution": true
+  },
+  "next_gate": "YMA55_H4_1_PRIMARY_EVIDENCE_HYDRATION_AND_BLIND_REPLAY_QUALIFICATION"
+}

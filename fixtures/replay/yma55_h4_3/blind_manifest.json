@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.3",
+  "status": "PRE_REGISTERED_PAIRED_CHALLENGE",
+  "pair_ids": ["TP-01", "TP-02", "TP-03", "TP-04", "TP-05", "TP-06"],
+  "structural_files": [
+    "structural/TP-01.json",
+    "structural/TP-02.json",
+    "structural/TP-03.json",
+    "structural/TP-04.json",
+    "structural/TP-05.json",
+    "structural/TP-06.json"
+  ],
+  "observation_files": [
+    "observations/TP-01.json",
+    "observations/TP-02.json",
+    "observations/TP-03.json",
+    "observations/TP-04.json",
+    "observations/TP-05.json",
+    "observations/TP-06.json"
+  ],
+  "same_pair_across_variants": true,
+  "structural_evidence_authority": "CANDIDATE_DERIVED_FROM_H4_H41",
+  "historical_gold_admission": false,
+  "capital_authority": false
+}

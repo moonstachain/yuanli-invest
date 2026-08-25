@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1.0",
+  "opaque_pair_id": "TP-03",
+  "observation_stream": [
+    {
+      "known_at": "2020-12-31T12:00:00Z",
+      "signals": [
+        {"observable":"breakeven","state":"UP"},
+        {"observable":"term_premium","state":"UP"},
+        {"observable":"long_yield","state":"UP"}
+      ]
+    }
+  ],
+  "observed_sequence": ["term_premium","long_yield"],
+  "window_closed": true,
+  "historical_gold_admission": false,
+  "capital_authority": false
+}

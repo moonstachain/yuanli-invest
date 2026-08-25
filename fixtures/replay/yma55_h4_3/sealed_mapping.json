@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.3",
+  "status": "SEALED_IDENTITY_MAPPING",
+  "pairs": [
+    {"opaque_pair_id":"TP-01","source_prior_ref":"SP-01","source_episode_id":"YMA55-H4-CR-GOLD-2009","source_hypothesis_id":"CR2009-P","target_episode_id":"YMA55-H4-CR-WM-2020","challenge_role":"TRANSFERABLE_COMPATIBLE"},
+    {"opaque_pair_id":"TP-02","source_prior_ref":"SP-02","source_episode_id":"YMA55-H4-D-GOLD-1982-UST","source_hypothesis_id":"D1982-P","target_episode_id":"YMA55-H4-D-NEAR-1994-UST","challenge_role":"TRANSFERABLE_VIOLATED"},
+    {"opaque_pair_id":"TP-03","source_prior_ref":"SP-03","source_episode_id":"YMA55-H4-D-GOLD-1982-UST","source_hypothesis_id":"D1982-P","target_episode_id":"YMA55-H4-D-WS-2020-UST","challenge_role":"STRUCTURALLY_NON_TRANSFERABLE"},
+    {"opaque_pair_id":"TP-04","source_prior_ref":"SP-04","source_episode_id":"YMA55-H4-CR-WS-2006","source_hypothesis_id":"CR2006-P","target_episode_id":"YMA55-H4-CR-NEAR-2015","challenge_role":"PARTIAL_TRANSFERABLE_VIOLATED"},
+    {"opaque_pair_id":"TP-05","source_prior_ref":"SP-05","source_episode_id":"YMA55-H4-CR-WS-2006","source_hypothesis_id":"CR2006-P","target_episode_id":"YMA55-H4-CR-WM-2020","challenge_role":"STRUCTURALLY_NON_TRANSFERABLE"},
+    {"opaque_pair_id":"TP-06","source_prior_ref":"SP-06","source_episode_id":"YMA55-H4-CR-GOLD-2009","source_hypothesis_id":"CR2009-P","target_episode_id":"YMA55-H4-CR-NEAR-2015","challenge_role":"WEAK_TRANSFERABILITY_STRESS_REFERENCE"}
+  ],
+  "historical_gold_admission": false,
+  "capital_authority": false
+}

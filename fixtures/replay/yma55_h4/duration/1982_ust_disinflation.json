@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.1.0",
+  "episode_id": "YMA55-H4-D-GOLD-1982-UST",
+  "mechanism_family": "MRM-D",
+  "case_type": "GOLD",
+  "as_of": "1982-01-01",
+  "evidence_cutoff": "1982-01-01T23:59:59Z",
+  "evidence_status": "needs_primary_hydration",
+  "gold_qualified": false,
+  "t0": {
+    "world": {"epoch_id": "R1_VOLCKER_DISINFLATION", "state_summary": "restrictive monetary policy, elevated inflation, weakening growth", "evidence_refs": ["evidence:needs_primary_hydration:YMA55-H4-D-GOLD-1982-UST"]},
+    "constraint": {"constraint_id": "inflation_credibility", "bound_actor": "Federal Reserve", "binding_resource_or_freedom": "ability to ease without re-accelerating inflation expectations", "binding_evidence": ["needs_primary_hydration"], "easing_evidence": ["sustained disinflation and anchored expectations"]},
+    "transmission": {"feasible_policy_set": ["maintain_restriction", "gradual_easing_after_disinflation"], "channels": ["policy_rate", "inflation_expectations", "term_premium", "long_yield"], "expected_sequence": ["inflation_expectations", "term_premium", "long_yield"]},
+    "hypothesis_set": {
+      "hypothesis_set_id": "MHS-D-1982",
+      "pit_frozen": true,
+      "primary": {"hypothesis_id": "D1982-P", "role": "PRIMARY", "mechanism_family": "MRM-D", "causal_chain": ["credible_restriction", "disinflation", "term_premium_down", "long_yield_down", "duration_payoff"], "required_conditions": ["disinflation_persists", "credibility_improves"], "predicted_observables": {"term_premium": "DOWN", "long_yield": "DOWN"}, "expected_sequence": ["term_premium", "long_yield"], "expected_horizon": "6-24m", "falsifiers": ["inflation_reaccelerates"], "breaker": "long_yield_rises_with_inflation_expectations", "supporting_evidence_refs": ["evidence:needs_primary_hydration:YMA55-H4-D-GOLD-1982-UST"], "contradicting_evidence_refs": []},
+      "alternatives": [{"hypothesis_id": "D1982-A1", "role": "ALTERNATIVE", "mechanism_family": "SAFE_HAVEN_GROWTH", "causal_chain": ["recession", "risk_aversion", "treasury_demand", "long_yield_down"], "required_conditions": ["growth_shock"], "predicted_observables": {"credit_spread": "UP", "long_yield": "DOWN"}, "expected_sequence": ["credit_spread", "long_yield"], "expected_horizon": "3-12m", "falsifiers": ["growth_reaccelerates"], "breaker": "risk_assets_confirm_reacceleration", "supporting_evidence_refs": ["evidence:needs_primary_hydration:YMA55-H4-D-GOLD-1982-UST"], "contradicting_evidence_refs": []}],
+      "null": {"hypothesis_id": "D1982-N", "role": "NULL", "mechanism_family": "FLOW_NULL", "causal_chain": ["positioning", "bond_rally"], "required_conditions": ["positioning_extreme"], "predicted_observables": {"positioning": "EXTREME"}, "expected_sequence": ["positioning", "long_yield"], "expected_horizon": "days-weeks", "falsifiers": ["no_positioning_extreme"], "breaker": "flow_normalizes_without_macro_confirmation", "supporting_evidence_refs": ["evidence:needs_primary_hydration:YMA55-H4-D-GOLD-1982-UST"], "contradicting_evidence_refs": []}
+    },
+    "transferability_template": {"dimensions": ["monetary_regime", "fiscal_capacity", "market_structure", "global_order", "policy_toolkit"], "states": ["UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN", "UNKNOWN"], "overall_transferability": "UNRESOLVED"}
+  },
+  "settlement": {"outcome_class": "RIGHT_MECHANISM_RIGHT_OUTCOME_CANDIDATE", "mechanism_resolution": "duration_disinflation_candidate", "expression_resolution": "long_duration_candidate_success", "notes": "Role is candidate only until primary evidence hydration and blind replay qualification."}
+}

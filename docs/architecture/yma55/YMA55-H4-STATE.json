@@ -1,0 +1,74 @@
+{
+  "schema_version": "0.3.0",
+  "stage": "YMA55_H4_REFERENCE_IMPLEMENTATION_GOLD_REPLAY_MIGRATION",
+  "status": "human_accepted_reference_implementation_replay_candidate",
+  "repository": "moonstachain/yuanli-invest",
+  "branch": "yma55-h1-h3-causal-prior-hardening",
+  "implementation_authorized": true,
+  "authorization_basis": "explicit user authorization of IMPLEMENTATION_PLAN_AND_CI_SCOPE_BLOCKER_RESOLUTION on 2026-08-24",
+  "human_acceptance": {
+    "token": "ACCEPT_YMA55_H4_REFERENCE_IMPLEMENTATION_REPLAY_CANDIDATE",
+    "accepted_at": "2026-08-24T13:54:00+08:00",
+    "review_threshold": "23/23 PASS",
+    "reviewed_subject_sha": "c6bd05b5bfab6951704195180e4297f82fa2bdea",
+    "acceptance_does_not_imply_merge": true,
+    "acceptance_does_not_grant_gold_admission": true,
+    "acceptance_does_not_grant_capital_authority": true
+  },
+  "dependencies": {
+    "H1": "human_accepted_written_spec",
+    "H2": "human_accepted_written_spec",
+    "H3": "human_accepted_written_spec",
+    "H0_1": "machine_qualified_candidate_repair"
+  },
+  "scope": {
+    "mechanisms": ["MRM-D", "MRM-CR", "MRM-SC"],
+    "case_roles": ["GOLD", "NEAR_MISS", "WRONG_MECHANISM", "WRONG_STRIKE"],
+    "candidate_count": 12,
+    "matrix": "3 mechanisms x 4 case roles",
+    "historical_gold_admission_count": 0
+  },
+  "evidence_policy": {
+    "candidate_evidence_status": "needs_primary_hydration",
+    "gold_qualified": false,
+    "gold_case_role_semantics": "GOLD is a positive-pattern replay role only and does not mean evidence-qualified Gold admission",
+    "primary_evidence_hydration_required_before_gold_admission": true
+  },
+  "runtime": {
+    "human_kernel": ["WORLD", "CONSTRAINT", "TRANSMISSION", "MECHANISM", "SETTLEMENT"],
+    "competing_mechanism_contract": true,
+    "null_hypothesis_required": true,
+    "transferability_contract": true,
+    "prior_violation_evaluator": true,
+    "settlement_isolated_from_t0": true,
+    "direct_trade_action_prohibited": true
+  },
+  "authority": {
+    "reference_research": true,
+    "historical_gold_admission": false,
+    "canon_promotion": false,
+    "engine_registry_mutation": false,
+    "constitution_mutation": false,
+    "portfolio": false,
+    "position_sizing": false,
+    "trading": false,
+    "live_execution": false,
+    "merge": false
+  },
+  "qualification": {
+    "h0_1_ci_run": 408,
+    "h4_contract_ci_run": 414,
+    "prior_violation_ci_run": 416,
+    "twelve_case_replay_ci_run": 431,
+    "h4_validator_green_ci_run": 433,
+    "dedicated_h4_ci_repaired_run": 437,
+    "final_exact_head_ci_run": 439,
+    "final_exact_head_ci_run_id": 32694060523,
+    "governance": "success",
+    "contracts": "success",
+    "dedicated_h4_validator": "success",
+    "full_unit_tests": "success"
+  },
+  "next_gate": "YMA55_H4_1_PRIMARY_EVIDENCE_HYDRATION_AND_BLIND_REPLAY_QUALIFICATION",
+  "merge_authorized": false
+}

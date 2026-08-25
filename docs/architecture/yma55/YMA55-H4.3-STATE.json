@@ -1,0 +1,121 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55-H4.3",
+  "title": "H3 Transferability & Prior-Violation Paired Challenge",
+  "status": "machine_qualified_paired_transfer_challenge_candidate",
+  "parent_program": "YMA55-H4.2",
+  "execution_authorized": true,
+  "human_acceptance": false,
+  "experiment_design": {
+    "pair_count": 6,
+    "same_pair_across_variants": true,
+    "historical_to_historical_pseudo_current": true,
+    "source_prior_eligibility_required": true,
+    "transferability_freeze_before_forward_observation": true,
+    "structural_evidence_authority": "CANDIDATE_DERIVED_FROM_H4_H41",
+    "challenge_set_is_iid": false,
+    "out_of_sample_claim": false,
+    "exact_old_yma55_replication_claim": false
+  },
+  "variants": [
+    "T0_UNCONDITIONAL_TRANSPORT",
+    "T1_TRANSFERABILITY_GATE_ONLY",
+    "T2_H3_FULL"
+  ],
+  "machine_results": {
+    "T0_UNCONDITIONAL_TRANSPORT": {
+      "unsafe_prior_applications": 3,
+      "correct_structural_blocks": 0,
+      "eligible_prior_maintains": 1,
+      "eligible_prior_violations_detected": 0,
+      "eligible_prior_violations_missed": 2,
+      "false_breakers": 0,
+      "weak_prior_active_authority_leaks": 1,
+      "source_prior_laundering_events": 0,
+      "capital_authority_events": 0
+    },
+    "T1_TRANSFERABILITY_GATE_ONLY": {
+      "unsafe_prior_applications": 0,
+      "correct_structural_blocks": 3,
+      "eligible_prior_maintains": 1,
+      "eligible_prior_violations_detected": 0,
+      "eligible_prior_violations_missed": 2,
+      "false_breakers": 0,
+      "weak_prior_active_authority_leaks": 0,
+      "source_prior_laundering_events": 0,
+      "capital_authority_events": 0
+    },
+    "T2_H3_FULL": {
+      "unsafe_prior_applications": 0,
+      "correct_structural_blocks": 3,
+      "eligible_prior_maintains": 1,
+      "eligible_prior_violations_detected": 2,
+      "eligible_prior_violations_missed": 0,
+      "false_breakers": 0,
+      "weak_prior_active_authority_leaks": 0,
+      "source_prior_laundering_events": 0,
+      "capital_authority_events": 0
+    }
+  },
+  "epistemic_settlement": {
+    "historical_validity_is_not_transferability": "SUPPORTED_BY_PAIRED_CHALLENGE",
+    "transferability_gate_reduces_unsafe_prior_transport": "SUPPORTED_WITHIN_CONSTRUCTED_CHALLENGE_SET",
+    "prior_violation_adds_information_after_transferability_gate": "SUPPORTED_WITHIN_CONSTRUCTED_CHALLENGE_SET",
+    "weak_transferability_active_authority_is_fail_closed": "SUPPORTED",
+    "source_prior_laundering_control": "SUPPORTED_IN_CHALLENGE_SET",
+    "false_breaker_control": "SUPPORTED_IN_CHALLENGE_SET",
+    "current_world_2026_validity": "NOT_ESTABLISHED",
+    "out_of_sample_predictive_superiority": "NOT_ESTABLISHED",
+    "population_accuracy": "NOT_CLAIMED",
+    "exact_old_yma55_superiority": "NOT_ESTABLISHED"
+  },
+  "three_machine_disciplines": {
+    "discipline_1": "NO_EVIDENCE_MAY_RESOLVE_TO_INSUFFICIENT_EVIDENCE",
+    "discipline_2": "PREFERRED_EXPLANATION_MUST_BE_ALLOWED_TO_LOSE_TO_ALTERNATIVE_OR_NULL",
+    "discipline_3": "HISTORICALLY_VALID_PRIOR_HAS_NO_CURRENT_AUTHORITY_WITHOUT_TRANSFERABILITY_AND_MAY_LATER_BE_VIOLATED"
+  },
+  "kernel_closure_settlement": {
+    "h1_compress_reality": "HUMAN_ACCEPTED_AND_RUNTIME_IMPLEMENTED",
+    "h2_compete_explanations": "HUMAN_ACCEPTED_AND_INCREMENTALLY_SUPPORTED_IN_H4_2",
+    "h3_control_transfer_and_violation": "HUMAN_ACCEPTED_SPEC_AND_MACHINE_SUPPORTED_IN_H4_3_CHALLENGE",
+    "yma55_2_1_theory_building": "RECOMMEND_FREEZE_AFTER_H4_3_HUMAN_ACCEPTANCE",
+    "no_h4_4_theory_extension_recommended": true,
+    "recommended_phase_2": "Evidence Hardening -> Shadow Runtime -> Reality Settlement"
+  },
+  "authority_freeze": {
+    "historical_gold_admission": false,
+    "constitution_mutation": false,
+    "engine_registry_mutation": false,
+    "canon_promotion": false,
+    "portfolio_authority": false,
+    "position_sizing": false,
+    "trade_signal_authority": false,
+    "live_execution": false,
+    "merge_authority": false
+  },
+  "qualification_checkpoint": {
+    "dedicated_gate_commit_sha": "26abcdfd2f72cbdaf9e3a04c1468ca8cc5683be6",
+    "repository_gates_run": 507,
+    "dedicated_h4_3_gate": "PASS",
+    "contracts": "PASS",
+    "governance": "PASS",
+    "full_unit_suite": "PASS",
+    "unit_test_count": 190
+  },
+  "human_review_required": true,
+  "human_review_threshold": "24/24",
+  "recommended_acceptance_token": "ACCEPT_YMA55_H4_3_TRANSFERABILITY_PRIOR_VIOLATION_PAIRED_CHALLENGE",
+  "acceptance_does_not_authorize": [
+    "merge",
+    "historical_gold_admission",
+    "canon_promotion",
+    "engine_registry_mutation",
+    "portfolio_authority",
+    "position_sizing",
+    "trade_signal_authority",
+    "live_execution",
+    "phase_2_execution"
+  ],
+  "final_exact_head_verification_required": true,
+  "final_exact_head_verification_policy": "Machine-qualified claims are valid only if repository-gates succeeds on the exact commit containing State, Report, Human Review Card, theory-freeze transition artifact and metric-bound validator; record the final run without mutating the qualified head afterward."
+}

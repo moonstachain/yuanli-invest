@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1.0",
+  "status": "candidate_not_gold_admitted",
+  "semantics": "case_type GOLD denotes intended positive-pattern role inside H4; it does not mean evidence-qualified Gold admission",
+  "mechanisms": {
+    "MRM-D": {
+      "name": "Duration",
+      "case_types": ["GOLD", "NEAR_MISS", "WRONG_MECHANISM", "WRONG_STRIKE"],
+      "cases": [
+        {"case_type": "GOLD", "path": "fixtures/replay/yma55_h4/duration/1982_ust_disinflation.json"},
+        {"case_type": "NEAR_MISS", "path": "fixtures/replay/yma55_h4/duration/1994_ust_tightening.json"},
+        {"case_type": "WRONG_MECHANISM", "path": "fixtures/replay/yma55_h4/duration/2008_ust_crisis_rally.json"},
+        {"case_type": "WRONG_STRIKE", "path": "fixtures/replay/yma55_h4/duration/2020_ust_zero_bound.json"}
+      ]
+    },
+    "MRM-CR": {
+      "name": "Credit",
+      "case_types": ["GOLD", "NEAR_MISS", "WRONG_MECHANISM", "WRONG_STRIKE"],
+      "cases": [
+        {"case_type": "GOLD", "path": "fixtures/replay/yma55_h4/credit/2009_spread_compression.json"},
+        {"case_type": "NEAR_MISS", "path": "fixtures/replay/yma55_h4/credit/2015_energy_stress.json"},
+        {"case_type": "WRONG_MECHANISM", "path": "fixtures/replay/yma55_h4/credit/2020_fed_backstop.json"},
+        {"case_type": "WRONG_STRIKE", "path": "fixtures/replay/yma55_h4/credit/2006_early_subprime_protection.json"}
+      ]
+    },
+    "MRM-SC": {
+      "name": "Scarcity",
+      "case_types": ["GOLD", "NEAR_MISS", "WRONG_MECHANISM", "WRONG_STRIKE"],
+      "cases": [
+        {"case_type": "GOLD", "path": "fixtures/replay/yma55_h4/scarcity/1971_gold_regime_break.json"},
+        {"case_type": "NEAR_MISS", "path": "fixtures/replay/yma55_h4/scarcity/2008_oil_demand_collapse.json"},
+        {"case_type": "WRONG_MECHANISM", "path": "fixtures/replay/yma55_h4/scarcity/2020_gold_real_rate_liquidity.json"},
+        {"case_type": "WRONG_STRIKE", "path": "fixtures/replay/yma55_h4/scarcity/1980_gold_parabolic_peak.json"}
+      ]
+    }
+  }
+}

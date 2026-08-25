@@ -2,6 +2,7 @@ from pathlib import Path
 import copy
 import json
 import unittest
+from unittest import mock
 
 from scripts import validate_yim0_methodology_projection as yim0
 
@@ -190,6 +191,20 @@ class YIM0ValidatorTests(unittest.TestCase):
         self.assertEqual(state["human_review_threshold"], "10/10 PASS")
         self.assertTrue(state["human_gate"]["acceptance_does_not_imply_merge"])
         self.assertTrue(state["human_gate"]["acceptance_does_not_authorize_ME2"])
+
+    def test_scope_end_ref_freezes_merged_yim0_at_semantic_merge(self):
+        state = load(ROOT / "docs/architecture/yim0/YIM0-STATE.json")
+        self.assertEqual(yim0.scope_end_ref_for_state(state), state["semantic_merge_commit"])
+
+    def test_scope_end_ref_uses_head_before_semantic_merge(self):
+        self.assertEqual(yim0.scope_end_ref_for_state({"status": "candidate"}), "HEAD")
+
+    def test_changed_paths_uses_explicit_scope_end_ref(self):
+        completed = mock.Mock(stdout="docs/human-projection/YUANLI-INVESTMENT-METHODOLOGY-MAP-v1.md\n")
+        with mock.patch.object(yim0.subprocess, "run", return_value=completed) as run:
+            paths = yim0.changed_paths_from_git("abc123")
+        self.assertEqual(paths, ["docs/human-projection/YUANLI-INVESTMENT-METHODOLOGY-MAP-v1.md"])
+        self.assertEqual(run.call_args.args[0], ["git", "diff", "--name-only", f"{yim0.BASE_SHA}...abc123"])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,155 @@
+{
+  "schema_version": "0.1.0",
+  "program": "YMA55_CAUSAL_HISTORICAL_PRIOR_HARDENING",
+  "status": "design_candidate_for_human_review",
+  "repository_base_sha": "bd18ec6f92131ddb6948b07973a98d1fe69d5cbb",
+  "authority": {
+    "historical_prior_research": true,
+    "human_projection": true,
+    "domain_ontology_candidate": true,
+    "engine_registry_mutation": false,
+    "constitution_mutation": false,
+    "portfolio": false,
+    "position_sizing": false,
+    "trading": false,
+    "live_execution": false,
+    "canon_promotion": false
+  },
+  "h1": {
+    "human_kernel": [
+      "WORLD",
+      "CONSTRAINT",
+      "TRANSMISSION",
+      "MECHANISM",
+      "SETTLEMENT"
+    ],
+    "machine_chain": [
+      "HistoricalEpoch",
+      "MacroRealityState",
+      "StructuralConstraint",
+      "PolicyReactionFunction",
+      "FinancialTransmission",
+      "MacroReturnMechanism",
+      "EngineThesis",
+      "AssetInstrumentExpression",
+      "PathPayoffSurvival",
+      "RealitySettlement"
+    ],
+    "projection": {
+      "WORLD": ["HistoricalEpoch", "MacroRealityState"],
+      "CONSTRAINT": ["StructuralConstraint"],
+      "TRANSMISSION": ["PolicyReactionFunction", "FinancialTransmission"],
+      "MECHANISM": ["MacroReturnMechanism", "EngineThesis"],
+      "SETTLEMENT": ["AssetInstrumentExpression", "PathPayoffSurvival", "RealitySettlement"]
+    },
+    "macro_state_dimensions": ["G", "I", "L", "C", "F", "B"],
+    "dynamic_state_fields": ["level", "direction", "acceleration", "surprise", "persistence"],
+    "macro_return_mechanisms": [
+      "MRM-P",
+      "MRM-D",
+      "MRM-CA",
+      "MRM-CR",
+      "MRM-SC",
+      "MRM-RS"
+    ],
+    "genesis_engines_referenced": ["ENG-C", "ENG-R", "ENG-X"]
+  },
+  "h2": {
+    "object": "MechanismHypothesisSet",
+    "primary_count": 1,
+    "alternative_count": {"min": 1, "max": 3},
+    "null_count": 1,
+    "support_states": ["strong", "moderate", "weak", "contradicted", "unknown"],
+    "resolution_states": [
+      "PRIMARY_BEST_SUPPORTED",
+      "ALTERNATIVE_BEST_SUPPORTED",
+      "NULL_BEST_SUPPORTED",
+      "MULTIPLE_MECHANISMS_PLAUSIBLE",
+      "PRIMARY_CONTRADICTED",
+      "UNRESOLVED"
+    ],
+    "required_components": [
+      "causal_chain",
+      "required_conditions",
+      "predicted_observables",
+      "expected_sequence",
+      "expected_horizon",
+      "falsifiers",
+      "breaker",
+      "supporting_evidence_refs",
+      "contradicting_evidence_refs",
+      "discrimination_matrix",
+      "evidence_search_budget"
+    ],
+    "normal_max_causal_nodes": 6,
+    "pit_freeze_required": true,
+    "silent_thesis_migration_prohibited": true,
+    "numeric_probability_required": false
+  },
+  "h3": {
+    "transferability_object": "TransferabilityAssessment",
+    "transferability_dimensions": [
+      "monetary_regime",
+      "fiscal_capacity",
+      "market_structure",
+      "global_order",
+      "policy_toolkit"
+    ],
+    "dimension_states": ["MATCHED", "PARTIAL", "MISMATCHED", "UNKNOWN"],
+    "overall_transferability": [
+      "HIGH_TRANSFERABILITY",
+      "PARTIAL_TRANSFERABILITY",
+      "WEAK_TRANSFERABILITY",
+      "NON_TRANSFERABLE",
+      "UNRESOLVED"
+    ],
+    "violation_object": "PriorViolationRecord",
+    "violation_types": [
+      "SIGN_VIOLATION",
+      "SEQUENCE_VIOLATION",
+      "MAGNITUDE_VIOLATION",
+      "PERSISTENCE_VIOLATION",
+      "POLICY_REACTION_VIOLATION",
+      "CROSS_ASSET_CONFIRMATION_VIOLATION"
+    ],
+    "severity": ["WATCH", "MATERIAL", "BREAKER"],
+    "research_responses": [
+      "MAINTAIN_PRIOR",
+      "DOWNGRADE_PRIOR",
+      "REOPEN_MECHANISM_COMPETITION",
+      "RETIRE_CURRENT_PRIOR_APPLICATION",
+      "UNRESOLVED_NEEDS_EVIDENCE"
+    ],
+    "posterior_effects": [
+      "NO_CHANGE",
+      "MODEST_DOWNGRADE",
+      "MAJOR_DOWNGRADE",
+      "PRIMARY_BREAK",
+      "SHIFT_TO_ALTERNATIVE_REVIEW",
+      "SHIFT_TO_NULL_REVIEW"
+    ],
+    "direct_trade_action_prohibited": true,
+    "pit_expected_observables_required": true
+  },
+  "invariants": [
+    "HumanKernel != MachineOntology",
+    "HistoricalEpoch != MacroRealityState",
+    "WorldState != Constraint",
+    "Constraint != Transmission",
+    "Transmission != ReturnMechanism",
+    "MacroReturnMechanism != ReturnEngine",
+    "Target != Thesis != Position != Book",
+    "HistoricalAnalogy != CapitalAction",
+    "ResearchPass != CapitalPass",
+    "ClaimAuthority <= EvidenceAuthority",
+    "NoSilentThesisMigration = true",
+    "HistoricalValidity != CurrentTransferability",
+    "Surprise != PriorViolation",
+    "RealitySettlement = final epistemic authority"
+  ],
+  "human_acceptance_tokens": [
+    "ACCEPT_YMA55_H1_FIVE_LAYER_DECISION_KERNEL_FREEZE",
+    "ACCEPT_YMA55_H2_COMPETING_MECHANISM_NULL_HYPOTHESIS_CONTRACT",
+    "ACCEPT_YMA55_H3_TRANSFERABILITY_PRIOR_VIOLATION_ENGINE"
+  ]
+}
