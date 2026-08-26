@@ -1,0 +1,104 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YQS0_SUPABASE_SOVEREIGN_RESEARCH_KERNEL_ARCHITECTURE",
+  "status": "candidate_started",
+  "required_clocks": [
+    "recorded_at",
+    "known_as_of",
+    "knowledge_cutoff",
+    "replay_cutoff"
+  ],
+  "source_data_clocks": [
+    "event_time",
+    "period_end",
+    "published_at",
+    "available_at",
+    "captured_at"
+  ],
+  "eligibility_rule": "known_as_of <= knowledge_cutoff <= replay_cutoff",
+  "laws": [
+    {
+      "id": "PIT-01",
+      "rule": "recorded_at cannot substitute for known_as_of",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-02",
+      "rule": "captured_at cannot prove earlier knowability",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-03",
+      "rule": "replay reads only observations/evidence whose historically knowable timestamp is on or before knowledge_cutoff",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-04",
+      "rule": "revisions are append-only and linked to predecessor revisions; latest-value overwrite is prohibited",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-05",
+      "rule": "historical reconstruction requires explicit reconstruction mode, immutable source locator/hash, publication-or-availability proof, and revision lineage",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-06",
+      "rule": "historical reconstruction may reconstruct the information set but may not replace historical values with today’s revised latest values",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-07",
+      "rule": "feature records inherit the strictest known_as_of across all required inputs unless a more conservative explicit cutoff is used",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-08",
+      "rule": "agent and replay access must use PIT-safe RPC/function or equivalently enforced data access; unrestricted raw table access is not a compliant replay path",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-09",
+      "rule": "settlement may evaluate a frozen historical object but may not mutate its T0 evidence, forecast or thesis identity",
+      "fail_closed": true
+    },
+    {
+      "id": "PIT-10",
+      "rule": "if knowability cannot be established, replay eligibility is unknown/ineligible rather than inferred from current availability",
+      "fail_closed": true
+    }
+  ],
+  "required_observation_fields": [
+    "observation_id",
+    "subject_id",
+    "metric_id",
+    "event_time",
+    "period_end",
+    "published_at",
+    "available_at",
+    "captured_at",
+    "known_as_of",
+    "value",
+    "unit",
+    "provider",
+    "source_snapshot_id",
+    "revision_id",
+    "quality_state"
+  ],
+  "required_feature_fields": [
+    "feature_record_id",
+    "feature_id",
+    "subject_id",
+    "as_of",
+    "known_as_of",
+    "knowledge_cutoff",
+    "formula_version",
+    "code_ref",
+    "input_manifest_hash",
+    "value",
+    "unit",
+    "quality_state"
+  ],
+  "replay_direct_table_access_authorized": false,
+  "future_leakage_authorized": false
+}

@@ -1,0 +1,209 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YQS0_SUPABASE_SOVEREIGN_RESEARCH_KERNEL_ARCHITECTURE",
+  "status": "candidate_started",
+  "application_schemas": [
+    "core",
+    "evidence",
+    "pit",
+    "quant",
+    "runtime",
+    "replay",
+    "governance",
+    "projection"
+  ],
+  "schema_count": 8,
+  "object_count": 18,
+  "objects": [
+    {
+      "object": "core.research_targets",
+      "schema": "core",
+      "kind": "table",
+      "purpose": "Operational projection of ME1 ResearchTarget identity.",
+      "upstream_semantics": "ME1",
+      "mutation_policy": "versioned_or_status_transition",
+      "authority_class": "operational_state_only",
+      "canon_authority": false
+    },
+    {
+      "object": "core.engine_theses",
+      "schema": "core",
+      "kind": "table",
+      "purpose": "Operational EngineThesis state, one target to zero-or-many independent theses.",
+      "upstream_semantics": "ME1",
+      "mutation_policy": "append_revision_no_silent_engine_migration",
+      "authority_class": "operational_state_only",
+      "canon_authority": false
+    },
+    {
+      "object": "core.position_passports",
+      "schema": "core",
+      "kind": "table",
+      "purpose": "Capital-expression contract projection without allocation or execution authority.",
+      "upstream_semantics": "ME1",
+      "mutation_policy": "append_revision",
+      "authority_class": "operational_state_only",
+      "canon_authority": false
+    },
+    {
+      "object": "core.book_states",
+      "schema": "core",
+      "kind": "table",
+      "purpose": "Point-in-time BookState membership projection; membership belongs to PositionPassport.",
+      "upstream_semantics": "ME1",
+      "mutation_policy": "append_only_by_as_of",
+      "authority_class": "operational_state_only",
+      "canon_authority": false
+    },
+    {
+      "object": "evidence.sources",
+      "schema": "evidence",
+      "kind": "table",
+      "purpose": "Source identity, provider, authority tier and access classification.",
+      "upstream_semantics": "R2.3-B0 evidence contract",
+      "mutation_policy": "versioned",
+      "authority_class": "evidence_metadata",
+      "canon_authority": false
+    },
+    {
+      "object": "evidence.source_snapshots",
+      "schema": "evidence",
+      "kind": "table",
+      "purpose": "Immutable locator/hash snapshot of source content or restricted external evidence.",
+      "upstream_semantics": "Q0 evidence plane",
+      "mutation_policy": "append_only",
+      "authority_class": "evidence_metadata",
+      "canon_authority": false
+    },
+    {
+      "object": "evidence.claims",
+      "schema": "evidence",
+      "kind": "table",
+      "purpose": "Typed claim with evidence authority, known-as-of semantics and reviewer state.",
+      "upstream_semantics": "R2.3-B0 evidence contract",
+      "mutation_policy": "append_revision",
+      "authority_class": "research_claim_candidate",
+      "canon_authority": false
+    },
+    {
+      "object": "evidence.evidence_links",
+      "schema": "evidence",
+      "kind": "table",
+      "purpose": "Support/counterevidence relation between claims and source snapshots.",
+      "upstream_semantics": "R2.3-B0 evidence contract",
+      "mutation_policy": "append_only",
+      "authority_class": "evidence_metadata",
+      "canon_authority": false
+    },
+    {
+      "object": "pit.observations",
+      "schema": "pit",
+      "kind": "table",
+      "purpose": "Revision-aware bitemporal observations for market, macro, fundamental, industry and narrative data.",
+      "upstream_semantics": "ME1 PIT law + Q0 data plane",
+      "mutation_policy": "append_only_revision_lineage",
+      "authority_class": "observed_data",
+      "canon_authority": false
+    },
+    {
+      "object": "pit.feature_records",
+      "schema": "pit",
+      "kind": "table",
+      "purpose": "Deterministic feature values with formula/code version, PIT cutoff and source snapshot lineage.",
+      "upstream_semantics": "Q0 feature plane",
+      "mutation_policy": "append_only_by_formula_and_as_of",
+      "authority_class": "derived_data",
+      "canon_authority": false
+    },
+    {
+      "object": "pit.data_lineage",
+      "schema": "pit",
+      "kind": "table",
+      "purpose": "Explicit transformation lineage from source snapshot to observation/feature/output.",
+      "upstream_semantics": "YQS0",
+      "mutation_policy": "append_only",
+      "authority_class": "provenance_metadata",
+      "canon_authority": false
+    },
+    {
+      "object": "quant.factor_definitions",
+      "schema": "quant",
+      "kind": "table",
+      "purpose": "Versioned factor identity, family, economic hypothesis, universe/domain/horizon and formula reference.",
+      "upstream_semantics": "YQOS systematic-alpha candidate architecture",
+      "mutation_policy": "immutable_version_identity",
+      "authority_class": "quant_definition_candidate",
+      "canon_authority": false
+    },
+    {
+      "object": "quant.factor_states",
+      "schema": "quant",
+      "kind": "table",
+      "purpose": "Point-in-time factor health including predictive, economic, diversity, crowding, capacity, cost and decay state.",
+      "upstream_semantics": "YQOS systematic-alpha candidate architecture",
+      "mutation_policy": "append_only_by_as_of",
+      "authority_class": "quant_state",
+      "canon_authority": false
+    },
+    {
+      "object": "runtime.run_receipts",
+      "schema": "runtime",
+      "kind": "table",
+      "purpose": "Immutable receipt for deterministic/agent computation including code, inputs, environment, outputs and authority declaration.",
+      "upstream_semantics": "R2.3-B0 research receipt + YQS0 worker contract",
+      "mutation_policy": "append_only",
+      "authority_class": "runtime_ledger",
+      "canon_authority": false
+    },
+    {
+      "object": "replay.replay_cases",
+      "schema": "replay",
+      "kind": "table",
+      "purpose": "Pre-registered PIT replay identity with T0, frozen knowledge cutoff, hypothesis set, baseline/ablation and output contract.",
+      "upstream_semantics": "Q0 replay/eval + ME1 PIT",
+      "mutation_policy": "freeze_then_append_version",
+      "authority_class": "experiment_definition",
+      "canon_authority": false
+    },
+    {
+      "object": "replay.settlements",
+      "schema": "replay",
+      "kind": "table",
+      "purpose": "Future-outcome settlement that evaluates frozen historical state without rewriting it.",
+      "upstream_semantics": "ME1 settlement law",
+      "mutation_policy": "append_only",
+      "authority_class": "learning_ledger",
+      "canon_authority": false
+    },
+    {
+      "object": "governance.authority_events",
+      "schema": "governance",
+      "kind": "table",
+      "purpose": "Append-first operational review/authorization/sync event ledger; never substitutes GitHub acceptance or merge receipts.",
+      "upstream_semantics": "ledger law",
+      "mutation_policy": "append_only",
+      "authority_class": "operational_governance_ledger",
+      "canon_authority": false
+    },
+    {
+      "object": "projection.change_queue",
+      "schema": "projection",
+      "kind": "view_or_materialized_view",
+      "purpose": "Non-authoritative human projection of material state changes requiring research attention.",
+      "upstream_semantics": "YQS0 human projection",
+      "mutation_policy": "derived_projection",
+      "authority_class": "non_authoritative_projection",
+      "canon_authority": false
+    }
+  ],
+  "global_invariants": {
+    "public_schema_is_application_domain": false,
+    "all_objects_canon_authority_false": true,
+    "me1_object_semantics_redefined": false,
+    "live_execution_authorized": false,
+    "portfolio_weight_authorized": false,
+    "position_sizing_authorized": false,
+    "operational_canon_switch_authorized": false,
+    "me2_me5_authorized": false
+  }
+}

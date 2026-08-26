@@ -1,0 +1,114 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YQS0_SUPABASE_SOVEREIGN_RESEARCH_KERNEL_ARCHITECTURE",
+  "status": "candidate_started",
+  "control_plane": "Supabase",
+  "compute_plane": "external_quant_worker",
+  "queue_primitive": "pgmq_or_supabase_queues",
+  "edge_function_role": "dispatcher_adapter_lightweight_transform_only",
+  "heavy_compute_in_edge_functions": false,
+  "job_types_initial": [
+    "feature_compute",
+    "factor_health",
+    "replay_run",
+    "benchmark_run",
+    "ablation_run",
+    "settlement_attribution"
+  ],
+  "required_job_envelope": [
+    "job_id",
+    "idempotency_key",
+    "job_type",
+    "job_schema_version",
+    "requested_at",
+    "requested_by",
+    "canon_ref",
+    "code_ref",
+    "input_manifest",
+    "input_manifest_hash",
+    "output_schema_id",
+    "runtime_policy"
+  ],
+  "conditional_job_fields": {
+    "replay_jobs": [
+      "replay_case_id",
+      "knowledge_cutoff",
+      "replay_cutoff"
+    ],
+    "capability_jobs": [
+      "capability_id",
+      "capability_contract_version"
+    ],
+    "stochastic_jobs": [
+      "seed",
+      "model_profile",
+      "dependency_lock_hash"
+    ]
+  },
+  "runtime_policy": {
+    "network_access": "deny_by_default_allow_required_sources_only",
+    "max_runtime_required": true,
+    "resource_class_required": true,
+    "retry_policy_required": true,
+    "idempotent_output_required": true
+  },
+  "required_run_receipt": [
+    "run_receipt_id",
+    "job_id",
+    "job_type",
+    "started_at",
+    "ended_at",
+    "worker_identity",
+    "code_ref",
+    "runtime_fingerprint",
+    "input_manifest_hash",
+    "output_refs",
+    "output_hashes",
+    "status",
+    "warnings",
+    "authority_declaration"
+  ],
+  "authority_declaration": {
+    "canon_authority_granted": false,
+    "portfolio_weight_authority_granted": false,
+    "position_sizing_authority_granted": false,
+    "buy_sell_hold_authority_granted": false,
+    "live_execution_authority_granted": false
+  },
+  "write_boundary": {
+    "core_direct_authoritative_write": false,
+    "governance_human_event_write": false,
+    "github_canon_write": false,
+    "allowed": [
+      "runtime.run_receipts append",
+      "quant.factor_states append when output schema matches",
+      "pit.feature_records append when deterministic lineage is complete",
+      "replay run-output candidate append through reviewed interface"
+    ]
+  },
+  "fail_closed_conditions": [
+    "unknown output schema",
+    "unresolved canon_ref",
+    "unresolved engine authority reference",
+    "input manifest hash mismatch",
+    "missing knowledge_cutoff for replay",
+    "PIT eligibility failure",
+    "attempted governance/human-authority write",
+    "attempted live execution or broker action"
+  ],
+  "determinism_rules": [
+    "deterministic jobs record exact code_ref, inputs and dependency/runtime fingerprint",
+    "stochastic jobs record seed and model/dependency identity",
+    "same job identity with same immutable input manifest must not silently produce a replacement receipt",
+    "re-run creates a new receipt linked to the prior run rather than overwriting history"
+  ],
+  "compute_stack_candidates": [
+    "Python",
+    "DuckDB",
+    "Polars",
+    "NumPy",
+    "SciPy",
+    "LightGBM_or_equivalent_challenger"
+  ],
+  "live_execution_authorized": false
+}
