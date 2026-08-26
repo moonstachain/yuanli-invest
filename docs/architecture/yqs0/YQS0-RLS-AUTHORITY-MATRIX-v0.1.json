@@ -1,0 +1,122 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YQS0_SUPABASE_SOVEREIGN_RESEARCH_KERNEL_ARCHITECTURE",
+  "status": "candidate_started",
+  "roles": [
+    "principal",
+    "researcher",
+    "quant_worker",
+    "reviewer",
+    "viewer",
+    "system"
+  ],
+  "principles": {
+    "default_deny": true,
+    "least_privilege": true,
+    "service_role_frontend_exposure": false,
+    "database_role_can_create_github_acceptance_receipt": false,
+    "database_role_can_merge_github": false,
+    "research_pass_implies_capital_pass": false,
+    "live_execution_authorized": false
+  },
+  "role_intent": {
+    "principal": "Highest human application role. May inspect all investment-runtime state and append explicit human review/authorization events permitted by the application, but cannot bypass GitHub Canon gates.",
+    "researcher": "Creates and revises candidate research state, claims and replay proposals; cannot grant Canon or capital authority.",
+    "quant_worker": "External deterministic/ML compute identity. Reads only eligible scoped inputs and writes typed quant/replay outputs plus run receipts.",
+    "reviewer": "Human review identity. May append review decisions to the operational governance ledger; cannot merge GitHub or create Canon receipts from the database.",
+    "viewer": "Read-only consumer of approved projection surfaces.",
+    "system": "Server-side ingestion, queue, projection and Canon-sync identity under least privilege; never a human approval identity."
+  },
+  "matrix": {
+    "core": {
+      "principal": ["select", "candidate_insert", "candidate_revision"],
+      "researcher": ["select", "candidate_insert", "candidate_revision"],
+      "quant_worker": ["scoped_select"],
+      "reviewer": ["select"],
+      "viewer": [],
+      "system": ["canon_projection_upsert", "derived_status_projection"]
+    },
+    "evidence": {
+      "principal": ["select", "candidate_insert", "candidate_revision"],
+      "researcher": ["select", "candidate_insert", "candidate_revision"],
+      "quant_worker": ["eligible_scoped_select"],
+      "reviewer": ["select", "review_state_append"],
+      "viewer": [],
+      "system": ["ingest_metadata", "snapshot_append", "embedding_update"]
+    },
+    "pit": {
+      "principal": ["select_via_pit_safe_rpc"],
+      "researcher": ["select_via_pit_safe_rpc"],
+      "quant_worker": ["select_via_pit_safe_rpc", "feature_append"],
+      "reviewer": ["select_via_pit_safe_rpc"],
+      "viewer": [],
+      "system": ["observation_append", "lineage_append"]
+    },
+    "quant": {
+      "principal": ["select", "candidate_definition_insert", "state_append"],
+      "researcher": ["select", "candidate_definition_insert"],
+      "quant_worker": ["scoped_select", "state_append"],
+      "reviewer": ["select"],
+      "viewer": [],
+      "system": ["derived_projection_refresh"]
+    },
+    "runtime": {
+      "principal": ["select"],
+      "researcher": ["select"],
+      "quant_worker": ["receipt_append"],
+      "reviewer": ["select"],
+      "viewer": [],
+      "system": ["receipt_append", "queue_orchestration"]
+    },
+    "replay": {
+      "principal": ["select", "case_candidate_insert", "case_freeze_request", "settlement_append"],
+      "researcher": ["select", "case_candidate_insert"],
+      "quant_worker": ["scoped_case_select", "run_output_append"],
+      "reviewer": ["select", "freeze_review_append", "settlement_review_append"],
+      "viewer": [],
+      "system": ["queue_orchestration", "projection_refresh"]
+    },
+    "governance": {
+      "principal": ["select", "human_event_append"],
+      "researcher": ["select_own_or_visible"],
+      "quant_worker": [],
+      "reviewer": ["select", "human_review_event_append"],
+      "viewer": [],
+      "system": ["system_event_append"]
+    },
+    "projection": {
+      "principal": ["select"],
+      "researcher": ["select"],
+      "quant_worker": [],
+      "reviewer": ["select"],
+      "viewer": ["select_allowed_projection"],
+      "system": ["refresh_projection"]
+    }
+  },
+  "hard_denies": [
+    {
+      "role": "quant_worker",
+      "deny": ["governance_write", "human_approval", "canon_promotion", "capital_authorization", "live_execution"]
+    },
+    {
+      "role": "system",
+      "deny": ["human_approval", "github_merge", "canon_acceptance_receipt", "capital_authorization", "live_execution"]
+    },
+    {
+      "role": "researcher",
+      "deny": ["canon_promotion", "github_merge", "capital_authorization", "live_execution"]
+    },
+    {
+      "role": "viewer",
+      "deny": ["direct_application_table_access", "writes", "restricted_evidence", "live_execution"]
+    }
+  ],
+  "implementation_requirements": [
+    "RLS enabled on every table exposed through Data API",
+    "frontend uses publishable key only with RLS",
+    "service/secret keys remain backend-only",
+    "worker database identity has no governance schema write privileges",
+    "PIT replay functions are SECURITY DEFINER only after explicit search_path and privilege review",
+    "restricted third-party evidence receives separate access classification and policy"
+  ]
+}
