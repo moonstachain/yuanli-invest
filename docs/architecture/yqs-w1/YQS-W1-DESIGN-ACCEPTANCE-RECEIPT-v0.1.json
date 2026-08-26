@@ -29,7 +29,8 @@
     "live execution",
     "merge ahead of YQS0/YQS1 dependencies"
   ],
-  "next_gate": "YQS_W1_IMPLEMENTATION_PLAN_AND_EXECUTION_MODE_SELECTION",
+  "implementation_plan": "docs/superpowers/plans/2026-08-26-yqs-w1-wind-alice-evidence-provider-integration.md",
+  "next_gate": "YQS_W1_IMPLEMENTATION_EXECUTION_MODE_SELECTION",
   "acceptance_does_not_imply_merge": true,
   "acceptance_does_not_authorize_live_canary": true
 }
