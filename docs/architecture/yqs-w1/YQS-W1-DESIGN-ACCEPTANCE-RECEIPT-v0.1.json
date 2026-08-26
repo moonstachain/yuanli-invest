@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "YQS_W1_WIND_ALICE_EVIDENCE_PROVIDER_INTEGRATION",
+  "artifact": "design_acceptance_receipt",
+  "status": "human_accepted_design_only",
+  "decision_token": "ACCEPT_YQS_W1_WIND_ALICE_EVIDENCE_PROVIDER_DESIGN",
+  "accepted_design": "docs/superpowers/specs/2026-08-26-yqs-w1-wind-alice-evidence-provider-integration-design.md",
+  "accepted_design_commit": "3ce27c5618d427cec7e1ced4e85ba3f464565252",
+  "provider_reference": {
+    "repository": "Wind-Information-Co-Ltd/wind-skills",
+    "commit": "858043b90c916b596cd80da01e8dbf381501675d"
+  },
+  "approved_scope": [
+    "write implementation plan",
+    "implement no-secret synthetic qualification after a separate execution-mode choice",
+    "preserve YQS0 evidence/PIT/runtime authority boundaries"
+  ],
+  "explicit_non_authorizations": [
+    "real WIND_API_KEY submission in chat",
+    "secret installation",
+    "real Wind Alice invocation",
+    "Supabase production project creation",
+    "cloud migrations or cloud writes",
+    "evidence admission",
+    "Canon or Registry promotion",
+    "portfolio sizing",
+    "buy/sell/hold authority",
+    "broker connection",
+    "live execution",
+    "merge ahead of YQS0/YQS1 dependencies"
+  ],
+  "implementation_plan": "docs/superpowers/plans/2026-08-26-yqs-w1-wind-alice-evidence-provider-integration.md",
+  "next_gate": "YQS_W1_IMPLEMENTATION_EXECUTION_MODE_SELECTION",
+  "acceptance_does_not_imply_merge": true,
+  "acceptance_does_not_authorize_live_canary": true
+}
