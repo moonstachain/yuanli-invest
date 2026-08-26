@@ -1,6 +1,6 @@
 # YQS-W1｜Wind Alice Evidence Provider Integration — Design Candidate
 
-> Status: `DESIGN_CANDIDATE / HUMAN_REVIEW_REQUIRED`
+> Status: `HUMAN_ACCEPTED_DESIGN_ONLY / IMPLEMENTATION_NOT_YET_AUTHORIZED`
 >
 > Program: `YQS-W1｜Wind Alice Evidence Provider Integration`
 >
@@ -10,7 +10,11 @@
 >
 > Provider reference: `Wind-Information-Co-Ltd/wind-skills@858043b90c916b596cd80da01e8dbf381501675d`
 >
-> Human design gate reserved: `ACCEPT_YQS_W1_WIND_ALICE_EVIDENCE_PROVIDER_DESIGN`
+> Human design gate: `ACCEPT_YQS_W1_WIND_ALICE_EVIDENCE_PROVIDER_DESIGN` — accepted 2026-08-26
+>
+> Acceptance receipt: `docs/architecture/yqs-w1/YQS-W1-DESIGN-ACCEPTANCE-RECEIPT-v0.1.json`
+>
+> Implementation plan: `docs/superpowers/plans/2026-08-26-yqs-w1-wind-alice-evidence-provider-integration.md`
 
 ## 0. Decision
 
@@ -763,8 +767,10 @@ Human review should answer PASS only if all are true:
 13. real authenticated canary requires a later explicit authorization.
 14. YQS-W1 cannot merge ahead of its YQS0/YQS1 dependencies.
 
-If accepted, the exact design token is:
+The exact design token is:
 
 `ACCEPT_YQS_W1_WIND_ALICE_EVIDENCE_PROVIDER_DESIGN`
+
+**Decision:** HUMAN ACCEPTED on 2026-08-26.
 
 Acceptance means **design only**. It does not imply implementation, secret installation, live invocation or merge.
