@@ -25,10 +25,6 @@ import urllib.request
 from datetime import datetime, timezone
 from typing import Any
 
-import boto3
-from botocore.config import Config
-from botocore.exceptions import ClientError
-
 FRED_ENDPOINT = "https://api.stlouisfed.org/fred/series/observations"
 SERIES_ID = os.getenv("YMQ4_PROOF_SERIES", "CPIAUCSL")
 OBS_START = os.getenv("YMQ4_PROOF_OBS_START", "2020-02-01")
@@ -112,7 +108,6 @@ def crosscheck_asof(api_key: str, initial: dict[str, Any]) -> bytes:
 def rpc_headers(secret_key: str) -> dict[str, str]:
     if not secret_key.startswith("sb_secret_"):
         raise RuntimeError("YMQ4_SUPABASE_SECRET_KEY must be a modern sb_secret_ key")
-    # Opaque secret keys are API keys, not JWTs. Do not place them in Authorization: Bearer.
     return {"apikey": secret_key, "Content-Type": "application/json"}
 
 
@@ -123,6 +118,11 @@ def rpc(supabase_url: str, secret_key: str, function_name: str, payload: dict[st
 
 
 def s3_client(access_key_id: str, secret_access_key: str):
+    try:
+        import boto3
+        from botocore.config import Config
+    except ImportError as exc:
+        raise RuntimeError("boto3 is required for the full DP1-A S3 proof") from exc
     endpoint = f"https://{SUPABASE_PROJECT_REF}.storage.supabase.co/storage/v1/s3"
     return boto3.client(
         "s3",
@@ -137,7 +137,7 @@ def s3_client(access_key_id: str, secret_access_key: str):
 def verify_private_bucket(client) -> None:
     try:
         client.head_bucket(Bucket=BUCKET)
-    except ClientError as exc:
+    except Exception as exc:
         raise RuntimeError(f"required private raw bucket is not reachable: {BUCKET}") from exc
 
 
