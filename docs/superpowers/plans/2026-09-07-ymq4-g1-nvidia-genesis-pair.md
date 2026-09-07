@@ -2,80 +2,71 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build and run the first strict-PIT, reproducible YMQ4 Dynamic Repricing vertical slice for NVIDIA across `T0=2022-08-26 16:00 ET` and held-out `T1=2023-05-25 16:00 ET`, persisting typed CapabilityInvocation → CapabilityResult → ResearchStateSnapshot → ResearchReceipt objects to Supabase without granting capital authority.
+**Goal:** Build and run the first strict-PIT, reproducible YMQ4 Dynamic Repricing vertical slice for NVIDIA across `T0=2022-08-26 16:00 ET` and held-out `T1=2023-05-25 16:00 ET`, persisting typed `CapabilityInvocation → CapabilityResult → ResearchStateSnapshot → ResearchReceipt` objects to Supabase without granting capital authority.
 
-**Architecture:** `moonstachain/yuanli-invest` remains Canon and stores the accepted design plus a frozen implementation manifest; `moonstachain/quant-workspace` implements deterministic YMQ4 compute under a new `src/ymq4/` namespace; Supabase `ymq4` remains the private PIT evidence/state/runtime plane. G1 uses a two-stage interpretation: continuous factors estimate common-tech/rates/liquidity exposure, while timestamped NVIDIA/Fed events are handled as typed event evidence and event-associated abnormal-return diagnostics rather than being silently promoted to causal factors.
+**Architecture:** `moonstachain/yuanli-invest` remains Canon and stores the accepted design plus a frozen implementation manifest. `moonstachain/quant-workspace` implements deterministic YMQ4 compute under a new `src/ymq4/` namespace. Supabase `ymq4` remains the private PIT evidence/state/runtime plane. Continuous factors estimate common-tech/rates/liquidity exposure; timestamped NVIDIA/Fed events are handled as typed event evidence and event-associated abnormal-return diagnostics, never silently promoted to causal proof.
 
-**Tech Stack:** Python >=3.11, NumPy, Pandas, DuckDB, `requests`, `psycopg[binary]`, pytest; Supabase PostgreSQL 17 `ymq4` schema; GitHub `yuanli-invest` Canon; official NVIDIA/Federal Reserve evidence plus public historical market/macro series.
+**Tech Stack:** Python >=3.11, NumPy, Pandas, DuckDB, `requests`, `psycopg[binary]`, pytest; Supabase PostgreSQL 17 `ymq4` schema; GitHub `yuanli-invest` Canon.
 
 **Spec:** `docs/superpowers/specs/2026-09-07-ymq4-g1-nvidia-genesis-pair-design.md`
 
 ## Global Constraints
 
-- Target is exactly `NVDA`; hard-negative comparators are `QQQ` and `SPY`.
-- Genesis T0 is exactly `2022-08-26T16:00:00-04:00`.
-- Held-out T1 is exactly `2023-05-25T16:00:00-04:00` and may not influence factor choice, transforms, model windows, model family, drift metric, drift thresholds, or output semantics.
-- Five input packs only: Rates / Liquidity / Earnings / Narrative / Price.
+- Target exactly `NVDA`; hard-negative comparators exactly `QQQ`, `SPY`.
+- T0 exactly `2022-08-26T16:00:00-04:00`.
+- T1 exactly `2023-05-25T16:00:00-04:00`; T1 may not influence factor choice, transforms, windows, TVP parameters, drift metric, thresholds, or output semantics.
+- Five packs only: Rates / Liquidity / Earnings / Narrative / Price.
 - Short rolling window = 63 trading days; long rolling window = 252 trading days.
-- G1 drift metric = cosine distance; thresholds are pre-T0 empirical percentiles P50/P75/P90 only.
+- Drift metric = cosine distance; thresholds = pre-T0 P50/P75/P90 empirical percentiles.
 - `Claim Authority <= Evidence Authority`; dynamic beta and event association are not causal proof.
-- `known_as_of <= evidence_cutoff` for every admitted observation.
-- No new Supabase table is allowed unless implementation proves a hard contract gap and a design amendment is approved.
-- `Research PASS != Capital PASS`; no Buy/Sell/Hold, target price, expected-return promise, weight, position size, or execution field.
-- Supabase test writes must be transactional or cleanup-safe; smoke fixtures must not contaminate production research rows.
-- Any post-T1 change to the frozen method creates a new version and invalidates the original transfer result.
+- Every admitted row must satisfy `known_as_of <= evidence_cutoff`.
+- No new Supabase table unless a design amendment is separately approved.
+- `Research PASS != Capital PASS`; no buy/sell/hold, target price, weight, position size, expected-return promise, or execution field.
+- `src/strategy/` is untouched.
+- Any post-T1 tuning creates a new version and invalidates the original transfer test.
 
 ---
 
 ## File Structure Lock
 
-### `moonstachain/yuanli-invest`
+### Canon repo: `moonstachain/yuanli-invest`
 
-- Create: `docs/ymq4/g1/implementation-manifest.json` — immutable G1 provider/model/parameter/evidence-cutoff freeze used by both T0 and T1.
-- Create: `docs/ymq4/g1/evidence-events.json` — small auditable event metadata only; no bulk market data.
-- Create: `docs/ymq4/g1/runtime-receipts.md` — pointers to persisted Supabase receipt IDs and Git/algorithm versions; Supabase remains runtime ledger.
+- Create `docs/ymq4/g1/implementation-manifest.json` — frozen model/provider/parameter manifest.
+- Create `docs/ymq4/g1/evidence-events.json` — auditable event metadata only.
+- Create `docs/ymq4/g1/runtime-receipts.md` — pointers to persisted Supabase receipt IDs; not the runtime ledger itself.
 
-### `moonstachain/quant-workspace`
+### Quant repo: `moonstachain/quant-workspace`
 
-- Modify: `pyproject.toml` — add test/runtime dependencies without changing existing A-share behavior.
-- Create: `src/ymq4/__init__.py` — package boundary only.
-- Create: `src/ymq4/contracts.py` — typed invocation/result/state/receipt dataclasses and prohibited-field validation.
-- Create: `src/ymq4/canonical.py` — canonical JSON, deterministic SHA-256, time normalization.
-- Create: `src/ymq4/transforms.py` — PIT-safe delta/z-score/log-return transforms.
-- Create: `src/ymq4/factor_frame.py` — align NVDA/QQQ/SPY, rates, USD/liquidity and event metadata into one daily modeling frame.
-- Create: `src/ymq4/fixed_beta.py` — static least-squares baseline.
-- Create: `src/ymq4/rolling_beta.py` — 63d/252d rolling least-squares with diagnostics.
-- Create: `src/ymq4/tvp_kalman.py` — deterministic NumPy Kalman random-walk beta estimator.
-- Create: `src/ymq4/contribution.py` — continuous driver contribution and residual accounting.
-- Create: `src/ymq4/event_study.py` — event-associated abnormal-return diagnostics; preserves under-identification for joint earnings+narrative events.
-- Create: `src/ymq4/property_drift.py` — cosine drift plus pre-T0 percentile calibration.
-- Create: `src/ymq4/challenge.py` — common-tech/common-market hard negatives and strongest-alternative selection.
-- Create: `src/ymq4/supabase_store.py` — private-schema PostgreSQL adapter using `YMQ4_SUPABASE_DB_URL`.
-- Create: `src/ymq4/runtime.py` — one orchestration entry point from frozen manifest + PIT observations to typed result/receipt.
-- Create: `src/ymq4/providers/csv_http.py` — strict CSV download helper with hashing and source metadata.
-- Create: `src/ymq4/providers/market.py` — NVDA/QQQ/SPY daily series adapter.
-- Create: `src/ymq4/providers/macro.py` — 2Y/10Y/10Y-real/USD/Fed-balance adapters and publication/revision policy metadata.
-- Create: `scripts/run_ymq4_g1.py` — CLI for `--point t0|t1 --persist --reproduce-receipt <uuid>`.
-- Create: `tests/ymq4/` — unit and integration tests described below.
-
-No file under `src/strategy/` is modified.
+- Modify `pyproject.toml`.
+- Create `src/ymq4/__init__.py`.
+- Create `src/ymq4/contracts.py`.
+- Create `src/ymq4/canonical.py`.
+- Create `src/ymq4/transforms.py`.
+- Create `src/ymq4/factor_frame.py`.
+- Create `src/ymq4/fixed_beta.py`.
+- Create `src/ymq4/rolling_beta.py`.
+- Create `src/ymq4/tvp_kalman.py`.
+- Create `src/ymq4/contribution.py`.
+- Create `src/ymq4/event_study.py`.
+- Create `src/ymq4/property_drift.py`.
+- Create `src/ymq4/challenge.py`.
+- Create `src/ymq4/supabase_store.py`.
+- Create `src/ymq4/runtime.py`.
+- Create `src/ymq4/providers/{__init__,csv_http,market,macro}.py`.
+- Create `scripts/run_ymq4_g1.py`.
+- Create `tests/ymq4/` test modules.
 
 ---
 
-### Task 1: Freeze the G1 implementation manifest and evidence-event vocabulary
+### Task 1: Freeze the implementation manifest and event evidence vocabulary
 
 **Files:**
-- Create: `yuanli-invest/docs/ymq4/g1/implementation-manifest.json`
-- Create: `yuanli-invest/docs/ymq4/g1/evidence-events.json`
-- Test: Canon JSON validation via a lightweight Python check executed from repository root
+- Create `docs/ymq4/g1/implementation-manifest.json`
+- Create `docs/ymq4/g1/evidence-events.json`
 
-**Interfaces:**
-- Consumes: accepted design spec.
-- Produces: exact keys read later by `src/ymq4/runtime.py`: `capability_id`, `contract_version`, `target`, `t0`, `t1`, `history_start`, `factors`, `windows`, `shock_normalization`, `drift`, `providers`, `event_policy`, `capital_authority`.
+**Produces:** exact values consumed by runtime: `capability_id`, `contract_version`, `target`, `t0`, `t1`, `history_start`, factor columns, windows, shock normalization, TVP parameters, drift policy, providers, event policy, capital authority.
 
-- [ ] **Step 1: Write the manifest with exact frozen values**
-
-Use these values, without later T1 tuning:
+- [ ] **Step 1: Write the frozen manifest**
 
 ```json
 {
@@ -93,41 +84,44 @@ Use these values, without later T1 tuning:
   "tvp": {"process_variance": 0.0001, "observation_variance_floor": 1e-8, "initial_covariance": 1.0},
   "drift": {"metric": "cosine_distance", "threshold_percentiles": [0.50, 0.75, 0.90], "calibration_cutoff": "2022-08-26T16:00:00-04:00"},
   "event_policy": {"association_window_trading_days": [0, 1], "joint_event_split": "forbidden", "joint_event_label": "earnings_narrative_bundle"},
+  "providers": {
+    "price": {"provider": "stooq_csv", "symbols": {"NVDA": "nvda.us", "QQQ": "qqq.us", "SPY": "spy.us"}},
+    "rates": {"provider": "fred_csv", "series": {"US2Y": "DGS2", "US10Y": "DGS10", "US10Y_REAL": "DFII10"}},
+    "liquidity": {"provider": "fred_csv", "series": {"USD_BROAD": "DTWEXBGS", "FED_ASSETS": "WALCL"}}
+  },
   "capital_authority": "none"
 }
 ```
 
-Provider section must bind economic definitions rather than Capability identity:
+- [ ] **Step 2: Write exact official event source URLs and conservative timestamp law**
 
-```json
-{
-  "price": {"provider": "stooq_csv", "symbols": {"NVDA": "nvda.us", "QQQ": "qqq.us", "SPY": "spy.us"}},
-  "rates": {"provider": "fred_csv", "series": {"US2Y": "DGS2", "US10Y": "DGS10", "US10Y_REAL": "DFII10"}},
-  "liquidity": {"provider": "fred_csv", "series": {"USD_BROAD": "DTWEXBGS", "FED_ASSETS": "WALCL"}}
-}
+Use these source URLs:
+
+```text
+NVDA-2022-08-08-PRELIM-Q2
+https://nvidianews.nvidia.com/news/nvidia-announces-preliminary-financial-resultsfor-second-quarter-fiscal-2023
+
+NVDA-2022-08-24-Q2-FY23
+https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2023
+
+FED-2022-08-26-JACKSON-HOLE
+https://www.federalreserve.gov/newsevents/speech/files/powell20220826a.pdf
+
+NVDA-2023-05-24-Q1-FY24-AI
+https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2024
 ```
 
-- [ ] **Step 2: Write the evidence-event vocabulary**
+Rules:
 
-The event file contains metadata only, with exact types:
-
-```json
-{
-  "event_types": ["earnings", "policy", "narrative", "earnings_narrative_bundle"],
-  "events": [
-    {"event_id": "NVDA-2022-08-08-PRELIM-Q2", "event_type": "earnings", "effective_market_date": "2022-08-08"},
-    {"event_id": "NVDA-2022-08-24-Q2-FY23", "event_type": "earnings", "effective_market_date": "2022-08-25"},
-    {"event_id": "FED-2022-08-26-JACKSON-HOLE", "event_type": "policy", "effective_market_date": "2022-08-26"},
-    {"event_id": "NVDA-2023-05-24-Q1-FY24-AI", "event_type": "earnings_narrative_bundle", "effective_market_date": "2023-05-25"}
-  ]
-}
+```text
+- If an official source proves exact release time, use it.
+- Powell Jackson Hole uses 2022-08-26T10:00:00-04:00 because the official Fed release says "For release on delivery 10:00 a.m. EDT".
+- NVIDIA 2022-08-24 uses the official preannouncement schedule: public results approximately 1:20 p.m. PT; encode 2022-08-24T16:20:00-04:00 and effective market date 2022-08-25.
+- If an NVIDIA page proves only a calendar date and no exact time, use a conservative `known_as_of` of 23:59:59 ET on that date and make the event effective on the next U.S. trading session. Never guess an earlier time.
+- `earnings_narrative_bundle` may not be split into earnings and narrative shares.
 ```
 
-Each event receives its official URL, release timestamp, SHA-256 of captured evidence text, and `known_as_of`; the implementer must capture the actual values before persistence. If the exact timestamp cannot be proven, the event is rejected rather than approximated.
-
-- [ ] **Step 3: Validate JSON and invariants**
-
-Run:
+- [ ] **Step 3: Validate the manifest**
 
 ```bash
 python - <<'PY'
@@ -144,7 +138,7 @@ PY
 
 Expected: `manifest-pass`.
 
-- [ ] **Step 4: Commit Canon-side freeze**
+- [ ] **Step 4: Commit**
 
 ```bash
 git add docs/ymq4/g1/implementation-manifest.json docs/ymq4/g1/evidence-events.json
@@ -153,35 +147,26 @@ git commit -m "canon: freeze YMQ4-G1 NVIDIA implementation manifest"
 
 ---
 
-### Task 2: Add YMQ4 typed contracts and deterministic canonical hashing
+### Task 2: Add typed contracts and deterministic receipt hashing
 
 **Files:**
-- Modify: `quant-workspace/pyproject.toml`
-- Create: `quant-workspace/src/ymq4/__init__.py`
-- Create: `quant-workspace/src/ymq4/contracts.py`
-- Create: `quant-workspace/src/ymq4/canonical.py`
-- Test: `quant-workspace/tests/ymq4/test_contracts.py`
+- Modify `quant-workspace/pyproject.toml`
+- Create `src/ymq4/{__init__,contracts,canonical}.py`
+- Create `tests/ymq4/test_contracts.py`
 
-**Interfaces:**
-- Produces: `Invocation`, `CapabilityResult`, `ResearchStateSnapshot`, `ResearchReceipt`, `canonical_json(obj) -> str`, `sha256_json(obj) -> str`.
+**Produces:** `Invocation`, `CapabilityResult`, `ResearchStateSnapshot`, `ResearchReceipt`, `canonical_json()`, `sha256_json()`.
 
 - [ ] **Step 1: Add dependencies**
-
-Add runtime dependencies:
 
 ```toml
 "requests>=2.32.0",
 "psycopg[binary]>=3.2.0",
-```
 
-Add a dev group:
-
-```toml
 [dependency-groups]
 dev = ["pytest>=8.4.0"]
 ```
 
-- [ ] **Step 2: Write failing contract tests**
+- [ ] **Step 2: Write failing tests**
 
 ```python
 from datetime import datetime, timezone
@@ -190,13 +175,9 @@ from src.ymq4.contracts import Invocation, CapabilityResult
 
 
 def test_invocation_requires_strict_pit():
+    now=datetime.now(timezone.utc)
     with pytest.raises(ValueError):
-        Invocation(
-            request_id="r1", capability_id="cap", contract_version="0.1",
-            target_id="NVDA", as_of=datetime.now(timezone.utc),
-            evidence_cutoff=datetime.now(timezone.utc), strict_pit=False,
-            runtime="reference"
-        )
+        Invocation("r1","cap","0.1","NVDA",now,now,"reference",False)
 
 
 def test_result_rejects_capital_fields():
@@ -204,38 +185,34 @@ def test_result_rejects_capital_fields():
         CapabilityResult(status="success", state={"buy": True})
 ```
 
-- [ ] **Step 3: Run tests and verify failure**
+- [ ] **Step 3: Verify failure**
 
 ```bash
 uv run --group dev pytest tests/ymq4/test_contracts.py -v
 ```
 
-Expected: import/module failure.
+- [ ] **Step 4: Implement contracts**
 
-- [ ] **Step 4: Implement minimal dataclasses and prohibited-field scan**
-
-`CapabilityResult` recursively rejects keys matching:
+Recursively reject:
 
 ```python
-PROHIBITED = {"buy", "sell", "hold", "target_price", "position_size", "portfolio_weight", "recommended_weight", "expected_return"}
+PROHIBITED = {"buy","sell","hold","target_price","position_size","portfolio_weight","recommended_weight","expected_return"}
 ```
 
-`Invocation.__post_init__` raises when `strict_pit is not True` or `evidence_cutoff > as_of`.
+`Invocation` rejects `strict_pit=False` and `evidence_cutoff > as_of`.
 
-- [ ] **Step 5: Add deterministic JSON tests**
+- [ ] **Step 5: Add deterministic hash test and implementation**
 
 ```python
 from src.ymq4.canonical import sha256_json
 
-def test_hash_is_order_independent_for_mapping_keys():
-    assert sha256_json({"b": 2, "a": 1}) == sha256_json({"a": 1, "b": 2})
+def test_hash_is_mapping_order_independent():
+    assert sha256_json({"b":2,"a":1}) == sha256_json({"a":1,"b":2})
 ```
 
-- [ ] **Step 6: Implement canonical serializer**
+Canonical JSON uses `sort_keys=True`, separators `(',', ':')`, UTF-8, and UTC ISO-8601 datetime normalization.
 
-Use `json.dumps(..., sort_keys=True, separators=(",", ":"), ensure_ascii=False)` and normalize datetimes to UTC ISO-8601 before hashing.
-
-- [ ] **Step 7: Run tests and commit**
+- [ ] **Step 6: Run and commit**
 
 ```bash
 uv run --group dev pytest tests/ymq4/test_contracts.py -v
@@ -245,33 +222,28 @@ git commit -m "feat: add YMQ4 typed runtime contracts"
 
 ---
 
-### Task 3: Implement PIT-safe transforms and modeling frame construction
+### Task 3: Implement PIT-safe transforms and factor frame
 
 **Files:**
-- Create: `src/ymq4/transforms.py`
-- Create: `src/ymq4/factor_frame.py`
-- Test: `tests/ymq4/test_transforms.py`
-- Test: `tests/ymq4/test_factor_frame.py`
+- Create `src/ymq4/transforms.py`
+- Create `src/ymq4/factor_frame.py`
+- Create `tests/ymq4/test_transforms.py`
+- Create `tests/ymq4/test_factor_frame.py`
 
-**Interfaces:**
-- Produces: `log_returns(series)`, `trailing_zscore(series, window=63)`, `build_factor_frame(prices, macro, cutoff, events) -> pd.DataFrame`.
+**Produces:** `log_returns(series)`, `trailing_zscore(series, window=63)`, `build_factor_frame(...)`.
 
-- [ ] **Step 1: Write failing transform tests**
+- [ ] **Step 1: Write failing trailing-window test**
 
 ```python
 import pandas as pd
-from src.ymq4.transforms import log_returns, trailing_zscore
+from src.ymq4.transforms import trailing_zscore
 
-
-def test_zscore_uses_past_and_current_only():
-    s = pd.Series([1.,2.,3.,4.])
-    z = trailing_zscore(s, window=3)
+def test_trailing_zscore_is_not_centered():
+    s=pd.Series([1.,2.,3.,4.])
+    z=trailing_zscore(s,3)
     assert pd.isna(z.iloc[1])
-    expected = (3 - 2) / 1
-    assert abs(z.iloc[2] - expected) < 1e-12
+    assert abs(z.iloc[2]-1.0) < 1e-12
 ```
-
-The implementation must not use centered/two-sided windows.
 
 - [ ] **Step 2: Implement transforms and verify**
 
@@ -279,18 +251,11 @@ The implementation must not use centered/two-sided windows.
 uv run --group dev pytest tests/ymq4/test_transforms.py -v
 ```
 
-- [ ] **Step 3: Write PIT frame test**
+- [ ] **Step 3: Write PIT cutoff test**
 
-Construct synthetic observations containing one row with `known_as_of` after cutoff. Assert it never enters the frame.
+A synthetic row with `known_as_of` after cutoff must not enter the model frame.
 
-```python
-assert frame.index.max() <= pd.Timestamp("2022-08-26")
-assert "future_value" not in frame.columns
-```
-
-- [ ] **Step 4: Implement factor-frame semantics**
-
-Daily frame columns are exactly:
+- [ ] **Step 4: Implement exact frame columns**
 
 ```text
 nvda_ret
@@ -303,15 +268,15 @@ event_type
 event_id
 ```
 
-`fed_assets_state` is contextual and is not part of the G1 regression matrix.
-
-Continuous regression factors are exactly:
+Regression factors exactly:
 
 ```python
-X_COLUMNS = ["qqq_ret", "real_yield_shock", "usd_shock"]
+X_COLUMNS=["qqq_ret","real_yield_shock","usd_shock"]
 ```
 
-- [ ] **Step 5: Run tests and commit**
+`FED_ASSETS` is contextual only in G1.
+
+- [ ] **Step 5: Run and commit**
 
 ```bash
 uv run --group dev pytest tests/ymq4/test_transforms.py tests/ymq4/test_factor_frame.py -v
@@ -321,41 +286,38 @@ git commit -m "feat: add PIT-safe YMQ4 factor frame"
 
 ---
 
-### Task 4: Implement Fixed Beta and 63d/252d Rolling Beta baselines
+### Task 4: Implement Fixed Beta and Rolling Beta baselines
 
 **Files:**
-- Create: `src/ymq4/fixed_beta.py`
-- Create: `src/ymq4/rolling_beta.py`
-- Test: `tests/ymq4/test_beta_models.py`
+- Create `src/ymq4/fixed_beta.py`
+- Create `src/ymq4/rolling_beta.py`
+- Create `tests/ymq4/test_beta_models.py`
 
-**Interfaces:**
-- Produces: `fit_fixed_beta(y, X) -> BetaEstimate`, `rolling_beta(y, X, window) -> pd.DataFrame`.
-- `BetaEstimate` contains `intercept`, ordered `betas`, `residual_std`, `condition_number`, `n_obs`, `status`.
+**Produces:** `fit_fixed_beta(y,X)` and `rolling_beta(y,X,window)`.
 
-- [ ] **Step 1: Write synthetic coefficient-recovery test**
+- [ ] **Step 1: Write coefficient-recovery test**
 
 ```python
 import numpy as np, pandas as pd
 from src.ymq4.fixed_beta import fit_fixed_beta
 
-
-def test_fixed_beta_recovers_known_coefficients():
+def test_fixed_beta_recovers_coefficients():
     rng=np.random.default_rng(7)
-    X=pd.DataFrame(rng.normal(size=(500,3)), columns=["qqq_ret","real_yield_shock","usd_shock"])
+    X=pd.DataFrame(rng.normal(size=(500,3)),columns=["qqq_ret","real_yield_shock","usd_shock"])
     y=0.2 + X.to_numpy() @ np.array([1.4,-0.5,-0.2])
-    est=fit_fixed_beta(pd.Series(y), X)
-    assert np.allclose(list(est.betas.values()), [1.4,-0.5,-0.2], atol=1e-8)
+    est=fit_fixed_beta(pd.Series(y),X)
+    assert np.allclose(list(est.betas.values()),[1.4,-0.5,-0.2],atol=1e-8)
 ```
 
-- [ ] **Step 2: Run failure, implement using `np.linalg.lstsq`, rerun**
+- [ ] **Step 2: Implement with `np.linalg.lstsq`**
 
-Ill-conditioned matrices with `condition_number > 1e8` return `status="unstable"` instead of pretending precision.
+If condition number `>1e8`, emit `status="unstable"` rather than silent precision.
 
-- [ ] **Step 3: Write rolling-window test**
+- [ ] **Step 3: Write rolling-window availability test**
 
-Assert the first non-null 63d beta appears only after 63 complete rows and the long series only after 252 complete rows.
+First valid short estimate only after 63 complete rows; first valid long estimate only after 252 complete rows.
 
-- [ ] **Step 4: Implement and commit**
+- [ ] **Step 4: Run and commit**
 
 ```bash
 uv run --group dev pytest tests/ymq4/test_beta_models.py -v
@@ -365,19 +327,15 @@ git commit -m "feat: add fixed and rolling YMQ4 beta models"
 
 ---
 
-### Task 5: Implement deterministic TVP/Kalman beta estimation
+### Task 5: Implement deterministic TVP/Kalman beta
 
 **Files:**
-- Create: `src/ymq4/tvp_kalman.py`
-- Test: `tests/ymq4/test_tvp_kalman.py`
+- Create `src/ymq4/tvp_kalman.py`
+- Create `tests/ymq4/test_tvp_kalman.py`
 
-**Interfaces:**
-- Produces: `fit_tvp_beta(y, X, process_variance, observation_variance_floor, initial_covariance) -> TVPResult`.
-- `TVPResult.beta_path` has index aligned to inputs and columns identical to `X_COLUMNS`.
+**Produces:** `fit_tvp_beta(...) -> TVPResult` with `beta_path` aligned to factor-frame index.
 
-- [ ] **Step 1: Write constant-beta test**
-
-Synthetic data with stable coefficients should converge close to the true values in the final 50 observations.
+- [ ] **Step 1: Write constant-beta convergence test**
 
 ```python
 assert np.allclose(result.beta_path.tail(50).mean().to_numpy(), true_beta, atol=0.12)
@@ -385,15 +343,15 @@ assert np.allclose(result.beta_path.tail(50).mean().to_numpy(), true_beta, atol=
 
 - [ ] **Step 2: Write regime-change test**
 
-Generate coefficient `rate_beta=-0.2` for first half and `-1.0` for second half. Assert the terminal estimate is more negative than the midpoint estimate.
+Synthetic rate beta changes from `-0.2` to `-1.0`; terminal estimate must be more negative than midpoint estimate.
 
-- [ ] **Step 3: Implement a random-walk state model in NumPy**
+- [ ] **Step 3: Implement NumPy random-walk Kalman filter**
 
-Use one state per factor plus intercept; no hidden optimization or auto-tuning. `process_variance`, `initial_covariance`, and floor come only from the manifest.
+Use only manifest parameters; no optimizer or auto-tuning.
 
-- [ ] **Step 4: Add numerical fail-closed behavior**
+- [ ] **Step 4: Add fail-closed numerics**
 
-Non-finite covariance, singular update, or insufficient observations returns `status="fail_closed"` with a warning list.
+Non-finite covariance, singular update, or insufficient observations returns `status="fail_closed"` with warnings.
 
 - [ ] **Step 5: Run and commit**
 
@@ -405,150 +363,125 @@ git commit -m "feat: add deterministic TVP Kalman beta estimator"
 
 ---
 
-### Task 6: Implement contribution, event diagnostics, property drift, and hard-negative challenge
+### Task 6: Implement contributions, event diagnostics, drift, and hard negatives
 
 **Files:**
-- Create: `src/ymq4/contribution.py`
-- Create: `src/ymq4/event_study.py`
-- Create: `src/ymq4/property_drift.py`
-- Create: `src/ymq4/challenge.py`
-- Test: `tests/ymq4/test_interpretation.py`
+- Create `src/ymq4/contribution.py`
+- Create `src/ymq4/event_study.py`
+- Create `src/ymq4/property_drift.py`
+- Create `src/ymq4/challenge.py`
+- Create `tests/ymq4/test_interpretation.py`
 
-**Interfaces:**
-- Produces: `driver_contributions(beta, shock_row)`, `event_abnormal_return(frame, event_date, window=(0,1))`, `calibrate_drift_thresholds(pre_t0_beta_short, pre_t0_beta_long)`, `classify_drift(value, thresholds)`, `select_strongest_alternative(...)`.
+**Produces:** contribution map, event-associated abnormal return, pre-T0 drift thresholds/state, strongest alternative.
 
-- [ ] **Step 1: Write contribution conservation test**
+- [ ] **Step 1: Write contribution test**
 
 ```python
 from src.ymq4.contribution import driver_contributions
 
-def test_continuous_contribution_is_beta_times_shock():
-    c=driver_contributions({"Rates":-0.5},{"Rates":2.0})
-    assert c["Rates"] == -1.0
+def test_contribution_is_beta_times_shock():
+    assert driver_contributions({"Rates":-0.5},{"Rates":2.0})["Rates"] == -1.0
 ```
 
 - [ ] **Step 2: Write joint-event under-identification test**
 
-For `event_type="earnings_narrative_bundle"`, the event study may emit `associated_abnormal_return`, but must emit:
+For `earnings_narrative_bundle`, output:
 
 ```python
-{"earnings_split": None, "narrative_split": None, "identification_status": "underidentified"}
+{"earnings_split":None,"narrative_split":None,"identification_status":"underidentified"}
 ```
 
-It must never arbitrarily split 50/50.
+Never split 50/50.
 
-- [ ] **Step 3: Write drift-threshold test**
+- [ ] **Step 3: Write drift calibration test**
 
-Threshold calibration only consumes beta pairs whose timestamp is strictly before T0. Assert T1 samples do not alter thresholds.
+T1 samples must not change P50/P75/P90 thresholds calibrated strictly before T0.
 
 - [ ] **Step 4: Write hard-negative test**
 
-If NVDA and QQQ move nearly identically and idiosyncratic residual is small, the strongest alternative must be `broad_tech_common_factor` rather than an NVIDIA-specific story.
+If NVDA and QQQ move almost identically and residual is small, strongest alternative must be `broad_tech_common_factor`.
 
-- [ ] **Step 5: Implement and run tests**
+- [ ] **Step 5: Implement and commit**
 
 ```bash
 uv run --group dev pytest tests/ymq4/test_interpretation.py -v
-```
-
-- [ ] **Step 6: Commit**
-
-```bash
 git add src/ymq4/contribution.py src/ymq4/event_study.py src/ymq4/property_drift.py src/ymq4/challenge.py tests/ymq4/test_interpretation.py
 git commit -m "feat: add YMQ4 attribution drift and challenge layer"
 ```
 
 ---
 
-### Task 7: Add private Supabase runtime adapter and atomic Result/State/Receipt persistence
+### Task 7: Add private Supabase runtime adapter and atomic persistence
 
 **Files:**
-- Create: `src/ymq4/supabase_store.py`
-- Test: `tests/ymq4/test_supabase_store.py`
-- Create: `.env.example` entries only; never commit secrets
+- Create `src/ymq4/supabase_store.py`
+- Create `tests/ymq4/test_supabase_store.py`
+- Modify `.env.example`
 
-**Interfaces:**
-- Consumes: `YMQ4_SUPABASE_DB_URL`.
-- Produces: `load_observations(economic_ids, cutoff)`, `insert_invocation(invocation)`, `persist_result_bundle(invocation, result, snapshot, receipt)`.
+**Produces:** `load_observations(...)`, `insert_invocation(...)`, `persist_result_bundle(...)`.
 
-- [ ] **Step 1: Write query-construction unit tests**
+- [ ] **Step 1: Write SQL-shape unit tests**
 
-Assert the observation query includes both:
+Observation SQL must include:
 
 ```sql
 known_as_of <= %s
-```
-
-and deterministic ordering:
-
-```sql
 ORDER BY economic_id, observed_at, known_as_of, observation_id
 ```
 
 - [ ] **Step 2: Implement fully qualified private-schema SQL**
 
-All table references are explicit `ymq4.<table>`; do not change Supabase exposed-schema settings.
+Use `ymq4.<table>` explicitly; do not expose `ymq4` through public Data API settings.
 
-- [ ] **Step 3: Persist the runtime bundle in one transaction**
-
-Transaction order:
+- [ ] **Step 3: Implement one-transaction persistence**
 
 ```text
 capability_invocations
 → capability_results
 → research_state_snapshots
 → research_receipts
-→ commit
+→ COMMIT
 ```
 
-Any failure rolls back the whole bundle.
+Any exception rolls back all four.
 
 - [ ] **Step 4: Add optional real-database integration test**
 
-The test is skipped unless `YMQ4_SUPABASE_DB_URL` exists. It creates a unique test request, writes the four runtime objects inside a transaction, verifies them, then rolls back.
+Run only when `YMQ4_SUPABASE_DB_URL` is set; unique test IDs are written and rolled back.
+
+- [ ] **Step 5: Run and commit**
 
 ```bash
 uv run --group dev pytest tests/ymq4/test_supabase_store.py -v
-```
-
-Expected without secret: unit tests PASS; integration test SKIPPED.
-
-- [ ] **Step 5: Commit**
-
-```bash
 git add src/ymq4/supabase_store.py tests/ymq4/test_supabase_store.py .env.example
 git commit -m "feat: add YMQ4 Supabase runtime store"
 ```
 
 ---
 
-### Task 8: Build provider adapters and ingest the five PIT input packs
+### Task 8: Build provider adapters and ingest the five PIT packs
 
 **Files:**
-- Create: `src/ymq4/providers/__init__.py`
-- Create: `src/ymq4/providers/csv_http.py`
-- Create: `src/ymq4/providers/market.py`
-- Create: `src/ymq4/providers/macro.py`
-- Test: `tests/ymq4/test_providers.py`
+- Create `src/ymq4/providers/{__init__,csv_http,market,macro}.py`
+- Create `tests/ymq4/test_providers.py`
 
-**Interfaces:**
-- Produces normalized provider rows compatible with the existing `ymq4.observations` schema.
+**Produces:** provider rows compatible with existing `ymq4.observations`.
 
-- [ ] **Step 1: Write fixture-based parser tests**
+- [ ] **Step 1: Write fixture-only parser tests**
 
-No unit test uses live internet. Store tiny CSV strings in tests and verify dates, missing values, decimal parsing, source hash, and deterministic symbol mapping.
+No unit test uses live internet. Verify date parsing, missing values, decimal parsing, source SHA-256, symbol/series mapping.
 
-- [ ] **Step 2: Implement HTTP helper with byte-level hash**
+- [ ] **Step 2: Implement `fetch_csv(url)`**
 
-`fetch_csv(url)` returns `(dataframe, sha256, fetched_at)` and raises on non-200 or empty content.
+Returns `(dataframe, sha256, fetched_at)`; raises on non-200 or empty content.
 
 - [ ] **Step 3: Implement market adapter**
 
-For NVDA/QQQ/SPY, store trading-date close observations and provenance that identifies whether source prices are adjusted. Compute returns in `factor_frame.py`, not in the provider layer.
+NVDA/QQQ/SPY daily close rows; returns are computed later in factor frame. Provenance must record provider adjustment semantics.
 
-- [ ] **Step 4: Implement macro adapter with admission policy**
+- [ ] **Step 4: Implement macro adapter**
 
-Economic IDs:
+Economic IDs exactly:
 
 ```text
 US2Y
@@ -558,21 +491,15 @@ USD_BROAD
 FED_ASSETS
 ```
 
-Each series mapping must define `revision_policy` and `publication_lag_policy`. If a series cannot establish defensible PIT availability for T0/T1, ingest it with `authority_class="proxy"` and force a warning/degrade state; do not fabricate a vintage timestamp.
+Every mapping has `revision_policy` and `publication_lag_policy`. If PIT availability cannot be defended, ingest as `authority_class="proxy"` and force a degraded result; never fabricate `vintage_at`.
 
 - [ ] **Step 5: Ingest official event evidence**
 
-Use only official NVIDIA and Federal Reserve source material referenced by the Canon event manifest. Store the event as `value_text` plus exact release/known timestamps and provenance; bulk article text is not committed to GitHub.
+Use only the four official URLs in Task 1. Store extracted evidence text in Supabase `value_text` with source hash and exact/conservative `known_as_of` under Task 1 law.
 
-- [ ] **Step 6: PIT admission check before commit to Supabase**
+- [ ] **Step 6: Run PIT admission audit**
 
-Run a dry validation that counts rows violating:
-
-```sql
-known_as_of < observed_at
-```
-
-or missing both numeric/text values. Zero violations are required.
+Reject rows where `known_as_of < observed_at`, both values are null, or the source policy is missing.
 
 - [ ] **Step 7: Run tests and commit**
 
@@ -584,20 +511,18 @@ git commit -m "feat: add YMQ4 G1 provider adapters"
 
 ---
 
-### Task 9: Implement the one-command runtime and reproduce-before-persist discipline
+### Task 9: Implement one-command runtime and receipt reproduction
 
 **Files:**
-- Create: `src/ymq4/runtime.py`
-- Create: `scripts/run_ymq4_g1.py`
-- Test: `tests/ymq4/test_runtime.py`
+- Create `src/ymq4/runtime.py`
+- Create `scripts/run_ymq4_g1.py`
+- Create `tests/ymq4/test_runtime.py`
 
-**Interfaces:**
-- Produces: `run_point(point: Literal["t0","t1"], manifest, store, persist=False) -> RuntimeBundle`.
-- `RuntimeBundle` contains invocation, result, snapshot, receipt.
+**Produces:** `run_point(point, manifest, store, persist=False) -> RuntimeBundle`.
 
-- [ ] **Step 1: Write a synthetic end-to-end runtime test**
+- [ ] **Step 1: Write synthetic end-to-end test**
 
-Feed deterministic fixture data and assert all of these exist:
+Assert the bundle contains:
 
 ```python
 bundle.result.state["dominant_driver"]
@@ -609,33 +534,32 @@ bundle.result.state["residual"]
 bundle.receipt.receipt_sha256
 ```
 
-- [ ] **Step 2: Enforce `t1` manifest freeze**
+- [ ] **Step 2: Enforce T1 freeze checksum**
 
-`run_point("t1")` reads the same factor columns, windows, TVP parameters, drift thresholds and event policy recorded by T0. Runtime raises if a parameter checksum differs.
+T1 uses the same manifest/factor/windows/TVP/drift/event policy checksum recorded at T0; mismatch raises and refuses persistence.
 
-- [ ] **Step 3: Implement reliability semantics**
-
-Minimum rules:
+- [ ] **Step 3: Implement reliability states**
 
 ```text
-fail_closed: PIT breach, missing long-window history, numerical failure
-unknown: no driver exceeds uncertainty / hard-negative challenge
-partial: at least one pack is proxy/missing but computation remains interpretable
-success: all mandatory packs admitted and computation stable
+fail_closed = PIT breach, missing long history, numerical failure
+unknown = no driver separable from uncertainty/hard negative
+partial = at least one pack proxy/missing but computation still interpretable
+success = mandatory packs admitted and computation stable
 ```
 
-- [ ] **Step 4: Generate receipt before persistence**
+- [ ] **Step 4: Hash before persistence**
 
-Receipt hash includes canonical invocation, sorted evidence references, algorithm version, manifest hash and typed result. Persistence is refused when a recomputed hash disagrees.
+Receipt SHA covers canonical invocation, sorted evidence refs, algorithm version, manifest hash, result state. Reproduction recomputes and compares the same hash.
 
 - [ ] **Step 5: Implement CLI**
 
-Examples:
+Exact commands after execution worktrees are created as siblings named `yuanli-invest-g1` and `quant-workspace-g1`:
 
 ```bash
-uv run python scripts/run_ymq4_g1.py --point t0 --manifest ../yuanli-invest/docs/ymq4/g1/implementation-manifest.json --persist
-uv run python scripts/run_ymq4_g1.py --point t1 --manifest ../yuanli-invest/docs/ymq4/g1/implementation-manifest.json --persist
-uv run python scripts/run_ymq4_g1.py --reproduce-receipt <receipt_uuid>
+cd quant-workspace-g1
+export YMQ4_MANIFEST_PATH="../yuanli-invest-g1/docs/ymq4/g1/implementation-manifest.json"
+uv run python scripts/run_ymq4_g1.py --point t0 --manifest "$YMQ4_MANIFEST_PATH"
+uv run python scripts/run_ymq4_g1.py --point t1 --manifest "$YMQ4_MANIFEST_PATH"
 ```
 
 - [ ] **Step 6: Run all tests and commit**
@@ -648,109 +572,89 @@ git commit -m "feat: add YMQ4 G1 runtime orchestration"
 
 ---
 
-### Task 10: Execute T0, freeze its method checksum, then execute held-out T1 without tuning
+### Task 10: Execute T0, freeze the method checksum, then run held-out T1
 
 **Files:**
-- Modify: `yuanli-invest/docs/ymq4/g1/runtime-receipts.md`
-- Supabase: existing `ymq4.*` tables only
-- No model-code changes are permitted between T0 and T1 unless T1 is invalidated and a new spec version is created.
+- Create/modify `yuanli-invest/docs/ymq4/g1/runtime-receipts.md`
+- Supabase existing `ymq4.*` tables only
 
-**Interfaces:**
-- Produces: one persisted T0 runtime bundle, one persisted held-out T1 bundle, reproduction evidence for both.
+**Produces:** two persisted runtime bundles and two reproduced receipt hashes.
 
-- [ ] **Step 1: Pre-run gate**
-
-Verify:
+- [ ] **Step 1: Full pre-run test gate**
 
 ```bash
+cd quant-workspace-g1
 uv run --group dev pytest tests/ymq4 -v
 ```
 
-Expected: all unit tests PASS; real Supabase integration PASS when secret is present.
+All unit tests PASS; Supabase integration PASS when `YMQ4_SUPABASE_DB_URL` is present.
 
-- [ ] **Step 2: Register replay cases**
-
-Use IDs:
+- [ ] **Step 2: Register exact replay case IDs**
 
 ```text
 YMQ4-G1-NVDA-T0-20220826
 YMQ4-G1-NVDA-T1-20230525
 ```
 
-Both rows carry exact `t0`/knowledge cutoff and the same preregistered manifest hash.
+Both reference the identical preregistered manifest hash.
 
-- [ ] **Step 3: Run T0 without persistence first**
-
-```bash
-uv run python scripts/run_ymq4_g1.py --point t0 --manifest <manifest-path>
-```
-
-Review only structural validity: PIT status, five-pack coverage, numerical stability, challenge output, residual visibility, and prohibited-field scan. Do **not** tune for a preferred economic conclusion.
-
-- [ ] **Step 4: Persist T0 and capture receipt**
+- [ ] **Step 3: Dry-run T0**
 
 ```bash
-uv run python scripts/run_ymq4_g1.py --point t0 --manifest <manifest-path> --persist
+export YMQ4_MANIFEST_PATH="../yuanli-invest-g1/docs/ymq4/g1/implementation-manifest.json"
+uv run python scripts/run_ymq4_g1.py --point t0 --manifest "$YMQ4_MANIFEST_PATH"
 ```
 
-Record `request_id`, `result_id`, `snapshot_id`, `receipt_id`, manifest SHA-256, quant Git commit SHA and Canon Git commit SHA.
+Review only structural validity: PIT, five-pack coverage, numerical stability, residual visibility, challenger output, prohibited-field scan. Do not tune toward a desired driver conclusion.
 
-- [ ] **Step 5: Reproduce T0 receipt**
+- [ ] **Step 4: Persist T0 and capture machine IDs**
 
 ```bash
-uv run python scripts/run_ymq4_g1.py --reproduce-receipt <t0-receipt-id>
+T0_JSON="$(uv run python scripts/run_ymq4_g1.py --point t0 --manifest "$YMQ4_MANIFEST_PATH" --persist --json)"
+T0_RECEIPT_ID="$(printf '%s' "$T0_JSON" | python -c 'import json,sys; print(json.load(sys.stdin)["receipt_id"])')"
+T0_RESULT_HASH="$(printf '%s' "$T0_JSON" | python -c 'import json,sys; print(json.load(sys.stdin)["typed_state_sha256"])')"
+printf '%s\n' "$T0_RECEIPT_ID" "$T0_RESULT_HASH"
 ```
 
-Expected: `REPRODUCED` and identical typed-state hash.
+- [ ] **Step 5: Reproduce T0**
+
+```bash
+uv run python scripts/run_ymq4_g1.py --reproduce-receipt "$T0_RECEIPT_ID" --json
+```
+
+Expected JSON field: `"reproduction_status":"REPRODUCED"` and the same `typed_state_sha256`.
 
 - [ ] **Step 6: Freeze T0 method checksum**
 
-Compute and record SHA-256 over:
+Runtime records SHA-256 over manifest JSON, factor list, transform parameters, windows, TVP parameters, drift thresholds, quant Git SHA. T1 must present the identical value.
 
-```text
-manifest JSON
-factor-column list
-transform parameters
-rolling windows
-TVP parameters
-drift thresholds
-quant commit SHA
-```
-
-This checksum is required verbatim by T1.
-
-- [ ] **Step 7: Run held-out T1**
-
-No code/config changes are allowed after Step 6.
+- [ ] **Step 7: Persist held-out T1 with no code/config change**
 
 ```bash
-uv run python scripts/run_ymq4_g1.py --point t1 --manifest <manifest-path> --persist
+T1_JSON="$(uv run python scripts/run_ymq4_g1.py --point t1 --manifest "$YMQ4_MANIFEST_PATH" --persist --json)"
+T1_RECEIPT_ID="$(printf '%s' "$T1_JSON" | python -c 'import json,sys; print(json.load(sys.stdin)["receipt_id"])')"
+T1_RESULT_HASH="$(printf '%s' "$T1_JSON" | python -c 'import json,sys; print(json.load(sys.stdin)["typed_state_sha256"])')"
+printf '%s\n' "$T1_RECEIPT_ID" "$T1_RESULT_HASH"
 ```
 
-If T1 reveals a method defect, label the original transfer test invalidated; do not patch and preserve the same test identity.
+If T1 exposes a method defect, invalidate the transfer test and version a new method; do not patch while preserving the original T1 identity.
 
-- [ ] **Step 8: Reproduce T1 receipt**
+- [ ] **Step 8: Reproduce T1**
 
 ```bash
-uv run python scripts/run_ymq4_g1.py --reproduce-receipt <t1-receipt-id>
+uv run python scripts/run_ymq4_g1.py --reproduce-receipt "$T1_RECEIPT_ID" --json
 ```
 
-Expected: identical typed-state hash.
+Expected: `REPRODUCED` and identical `typed_state_sha256`.
 
-- [ ] **Step 9: Write runtime pointer ledger**
+- [ ] **Step 9: Record runtime pointers in Canon**
 
-`runtime-receipts.md` records identifiers and statuses only, e.g.:
+`runtime-receipts.md` records T0/T1 request/result/snapshot/receipt IDs, manifest hash, quant commit SHA, status, and reproduction status only. It must not convert research state into capital advice.
 
-```text
-T0: receipt=<uuid> status=<success|partial|unknown|fail_closed> manifest_sha256=<hash> quant_commit=<sha>
-T1: receipt=<uuid> status=<success|partial|unknown|fail_closed> manifest_sha256=<same hash> quant_commit=<same sha>
-```
-
-It must not rewrite the scientific result as a capital recommendation.
-
-- [ ] **Step 10: Commit Canon-side runtime pointers**
+- [ ] **Step 10: Commit Canon runtime pointers**
 
 ```bash
+cd ../yuanli-invest-g1
 git add docs/ymq4/g1/runtime-receipts.md
 git commit -m "receipt: record YMQ4-G1 NVIDIA Genesis Pair runtime pointers"
 ```
@@ -759,15 +663,16 @@ git commit -m "receipt: record YMQ4-G1 NVIDIA Genesis Pair runtime pointers"
 
 ## Final Verification Gate
 
-Before claiming `YMQ4-G1 PASS`, run and archive the following evidence:
+Run:
 
 ```bash
+cd ../quant-workspace-g1
 uv run --group dev pytest tests/ymq4 -v
-uv run python scripts/run_ymq4_g1.py --reproduce-receipt <t0-receipt-id>
-uv run python scripts/run_ymq4_g1.py --reproduce-receipt <t1-receipt-id>
+uv run python scripts/run_ymq4_g1.py --reproduce-receipt "$T0_RECEIPT_ID" --json
+uv run python scripts/run_ymq4_g1.py --reproduce-receipt "$T1_RECEIPT_ID" --json
 ```
 
-Then verify in Supabase:
+Then verify Supabase minimum cardinality:
 
 ```sql
 select count(*) from ymq4.capability_invocations where target_id='NVDA';
@@ -776,23 +681,23 @@ select count(*) from ymq4.research_state_snapshots where target_id='NVDA';
 select count(*) from ymq4.research_receipts rr join ymq4.capability_invocations i using(request_id) where i.target_id='NVDA';
 ```
 
-Expected G1 minimum: two real invocations, two results, two snapshots, two receipts, plus zero PIT-violation findings.
+Expected G1 minimum: at least 2 real NVDA invocations, 2 results, 2 snapshots, 2 receipts, zero known PIT violations, and T0/T1 reproduction success.
 
-The final G1 settlement may be `PASS`, `PARTIAL`, or `FAIL_CLOSED`. A scientifically disappointing driver result does **not** constitute engineering failure; hidden leakage, non-reproducibility, method retuning after T1, or capital-authority leakage does.
+Allowed final settlement: `PASS`, `PARTIAL`, or `FAIL_CLOSED`. A scientifically disappointing driver result is not engineering failure. Hidden leakage, non-reproducibility, post-T1 retuning, or capital-authority leakage is failure.
 
-## Spec Coverage Self-Review
+## Self-Review Coverage
 
-- Genesis pair and held-out law: Tasks 1, 9, 10.
-- Five input packs: Tasks 1, 8.
-- Canonical PIT observation: Tasks 3, 7, 8.
+- Genesis pair / held-out law: Tasks 1, 9, 10.
+- Five packs: Tasks 1, 8.
+- PIT observation law: Tasks 3, 7, 8.
 - Fixed / Rolling / TVP: Tasks 4, 5.
-- Driver contribution + residual: Task 6.
+- Contribution + residual: Task 6.
 - Property drift: Task 6.
-- Hard negatives and competing explanation: Task 6.
-- Runtime Invocation → Result → State → Receipt: Tasks 7, 9, 10.
+- Hard negatives: Task 6.
+- Invocation → Result → State → Receipt: Tasks 7, 9, 10.
 - Receipt reproduction: Tasks 2, 9, 10.
 - No capital authority: Tasks 1, 2, 9, final gate.
-- No T1 retuning: Tasks 1, 9, 10.
-- No new Supabase tables: Global Constraint + Tasks 7, 10.
+- No T1 tuning: Tasks 1, 9, 10.
+- No new Supabase tables: Global Constraints + Tasks 7, 10.
 
-No placeholder or post-hoc tuning step is permitted by this plan.
+No `TBD`, `TODO`, hidden tuning step, or unresolved placeholder is permitted by this plan.
