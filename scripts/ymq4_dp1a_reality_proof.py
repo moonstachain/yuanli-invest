@@ -3,11 +3,15 @@
 
 Proof chain:
 GitHub Actions -> FRED/ALFRED initial release -> immutable raw object ->
-Supabase Storage -> service-role-only RPC -> evidence.source_snapshots +
+Supabase S3 private bucket -> service-role-only RPC -> evidence.source_snapshots +
 pit.observations -> RPC readback -> runtime.reality_gate_runs.
 
+The worker uses two deliberately separate backend credentials:
+- modern Supabase secret key (`sb_secret_...`) for PostgREST RPC, sent on `apikey` only;
+- dedicated Supabase S3 access key pair for raw object storage.
+
 Fail-closed on missing secrets, missing four-clock semantics, as-of mismatch,
-raw SHA mismatch, database readback mismatch, or any HTTP error.
+raw SHA mismatch, database readback mismatch, or any external/API error.
 """
 from __future__ import annotations
 
@@ -21,11 +25,17 @@ import urllib.request
 from datetime import datetime, timezone
 from typing import Any
 
+import boto3
+from botocore.config import Config
+from botocore.exceptions import ClientError
+
 FRED_ENDPOINT = "https://api.stlouisfed.org/fred/series/observations"
 SERIES_ID = os.getenv("YMQ4_PROOF_SERIES", "CPIAUCSL")
 OBS_START = os.getenv("YMQ4_PROOF_OBS_START", "2020-02-01")
 OBS_END = os.getenv("YMQ4_PROOF_OBS_END", OBS_START)
 BUCKET = os.getenv("YMQ4_RAW_BUCKET", "ymq4-raw-evidence")
+SUPABASE_PROJECT_REF = os.getenv("YMQ4_SUPABASE_PROJECT_REF", "tbmoimbdhsrltvospwpu")
+SUPABASE_REGION = os.getenv("YMQ4_SUPABASE_REGION", "us-east-2")
 
 
 def require_env(name: str) -> str:
@@ -99,57 +109,73 @@ def crosscheck_asof(api_key: str, initial: dict[str, Any]) -> bytes:
     return raw
 
 
-def sb_headers(service_key: str, content_type: str = "application/json") -> dict[str, str]:
-    return {
-        "Authorization": f"Bearer {service_key}",
-        "apikey": service_key,
-        "Content-Type": content_type,
-    }
+def rpc_headers(secret_key: str) -> dict[str, str]:
+    if not secret_key.startswith("sb_secret_"):
+        raise RuntimeError("YMQ4_SUPABASE_SECRET_KEY must be a modern sb_secret_ key")
+    # Opaque secret keys are API keys, not JWTs. Do not place them in Authorization: Bearer.
+    return {"apikey": secret_key, "Content-Type": "application/json"}
 
 
-def ensure_bucket(supabase_url: str, service_key: str) -> None:
-    body = json.dumps({"id": BUCKET, "name": BUCKET, "public": False}).encode()
-    url = supabase_url.rstrip("/") + "/storage/v1/bucket"
+def rpc(supabase_url: str, secret_key: str, function_name: str, payload: dict[str, Any]) -> Any:
+    url = supabase_url.rstrip("/") + "/rest/v1/rpc/" + function_name
+    _, _, raw = request_bytes(url, rpc_headers(secret_key), json.dumps(payload).encode(), "POST")
+    return json.loads(raw or b"null")
+
+
+def s3_client(access_key_id: str, secret_access_key: str):
+    endpoint = f"https://{SUPABASE_PROJECT_REF}.storage.supabase.co/storage/v1/s3"
+    return boto3.client(
+        "s3",
+        region_name=SUPABASE_REGION,
+        endpoint_url=endpoint,
+        aws_access_key_id=access_key_id,
+        aws_secret_access_key=secret_access_key,
+        config=Config(s3={"addressing_style": "path"}, signature_version="s3v4"),
+    )
+
+
+def verify_private_bucket(client) -> None:
     try:
-        request_bytes(url, sb_headers(service_key), body, "POST")
-    except RuntimeError as exc:
-        status, _, raw = request_bytes(url + "/" + urllib.parse.quote(BUCKET), sb_headers(service_key))
-        if status != 200:
-            raise exc
-        info = json.loads(raw)
-        if info.get("id") != BUCKET or info.get("public") is True:
-            raise RuntimeError("existing bucket does not satisfy private-bucket contract")
+        client.head_bucket(Bucket=BUCKET)
+    except ClientError as exc:
+        raise RuntimeError(f"required private raw bucket is not reachable: {BUCKET}") from exc
 
 
-def upload_raw(supabase_url: str, service_key: str, path: str, raw: bytes, expected_sha: str) -> None:
-    base = supabase_url.rstrip("/") + "/storage/v1/object/" + urllib.parse.quote(BUCKET) + "/" + urllib.parse.quote(path, safe="/")
-    headers = sb_headers(service_key, "application/json")
-    headers["x-upsert"] = "false"
-    request_bytes(base, headers, raw, "POST")
-    download = supabase_url.rstrip("/") + "/storage/v1/object/authenticated/" + urllib.parse.quote(BUCKET) + "/" + urllib.parse.quote(path, safe="/")
-    _, _, reread = request_bytes(download, sb_headers(service_key))
+def upload_raw_s3(client, path: str, raw: bytes, expected_sha: str) -> None:
+    client.put_object(
+        Bucket=BUCKET,
+        Key=path,
+        Body=raw,
+        ContentType="application/json",
+        Metadata={"sha256": expected_sha, "proof-contract": "YMQ4-DP1-A"},
+    )
+    obj = client.get_object(Bucket=BUCKET, Key=path)
+    reread = obj["Body"].read()
     got = hashlib.sha256(reread).hexdigest()
     if got != expected_sha:
         raise RuntimeError(f"raw storage SHA mismatch: {got} != {expected_sha}")
-
-
-def rpc(supabase_url: str, service_key: str, function_name: str, payload: dict[str, Any]) -> Any:
-    url = supabase_url.rstrip("/") + "/rest/v1/rpc/" + function_name
-    _, _, raw = request_bytes(url, sb_headers(service_key), json.dumps(payload).encode(), "POST")
-    return json.loads(raw or b"null")
+    metadata_sha = (obj.get("Metadata") or {}).get("sha256")
+    if metadata_sha != expected_sha:
+        raise RuntimeError(f"raw storage metadata SHA mismatch: {metadata_sha} != {expected_sha}")
 
 
 def main() -> int:
     started = datetime.now(timezone.utc)
-    api_key = require_env("FRED_API_KEY")
+    fred_api_key = require_env("FRED_API_KEY")
     sb_url = require_env("SUPABASE_URL")
-    sb_key = require_env("SUPABASE_SERVICE_ROLE_KEY")
+    sb_secret_key = require_env("YMQ4_SUPABASE_SECRET_KEY")
+    s3_access_key_id = require_env("YMQ4_SUPABASE_S3_ACCESS_KEY_ID")
+    s3_secret_access_key = require_env("YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY")
     git_sha = os.getenv("GITHUB_SHA", "LOCAL")
 
-    initial_url = fred_url(api_key)
+    expected_url = f"https://{SUPABASE_PROJECT_REF}.supabase.co"
+    if sb_url.rstrip("/") != expected_url:
+        raise RuntimeError(f"SUPABASE_URL project-ref mismatch: {sb_url!r} != {expected_url!r}")
+
+    initial_url = fred_url(fred_api_key)
     http_status, headers, raw_initial = request_bytes(initial_url)
     initial = parse_initial(raw_initial)
-    raw_asof = crosscheck_asof(api_key, initial)
+    raw_asof = crosscheck_asof(fred_api_key, initial)
 
     envelope = json.dumps({
         "proof_contract": "YMQ4-DP1-A",
@@ -160,10 +186,11 @@ def main() -> int:
     retrieved_at = datetime.now(timezone.utc)
     object_path = f"fred/{SERIES_ID}/{retrieved_at.strftime('%Y/%m/%d/%H%M%S')}-{sha}.json"
 
-    ensure_bucket(sb_url, sb_key)
-    upload_raw(sb_url, sb_key, object_path, envelope, sha)
+    storage = s3_client(s3_access_key_id, s3_secret_access_key)
+    verify_private_bucket(storage)
+    upload_raw_s3(storage, object_path, envelope, sha)
 
-    ingest = rpc(sb_url, sb_key, "ymq4_dp1a_ingest", {
+    ingest = rpc(sb_url, sb_secret_key, "ymq4_dp1a_ingest", {
         "p_source_id": "fred_cpiaucsl",
         "p_retrieved_at": retrieved_at.isoformat(),
         "p_http_status": http_status,
@@ -187,7 +214,7 @@ def main() -> int:
     snapshot_id = ingest[0]["snapshot_id"]
     observation_id = ingest[0]["observation_id"]
 
-    reread = rpc(sb_url, sb_key, "ymq4_dp1a_readback", {
+    reread = rpc(sb_url, sb_secret_key, "ymq4_dp1a_readback", {
         "p_series_id": SERIES_ID,
         "p_observation_date": initial["observation_date"],
         "p_known_as_of": initial["known_as_of"],
@@ -214,7 +241,7 @@ def main() -> int:
         "four_clocks": {k: initial[k] for k in ("observation_date", "release_date", "vintage_date", "known_as_of")},
         "value": initial["value"],
         "raw_sha256": sha,
-        "storage": {"bucket": BUCKET, "path": object_path},
+        "storage": {"bucket": BUCKET, "path": object_path, "transport": "Supabase S3"},
         "snapshot_id": snapshot_id,
         "pit_observation_id": observation_id,
         "checks": {
@@ -223,14 +250,14 @@ def main() -> int:
             "initial_release": "PASS",
             "same_day_asof_crosscheck": "PASS",
             "raw_storage_sha_readback": "PASS",
-            "service_role_rpc_ingest": "PASS",
+            "modern_secret_rpc_ingest": "PASS",
             "pit_ledger_write_readback": "PASS",
             "provenance_readback": "PASS"
         },
         "started_at": started.isoformat(),
         "completed_at": datetime.now(timezone.utc).isoformat(),
     }
-    gate_run_id = rpc(sb_url, sb_key, "ymq4_dp1a_record_gate", {
+    gate_run_id = rpc(sb_url, sb_secret_key, "ymq4_dp1a_record_gate", {
         "p_battle_id": "YMQ4-DP1-A",
         "p_git_sha": git_sha,
         "p_started_at": receipt["started_at"],
