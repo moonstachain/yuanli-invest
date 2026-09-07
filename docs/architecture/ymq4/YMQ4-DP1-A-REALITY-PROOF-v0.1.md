@@ -1,12 +1,12 @@
 # YMQ4-DP1-A｜External Runtime × Source Authority Reality Proof v0.1
 
-Status: `IMPLEMENTATION_CANDIDATE / CLOUD_GATE_OPEN`
+Status: `CLOUD_PROJECT_READY / CREDENTIAL_GATE_OPEN`
 
 ## Mission
 
 Prove one physical, auditable path:
 
-`GitHub Actions → FRED/ALFRED → immutable raw SHA → Supabase private object → evidence.source_snapshots → pit.observations → readback → reality_gate_runs`.
+`GitHub Actions → FRED/ALFRED → immutable raw SHA → Supabase private S3 object → service-role-only RPC → evidence.source_snapshots → pit.observations → readback → reality_gate_runs`.
 
 The proof does **not** authorize B2–B7, trading, allocation, evidence promotion, A9 canon switch, or Supabase→GitHub Canon mutation.
 
@@ -15,8 +15,17 @@ The proof does **not** authorize B2–B7, trading, allocation, evidence promotio
 - GitHub remains normative Canon / contract authority.
 - Supabase is an operational research-state and evidence-metadata plane only.
 - GitHub Actions is an external execution plane.
-- `yuanli-health` is explicitly out of scope; DP1-A requires a dedicated investment project.
+- `yuanli-health` is explicitly out of scope; DP1-A uses the dedicated `yuanli-invest-runtime` project.
 - Public repo contains code/contracts only. Raw source payloads and secrets must never be committed.
+
+## Cloud resource frozen for this proof
+
+- Supabase project: `yuanli-invest-runtime`
+- Project ref: `tbmoimbdhsrltvospwpu`
+- Region: `us-east-2`
+- Private raw bucket: `ymq4-raw-evidence`
+
+The project URL and project ref are identifiers, not credentials. Elevated keys remain secret-only.
 
 ## Minimal proof object
 
@@ -24,27 +33,51 @@ DP1-A intentionally uses one revisionable official statistic: `CPIAUCSL`, observ
 
 The FRED API request must use `output_type=4` (initial release). `realtime_start` from that row is frozen as release/vintage/known-as-of for the proof. A second as-of request at that exact date must return the same value.
 
+## Credential separation
+
+The GitHub worker must use four repository secrets and no secret may be pasted into source control:
+
+- `FRED_API_KEY`
+- `YMQ4_SUPABASE_SECRET_KEY` — a modern `sb_secret_...` backend key, sent to PostgREST on the `apikey` header only.
+- `YMQ4_SUPABASE_S3_ACCESS_KEY_ID` — dedicated server-side Storage S3 credential.
+- `YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY` — paired S3 secret.
+
+The legacy JWT-based service-role key is deliberately not required by DP1-A.
+
 ## PASS conditions
 
-1. GitHub-hosted runner resolves and reaches FRED hosts.
-2. FRED secret is present only as a GitHub Actions secret.
+1. GitHub-hosted runner resolves and reaches FRED, Supabase API and Supabase Storage hosts.
+2. FRED and Supabase elevated credentials exist only as GitHub Actions secrets.
 3. Initial-release row exposes four-clock semantics.
 4. Same-day as-of cross-check matches initial release.
-5. Raw evidence envelope is written to a **private** Supabase Storage bucket.
-6. SHA-256 after authenticated readback equals the pre-upload SHA.
-7. `evidence.source_snapshots` row is written and read back.
-8. `pit.observations` row is written with all four clocks and read back.
+5. Raw evidence envelope is written to the private Supabase S3 bucket.
+6. SHA-256 after S3 readback equals the pre-upload SHA and object metadata carries the same SHA.
+7. Service-role-only RPC writes `evidence.source_snapshots` and `pit.observations`.
+8. RPC readback returns identical value, four clocks, raw SHA and object locator.
 9. `runtime.reality_gate_runs` stores a non-secret PASS receipt tied to Git SHA.
 10. No raw payload or secret is committed to the public repository.
 
 Any failed condition means `FAIL_CLOSED`.
 
-## Human/cloud gates still required
+## Current machine/cloud state
 
-- Create a dedicated Supabase project, recommended name `yuanli-invest-runtime`.
-- Apply the candidate DP1-A migration to that project.
-- Add GitHub Actions secrets: `FRED_API_KEY`, `YMQ4_SUPABASE_URL`, `YMQ4_SUPABASE_SERVICE_ROLE_KEY`.
-- Manually dispatch `YMQ4 DP1-A Reality Proof` with `mode=full`.
+- dedicated investment Supabase project: `PASS`
+- DB project health: `ACTIVE_HEALTHY`
+- evidence/pit/runtime migration: `PASS`
+- RLS enabled on all DP1-A internal tables: `PASS`
+- anon/authenticated execute privilege on DP1-A RPCs: `DENIED`
+- service_role execute privilege on DP1-A RPCs: `ALLOWED`
+- private raw bucket: `PASS`
+- GitHub-hosted external runtime preflight: `PASS`
+- full credentialed physical proof: `OPEN`
+
+Security Advisor's `RLS Enabled No Policy` notices on the internal DP1-A tables are intentional fail-closed posture: no anon/authenticated table policy is created. The external worker reaches these objects only through the narrow service-role-only RPC surface.
+
+## Remaining Human Gate
+
+Create/copy the four secrets above in their native provider dashboards, then enter them under GitHub repository **Settings → Secrets and variables → Actions**. Do not paste secret values into chat, issues, PR comments, workflow YAML, or source files.
+
+After those four secrets exist, manually dispatch `YMQ4 DP1-A Reality Proof` on branch `ymq4-dp1a-external-runtime-reality-proof` with `mode=full` unless an authorized workflow-dispatch tool is available.
 
 ## Source authority upgrade for 1978–79
 
