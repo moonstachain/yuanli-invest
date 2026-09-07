@@ -42,13 +42,32 @@ jobs:
           set -euo pipefail
           python - <<'PY'
           import json, socket, ssl, urllib.request
-          hosts = ['fred.stlouisfed.org', 'api.stlouisfed.org']
           out = {'hosts': {}}
-          for host in hosts:
-              socket.getaddrinfo(host, 443)
-              ctx = ssl.create_default_context()
-              with urllib.request.urlopen('https://' + host + '/', context=ctx, timeout=30) as r:
-                  out['hosts'][host] = {'status': r.status, 'reachable': True}
+          ctx = ssl.create_default_context()
+
+          # api.stlouisfed.org: prove DNS + TCP + TLS without requiring an API key.
+          host = 'api.stlouisfed.org'
+          socket.getaddrinfo(host, 443)
+          with socket.create_connection((host, 443), timeout=30) as sock:
+              with ctx.wrap_socket(sock, server_hostname=host) as tls:
+                  out['hosts'][host] = {
+                      'reachable': True,
+                      'tls_version': tls.version(),
+                      'peer_subject': dict(x[0] for x in tls.getpeercert().get('subject', ())).get('commonName')
+                  }
+
+          # fred.stlouisfed.org: prove an actual keyless public data read.
+          url = 'https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPIAUCSL'
+          with urllib.request.urlopen(url, context=ctx, timeout=30) as r:
+              sample = r.read(256)
+              if b'CPIAUCSL' not in sample:
+                  raise RuntimeError('FRED graph CSV did not return expected series header')
+              out['hosts']['fred.stlouisfed.org'] = {
+                  'reachable': True,
+                  'status': r.status,
+                  'proof_url': url
+              }
+
           print(json.dumps(out, indent=2))
           PY
 
