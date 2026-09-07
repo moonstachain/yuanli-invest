@@ -1,0 +1,51 @@
+{
+  "registry_version": "ymq4-gold-source-authority-v0.1",
+  "battle": "YMQ4-DP1-A",
+  "status": "candidate",
+  "core_reality_gate": {
+    "required_series": ["gold_usd_oz", "real_rate", "usd", "inflation"],
+    "minimum_replay_month_coverage": 0.80,
+    "future_leakage_tolerance": 0
+  },
+  "source_classes": [
+    "REVISIONABLE_STATISTIC",
+    "OFFICIAL_MARKET_OBSERVATION",
+    "PIT_MARKET_RECONSTRUCTED",
+    "STRUCTURAL_ESTIMATE"
+  ],
+  "measurement_regimes": [
+    {
+      "id": "gold_1978_1979",
+      "period_start": "1978-01-01",
+      "period_end": "1979-12-31",
+      "gold": {"source_class": "PIT_MARKET_RECONSTRUCTED", "status": "RESEARCH_ONLY"},
+      "real_rate": {"formula": "TB3MS - trailing_known_CPI_YoY", "status": "HISTORICAL_PROXY"},
+      "usd": {"series": "TWEXMMTH", "provider": "Federal Reserve H.10", "status": "OFFICIAL_MARKET_OBSERVATION"},
+      "inflation": {"series": "CPIAUCSL", "provider": "BLS via FRED/ALFRED", "status": "PIT_STRICT_IF_INITIAL_RELEASE"}
+    },
+    {
+      "id": "gold_2003_plus",
+      "period_start": "2003-01-02",
+      "gold": {"source_class": "PIT_MARKET_RECONSTRUCTED", "status": "RESEARCH_ONLY"},
+      "real_rate": {"series": "DFII10", "provider": "Federal Reserve H.15", "status": "OFFICIAL_MARKET_OBSERVATION"},
+      "usd": {"series": "DTWEXBGS", "provider": "Federal Reserve H.10", "status": "OFFICIAL_MARKET_OBSERVATION"},
+      "inflation": {"series": "CPIAUCSL", "provider": "BLS via FRED/ALFRED", "status": "PIT_STRICT_IF_INITIAL_RELEASE"}
+    }
+  ],
+  "proof_series": {
+    "series_id": "CPIAUCSL",
+    "observation_start": "2020-02-01",
+    "observation_end": "2020-02-01",
+    "provider": "FRED/ALFRED",
+    "api_endpoint": "https://api.stlouisfed.org/fred/series/observations",
+    "required_output_type": 4,
+    "rule": "initial release only; realtime_start becomes release/vintage/known_as_of for DP1-A proof"
+  },
+  "non_goals": [
+    "No trade signal",
+    "No portfolio sizing",
+    "No evidence promotion",
+    "No GitHub Canon mutation from Supabase",
+    "No storage of secrets or raw payloads in the public repository"
+  ]
+}
