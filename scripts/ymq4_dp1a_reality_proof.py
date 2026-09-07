@@ -3,10 +3,11 @@
 
 Proof chain:
 GitHub Actions -> FRED/ALFRED initial release -> immutable raw object ->
-Supabase evidence.source_snapshots -> pit.observations -> readback -> receipt.
+Supabase Storage -> service-role-only RPC -> evidence.source_snapshots +
+pit.observations -> RPC readback -> runtime.reality_gate_runs.
 
-Fail-closed: missing secrets, missing realtime_start, inconsistent as-of value,
-failed storage hash readback, or failed DB readback causes non-zero exit.
+Fail-closed on missing secrets, missing four-clock semantics, as-of mismatch,
+raw SHA mismatch, database readback mismatch, or any HTTP error.
 """
 from __future__ import annotations
 
@@ -125,24 +126,17 @@ def upload_raw(supabase_url: str, service_key: str, path: str, raw: bytes, expec
     headers = sb_headers(service_key, "application/json")
     headers["x-upsert"] = "false"
     request_bytes(base, headers, raw, "POST")
-    _, _, reread = request_bytes(supabase_url.rstrip("/") + "/storage/v1/object/authenticated/" + urllib.parse.quote(BUCKET) + "/" + urllib.parse.quote(path, safe="/"), sb_headers(service_key))
+    download = supabase_url.rstrip("/") + "/storage/v1/object/authenticated/" + urllib.parse.quote(BUCKET) + "/" + urllib.parse.quote(path, safe="/")
+    _, _, reread = request_bytes(download, sb_headers(service_key))
     got = hashlib.sha256(reread).hexdigest()
     if got != expected_sha:
         raise RuntimeError(f"raw storage SHA mismatch: {got} != {expected_sha}")
 
 
-def rest_post(supabase_url: str, service_key: str, table_path: str, row: dict[str, Any], prefer: str = "return=representation") -> list[dict[str, Any]]:
-    url = supabase_url.rstrip("/") + "/rest/v1/" + table_path
-    headers = sb_headers(service_key)
-    headers["Prefer"] = prefer
-    _, _, raw = request_bytes(url, headers, json.dumps(row).encode(), "POST")
-    return json.loads(raw or b"[]")
-
-
-def rest_get(supabase_url: str, service_key: str, table_path: str, query: str) -> list[dict[str, Any]]:
-    url = supabase_url.rstrip("/") + "/rest/v1/" + table_path + "?" + query
-    _, _, raw = request_bytes(url, sb_headers(service_key))
-    return json.loads(raw or b"[]")
+def rpc(supabase_url: str, service_key: str, function_name: str, payload: dict[str, Any]) -> Any:
+    url = supabase_url.rstrip("/") + "/rest/v1/rpc/" + function_name
+    _, _, raw = request_bytes(url, sb_headers(service_key), json.dumps(payload).encode(), "POST")
+    return json.loads(raw or b"null")
 
 
 def main() -> int:
@@ -169,39 +163,47 @@ def main() -> int:
     ensure_bucket(sb_url, sb_key)
     upload_raw(sb_url, sb_key, object_path, envelope, sha)
 
-    snapshots = rest_post(sb_url, sb_key, "evidence.source_snapshots", {
-        "source_id": "fred_cpiaucsl",
-        "retrieved_at": retrieved_at.isoformat(),
-        "http_status": http_status,
-        "content_type": headers.get("Content-Type", "application/json"),
-        "sha256": sha,
-        "storage_bucket": BUCKET,
-        "storage_path": object_path,
-        "request_template": redact_api_key(initial_url),
-        "runner_commit": git_sha,
+    ingest = rpc(sb_url, sb_key, "ymq4_dp1a_ingest", {
+        "p_source_id": "fred_cpiaucsl",
+        "p_retrieved_at": retrieved_at.isoformat(),
+        "p_http_status": http_status,
+        "p_content_type": headers.get("Content-Type", "application/json"),
+        "p_sha256": sha,
+        "p_storage_bucket": BUCKET,
+        "p_storage_path": object_path,
+        "p_request_template": redact_api_key(initial_url),
+        "p_runner_commit": git_sha,
+        "p_series_id": initial["series_id"],
+        "p_value_numeric": initial["value"],
+        "p_observation_date": initial["observation_date"],
+        "p_release_date": initial["release_date"],
+        "p_vintage_date": initial["vintage_date"],
+        "p_known_as_of": initial["known_as_of"],
+        "p_pit_status": "PIT_STRICT_INITIAL_RELEASE",
+        "p_measurement_regime": "DP1A_PROOF",
     })
-    if not snapshots:
-        snapshots = rest_get(sb_url, sb_key, "evidence.source_snapshots", f"source_id=eq.fred_cpiaucsl&sha256=eq.{sha}&select=*")
-    if len(snapshots) != 1:
-        raise RuntimeError(f"snapshot readback expected one row, got {len(snapshots)}")
-    snapshot_id = snapshots[0]["snapshot_id"]
+    if not isinstance(ingest, list) or len(ingest) != 1:
+        raise RuntimeError(f"ingest RPC expected one row, got {ingest!r}")
+    snapshot_id = ingest[0]["snapshot_id"]
+    observation_id = ingest[0]["observation_id"]
 
-    rest_post(sb_url, sb_key, "pit.observations", {
-        "series_id": initial["series_id"],
-        "value_numeric": initial["value"],
-        "observation_date": initial["observation_date"],
-        "release_date": initial["release_date"],
-        "vintage_date": initial["vintage_date"],
-        "known_as_of": initial["known_as_of"],
-        "source_snapshot_id": snapshot_id,
-        "pit_status": "PIT_STRICT_INITIAL_RELEASE",
-        "measurement_regime": "DP1A_PROOF",
-    }, prefer="resolution=ignore-duplicates,return=representation")
-    reread = rest_get(sb_url, sb_key, "pit.observations", f"series_id=eq.{SERIES_ID}&observation_date=eq.{initial['observation_date']}&known_as_of=eq.{initial['known_as_of']}&select=*")
-    if len(reread) != 1:
-        raise RuntimeError(f"PIT observation readback expected one row, got {len(reread)}")
-    if abs(float(reread[0]["value_numeric"]) - initial["value"]) > 1e-12:
+    reread = rpc(sb_url, sb_key, "ymq4_dp1a_readback", {
+        "p_series_id": SERIES_ID,
+        "p_observation_date": initial["observation_date"],
+        "p_known_as_of": initial["known_as_of"],
+    })
+    if not isinstance(reread, list) or len(reread) != 1:
+        raise RuntimeError(f"readback RPC expected one row, got {reread!r}")
+    row = reread[0]
+    if row["snapshot_id"] != snapshot_id or row["observation_id"] != observation_id:
+        raise RuntimeError("RPC identity readback mismatch")
+    if row["sha256"] != sha or row["storage_bucket"] != BUCKET or row["storage_path"] != object_path:
+        raise RuntimeError("provenance readback mismatch")
+    if abs(float(row["value_numeric"]) - initial["value"]) > 1e-12:
         raise RuntimeError("PIT observation readback value mismatch")
+    for clock in ("observation_date", "release_date", "vintage_date", "known_as_of"):
+        if row[clock] != initial[clock]:
+            raise RuntimeError(f"four-clock readback mismatch for {clock}: {row[clock]} != {initial[clock]}")
 
     receipt = {
         "battle": "YMQ4-DP1-A",
@@ -214,26 +216,29 @@ def main() -> int:
         "raw_sha256": sha,
         "storage": {"bucket": BUCKET, "path": object_path},
         "snapshot_id": snapshot_id,
-        "pit_observation_id": reread[0]["observation_id"],
+        "pit_observation_id": observation_id,
         "checks": {
             "external_runtime": "PASS",
             "source_reachability": "PASS",
             "initial_release": "PASS",
             "same_day_asof_crosscheck": "PASS",
             "raw_storage_sha_readback": "PASS",
-            "pit_ledger_write_readback": "PASS"
+            "service_role_rpc_ingest": "PASS",
+            "pit_ledger_write_readback": "PASS",
+            "provenance_readback": "PASS"
         },
         "started_at": started.isoformat(),
         "completed_at": datetime.now(timezone.utc).isoformat(),
     }
-    rest_post(sb_url, sb_key, "runtime.reality_gate_runs", {
-        "battle_id": "YMQ4-DP1-A",
-        "git_sha": git_sha,
-        "started_at": receipt["started_at"],
-        "completed_at": receipt["completed_at"],
-        "gate_status": "PASS",
-        "receipt": receipt,
+    gate_run_id = rpc(sb_url, sb_key, "ymq4_dp1a_record_gate", {
+        "p_battle_id": "YMQ4-DP1-A",
+        "p_git_sha": git_sha,
+        "p_started_at": receipt["started_at"],
+        "p_completed_at": receipt["completed_at"],
+        "p_gate_status": "PASS",
+        "p_receipt": receipt,
     })
+    receipt["reality_gate_run_id"] = gate_run_id
     print(json.dumps(receipt, indent=2, sort_keys=True))
     return 0
 
