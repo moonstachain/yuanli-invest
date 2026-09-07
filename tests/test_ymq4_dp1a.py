@@ -26,12 +26,22 @@ class TestDP1A(unittest.TestCase):
         got = MOD.parse_initial(raw)
         self.assertEqual(got["observation_date"], "2020-02-01")
         self.assertEqual(got["release_date"], "2020-03-11")
+        self.assertEqual(got["vintage_date"], "2020-03-11")
         self.assertEqual(got["known_as_of"], "2020-03-11")
 
     def test_parse_initial_fails_without_realtime_start(self):
         raw = json.dumps({"observations": [{"date": "2020-02-01", "value": "259.050"}]}).encode()
         with self.assertRaises(RuntimeError):
             MOD.parse_initial(raw)
+
+    def test_modern_secret_is_apikey_only(self):
+        headers = MOD.rpc_headers("sb_secret_example_key")
+        self.assertEqual(headers["apikey"], "sb_secret_example_key")
+        self.assertNotIn("Authorization", headers)
+
+    def test_legacy_service_role_is_rejected(self):
+        with self.assertRaises(RuntimeError):
+            MOD.rpc_headers("eyJhbGciOiJIUzI1NiJ9.legacy.service_role")
 
 
 if __name__ == "__main__":
