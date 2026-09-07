@@ -1,0 +1,85 @@
+name: YMQ4 DP1-A Reality Proof
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ymq4-dp1a-reality-proof.yml'
+      - 'config/ymq4/**'
+      - 'docs/architecture/ymq4/**'
+      - 'scripts/ymq4_dp1a_reality_proof.py'
+      - 'scripts/validate_ymq4_dp1a.py'
+      - 'supabase/migrations/**ymq4_dp1a**'
+      - 'tests/test_ymq4_dp1a.py'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'preflight validates runtime; full performs FRED→Supabase write/read proof'
+        required: true
+        default: preflight
+        type: choice
+        options:
+          - preflight
+          - full
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate DP1-A contract
+        run: python scripts/validate_ymq4_dp1a.py
+      - name: Unit tests
+        run: python -m unittest tests.test_ymq4_dp1a -v
+      - name: External runtime reachability proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, socket, ssl, urllib.request
+          hosts = ['fred.stlouisfed.org', 'api.stlouisfed.org']
+          out = {'hosts': {}}
+          for host in hosts:
+              socket.getaddrinfo(host, 443)
+              ctx = ssl.create_default_context()
+              with urllib.request.urlopen('https://' + host + '/', context=ctx, timeout=30) as r:
+                  out['hosts'][host] = {'status': r.status, 'reachable': True}
+          print(json.dumps(out, indent=2))
+          PY
+
+  full-reality-proof:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'full' }}
+    needs: preflight
+    runs-on: ubuntu-latest
+    env:
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      SUPABASE_URL: ${{ secrets.YMQ4_SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.YMQ4_SUPABASE_SERVICE_ROLE_KEY }}
+      YMQ4_PROOF_SERIES: CPIAUCSL
+      YMQ4_PROOF_OBS_START: '2020-02-01'
+      YMQ4_PROOF_OBS_END: '2020-02-01'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fail closed on missing secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$FRED_API_KEY"
+          test -n "$SUPABASE_URL"
+          test -n "$SUPABASE_SERVICE_ROLE_KEY"
+      - name: FRED → Raw SHA → Supabase PIT Ledger → Readback
+        run: python scripts/ymq4_dp1a_reality_proof.py | tee ymq4-dp1a-reality-receipt.json
+      - name: Upload non-secret receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: ymq4-dp1a-reality-receipt
+          path: ymq4-dp1a-reality-receipt.json
+          retention-days: 30
