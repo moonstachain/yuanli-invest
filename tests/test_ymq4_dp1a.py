@@ -15,6 +15,28 @@ SPEC.loader.exec_module(MOD)
 
 
 class TestDP1A(unittest.TestCase):
+    def test_initial_request_searches_history_and_asof_overrides_both_bounds(self):
+        historical = urllib.parse.parse_qs(urllib.parse.urlsplit(MOD.fred_url("fixture")).query)
+        self.assertEqual(historical["realtime_start"], [MOD.OBS_START])
+        self.assertGreater(historical["realtime_end"][0], "2020-03-11")
+        asof = urllib.parse.parse_qs(urllib.parse.urlsplit(MOD.fred_url(
+            "fixture", output_type=1, realtime_start="2020-03-11", realtime_end="2020-03-11")).query)
+        self.assertEqual(asof["realtime_start"], ["2020-03-11"])
+        self.assertEqual(asof["realtime_end"], ["2020-03-11"])
+
+    def test_future_release_is_rejected(self):
+        raw = json.dumps({"observations": [{"date": MOD.OBS_START,
+            "realtime_start": "9999-12-31", "value": "259.050"}]}).encode()
+        with self.assertRaisesRegex(RuntimeError, "future"):
+            MOD.parse_initial(raw)
+
+    def test_same_value_from_wrong_observation_is_rejected(self):
+        initial = {"known_as_of": "2020-03-11", "observation_date": MOD.OBS_START, "value": 259.05}
+        body = json.dumps({"observations": [{"date": "2020-01-01", "value": "259.050"}]}).encode()
+        with patch.object(MOD, "request_bytes", return_value=(200, {}, body)):
+            with self.assertRaisesRegex(RuntimeError, "date mismatch"):
+                MOD.crosscheck_asof("fixture", initial)
+
     def test_http_failure_omits_key_and_provider_body(self):
         url = "https://x.test/path?api_key=synthetic-key"
         error = urllib.error.HTTPError(url, 403, "denied", {}, io.BytesIO(b"private-response"))

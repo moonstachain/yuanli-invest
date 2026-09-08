@@ -22,7 +22,7 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any
 
 FRED_ENDPOINT = "https://api.stlouisfed.org/fred/series/observations"
@@ -77,6 +77,10 @@ def fred_url(api_key: str, **overrides: Any) -> str:
         "observation_start": OBS_START,
         "observation_end": OBS_END,
         "output_type": 4,
+        # FRED defaults both real-time bounds to today, which excludes the
+        # historical release we are proving. Search from the observation date.
+        "realtime_start": OBS_START,
+        "realtime_end": datetime.now(timezone.utc).date().isoformat(),
     }
     params.update(overrides)
     return FRED_ENDPOINT + "?" + urllib.parse.urlencode(params)
@@ -100,6 +104,8 @@ def parse_initial(raw: bytes) -> dict[str, Any]:
         raise RuntimeError("initial-release row lacks realtime_start; cannot establish four clocks")
     if row.get("date") != OBS_START:
         raise RuntimeError(f"unexpected observation date: {row.get('date')} != {OBS_START}")
+    if not date.fromisoformat(OBS_START) <= date.fromisoformat(release) <= datetime.now(timezone.utc).date():
+        raise RuntimeError("initial-release date is before observation or in the future")
     return {
         "series_id": SERIES_ID,
         "value": float(row["value"]),
@@ -118,6 +124,8 @@ def crosscheck_asof(api_key: str, initial: dict[str, Any]) -> bytes:
     rows = [o for o in payload.get("observations", []) if o.get("value") not in (None, ".")]
     if len(rows) != 1:
         raise RuntimeError(f"as-of crosscheck expected one observation, got {len(rows)}")
+    if rows[0].get("date") != initial["observation_date"]:
+        raise RuntimeError("as-of crosscheck observation date mismatch")
     if abs(float(rows[0]["value"]) - initial["value"]) > 1e-12:
         raise RuntimeError("initial-release value does not match same-day as-of read")
     return raw
