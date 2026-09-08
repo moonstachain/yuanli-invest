@@ -3,6 +3,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 MIGRATION = ROOT / "supabase/migrations/20260908123000_ymq4_b3_dynamic_beta.sql"
+WORKFLOW = ROOT / ".github/workflows/ymq4-b3-dynamic-beta.yml"
 
 
 class B3DatabaseContractTests(unittest.TestCase):
@@ -35,6 +36,11 @@ class B3DatabaseContractTests(unittest.TestCase):
         text = self.migration_text()
         self.assertIn("b4_b7_executed", text)
         self.assertIn("trading_action", text)
+
+    def test_physical_workflow_invokes_b3_as_module(self):
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertEqual(text.count("python -m scripts.ymq4_b3_dynamic_beta | tee ymq4-b3-reality-receipt.json"), 2)
+        self.assertNotIn("python scripts/ymq4_b3_dynamic_beta.py | tee ymq4-b3-reality-receipt.json", text)
 
 
 if __name__ == "__main__":
