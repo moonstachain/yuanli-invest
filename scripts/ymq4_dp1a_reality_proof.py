@@ -47,8 +47,10 @@ def request_bytes(url: str, headers: dict[str, str] | None = None, data: bytes |
         with urllib.request.urlopen(req, timeout=90) as resp:
             return resp.status, dict(resp.headers.items()), resp.read()
     except urllib.error.HTTPError as e:
-        body = e.read()
-        raise RuntimeError(f"HTTP {e.code} for {url}: {body[:500]!r}") from e
+        # Provider error bodies can echo credentials or private source data.
+        raise RuntimeError(f"HTTP {e.code} for {redact_api_key(url)}") from None
+    except urllib.error.URLError:
+        raise RuntimeError(f"network request failed for {redact_api_key(url)}") from None
 
 
 def fred_url(api_key: str, **overrides: Any) -> str:
@@ -270,9 +272,22 @@ def main() -> int:
     return 0
 
 
-if __name__ == "__main__":
+def run() -> int:
     try:
-        raise SystemExit(main())
+        return main()
     except Exception as exc:
-        print(json.dumps({"battle": "YMQ4-DP1-A", "status": "FAIL_CLOSED", "error": repr(exc)}, indent=2), file=sys.stderr)
-        raise
+        message = str(exc)
+        for name in ("FRED_API_KEY", "YMQ4_SUPABASE_SECRET_KEY",
+                     "YMQ4_SUPABASE_S3_ACCESS_KEY_ID", "YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY"):
+            value = os.getenv(name, "").strip()
+            if value:
+                for variant in (value, urllib.parse.quote(value, safe=""), urllib.parse.quote_plus(value)):
+                    message = message.replace(variant, "REDACTED")
+        print(json.dumps({"battle": "YMQ4-DP1-A", "status": "FAIL_CLOSED",
+                          "error_type": type(exc).__name__, "error": message}, indent=2), file=sys.stderr)
+        # Exception chains may still contain request URLs. Never emit a traceback.
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(run())
