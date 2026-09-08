@@ -1,5 +1,3 @@
-import hashlib
-import json
 import math
 import unittest
 from datetime import date
@@ -25,14 +23,16 @@ class B3ContractTests(unittest.TestCase):
             year = 2000 + i // 12
             month = i % 12 + 1
             d = date(year, month, 28).isoformat()
-            x = float(i + 1)
+            usd = math.sin(i / 3.0) + 0.01 * i
+            inflation = math.cos(i / 5.0) + ((i % 4) - 1.5) * 0.03
+            real_rate = ((i % 7) - 3.0) / 5.0 + math.sin(i / 11.0) * 0.2
             rows.append({
                 "decision_date": d,
                 "known_as_of": d,
-                "gold_return": 1.0 + 2.0 * x + 3.0 * (x / 10.0) - 0.5 * (x / 100.0),
-                "usd_return": x,
-                "inflation_change": x / 10.0,
-                "real_rate_change": x / 100.0,
+                "gold_return": 1.0 + 0.8 * usd + 1.2 * inflation - 0.4 * real_rate,
+                "usd_return": usd,
+                "inflation_change": inflation,
+                "real_rate_change": real_rate,
             })
         states = b3.rolling_dynamic_predictions(rows, start_index=60, window=60)
         self.assertEqual(len(states), 10)
@@ -40,6 +40,8 @@ class B3ContractTests(unittest.TestCase):
         self.assertEqual(states[0]["estimation_end"], rows[59]["decision_date"])
         self.assertEqual(states[0]["decision_date"], rows[60]["decision_date"])
         self.assertLess(states[0]["estimation_end"], states[0]["decision_date"])
+        self.assertAlmostEqual(states[0]["coefficients"]["alpha"], 1.0, places=8)
+        self.assertAlmostEqual(states[0]["coefficients"]["beta_usd"], 0.8, places=8)
 
     def test_coefficient_state_sha_is_deterministic(self):
         states = [
