@@ -68,7 +68,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/ymq4_b3_dynamic_beta.py | tee ymq4-b3-reality-receipt.json
+          python -m scripts.ymq4_b3_dynamic_beta | tee ymq4-b3-reality-receipt.json
       - name: Require physical PASS receipt
         shell: bash
         run: |
@@ -132,7 +132,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python scripts/ymq4_b3_dynamic_beta.py | tee ymq4-b3-reality-receipt.json
+          python -m scripts.ymq4_b3_dynamic_beta | tee ymq4-b3-reality-receipt.json
       - name: Require physical PASS receipt
         if: ${{ steps.auth.outputs.authorized == 'true' }}
         shell: bash
