@@ -1,6 +1,6 @@
 {
   "battle": "YMQ4-B3",
-  "status": "authorized_pre_result_freeze",
+  "status": "reality_proof_pass",
   "panel_id": "gold_core_monthly_v0.1",
   "input_integrity": {
     "expected_months": 584,
@@ -43,6 +43,25 @@
     "DYNAMIC_BETA_BEATS_B2",
     "DYNAMIC_BETA_DOES_NOT_BEAT_B2"
   ],
+  "settlement": {
+    "physical_status": "B3_DYNAMIC_BETA_MATERIALIZED_PASS",
+    "scientific_observation": "DYNAMIC_BETA_DOES_NOT_BEAT_B2",
+    "reality_gate_run_id": "2b4ea1f8-b317-433a-a801-630268b56c39",
+    "workflow_run_id": 34226196855,
+    "workflow_job_id": 102060889174,
+    "artifact_id": 10055814378,
+    "executed_pr_merge_sha": "6121b380326cd492e90223a7fba168d71417ec59",
+    "coefficient_states": 236,
+    "coefficient_state_sha256": "7e3d640b1477715c2f184a0786be3405b7abb31d8aedde34cf79299484ab4c6c",
+    "dynamic_rmse": 3.6599160404780755,
+    "dynamic_mae": 2.8549260308862356,
+    "positive_rmse_blocks": 2,
+    "rmse_pass": true,
+    "mae_pass": true,
+    "blocks_pass": false,
+    "beats_b2": false,
+    "receipt": "docs/architecture/ymq4/YMQ4-B3-REALITY-RECEIPT-v0.1.md"
+  },
   "non_authorizations": [
     "No B4-B7 execution",
     "No Kalman or TVP beta",
