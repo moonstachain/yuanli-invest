@@ -14,6 +14,7 @@ MIGRATION = ROOT / "supabase/migrations/20260908123000_ymq4_b3_dynamic_beta.sql"
 TEST_UNIT = ROOT / "tests/test_ymq4_b3.py"
 TEST_DB = ROOT / "tests/test_ymq4_b3_contract.py"
 WORKFLOW = ROOT / ".github/workflows/ymq4-b3-dynamic-beta.yml"
+AUTH = ROOT / ".ymq4/authorizations/YMQ4-B3-FULL"
 
 
 def require(condition: bool, message: str) -> None:
@@ -89,6 +90,7 @@ def main() -> int:
         "B3_DYNAMIC_BETA_MATERIALIZED_PASS",
         "ymq4-b3-reality-receipt",
         "AUTHORIZED_YMQ4_B3_FULL_ONCE",
+        "python -m scripts.ymq4_b3_dynamic_beta",
     ):
         require(token in workflow, f"workflow missing contract: {token}")
 
@@ -103,9 +105,29 @@ def main() -> int:
     if config["status"] == "reality_proof_pass":
         settlement = config.get("settlement", {})
         require(settlement.get("physical_status") == "B3_DYNAMIC_BETA_MATERIALIZED_PASS", "final physical settlement missing")
-        require(settlement.get("scientific_observation") in {"DYNAMIC_BETA_BEATS_B2", "DYNAMIC_BETA_DOES_NOT_BEAT_B2"}, "final scientific settlement missing")
+        require(settlement.get("scientific_observation") == "DYNAMIC_BETA_DOES_NOT_BEAT_B2", "final scientific settlement drift")
+        require(settlement.get("reality_gate_run_id") == "2b4ea1f8-b317-433a-a801-630268b56c39", "B3 Reality Gate drift")
+        require(settlement.get("coefficient_states") == 236, "B3 coefficient-state count drift")
+        require(settlement.get("coefficient_state_sha256") == "7e3d640b1477715c2f184a0786be3405b7abb31d8aedde34cf79299484ab4c6c", "B3 state SHA drift")
+        require(settlement.get("positive_rmse_blocks") == 2, "B3 block result drift")
+        require(settlement.get("rmse_pass") is True, "B3 RMSE settlement drift")
+        require(settlement.get("mae_pass") is True, "B3 MAE settlement drift")
+        require(settlement.get("blocks_pass") is False, "B3 block gate settlement drift")
+        require(settlement.get("beats_b2") is False, "B3 scientific verdict drift")
         receipt = ROOT / settlement.get("receipt", "")
         require(receipt.exists(), "canonical B3 receipt missing")
+        receipt_text = receipt.read_text(encoding="utf-8")
+        for token in (
+            "B3_DYNAMIC_BETA_MATERIALIZED_PASS",
+            "DYNAMIC_BETA_DOES_NOT_BEAT_B2",
+            "2b4ea1f8-b317-433a-a801-630268b56c39",
+            "236",
+            "7e3d640b1477715c2f184a0786be3405b7abb31d8aedde34cf79299484ab4c6c",
+            "2 / 4",
+            "One-shot authorization: consumed",
+        ):
+            require(token in receipt_text, f"canonical B3 receipt missing token: {token}")
+        require(not AUTH.exists(), "B3 one-shot authorization must be consumed before settlement")
 
     print("YMQ4-B3 validator: PASS")
     return 0
