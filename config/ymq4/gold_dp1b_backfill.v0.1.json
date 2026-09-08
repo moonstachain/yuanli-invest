@@ -1,0 +1,105 @@
+{
+  "battle": "YMQ4-DP1-B",
+  "status": "reality_proof_pass",
+  "panel_id": "gold_core_monthly_v0.1",
+  "period": {
+    "start": "1978-01-01",
+    "end_rule": "last_complete_calendar_month"
+  },
+  "core_factors": ["gold_usd_oz", "usd", "inflation_yoy", "real_rate"],
+  "future_leakage_tolerance": 0,
+  "minimum_replay_month_coverage": 0.80,
+  "settlement": {
+    "gate_status": "DP1B_CORE_BACKFILL_PASS",
+    "completed_at": "2026-09-08T06:29:26.391211+00:00",
+    "panel_rows": 2336,
+    "months": 584,
+    "period_start": "1978-01-31",
+    "period_end": "2026-08-31",
+    "future_leakage": 0,
+    "all_replay_windows_pass": true,
+    "reality_gate_run_id": "df45f989-7295-4da4-8492-f8f8500690d6",
+    "github_actions_run_id": 34194178721,
+    "executed_pr_merge_sha": "eaccf43ee02fd1e91b5da4b39f92433d73f00e0d",
+    "b2_b7_executed": false
+  },
+  "sources": {
+    "gold": {
+      "source_id": "worldbank_pinksheet_gold",
+      "provider": "World Bank Prospects Group",
+      "source_class": "PIT_MARKET_RECONSTRUCTED",
+      "landing_page": "https://www.worldbank.org/en/research/commodity-markets",
+      "document_page": "https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/world-bank-commodities-price-data-the-pink-sheet",
+      "xlsx_url": "https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx",
+      "fallback_xlsx_url": "https://thedocs.worldbank.org/en/doc/561011486076393416-0050022017/original/CMOHistoricalDataMonthly.xlsx",
+      "column": "Gold",
+      "semantics": "monthly reconstructed institutional price series; not strict historical vintage"
+    },
+    "cpi": {
+      "source_id": "fred_cpiaucsl",
+      "series_id": "CPIAUCSL",
+      "provider": "BLS via FRED/ALFRED",
+      "source_class": "REVISIONABLE_STATISTIC",
+      "panel_semantics": "same-day ALFRED as-of snapshot; YoY uses same-vintage levels"
+    },
+    "tbill": {
+      "source_id": "fred_dtb3",
+      "series_id": "DTB3",
+      "provider": "Federal Reserve H.15 via FRED",
+      "source_class": "PIT_MARKET_RECONSTRUCTED"
+    },
+    "usd_legacy": {
+      "source_id": "fred_dtwexm",
+      "series_id": "DTWEXM",
+      "provider": "Federal Reserve H.10 via FRED",
+      "source_class": "PIT_MARKET_RECONSTRUCTED"
+    },
+    "usd_modern": {
+      "source_id": "fred_dtwexbgs",
+      "series_id": "DTWEXBGS",
+      "provider": "Federal Reserve H.10 via FRED",
+      "source_class": "PIT_MARKET_RECONSTRUCTED"
+    },
+    "real_yield": {
+      "source_id": "fred_dfii10",
+      "series_id": "DFII10",
+      "provider": "Federal Reserve H.15 via FRED",
+      "source_class": "PIT_MARKET_RECONSTRUCTED"
+    }
+  },
+  "measurement_regimes": [
+    {
+      "start": "1978-01-01",
+      "end": "2002-12-31",
+      "usd_series": "DTWEXM",
+      "real_rate_method": "DTB3_MINUS_CPI_YOY_ASOF"
+    },
+    {
+      "start": "2003-01-01",
+      "end": "2005-12-31",
+      "usd_series": "DTWEXM",
+      "real_rate_method": "DFII10"
+    },
+    {
+      "start": "2006-01-01",
+      "end": null,
+      "usd_series": "DTWEXBGS",
+      "real_rate_method": "DFII10"
+    }
+  ],
+  "replay_windows": {
+    "gold_1978_1979": ["1978-01-01", "1979-12-31"],
+    "gfc_2008_2009": ["2008-01-01", "2009-12-31"],
+    "covid_2020": ["2020-01-01", "2020-12-31"],
+    "rates_2022": ["2022-01-01", "2022-12-31"],
+    "ai_2023_2026": ["2023-01-01", "2026-12-31"]
+  },
+  "non_authorizations": [
+    "No B2-B7 execution",
+    "No model tuning after data reveal",
+    "No Canon promotion",
+    "No portfolio sizing",
+    "No broker connection",
+    "No trading action"
+  ]
+}
