@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - '.github/workflows/ymq4-dp1b-historical-backfill.yml'
+      - '.ymq4/authorizations/YMQ4-B2-FULL'
       - 'config/ymq4/gold_dp1b_backfill.v0.1.json'
       - 'docs/architecture/ymq4/**DP1-B**'
       - 'docs/superpowers/specs/*dp1b*'
@@ -94,13 +95,6 @@ jobs:
               raise SystemExit(f"replay coverage gate failed: {coverage!r}")
           if (receipt.get('constraints') or {}).get('b2_b7_executed') is not False:
               raise SystemExit('B2-B7 boundary receipt is not false')
-          print(json.dumps({
-              'status': receipt['status'],
-              'panel_rows': receipt.get('panel_rows'),
-              'future_leakage': receipt.get('future_leakage'),
-              'coverage': coverage,
-              'reality_gate_run_id': receipt.get('reality_gate_run_id'),
-          }, indent=2, sort_keys=True))
           PY
       - name: Upload non-secret DP1-B reality receipt
         if: ${{ always() }}
@@ -108,5 +102,76 @@ jobs:
         with:
           name: ymq4-dp1b-reality-receipt
           path: ymq4-dp1b-reality-receipt.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  b2-preflight:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install B2 dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Validate B2 contract
+        run: python scripts/validate_ymq4_b2.py
+      - name: B2 unit and database contract tests
+        run: python -m unittest tests.test_ymq4_b2 tests.test_ymq4_b2_contract -v
+
+  b2-full-baseline:
+    if: ${{ github.event_name == 'pull_request' && hashFiles('.ymq4/authorizations/YMQ4-B2-FULL') != '' }}
+    needs: b2-preflight
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: 'https://tbmoimbdhsrltvospwpu.supabase.co'
+      YMQ4_SUPABASE_SECRET_KEY: ${{ secrets.YMQ4_SUPABASE_SECRET_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Verify B2 one-shot authorization
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f .ymq4/authorizations/YMQ4-B2-FULL
+          grep -qx 'AUTHORIZED_YMQ4_B2_FULL_ONCE' .ymq4/authorizations/YMQ4-B2-FULL
+      - name: Install B2 dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Fail closed on missing secret
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$YMQ4_SUPABASE_SECRET_KEY"
+      - name: Materialize B2 fixed-beta baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/ymq4_b2_fixed_beta.py | tee ymq4-b2-reality-receipt.json
+      - name: Require B2_BASELINE_MATERIALIZED_PASS receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          with open('ymq4-b2-reality-receipt.json', encoding='utf-8') as fh:
+              receipt = json.load(fh)
+          if receipt.get('status') != 'B2_BASELINE_MATERIALIZED_PASS':
+              raise SystemExit(f"B2 receipt not PASS: {receipt.get('status')!r}")
+          if receipt.get('constraints', {}).get('b3_b7_executed') is not False:
+              raise SystemExit('B3-B7 boundary violated')
+          if receipt.get('constraints', {}).get('trading_action') is not False:
+              raise SystemExit('trading boundary violated')
+          PY
+      - name: Upload non-secret B2 reality receipt
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ymq4-b2-reality-receipt
+          path: ymq4-b2-reality-receipt.json
           if-no-files-found: warn
           retention-days: 30

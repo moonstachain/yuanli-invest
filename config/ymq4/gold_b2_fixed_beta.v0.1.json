@@ -1,0 +1,66 @@
+{
+  "battle": "YMQ4-B2",
+  "status": "reality_proof_pass",
+  "panel_id": "gold_core_monthly_v0.1",
+  "input_integrity": {
+    "expected_months": 584,
+    "expected_panel_rows": 2336,
+    "expected_factors": ["gold_usd_oz", "usd", "inflation_yoy", "real_rate"],
+    "future_leakage_tolerance": 0
+  },
+  "transformations": {
+    "target": "100*ln(gold_t/gold_t_minus_1)",
+    "usd": "100*ln(usd_t/usd_t_minus_1)",
+    "inflation": "inflation_yoy_t-inflation_yoy_t_minus_1",
+    "real_rate": "real_rate_t-real_rate_t_minus_1"
+  },
+  "model": {
+    "family": "fixed_ols",
+    "intercept": true,
+    "features": ["usd_return", "inflation_change", "real_rate_change"],
+    "estimation": "numpy.linalg.lstsq",
+    "coefficient_reestimation_in_oos": false
+  },
+  "split": {
+    "train_start": "1978-02-28",
+    "train_end": "2006-12-31",
+    "train_rows": 347,
+    "oos_start": "2007-01-31",
+    "oos_end": "2026-08-31",
+    "oos_rows": 236
+  },
+  "null_benchmark": "training_mean_gold_return",
+  "metrics": ["rmse", "mae", "sign_accuracy", "oos_r2_vs_null", "rmse_improvement_vs_null", "mae_improvement_vs_null"],
+  "b3_incrementality_gate": {
+    "same_panel": true,
+    "same_transformations": true,
+    "same_oos_dates": true,
+    "candidate_rmse_lt_b2": true,
+    "candidate_mae_lte_b2": true,
+    "minimum_positive_rmse_blocks": 3,
+    "blocks": {
+      "gfc_2007_2009": ["2007-01-31", "2009-12-31"],
+      "post_gfc_2010_2019": ["2010-01-31", "2019-12-31"],
+      "covid_rates_2020_2022": ["2020-01-31", "2022-12-31"],
+      "current_2023_2026": ["2023-01-31", "2026-08-31"]
+    }
+  },
+  "settlement": {
+    "gate_status": "B2_BASELINE_MATERIALIZED_PASS",
+    "economic_observation": "FIXED_BETA_BEATS_NULL",
+    "reality_gate_run_id": "8907b60a-445c-4396-8e51-29e6f36620fb",
+    "executed_merge_sha": "9a86a76e4b04b1b2c63b4a1c6ab31f7313a11aae",
+    "artifact_id": 10044791323,
+    "receipt": "docs/architecture/ymq4/YMQ4-B2-REALITY-RECEIPT-v0.1.md"
+  },
+  "non_authorizations": [
+    "No B3-B7 execution",
+    "No rolling beta",
+    "No TVP or Kalman beta",
+    "No regime switching",
+    "No Canon promotion",
+    "No portfolio sizing",
+    "No broker connection",
+    "No trading action"
+  ]
+}
