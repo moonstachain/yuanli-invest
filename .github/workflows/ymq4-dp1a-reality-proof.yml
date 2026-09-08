@@ -1,0 +1,118 @@
+name: YMQ4 DP1-A Reality Proof
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ymq4-dp1a-reality-proof.yml'
+      - 'config/ymq4/**'
+      - 'docs/architecture/ymq4/**'
+      - 'scripts/ymq4_dp1a_reality_proof.py'
+      - 'scripts/validate_ymq4_dp1a.py'
+      - 'supabase/migrations/**ymq4_dp1a**'
+      - 'tests/test_ymq4_dp1a.py'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'preflight validates runtime; full performs FRED→Supabase write/read proof'
+        required: true
+        default: preflight
+        type: choice
+        options:
+          - preflight
+          - full
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate DP1-A contract
+        run: python scripts/validate_ymq4_dp1a.py
+      - name: Install proof runtime dependency
+        run: python -m pip install 'boto3>=1.35,<2'
+      - name: Unit tests
+        run: python -m unittest tests.test_ymq4_dp1a -v
+      - name: External runtime reachability proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, socket, ssl, urllib.request
+          out = {'hosts': {}}
+          ctx = ssl.create_default_context()
+
+          for host in ['api.stlouisfed.org', 'tbmoimbdhsrltvospwpu.supabase.co', 'tbmoimbdhsrltvospwpu.storage.supabase.co']:
+              socket.getaddrinfo(host, 443)
+              with socket.create_connection((host, 443), timeout=30) as sock:
+                  with ctx.wrap_socket(sock, server_hostname=host) as tls:
+                      out['hosts'][host] = {'reachable': True, 'tls_version': tls.version()}
+
+          url = 'https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPIAUCSL'
+          with urllib.request.urlopen(url, context=ctx, timeout=30) as r:
+              sample = r.read(256)
+              if b'CPIAUCSL' not in sample:
+                  raise RuntimeError('FRED graph CSV did not return expected series header')
+              out['hosts']['fred.stlouisfed.org'] = {'reachable': True, 'status': r.status, 'proof_url': url}
+
+          print(json.dumps(out, indent=2))
+          PY
+
+  full-reality-proof:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'full' }}
+    needs: preflight
+    runs-on: ubuntu-latest
+    env:
+      FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      SUPABASE_URL: 'https://tbmoimbdhsrltvospwpu.supabase.co'
+      YMQ4_SUPABASE_PROJECT_REF: 'tbmoimbdhsrltvospwpu'
+      YMQ4_SUPABASE_REGION: 'us-east-2'
+      YMQ4_SUPABASE_SECRET_KEY: ${{ secrets.YMQ4_SUPABASE_SECRET_KEY }}
+      YMQ4_SUPABASE_S3_ACCESS_KEY_ID: ${{ secrets.YMQ4_SUPABASE_S3_ACCESS_KEY_ID }}
+      YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY: ${{ secrets.YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY }}
+      YMQ4_PROOF_SERIES: CPIAUCSL
+      YMQ4_PROOF_OBS_START: '2020-02-01'
+      YMQ4_PROOF_OBS_END: '2020-02-01'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install proof runtime dependency
+        run: python -m pip install 'boto3>=1.35,<2'
+      - name: Fail closed on missing secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$FRED_API_KEY"
+          test -n "$YMQ4_SUPABASE_SECRET_KEY"
+          test -n "$YMQ4_SUPABASE_S3_ACCESS_KEY_ID"
+          test -n "$YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY"
+      - name: FRED → Raw SHA → Supabase PIT Ledger → Readback
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/ymq4_dp1a_reality_proof.py | tee ymq4-dp1a-reality-receipt.json
+      - name: Require PASS receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          with open('ymq4-dp1a-reality-receipt.json', encoding='utf-8') as fh:
+              receipt = json.load(fh)
+          if receipt.get('status') != 'PASS':
+              raise SystemExit(f"reality receipt is not PASS: {receipt.get('status')!r}")
+          PY
+      - name: Upload non-secret receipt
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ymq4-dp1a-reality-receipt
+          path: ymq4-dp1a-reality-receipt.json
+          retention-days: 30
