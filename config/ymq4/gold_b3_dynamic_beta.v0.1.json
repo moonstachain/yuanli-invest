@@ -1,0 +1,58 @@
+{
+  "battle": "YMQ4-B3",
+  "status": "authorized_pre_result_freeze",
+  "panel_id": "gold_core_monthly_v0.1",
+  "input_integrity": {
+    "expected_months": 584,
+    "expected_panel_rows": 2336,
+    "expected_factors": ["gold_usd_oz", "usd", "inflation_yoy", "real_rate"],
+    "future_leakage_tolerance": 0
+  },
+  "transformations_source": "YMQ4-B2",
+  "model": {
+    "family": "rolling_ols",
+    "window_months": 60,
+    "intercept": true,
+    "features": ["usd_return", "inflation_change", "real_rate_change"],
+    "estimation": "numpy.linalg.lstsq",
+    "current_target_in_estimation": false,
+    "window_search": false
+  },
+  "oos": {
+    "start": "2007-01-31",
+    "end": "2026-08-31",
+    "rows": 236
+  },
+  "canonical_b2": {
+    "reality_gate_run_id": "8907b60a-445c-4396-8e51-29e6f36620fb",
+    "rmse": 3.7129313457620357,
+    "mae": 2.9202089520079597,
+    "blocks": {
+      "gfc_2007_2009": 4.735405232228532,
+      "post_gfc_2010_2019": 3.280590575419435,
+      "covid_rates_2020_2022": 3.1050742795420367,
+      "current_2023_2026": 4.284300249030305
+    }
+  },
+  "victory_gate": {
+    "rmse_lt_b2": true,
+    "mae_lte_b2": true,
+    "minimum_positive_rmse_blocks": 3
+  },
+  "scientific_labels": [
+    "DYNAMIC_BETA_BEATS_B2",
+    "DYNAMIC_BETA_DOES_NOT_BEAT_B2"
+  ],
+  "non_authorizations": [
+    "No B4-B7 execution",
+    "No Kalman or TVP beta",
+    "No DCC or HMM",
+    "No regime switching",
+    "No window search",
+    "No Narrative or Herding integration",
+    "No Canon promotion",
+    "No portfolio sizing",
+    "No broker connection",
+    "No trading action"
+  ]
+}
