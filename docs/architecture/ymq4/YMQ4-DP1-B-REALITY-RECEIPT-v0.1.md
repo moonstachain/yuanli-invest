@@ -9,7 +9,7 @@
 
 A physical historical Gold research data plane was executed from governed external sources through immutable raw-object capture, provenance snapshots, PIT/as-of reconstruction, monthly decision-state materialization, database readback, replay-window coverage audit, future-leakage audit, and a persisted Reality Gate receipt.
 
-This is a **data-plane closure only**. It does not promote any research thesis to Canon and does not authorize B3-B7, portfolio sizing, broker connectivity, or trading action.
+This is a **data-plane closure only**. It does not promote any research thesis to Canon and does not authorize B2-B7, portfolio sizing, broker connectivity, or trading action.
 
 ## 2. Execution identity
 
@@ -31,7 +31,7 @@ panel_rows: 2336
 null_values: 0
 distinct_keys: 2336
 future_leakage: 0
-B2-B7 executed during DP1-B: false
+B2-B7 executed: false
 ```
 
 Independent Supabase readback reproduced the physical panel state after the workflow completed:
@@ -80,21 +80,8 @@ No post-reveal relaxation was made.
 
 ## 6. Repository-scope closure
 
-The later stacked-PR repository failure was traced to a YIM0 validator scope-window bug: `validate_yim0_methodology_projection.py` used a fixed historical `BASE_SHA...HEAD` diff and therefore misclassified legitimate post-YIM0 YMQ4 files as YIM0 modifications.
+The subsequent stacked-PR repository failure was traced to a YIM0 validator bug: `validate_yim0_methodology_projection.py` used a fixed historical `BASE_SHA...HEAD` scope window, causing legitimate later YMQ4 files to be misclassified as YIM0 changes. The validator was corrected to validate only YIM0's frozen `semantic_merge_commit` diff.
 
-The fix changed the validator to audit only YIM0's frozen `semantic_merge_commit` diff. A regression test was added in `tests/test_yim0_scope_window.py`.
+Regression coverage was added in `tests/test_yim0_scope_window.py`. Fresh repository-gates run `34195784889` passed both `governance` and `contracts`, including the YIM0 validator and the full unit-test suite.
 
-Fresh repository-gates run `34195906929` passed both jobs:
-
-```text
-governance: PASS
-contracts:  PASS
-YIM0 validator: PASS
-full unit test suite: PASS
-```
-
-Therefore PR #69 reached repository-wide clean state while remaining Draft/Open/Not Merged.
-
-## 7. Successor authorization boundary
-
-After repository-wide clean closure, B2 was separately authorized as the next research battle. That later authorization does not retroactively change the DP1-B runtime claim above: DP1-B itself executed no B2-B7 model logic.
+Therefore the DP1-B stacked PR is now repository-wide clean while remaining Draft/Open/Not Merged.
