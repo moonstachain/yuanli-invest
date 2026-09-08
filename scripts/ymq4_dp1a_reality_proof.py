@@ -47,8 +47,24 @@ def request_bytes(url: str, headers: dict[str, str] | None = None, data: bytes |
         with urllib.request.urlopen(req, timeout=90) as resp:
             return resp.status, dict(resp.headers.items()), resp.read()
     except urllib.error.HTTPError as e:
-        # Provider error bodies can echo credentials or private source data.
-        raise RuntimeError(f"HTTP {e.code} for {redact_api_key(url)}") from None
+        # Provider error bodies can echo credentials or private source data. Keep
+        # only documented non-secret error fields, then redact every credential.
+        body = e.read()
+        detail = ""
+        try:
+            payload = json.loads(body or b"{}")
+            code = payload.get("error_code") or payload.get("code")
+            text = payload.get("error_message") or payload.get("message")
+            if code is not None or text is not None:
+                detail = f" provider_code={code!r} provider_message={text!r}"
+        except (TypeError, ValueError, json.JSONDecodeError):
+            detail = ""
+        for name in ("FRED_API_KEY", "YMQ4_SUPABASE_SECRET_KEY",
+                     "YMQ4_SUPABASE_S3_ACCESS_KEY_ID", "YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY"):
+            value = os.getenv(name, "").strip()
+            if value:
+                detail = detail.replace(value, "REDACTED")
+        raise RuntimeError(f"HTTP {e.code} for {redact_api_key(url)}{detail}") from None
     except urllib.error.URLError:
         raise RuntimeError(f"network request failed for {redact_api_key(url)}") from None
 
@@ -284,7 +300,7 @@ def run() -> int:
                 for variant in (value, urllib.parse.quote(value, safe=""), urllib.parse.quote_plus(value)):
                     message = message.replace(variant, "REDACTED")
         print(json.dumps({"battle": "YMQ4-DP1-A", "status": "FAIL_CLOSED",
-                          "error_type": type(exc).__name__, "error": message}, indent=2), file=sys.stderr)
+                          "error_type": type(exc).__name__, "error": message}, indent=2))
         # Exception chains may still contain request URLs. Never emit a traceback.
         return 1
 

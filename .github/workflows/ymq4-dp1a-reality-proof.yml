@@ -94,8 +94,23 @@ jobs:
           test -n "$YMQ4_SUPABASE_S3_ACCESS_KEY_ID"
           test -n "$YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY"
       - name: FRED → Raw SHA → Supabase PIT Ledger → Readback
-        run: python scripts/ymq4_dp1a_reality_proof.py | tee ymq4-dp1a-reality-receipt.json
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/ymq4_dp1a_reality_proof.py | tee ymq4-dp1a-reality-receipt.json
+      - name: Require PASS receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          with open('ymq4-dp1a-reality-receipt.json', encoding='utf-8') as fh:
+              receipt = json.load(fh)
+          if receipt.get('status') != 'PASS':
+              raise SystemExit(f"reality receipt is not PASS: {receipt.get('status')!r}")
+          PY
       - name: Upload non-secret receipt
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: ymq4-dp1a-reality-receipt
