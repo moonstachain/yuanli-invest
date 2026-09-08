@@ -26,6 +26,17 @@ class TestDP1A(unittest.TestCase):
         self.assertNotIn("private-response", str(got.exception))
         self.assertTrue(got.exception.__suppress_context__)
 
+    def test_http_failure_keeps_only_non_secret_provider_error(self):
+        url = "https://x.test/path?api_key=synthetic-key"
+        body = json.dumps({"error_code": 400, "error_message": "api_key is invalid"}).encode()
+        error = urllib.error.HTTPError(url, 400, "denied", {}, io.BytesIO(body))
+        with patch.object(MOD.urllib.request, "urlopen", side_effect=error):
+            with self.assertRaises(RuntimeError) as got:
+                MOD.request_bytes(url)
+        self.assertIn("provider_code=400", str(got.exception))
+        self.assertIn("api_key is invalid", str(got.exception))
+        self.assertNotIn("synthetic-key", str(got.exception))
+
     def test_failure_receipt_redacts_all_credentials_without_traceback(self):
         names = ("FRED_API_KEY", "YMQ4_SUPABASE_SECRET_KEY",
                  "YMQ4_SUPABASE_S3_ACCESS_KEY_ID", "YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY")
@@ -34,7 +45,7 @@ class TestDP1A(unittest.TestCase):
                            for part in (value, urllib.parse.quote(value, safe="")))
         output = io.StringIO()
         with patch.dict(MOD.os.environ, secrets), patch.object(MOD, "main", side_effect=RuntimeError(message)):
-            with contextlib.redirect_stderr(output):
+            with contextlib.redirect_stdout(output):
                 self.assertEqual(MOD.run(), 1)
         receipt = json.loads(output.getvalue())
         self.assertEqual(receipt["status"], "FAIL_CLOSED")
