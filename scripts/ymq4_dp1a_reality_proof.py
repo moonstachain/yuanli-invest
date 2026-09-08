@@ -24,6 +24,7 @@ import urllib.parse
 import urllib.request
 from datetime import date, datetime, timezone
 from typing import Any
+from zoneinfo import ZoneInfo
 
 FRED_ENDPOINT = "https://api.stlouisfed.org/fred/series/observations"
 SERIES_ID = os.getenv("YMQ4_PROOF_SERIES", "CPIAUCSL")
@@ -69,6 +70,10 @@ def request_bytes(url: str, headers: dict[str, str] | None = None, data: bytes |
         raise RuntimeError(f"network request failed for {redact_api_key(url)}") from None
 
 
+def fred_today(now: datetime | None = None) -> date:
+    return (now or datetime.now(timezone.utc)).astimezone(ZoneInfo("America/Chicago")).date()
+
+
 def fred_url(api_key: str, **overrides: Any) -> str:
     params = {
         "series_id": SERIES_ID,
@@ -80,7 +85,7 @@ def fred_url(api_key: str, **overrides: Any) -> str:
         # FRED defaults both real-time bounds to today, which excludes the
         # historical release we are proving. Search from the observation date.
         "realtime_start": OBS_START,
-        "realtime_end": datetime.now(timezone.utc).date().isoformat(),
+        "realtime_end": fred_today().isoformat(),
     }
     params.update(overrides)
     return FRED_ENDPOINT + "?" + urllib.parse.urlencode(params)
@@ -104,7 +109,7 @@ def parse_initial(raw: bytes) -> dict[str, Any]:
         raise RuntimeError("initial-release row lacks realtime_start; cannot establish four clocks")
     if row.get("date") != OBS_START:
         raise RuntimeError(f"unexpected observation date: {row.get('date')} != {OBS_START}")
-    if not date.fromisoformat(OBS_START) <= date.fromisoformat(release) <= datetime.now(timezone.utc).date():
+    if not date.fromisoformat(OBS_START) <= date.fromisoformat(release) <= fred_today():
         raise RuntimeError("initial-release date is before observation or in the future")
     return {
         "series_id": SERIES_ID,

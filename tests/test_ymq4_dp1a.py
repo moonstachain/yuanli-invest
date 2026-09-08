@@ -7,6 +7,7 @@ import unittest
 import urllib.error
 import urllib.parse
 from unittest.mock import patch
+from datetime import datetime, timezone
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("dp1a", ROOT / "scripts/ymq4_dp1a_reality_proof.py")
@@ -15,6 +16,12 @@ SPEC.loader.exec_module(MOD)
 
 
 class TestDP1A(unittest.TestCase):
+    def test_fred_cutoff_uses_st_louis_calendar_across_utc_midnight(self):
+        before = datetime(2026, 9, 8, 3, 30, tzinfo=timezone.utc)
+        after = datetime(2026, 9, 8, 6, 30, tzinfo=timezone.utc)
+        self.assertEqual(MOD.fred_today(before).isoformat(), "2026-09-07")
+        self.assertEqual(MOD.fred_today(after).isoformat(), "2026-09-08")
+
     def test_initial_request_searches_history_and_asof_overrides_both_bounds(self):
         historical = urllib.parse.parse_qs(urllib.parse.urlsplit(MOD.fred_url("fixture")).query)
         self.assertEqual(historical["realtime_start"], [MOD.OBS_START])
