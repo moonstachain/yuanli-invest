@@ -11,6 +11,7 @@ VNEXT = ROOT / "packages" / "contracts" / "schemas" / "vnext"
 CONFIG = ROOT / "config" / "yvn1" / "yvn1_a0_shadow_execution.v0.1.json"
 SCENARIOS = ROOT / "fixtures" / "yvn1" / "yvn1_a0_golden_scenarios.v0.1.json"
 YEX0 = ROOT / "config" / "yex0" / "yex0_constitution.v0.1.json"
+ACCEPTANCE = ROOT / "docs" / "architecture" / "yvn1" / "YVN1-A0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 
 SCHEMA_PATHS = [
     VNEXT / "execution-plan.schema.json",
@@ -167,6 +168,50 @@ def validate_schema_contracts() -> None:
         require(nonauth[key]["const"] is False, f"settlement authority escalated: {key}")
 
 
+def validate_human_acceptance() -> None:
+    require(ACCEPTANCE.exists(), "YVN1-A0 human acceptance receipt missing")
+    acceptance = load_json(ACCEPTANCE)
+    require(acceptance["stage"] == "YVN1_A0_SHADOW_EXECUTION_CONSTITUTION_DEPLOYMENT_FREEZE", "acceptance stage drift")
+    require(acceptance["decision"] == "ACCEPT_YVN1_A0_DEPLOYMENT_FREEZE", "acceptance token drift")
+    require(acceptance["pr_number"] == 74, "acceptance PR drift")
+    require(acceptance["reviewed_head_sha"] == "75d34b7888f03f53adacb9d5bd7982b44cff80ea", "reviewed head drift")
+    ci = acceptance["reviewed_ci"]
+    require(ci["workflow"] == "repository-gates", "acceptance workflow drift")
+    require(ci["run_number"] == 692, "acceptance run number drift")
+    require(ci["run_id"] == 34312728209, "acceptance run id drift")
+    for key in ("conclusion", "contracts", "governance", "yvn1_a0_validator", "unit_tests"):
+        require(ci[key] == "success", f"acceptance CI not green: {key}")
+    require(acceptance["formal_review"] == "14/14 PASS", "formal review drift")
+
+    expected_decisions = {
+        "yex0_upstream_law_binding",
+        "action_contract_only_entry",
+        "provider_independent_first",
+        "runtime_separate_from_research",
+        "shadow_oms_and_synthetic_broker_independent",
+        "event_ledger_truth_status_projection",
+        "sqlite_wal_edge_truth",
+        "unknown_equals_deny",
+        "idempotency_and_pre_submit_persist_before_side_effect",
+        "s01_s10_frozen_and_s07_p0",
+        "a1_victory_law_preregistered",
+        "a1_no_go_is_valid_and_no_silent_rescue",
+        "a0_creates_no_execution_authority",
+        "human_acceptance_does_not_imply_merge_or_runtime",
+    }
+    require(set(acceptance["accepted_decisions"]) == expected_decisions, "accepted decision set drift")
+    for key, value in acceptance["accepted_decisions"].items():
+        require(value is True, f"accepted decision not affirmed: {key}")
+
+    for key, value in acceptance["boundaries_preserved"].items():
+        require(value is False, f"G2 escalated authority: {key}")
+    require(acceptance["merge_authority"] == "not_implied_by_acceptance", "merge authority drift")
+    require(acceptance["required_merge_token"] == "AUTHORIZE_YVN1_A0_MERGE", "G3 token drift")
+    require(acceptance["post_acceptance_ci"] == "required_on_acceptance_record_head", "post-acceptance CI law drift")
+    require(acceptance["next_gate"] == "YVN1_A0_POST_ACCEPTANCE_CI", "next gate drift")
+    print("YVN1_A0_DEPLOYMENT_FREEZE_HUMAN_ACCEPTED")
+
+
 def validate_a0() -> None:
     validate_upstream_yex0()
     config = load_config()
@@ -185,3 +230,4 @@ def validate_a0() -> None:
 
 if __name__ == "__main__":
     validate_a0()
+    validate_human_acceptance()
