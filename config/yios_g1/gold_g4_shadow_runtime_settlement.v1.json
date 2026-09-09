@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0.0",
+  "system_id": "YIOS-G1-G4",
+  "case_id": "YIOS-GOLD-001",
+  "stage": "GOLD_SHADOW_RUNTIME_SETTLEMENT",
+  "runtime_state": "SETTLEMENT_CANDIDATE",
+  "lineage": {
+    "yios0_architecture_version": "1.0.0",
+    "research_trial_path": "config/yios_g1/gold_g1_reality_trial.v1.json",
+    "g3_shadow_action_path": "config/yios_g1/gold_g3_shadow_action.v1.json",
+    "g3_position_passport_path": "config/yios_g1/gold_g3_shadow_position_passport.v1.json"
+  },
+  "research_input": {
+    "primary_settlement": "INDETERMINATE",
+    "pit_integrity": "PASS",
+    "h1_official_demand_structural": "INDETERMINATE",
+    "h2_traditional_macro_decoupling": "SUPPORTED",
+    "h3_price_confirmation": "SUPPORTED",
+    "unknown_semantics": "DENY"
+  },
+  "capital_admission": {
+    "decision": "DENY",
+    "max_notional": 0,
+    "max_loss": 0,
+    "reason": "UNKNOWN_DENY_ON_MANDATORY_H1"
+  },
+  "shadow_position": {
+    "target_id": "GOLD",
+    "primary_engine": "ENG-R",
+    "status": "CANCELLED_DENIED",
+    "portfolio_weight": null,
+    "quantity": 0
+  },
+  "execution_runtime": {
+    "mode": "SHADOW",
+    "provider": "INTERNAL_SYNTHETIC_ONLY",
+    "quantity_delta": 0,
+    "max_notional": 0,
+    "max_loss": 0,
+    "external_network_used": false,
+    "oms_invoked": false,
+    "broker_invoked": false,
+    "veighna_invoked": false,
+    "events": [
+      {
+        "event_type": "ExecutionFailureObserved",
+        "reason": "CAPITAL_ADMISSION_DENIED"
+      },
+      {
+        "event_type": "SettlementClosed",
+        "reason": "FAIL_CLOSED_WITHOUT_ORDER"
+      }
+    ]
+  },
+  "execution_settlement": {
+    "status": "FAIL_CLOSED",
+    "reconciliation": {
+      "capital_intent": {
+        "status": "MATCHED",
+        "observed_quantity_delta": 0
+      },
+      "yuanli_execution": {
+        "status": "SIMULATED_MATCH",
+        "observed_quantity_delta": 0
+      },
+      "execution_engine_oms": {
+        "status": "NOT_APPLICABLE",
+        "invoked": false
+      },
+      "broker_custodian": {
+        "status": "NOT_APPLICABLE",
+        "connected": false
+      }
+    },
+    "drift": {
+      "unknown_external_orders": 0,
+      "unexplained_fills": 0,
+      "unexplained_position_delta": 0,
+      "unexplained_cash_delta": 0
+    }
+  },
+  "learning": {
+    "outcome": "DENIAL_IS_VALID_EXECUTION_OUTCOME",
+    "system_delta": "A governed investment OS must preserve UNKNOWN through capital and execution boundaries instead of manufacturing a trade."
+  },
+  "authority": {
+    "portfolio_weight_authority": false,
+    "position_sizing_authority": false,
+    "capital_movement_authority": false,
+    "trade_execution_authority": false,
+    "live_execution_authority": false,
+    "broker_authority": false,
+    "veighna_invocation_authority": false,
+    "automatic_research_to_execution_authority": false
+  },
+  "non_authorizations": {
+    "yvn1_a1_runtime": false,
+    "veighna_installation_or_invocation": false,
+    "broker_credentials_or_connection": false,
+    "broker_paper_orders": false,
+    "live_execution": false,
+    "real_capital_movement": false,
+    "portfolio_or_position_sizing": false,
+    "automatic_research_to_execution": false
+  }
+}
