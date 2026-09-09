@@ -23,23 +23,23 @@ This must never be described as `GOLD_MODEL_VALIDATED`, `DYNAMIC_BETA_VALIDATED`
 
 ---
 
-## 1. Authority position
+## 1. Authority position and temporal direction
 
 YGR0 sits below YIP0 philosophy authority and below the existing Yuanli investment ontology. It may summarize and freeze historical case evidence; it may not redefine upstream philosophy, engines, thesis semantics, capital authority, or historical receipts.
 
-Canonical relationship:
+The Genesis sequence is intentionally asymmetric:
 
 ```text
-YIP0 Philosophy Authority
-        ↓ constrains
-YRP1 future research protocol
-        ↓ will constrain future battles
+YIP0 + existing OS / ME laws
+        ↓ constrain
 YGR0 Gold Genesis Case
-        ↓ supplies first proven case evidence
-YMQ4 / successor research hypotheses
+        ↓ supplies proven case evidence
+YRP1 future research protocol
+        ↓ once accepted, constrains future research battles
+Future Gold / Copper / NVIDIA / BTC cases
 ```
 
-For the current stage, YRP1 is not yet implemented. YGR0 therefore consumes the already accepted research laws in the repository and produces the first settled case from which YRP1 may later be abstracted.
+YRP1 does **not** retroactively create or rewrite the Gold Genesis history. Gold is the first case evidence from which YRP1 may later be abstracted. Once YRP1 exists, Gold may serve as its first Golden Fixture, but the original YGR0 settlement remains an immutable historical ledger fact.
 
 YGR0 may not mutate DP1-A, DP1-B, B2, or B3 historical receipts in place.
 
@@ -156,8 +156,20 @@ Required stable identities:
 ```text
 case_id: YGR-GOLD-001
 target_id: GOLD
-case_status: GOLD_GENESIS_CASE_SETTLED   # only after final gate
 ```
+
+Allowed case lifecycle values:
+
+```text
+DRAFT
+LINEAGE_LOCKED
+NEGATIVE_EVIDENCE_ADMITTED
+CANON_CANDIDATE
+HUMAN_ACCEPTED
+GOLD_GENESIS_CASE_SETTLED
+```
+
+`GOLD_GENESIS_CASE_SETTLED` is legal only after the final Human + repository settlement gate.
 
 `source_receipts[]` must contain the four battle lineages and may only point to canonical repository receipts / immutable Reality Gate identities.
 
