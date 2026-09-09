@@ -1,0 +1,70 @@
+{
+  "schema_version": "0.1.0",
+  "program_id": "YEX0",
+  "status": "implementation_candidate",
+  "authority_separation": [
+    "ResearchAuthority",
+    "CapitalAuthority",
+    "ExecutionAuthority"
+  ],
+  "object_chain": [
+    "ResearchSettlement",
+    "CapitalAdmission",
+    "PositionPassport",
+    "ExecutionIntent",
+    "ActionContract",
+    "ExecutionRuntime",
+    "ExecutionSettlement"
+  ],
+  "laws": [
+    "RESEARCH_PASS_NE_CAPITAL_PASS",
+    "CAPITAL_PASS_NE_EXECUTION_PASS",
+    "POSITION_PASSPORT_NE_EXECUTION_AUTHORITY",
+    "INTENT_NE_AUTHORIZATION",
+    "ACTION_CONTRACT_NARROW_EXPIRING_IDEMPOTENT",
+    "UNKNOWN_EQUALS_DENY",
+    "RECEIPT_EQUALS_LEDGER_STATUS_EQUALS_PROJECTION",
+    "FOUR_WAY_RECONCILIATION",
+    "RESEARCH_FAILURE_NE_EXECUTION_FAILURE",
+    "EXECUTION_ADAPTER_REPLACEABLE",
+    "FAILURE_IS_KNOWLEDGE",
+    "NO_LIVE_AUTHORITY_IN_YEX0"
+  ],
+  "firewall": {
+    "decisions": ["ALLOW", "DENY", "UNKNOWN"],
+    "unknown_semantics": "DENY",
+    "scope_expansion": "DENY",
+    "expired_contract": "DENY",
+    "reference_mismatch": "DENY",
+    "live_or_real_capital_flag": "DENY"
+  },
+  "execution_modes": ["shadow", "broker_paper"],
+  "live_execution_authorized": false,
+  "real_capital_movement_authorized": false,
+  "four_way_reconciliation": [
+    "capital_intent",
+    "yuanli_execution",
+    "execution_engine_oms",
+    "broker_custodian"
+  ],
+  "truth_model": {
+    "execution_events_append_only": true,
+    "status_projection_only": true,
+    "hash_chain_required": true
+  },
+  "non_authorizations": [
+    "broker_credentials",
+    "veighna_invocation",
+    "market_data_subscription",
+    "broker_paper_order_submission",
+    "live_order_submission",
+    "portfolio_weighting",
+    "position_sizing",
+    "real_capital_movement",
+    "yvn1_runtime",
+    "yvn2_runtime",
+    "yvn3_runtime",
+    "automatic_merge"
+  ],
+  "next_gate_after_human_merge": "YVN1-A0_SHADOW_EXECUTION_CONSTITUTION_DEPLOYMENT_FREEZE"
+}
