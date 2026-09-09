@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-G1",
+  "case_id": "YIOS-GOLD-001",
+  "target_id": "GOLD",
+  "trial_status": "REALITY_TRIAL_COMPLETE_SETTLEMENT_CANDIDATE",
+  "historical_t0": "2024-01-31T23:59:59-05:00",
+  "reality_gate_run_id": "c9b6aada-f439-4ef3-830d-7d8df6b71625",
+  "pit_integrity": {
+    "status": "PASS",
+    "future_leakage_count": 0,
+    "t0_state_path": "config/yios_g1/gold_state_t0.v1.json",
+    "b2_b3_used_as_t0_evidence": false,
+    "post_t0_price_used_to_form_t0_claim": false
+  },
+  "hypothesis_results": {
+    "H1_OFFICIAL_DEMAND_STRUCTURAL": {
+      "status": "INDETERMINATE",
+      "observed_future_annual_official_demand_tonnes": {
+        "2024": 1044.6,
+        "2025": 863.3
+      },
+      "frozen_threshold": "P75(rolling_12m_official_net_purchases, 2010-01-01..2019-12-31) using only data known at T0",
+      "threshold_value": null,
+      "reason": "No coherent exact T0-vintage rolling-12m official-demand series for the full 2010-2019 threshold window is materialized in the governed runtime. World Gold Council historical demand tables are revision-prone across vintages; mixing later vintages to manufacture the threshold is forbidden.",
+      "authority_action": "UNKNOWN_DENY_DECISIVE_SUPPORT"
+    },
+    "H2_TRADITIONAL_MACRO_DECOUPLING": {
+      "status": "SUPPORTED",
+      "metric": "cumulative log Gold return residual versus frozen B0 traditional macro baseline",
+      "positive_windows": "4/4",
+      "windows": {
+        "T+3M": {"cutoff": "2024-04-30", "cumulative_b0_residual_log_pct": 13.159744628679},
+        "T+6M": {"cutoff": "2024-07-31", "cumulative_b0_residual_log_pct": 15.7785512393508},
+        "T+12M": {"cutoff": "2025-01-31", "cumulative_b0_residual_log_pct": 27.5074997964836},
+        "T+24M": {"cutoff": "2026-01-31", "cumulative_b0_residual_log_pct": 75.6115226190574}
+      },
+      "defeat_triggered": false
+    },
+    "H3_PRICE_CONFIRMATION": {
+      "status": "SUPPORTED",
+      "metric": "cumulative log Gold return after T0",
+      "positive_windows": "4/4",
+      "windows": {
+        "T+3M": {"cutoff": "2024-04-30", "cumulative_log_gold_return_pct": 13.6293062427252},
+        "T+6M": {"cutoff": "2024-07-31", "cumulative_log_gold_return_pct": 16.4630758978954},
+        "T+12M": {"cutoff": "2025-01-31", "cumulative_log_gold_return_pct": 28.6944337265241},
+        "T+24M": {"cutoff": "2026-01-31", "cumulative_log_gold_return_pct": 84.8771700005504}
+      },
+      "defeat_triggered": false
+    },
+    "H4_NARRATIVE_PRIVATE_DEMAND_BROADENING": {
+      "status": "EXPLORATORY_ONLY",
+      "decisive": false,
+      "t0_observation": "Private demand was mixed at T0: global ETF outflows coexisted with resilient bar-and-coin demand; no decisive primary settlement is assigned."
+    }
+  },
+  "baseline_forward_readback": {
+    "measurement_period": "2024-02-29_to_2026-01-31",
+    "months": 24,
+    "B0_TRADITIONAL_MACRO": {
+      "rmse": 4.59739791982403,
+      "mae": 3.39853402948101,
+      "sign_accuracy": 0.9166666666666667
+    },
+    "B1_NULL_PRICE_ONLY": {
+      "rmse": 4.67959381509622,
+      "mae": 3.617070681837,
+      "sign_accuracy": 0.7916666666666666
+    },
+    "interpretation": "B0 modestly beats B1 on the sealed forward period while Gold also exhibits large positive residual performance. This is not a tradability claim."
+  },
+  "primary_claim": "GOLD_EARLY_MONETARY_REGIME_REPRICING",
+  "primary_research_settlement_candidate": "INDETERMINATE",
+  "settlement_reason": "H2 and H3 satisfy their preregistered support laws, but H1 cannot be decisively evaluated without the exact coherent T0-vintage threshold. The primary claim requires H1 + H2 + H3; UNKNOWN therefore fails closed to INDETERMINATE rather than being converted into SUPPORT by the later Gold price rise.",
+  "ablations": {
+    "ABL-1_REMOVE_OFFICIAL_DEMAND": "PRIMARY_SETTLEMENT_NOT_IDENTIFIABLE",
+    "ABL-2_REMOVE_FISCAL_AND_NARRATIVE": "H2_AND_H3_RESULTS_UNCHANGED; H4_NOT_DECISIVE",
+    "ABL-3_AUTHORITY_DOWNGRADE_TO_SECONDARY": "DECISIVE_SETTLEMENT_DENIED",
+    "ABL-4_B0_ONLY_RECONSTRUCTION": "H2_SUPPORTED_BUT_PRIMARY_CLAIM_NOT_SETTLED"
+  },
+  "hard_negative_results": {
+    "PRICE_UP_ONLY": "REJECTED_AS_SUFFICIENT_PROOF",
+    "OFFICIAL_DEMAND_ONLY": "REJECTED_AS_SUFFICIENT_PROOF",
+    "NARRATIVE_ONLY": "REJECTED_AS_SUFFICIENT_PROOF",
+    "POST_T0_LEAKAGE": "PASS_ZERO_LEAKAGE",
+    "B2_B3_RETROJECTION": "PASS_NOT_USED_IN_T0_STATE",
+    "NEGATIVE_EVIDENCE_REWRITE": "PASS_NO_REWRITE",
+    "RESEARCH_TO_CAPITAL_AUTO_PROMOTION": "PASS_BLOCKED",
+    "RESEARCH_TO_EXECUTION_AUTO_PROMOTION": "PASS_BLOCKED"
+  },
+  "system_integrity_settlement": {
+    "pit_integrity": "PASS",
+    "defeatability": "PASS",
+    "candidate_self_settlement_blocked": "PASS",
+    "authority_separation": "PASS",
+    "unknown_deny": "PASS",
+    "learning_integrity": "PASS"
+  },
+  "authority_state": "RESEARCH_SETTLEMENT_CANDIDATE_ONLY",
+  "human_settlement_required": "ACCEPT_GOLD_G1_RESEARCH_SETTLEMENT",
+  "non_authorizations": {
+    "capital_authorized": false,
+    "position_sizing_authorized": false,
+    "yvn1_a1_runtime_authorized": false,
+    "veighna_installation_authorized": false,
+    "veighna_invocation_authorized": false,
+    "broker_credentials_authorized": false,
+    "broker_connection_authorized": false,
+    "broker_paper_authorized": false,
+    "live_execution_authorized": false,
+    "real_capital_movement_authorized": false,
+    "automatic_research_to_execution_authorized": false
+  },
+  "compressed_result": "H1=INDETERMINATE; H2=SUPPORTED; H3=SUPPORTED; PRIMARY=INDETERMINATE; RESEARCH_ONLY"
+}

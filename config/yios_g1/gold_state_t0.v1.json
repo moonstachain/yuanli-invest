@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "case_id": "YIOS-GOLD-001",
+  "asset": "GOLD",
+  "known_as_of": "2024-01-31T23:59:59-05:00",
+  "future_leakage_count": 0,
+  "authority": "RESEARCH_STATE_ONLY",
+  "identity_state": {
+    "asset": "Gold",
+    "candidate_species": "Monetary Scarcity",
+    "candidate_engine": "S / R",
+    "candidate_state": "Early Monetary-Regime Repricing",
+    "candidate_only": true
+  },
+  "reality_state": {
+    "gold_usd_oz": 2034.0,
+    "usd_broad_index": 120.4331,
+    "inflation_yoy": 3.29776915615907,
+    "real_rate_10y": 1.73,
+    "pit_panel": "gold_core_monthly_v0.1",
+    "measurement_regime": "2006_plus_modern"
+  },
+  "monetary_state": {
+    "fed_target_range_percent": [5.25, 5.5],
+    "fed_policy_description": "restrictive_hold_with_inflation_still_elevated",
+    "pce_yoy_percent": 2.6,
+    "core_pce_yoy_percent": 2.9,
+    "cpi_yoy_official_release_percent": 3.4
+  },
+  "price_state": {
+    "state": "high_price_but_no_post_t0_confirmation_admitted",
+    "reference_value_from_pit_panel": 2034.0,
+    "price_confirmation_status": "NOT_YET_OBSERVED_AT_T0"
+  },
+  "demand_state": {
+    "official_demand": {
+      "latest_full_year_net_purchases_tonnes": 1037.4,
+      "latest_full_year": 2023,
+      "interpretation": "two_consecutive_years_above_1000t",
+      "decisive_h1_threshold_available": false
+    },
+    "private_demand": {
+      "global_etf_flow_tonnes_latest_full_year": -244.4,
+      "bar_and_coin_tonnes_latest_full_year": 1189.5,
+      "interpretation": "mixed_private_demand"
+    }
+  },
+  "narrative_state": {
+    "admitted": [
+      "central_bank_buying_is_structurally_salient",
+      "rate_cut_expectations_are_relevant_but_not_yet_realized",
+      "geopolitical_and_otc_demand_are_plausible_supports"
+    ],
+    "exploratory_only": true
+  },
+  "regime_state": {
+    "candidate": "EARLY_MONETARY_REGIME_REPRICING",
+    "status": "RESEARCH_CANDIDATE_NOT_SETTLED",
+    "supporting_at_t0": [
+      "official_demand_above_1000t_for_second_successive_year",
+      "gold_resilience_despite_positive_real_rate",
+      "private_demand_not_uniformly_bullish"
+    ],
+    "opposing_at_t0": [
+      "restrictive_fed_policy",
+      "positive_real_rate",
+      "global_gold_etf_outflows"
+    ]
+  },
+  "unknown_state": {
+    "decisive_unknowns": [
+      "coherent_exact_T0_vintage_rolling_12m_official_net_purchase_series_for_2010_2019_P75_threshold"
+    ],
+    "non_decisive_unknowns": [
+      "future_rate_cut_path",
+      "future_private_demand_broadening",
+      "future_price_confirmation",
+      "future_macro_residual_persistence"
+    ]
+  },
+  "falsifier_state": {
+    "H1": "T+12M_or_T+24M_official_rolling12m_at_or_below_frozen_P75_threshold_with_sufficient_authority",
+    "H2": "T+12M_residual_le_0_or_T+24M_residual_le_0",
+    "H3": "T+12M_return_le_0_or_T+24M_return_le_0"
+  },
+  "authority_state": {
+    "research_claim_authority": "CANDIDATE_ONLY",
+    "capital_authority": false,
+    "execution_authority": false,
+    "broker_authority": false
+  },
+  "source_lineage": {
+    "gold_snapshot_id": "71d24a7e-33d2-4775-9b43-f9d521881e21",
+    "cpi_snapshot_id": "6150296d-bb92-4e90-9451-4e0812692680",
+    "real_rate_snapshot_id": "ec23477e-04bf-4255-aefd-4d8493acf125",
+    "usd_snapshot_id": "202f0c3c-25f0-4849-9140-d6249817f1a3",
+    "official_demand_source": "World Gold Council Gold Demand Trends Full Year 2023",
+    "fed_source": "Federal Reserve FOMC statement 2024-01-31",
+    "cpi_source": "BLS CPI December 2023 release 2024-01-11",
+    "pce_source": "BEA Personal Income and Outlays December 2023 release 2024-01-26"
+  }
+}
