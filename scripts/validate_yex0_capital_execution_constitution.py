@@ -12,6 +12,7 @@ VNEXT = ROOT / "packages" / "contracts" / "schemas" / "vnext"
 CONFIG = ROOT / "config" / "yex0" / "yex0_constitution.v0.1.json"
 FIXTURE = ROOT / "fixtures" / "yex0" / "yex0_positive_bundle.v0.1.json"
 POSITION_PASSPORT = VNEXT / "position-passport.schema.json"
+ACCEPTANCE = ROOT / "docs" / "architecture" / "yex0" / "YEX0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 
 SCHEMAS = {
     "capital_admission": VNEXT / "capital-admission.schema.json",
@@ -67,6 +68,75 @@ def validate_constitution() -> None:
         "NO_LIVE_AUTHORITY_IN_YEX0",
     }
     require(required_laws.issubset(set(c["laws"])), "constitutional law missing")
+
+
+def validate_human_acceptance() -> None:
+    require(ACCEPTANCE.exists(), "human acceptance receipt missing")
+    receipt = load_json(ACCEPTANCE)
+    require(receipt["schema_version"] == "0.1.0", "acceptance receipt schema drift")
+    require(receipt["stage"] == "YEX0_CAPITAL_EXECUTION_CONSTITUTION", "acceptance stage mismatch")
+    require(receipt["decision"] == "ACCEPT_YEX0_CAPITAL_EXECUTION_CONSTITUTION", "acceptance decision mismatch")
+    require(receipt["pr_number"] == 73, "acceptance PR mismatch")
+    require(
+        receipt["reviewed_head_sha"] == "8767005c8a78f5426cfcadc3fb643a221132d96b",
+        "acceptance reviewed head mismatch",
+    )
+    reviewed_ci = receipt["reviewed_ci"]
+    require(reviewed_ci["workflow"] == "repository-gates", "acceptance CI workflow mismatch")
+    require(reviewed_ci["run_number"] == 675, "acceptance CI run number mismatch")
+    require(reviewed_ci["run_id"] == 34307619838, "acceptance CI run id mismatch")
+    require(reviewed_ci["conclusion"] == "success", "reviewed CI did not pass")
+    for key in ("contracts", "governance", "yex0_validator", "unit_tests"):
+        require(reviewed_ci[key] == "success", f"reviewed CI component not successful: {key}")
+    require(receipt["formal_review"] == "14/14 PASS", "formal review mismatch")
+    parse_time(receipt["accepted_at"])
+
+    accepted = receipt["accepted_decisions"]
+    require(
+        accepted["authority_separation"] == "ResearchAuthority != CapitalAuthority != ExecutionAuthority",
+        "accepted authority separation drift",
+    )
+    for key in (
+        "position_passport_non_executable",
+        "capital_admission_ne_execution",
+        "intent_ne_authorization",
+        "action_contract_bounded_expiring_idempotent",
+        "unknown_equals_deny",
+        "receipt_equals_ledger_status_equals_projection",
+        "four_way_reconciliation_required",
+        "research_failure_ne_execution_failure",
+        "execution_provider_ne_sovereign_authority",
+        "golden_failure_immutable",
+        "no_live_authority_in_yex0",
+    ):
+        require(accepted[key] is True, f"accepted decision missing: {key}")
+    require(
+        accepted["next_battle_after_merge"] == "YVN1-A0_SHADOW_EXECUTION_CONSTITUTION_DEPLOYMENT_FREEZE",
+        "next battle drift",
+    )
+
+    boundaries = receipt["boundaries_preserved"]
+    for key in (
+        "merge_authorized",
+        "yvn1_authorized",
+        "yvn2_authorized",
+        "yvn3_authorized",
+        "veighna_invocation_authorized",
+        "broker_credentials_authorized",
+        "market_data_subscription_authorized",
+        "broker_paper_authorized",
+        "live_execution_authorized",
+        "real_capital_movement_authorized",
+        "portfolio_weight_authorized",
+        "position_sizing_authorized",
+        "order_submission_authorized",
+        "canon_promotion_authorized",
+    ):
+        require(boundaries[key] is False, f"acceptance escalated authority: {key}")
+    require(receipt["merge_authority"] == "not_implied_by_acceptance", "merge authority silently implied")
+    require(receipt["required_merge_token"] == "AUTHORIZE_YEX0_MERGE", "merge token drift")
+    require(receipt["post_acceptance_ci"] == "required_on_acceptance_record_head", "post-acceptance CI not required")
+    require(receipt["next_gate"] == "YEX0_POST_ACCEPTANCE_CI", "acceptance next gate drift")
 
 
 def validate_schema_shapes(bundle: dict[str, Any]) -> None:
@@ -234,7 +304,9 @@ def validate_bundle(bundle: dict[str, Any]) -> None:
 def main() -> None:
     bundle = load_fixture_bundle()
     validate_bundle(bundle)
+    validate_human_acceptance()
     print("YEX0_CONSTITUTION_MACHINE_QUALIFIED")
+    print("YEX0_HUMAN_ACCEPTANCE_RECORDED")
 
 
 if __name__ == "__main__":
