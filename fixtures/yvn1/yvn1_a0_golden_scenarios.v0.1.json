@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.1.0",
+  "program_id": "YVN1-A1",
+  "registry_status": "preregistered_by_yvn1_a0",
+  "scenarios": [
+    {"scenario_id": "S01", "priority": "P1", "name": "happy_path_full_fill", "required_terminal_behavior": "SHADOW_EXECUTION_SETTLED", "required_invariants": ["one_provider_submission", "four_way_match", "replay_deterministic"]},
+    {"scenario_id": "S02", "priority": "P1", "name": "partial_fill_then_full_fill", "required_terminal_behavior": "SHADOW_EXECUTION_SETTLED_AFTER_FINAL_RECONCILIATION", "required_invariants": ["partial_state_observed", "final_four_way_match", "replay_deterministic"]},
+    {"scenario_id": "S03", "priority": "P1", "name": "provider_order_reject", "required_terminal_behavior": "REJECTED", "required_invariants": ["no_unexplained_state", "no_duplicate_submission"]},
+    {"scenario_id": "S04", "priority": "P1", "name": "duplicate_action_contract_delivery", "required_terminal_behavior": "SHADOW_EXECUTION_SETTLED", "required_invariants": ["duplicate_order_submission_equals_0", "one_provider_submission"]},
+    {"scenario_id": "S05", "priority": "P1", "name": "contract_expired_before_execution", "required_terminal_behavior": "EXPIRED", "required_invariants": ["provider_submission_equals_0"]},
+    {"scenario_id": "S06", "priority": "P1", "name": "provider_timeout_before_clear_ack", "required_terminal_behavior": "AMBIGUITY_FAIL_CLOSED_OR_RECONCILED", "required_invariants": ["no_blind_resubmit", "duplicate_order_submission_equals_0"]},
+    {"scenario_id": "S07", "priority": "P0", "name": "crash_after_submit_before_ack_persistence", "required_terminal_behavior": "RECOVERED_WITHOUT_DUPLICATE_OR_FAIL_CLOSED", "required_invariants": ["duplicate_order_submission_equals_0", "replay_deterministic", "unknown_equals_deny"]},
+    {"scenario_id": "S08", "priority": "P1", "name": "late_fill_after_reconnect", "required_terminal_behavior": "SHADOW_EXECUTION_SETTLED_OR_FAIL_CLOSED", "required_invariants": ["late_reality_recorded", "reconciled_or_explicit_fail_closed"]},
+    {"scenario_id": "S09", "priority": "P1", "name": "unknown_external_order", "required_terminal_behavior": "DRIFTED_FAIL_CLOSED", "required_invariants": ["unknown_external_order_detected", "no_further_side_effect"]},
+    {"scenario_id": "S10", "priority": "P1", "name": "position_or_cash_drift", "required_terminal_behavior": "DRIFTED_FAIL_CLOSED", "required_invariants": ["position_or_cash_drift_detected", "no_further_side_effect"]}
+  ]
+}
