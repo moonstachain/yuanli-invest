@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yvn1-provider-state:0.1.0",
+  "title": "ProviderState",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "snapshot_id", "stream_id", "state_source", "as_of", "orders", "trades", "positions", "cash", "provider_health"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "snapshot_id": {"type": "string", "pattern": "^PS-[A-Z0-9-]+$"},
+    "stream_id": {"type": "string", "minLength": 1},
+    "state_source": {"enum": ["shadow_oms", "synthetic_broker_custodian"]},
+    "as_of": {"type": "string", "format": "date-time"},
+    "orders": {"type": "array", "items": {"type": "object"}},
+    "trades": {"type": "array", "items": {"type": "object"}},
+    "positions": {"type": "array", "items": {"type": "object"}},
+    "cash": {"type": "number"},
+    "provider_health": {"enum": ["HEALTHY", "DEGRADED", "UNKNOWN"]}
+  }
+}

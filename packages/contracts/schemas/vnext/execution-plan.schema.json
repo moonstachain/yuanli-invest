@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yvn1-execution-plan:0.1.0",
+  "title": "ExecutionPlan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["execution_plan_id", "schema_version", "action_contract_id", "execution_intent_id", "created_at", "idempotency_key", "provider_kind", "execution_mode", "scope", "live_execution_authorized", "real_capital_movement_authorized"],
+  "properties": {
+    "execution_plan_id": {"type": "string", "pattern": "^EP-[A-Z0-9-]+$"},
+    "schema_version": {"const": "0.1.0"},
+    "action_contract_id": {"type": "string", "pattern": "^AC-[A-Z0-9-]+$"},
+    "execution_intent_id": {"type": "string", "pattern": "^EI-[A-Z0-9-]+$"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "idempotency_key": {"type": "string", "minLength": 8},
+    "provider_kind": {"const": "synthetic_shadow"},
+    "execution_mode": {"const": "shadow"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_quantity_abs", "max_notional", "max_loss", "max_slippage_bps", "allowed_venues"],
+      "properties": {
+        "max_quantity_abs": {"type": "number", "minimum": 0},
+        "max_notional": {"type": "number", "minimum": 0},
+        "max_loss": {"type": "number", "minimum": 0},
+        "max_slippage_bps": {"type": "number", "minimum": 0},
+        "allowed_venues": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "live_execution_authorized": {"const": false},
+    "real_capital_movement_authorized": {"const": false}
+  }
+}
