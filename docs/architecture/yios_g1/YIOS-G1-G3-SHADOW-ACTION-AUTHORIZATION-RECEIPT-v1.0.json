@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-G3",
+  "case_id": "YIOS-GOLD-001",
+  "decision": "AUTHORIZE_GOLD_G1_SHADOW_ACTION",
+  "authorized_at": "2026-09-09T19:49:00+08:00",
+  "repository": "moonstachain/yuanli-invest",
+  "source_pr_number": 77,
+  "source_branch": "yios-g1-g1-gold-reality-trial",
+  "research_acceptance_receipt": "docs/architecture/yios_g1/YIOS-G1-G1-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json",
+  "research_acceptance_head_sha": "e0800feb900efe7e4f0bb09d5e7a6b65364fcba6",
+  "research_acceptance_ci": {
+    "workflow": "repository-gates",
+    "run_number": 730,
+    "run_id": 34347463546,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "gold_reality_trial_validator": "success",
+    "full_unittest_discovery": "success"
+  },
+  "authorized_scope": {
+    "chain": [
+      "Research Settlement",
+      "Capital Admission",
+      "Shadow PositionPassport",
+      "Synthetic ActionContract",
+      "Execution Shadow",
+      "Four-Way Reconciliation",
+      "Execution Settlement",
+      "Learning"
+    ],
+    "execution_mode": "shadow",
+    "internal_synthetic_only": true,
+    "case_bound": true,
+    "case_id": "YIOS-GOLD-001",
+    "capital_gate_may_deny": true,
+    "authorization_does_not_force_admission": true,
+    "unknown_semantics": "DENY"
+  },
+  "research_state_at_authorization": {
+    "H1_OFFICIAL_DEMAND_STRUCTURAL": "INDETERMINATE",
+    "H2_TRADITIONAL_MACRO_DECOUPLING": "SUPPORTED",
+    "H3_PRICE_CONFIRMATION": "SUPPORTED",
+    "primary_settlement": "INDETERMINATE"
+  },
+  "boundaries_preserved": {
+    "merge_authorized": false,
+    "positive_capital_admission_forced": false,
+    "position_sizing_authorized": false,
+    "yvn1_a1_runtime_authorized": false,
+    "veighna_installation_authorized": false,
+    "veighna_invocation_authorized": false,
+    "broker_credentials_authorized": false,
+    "broker_connection_authorized": false,
+    "market_data_subscription_authorized": false,
+    "broker_paper_authorized": false,
+    "live_execution_authorized": false,
+    "real_capital_movement_authorized": false,
+    "automatic_research_to_execution_authorized": false
+  },
+  "authority_note": "G3 authorizes execution of the governed internal shadow/synthetic chain only. It cannot override UNKNOWN = DENY, cannot convert an INDETERMINATE research settlement into ResearchPass or CapitalPass, and cannot create broker/live/real-capital authority.",
+  "next_action": "RUN_GOLD_SHADOW_ACTION_CHAIN_FAIL_CLOSED_IF_CAPITAL_GATE_DENIES"
+}

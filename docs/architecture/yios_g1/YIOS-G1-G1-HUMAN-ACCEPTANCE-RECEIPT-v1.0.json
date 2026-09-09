@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-G2",
+  "case_id": "YIOS-GOLD-001",
+  "decision": "ACCEPT_GOLD_G1_RESEARCH_SETTLEMENT",
+  "accepted_at": "2026-09-09T19:46:25+08:00",
+  "repository": "moonstachain/yuanli-invest",
+  "pr_number": 77,
+  "candidate_branch": "yios-g1-g1-gold-reality-trial",
+  "reviewed_exact_head_sha": "ee43aac0a48af07fc8d2f8984772fcc687a332a3",
+  "reviewed_repository_gate": {
+    "workflow": "repository-gates",
+    "run_number": 729,
+    "run_id": 34346151000,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "gold_reality_trial_validator": "success",
+    "full_unittest_discovery": "success"
+  },
+  "formal_review": "16/16 PASS",
+  "accepted_research_settlement": {
+    "pit_integrity": "PASS",
+    "H1_OFFICIAL_DEMAND_STRUCTURAL": "INDETERMINATE",
+    "H2_TRADITIONAL_MACRO_DECOUPLING": "SUPPORTED",
+    "H3_PRICE_CONFIRMATION": "SUPPORTED",
+    "H4_NARRATIVE_PRIVATE_DEMAND_BROADENING": "EXPLORATORY_ONLY",
+    "primary_claim": "GOLD_EARLY_MONETARY_REGIME_REPRICING",
+    "primary_settlement": "INDETERMINATE",
+    "acceptance_does_not_convert_indeterminate_to_supported": true,
+    "unknown_semantics": "DENY"
+  },
+  "boundaries_preserved": {
+    "merge_authorized": false,
+    "shadow_action_authorized_by_g2": false,
+    "capital_admitted_by_g2": false,
+    "position_sizing_authorized": false,
+    "yvn1_a1_runtime_authorized": false,
+    "veighna_installation_authorized": false,
+    "veighna_invocation_authorized": false,
+    "broker_credentials_authorized": false,
+    "broker_connection_authorized": false,
+    "broker_paper_authorized": false,
+    "live_execution_authorized": false,
+    "real_capital_movement_authorized": false,
+    "automatic_research_to_execution_authorized": false
+  },
+  "authority_note": "G2 accepts the machine-qualified research settlement exactly as INDETERMINATE. It does not create CapitalAuthority or ExecutionAuthority and does not imply merge. Shadow Action requires the independent token AUTHORIZE_GOLD_G1_SHADOW_ACTION.",
+  "next_gate": "YIOS_G1_G3_SHADOW_ACTION_AUTHORIZATION",
+  "required_next_token": "AUTHORIZE_GOLD_G1_SHADOW_ACTION"
+}
