@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-A0",
+  "case_id": "YIOS-GOLD-001",
+  "decision": "ACCEPT_GOLD_G1_CASE_CONSTITUTION",
+  "accepted_at": "2026-09-09T19:11:00+08:00",
+  "repository": "moonstachain/yuanli-invest",
+  "pr_number": 76,
+  "candidate_branch": "yios-g1-a0-gold-genesis-case-constitution",
+  "reviewed_exact_head_sha": "818bf1d2b5509bbfac99bb53e027e70cead01a74",
+  "reviewed_repository_gate": {
+    "workflow": "repository-gates",
+    "run_number": 714,
+    "run_id": 34343071869,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "full_unittest_discovery": "success"
+  },
+  "accepted_constitution": {
+    "historical_t0": "2024-01-31T23:59:59-05:00",
+    "pit_rule": "known_as_of <= T0",
+    "two_clock_invariant": "GOVERNANCE_KNOWLEDGE_2026 != HISTORICAL_KNOWLEDGE_AT_T0",
+    "primary_claim": "GOLD_EARLY_MONETARY_REGIME_REPRICING",
+    "mandatory_hypotheses": [
+      "H1_OFFICIAL_DEMAND_STRUCTURAL",
+      "H2_TRADITIONAL_MACRO_DECOUPLING",
+      "H3_PRICE_CONFIRMATION"
+    ],
+    "exploratory_hypothesis": "H4_NARRATIVE_PRIVATE_DEMAND_BROADENING",
+    "settlement_windows": ["T+3M", "T+6M", "T+12M", "T+24M"],
+    "price_up_alone_can_pass": false,
+    "candidate_cannot_self_settle": true,
+    "research_pass_does_not_imply_capital_pass": true
+  },
+  "boundaries_preserved": {
+    "reality_trial_authorized_by_g0": false,
+    "capital_authorized": false,
+    "position_sizing_authorized": false,
+    "yvn1_a1_runtime_authorized": false,
+    "veighna_installation_authorized": false,
+    "veighna_invocation_authorized": false,
+    "broker_credentials_authorized": false,
+    "broker_connection_authorized": false,
+    "broker_paper_authorized": false,
+    "live_execution_authorized": false,
+    "real_capital_movement_authorized": false,
+    "automatic_research_to_execution_authorized": false
+  },
+  "authority_note": "G0 accepts the frozen Case Constitution only. Reality Trial requires the independent token AUTHORIZE_GOLD_G1_REALITY_TRIAL.",
+  "next_gate": "YIOS_G1_G1_REALITY_TRIAL_AUTHORIZATION",
+  "required_next_token": "AUTHORIZE_GOLD_G1_REALITY_TRIAL"
+}
