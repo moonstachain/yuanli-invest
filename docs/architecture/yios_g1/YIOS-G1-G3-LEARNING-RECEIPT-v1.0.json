@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-G3",
+  "case_id": "YIOS-GOLD-001",
+  "learning_outcome": "DENIAL_IS_VALID_EXECUTION_OUTCOME",
+  "observed_chain": {
+    "research_settlement": "INDETERMINATE",
+    "capital_admission": "DENY",
+    "shadow_position_passport": "CANCELLED_ZERO_AUTHORITY",
+    "synthetic_action_contract": "ZERO_SCOPE_SHADOW_ONLY",
+    "execution_shadow": "NO_ORDER_PATH_INVOKED",
+    "four_way_reconciliation": "COMPLETE_WITH_MATCHED_AND_NOT_APPLICABLE_LEGS",
+    "execution_settlement": "FAIL_CLOSED"
+  },
+  "learning": [
+    "Human authorization to run the Shadow Action layer does not force Capital Admission.",
+    "UNKNOWN = DENY propagates across the Research-to-Capital firewall when the accepted primary research settlement remains INDETERMINATE.",
+    "A large ex-post Gold rally and supported H2/H3 do not override the missing decisive H1 evidence gate.",
+    "A PositionPassport can exist as a cancelled zero-authority shadow artifact without creating sizing or trade authority.",
+    "A zero-scope synthetic ActionContract can test execution governance without submitting any order or invoking OMS/broker infrastructure.",
+    "Four-Way Reconciliation remains meaningful in a denial path: absent OMS/broker legs are explicitly NOT_APPLICABLE rather than silently assumed matched.",
+    "FAIL_CLOSED is a successful governance outcome when the system prevents unauthorized capital or execution escalation."
+  ],
+  "authority_changes": {
+    "capital_authority_granted": false,
+    "position_sizing_authority_granted": false,
+    "execution_authority_granted": false,
+    "broker_authority_granted": false,
+    "live_authority_granted": false,
+    "real_capital_authority_granted": false
+  },
+  "source_refs": {
+    "research_result": "config/yios_g1/gold_g1_reality_trial.v1.json",
+    "research_acceptance": "docs/architecture/yios_g1/YIOS-G1-G1-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json",
+    "shadow_authorization": "docs/architecture/yios_g1/YIOS-G1-G3-SHADOW-ACTION-AUTHORIZATION-RECEIPT-v1.0.json",
+    "position_passport": "config/yios_g1/gold_g3_shadow_position_passport.v1.json",
+    "shadow_action_bundle": "config/yios_g1/gold_g3_shadow_action.v1.json"
+  },
+  "next_learning_question": "What additional governed evidence would be required to resolve H1 without hindsight or mixed-vintage reconstruction?"
+}
