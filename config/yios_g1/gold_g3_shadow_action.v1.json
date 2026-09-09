@@ -1,0 +1,233 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-G3",
+  "case_id": "YIOS-GOLD-001",
+  "source_authorization": {
+    "decision": "AUTHORIZE_GOLD_G1_SHADOW_ACTION",
+    "receipt": "docs/architecture/yios_g1/YIOS-G1-G3-SHADOW-ACTION-AUTHORIZATION-RECEIPT-v1.0.json",
+    "authorization_head_sha": "a28b8b3949f8c6c496c6f5faf9bf2a6e2977810d"
+  },
+  "research_settlement": {
+    "acceptance_receipt": "docs/architecture/yios_g1/YIOS-G1-G1-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json",
+    "result_ref": "config/yios_g1/gold_g1_reality_trial.v1.json",
+    "H1_OFFICIAL_DEMAND_STRUCTURAL": "INDETERMINATE",
+    "H2_TRADITIONAL_MACRO_DECOUPLING": "SUPPORTED",
+    "H3_PRICE_CONFIRMATION": "SUPPORTED",
+    "primary_settlement": "INDETERMINATE",
+    "unknown_semantics": "DENY"
+  },
+  "capital_admission": {
+    "capital_admission_id": "CA-YIOS-GOLD-001-SHADOW",
+    "schema_version": "0.1.0",
+    "research_settlement_ref": "config/yios_g1/gold_g1_reality_trial.v1.json",
+    "position_passport_id": "PP-YIOS-GOLD-001-SHADOW",
+    "decision": "deny",
+    "capital_book_id": "BOOK-SHADOW-DENIED",
+    "risk_budget": {
+      "max_notional": 0,
+      "max_loss": 0
+    },
+    "mode_eligibility": ["shadow"],
+    "human_decision_ref": "docs/architecture/yios_g1/YIOS-G1-G3-SHADOW-ACTION-AUTHORIZATION-RECEIPT-v1.0.json",
+    "lifecycle": {
+      "created_at": "2026-09-09T19:50:00+08:00",
+      "valid_from": "2026-09-09T19:50:00+08:00",
+      "expires_at": "2026-09-09T20:00:00+08:00"
+    },
+    "authority": {
+      "order_submission_authority": false,
+      "live_execution_authority": false,
+      "real_capital_movement_authority": false
+    }
+  },
+  "position_passport_ref": "config/yios_g1/gold_g3_shadow_position_passport.v1.json",
+  "execution_intent": {
+    "execution_intent_id": "EI-YIOS-GOLD-001-SHADOW",
+    "schema_version": "0.1.0",
+    "capital_admission_id": "CA-YIOS-GOLD-001-SHADOW",
+    "position_passport_id": "PP-YIOS-GOLD-001-SHADOW",
+    "instrument_ref": "GOLD.SHADOW.NOOP",
+    "direction": "flatten",
+    "quantity_delta": 0,
+    "limits": {
+      "max_quantity_abs": 0,
+      "max_notional": 0,
+      "max_loss": 0,
+      "max_slippage_bps": 0
+    },
+    "allowed_venues": ["SIMULATED"],
+    "created_at": "2026-09-09T19:51:00+08:00",
+    "valid_from": "2026-09-09T19:51:00+08:00",
+    "expires_at": "2026-09-09T19:59:00+08:00",
+    "idempotency_key": "yios-gold-001-g3-intent-v1",
+    "self_execution_authorized": false
+  },
+  "action_contract": {
+    "action_contract_id": "AC-YIOS-GOLD-001-SHADOW",
+    "schema_version": "0.1.0",
+    "execution_intent_id": "EI-YIOS-GOLD-001-SHADOW",
+    "capital_admission_id": "CA-YIOS-GOLD-001-SHADOW",
+    "human_approval_ref": "docs/architecture/yios_g1/YIOS-G1-G3-SHADOW-ACTION-AUTHORIZATION-RECEIPT-v1.0.json",
+    "issued_at": "2026-09-09T19:52:00+08:00",
+    "expires_at": "2026-09-09T19:58:00+08:00",
+    "execution_mode": "shadow",
+    "idempotency_key": "yios-gold-001-g3-contract-v1",
+    "contract_hash": "sha256:89b5d3fe294f40c99feb8de23f74b191183dbd9409695d77737afc60e47c949a",
+    "scope": {
+      "max_quantity_abs": 0,
+      "max_notional": 0,
+      "max_loss": 0,
+      "max_slippage_bps": 0,
+      "allowed_venues": ["SIMULATED"]
+    },
+    "live_execution_authorized": false,
+    "real_capital_movement_authorized": false
+  },
+  "execution_events": [
+    {
+      "event_id": "EE-YIOS-GOLD-001-001",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YIOS-GOLD-001-SHADOW",
+      "sequence": 1,
+      "execution_intent_id": "EI-YIOS-GOLD-001-SHADOW",
+      "action_contract_id": "AC-YIOS-GOLD-001-SHADOW",
+      "idempotency_key": "yios-gold-001-g3-event-001",
+      "event_type": "IntentCreated",
+      "occurred_at": "2026-09-09T19:52:05+08:00",
+      "recorded_at": "2026-09-09T19:52:05+08:00",
+      "payload": {
+        "quantity_delta": 0,
+        "instrument_ref": "GOLD.SHADOW.NOOP",
+        "capital_decision": "deny"
+      },
+      "previous_event_hash": null,
+      "event_hash": "sha256:c1db6e8199ce6142400440cf90d83598850a77a78f54ed936c70ce9e5f77bdf1",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YIOS-GOLD-001-002",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YIOS-GOLD-001-SHADOW",
+      "sequence": 2,
+      "execution_intent_id": "EI-YIOS-GOLD-001-SHADOW",
+      "action_contract_id": "AC-YIOS-GOLD-001-SHADOW",
+      "idempotency_key": "yios-gold-001-g3-event-002",
+      "event_type": "CapitalAdmissionObserved",
+      "occurred_at": "2026-09-09T19:52:10+08:00",
+      "recorded_at": "2026-09-09T19:52:10+08:00",
+      "payload": {
+        "capital_admission_id": "CA-YIOS-GOLD-001-SHADOW",
+        "decision": "deny",
+        "risk_budget": {"max_notional": 0, "max_loss": 0},
+        "reason": "PRIMARY_RESEARCH_SETTLEMENT_INDETERMINATE_UNKNOWN_EQUALS_DENY"
+      },
+      "previous_event_hash": "sha256:c1db6e8199ce6142400440cf90d83598850a77a78f54ed936c70ce9e5f77bdf1",
+      "event_hash": "sha256:54d868633fd7f3c63d2df6852c6f4dac251788dc3de96a192864ef8324dc67e1",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YIOS-GOLD-001-003",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YIOS-GOLD-001-SHADOW",
+      "sequence": 3,
+      "execution_intent_id": "EI-YIOS-GOLD-001-SHADOW",
+      "action_contract_id": "AC-YIOS-GOLD-001-SHADOW",
+      "idempotency_key": "yios-gold-001-g3-event-003",
+      "event_type": "ExecutionFailureObserved",
+      "occurred_at": "2026-09-09T19:52:15+08:00",
+      "recorded_at": "2026-09-09T19:52:15+08:00",
+      "payload": {
+        "failure_class": "GOVERNED_FAIL_CLOSED",
+        "reason": "CAPITAL_ADMISSION_DENIED_UNKNOWN_EQUALS_DENY",
+        "order_path_invoked": false
+      },
+      "previous_event_hash": "sha256:54d868633fd7f3c63d2df6852c6f4dac251788dc3de96a192864ef8324dc67e1",
+      "event_hash": "sha256:b32b683a63c515f5e77e21ec91a0a4f507f76d230dc0e245e744425f63961e86",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YIOS-GOLD-001-004",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YIOS-GOLD-001-SHADOW",
+      "sequence": 4,
+      "execution_intent_id": "EI-YIOS-GOLD-001-SHADOW",
+      "action_contract_id": "AC-YIOS-GOLD-001-SHADOW",
+      "idempotency_key": "yios-gold-001-g3-event-004",
+      "event_type": "ReconciliationMatched",
+      "occurred_at": "2026-09-09T19:52:20+08:00",
+      "recorded_at": "2026-09-09T19:52:20+08:00",
+      "payload": {
+        "capital_intent": "MATCHED",
+        "yuanli_execution": "SIMULATED_MATCH",
+        "execution_engine_oms": "NOT_APPLICABLE",
+        "broker_custodian": "NOT_APPLICABLE"
+      },
+      "previous_event_hash": "sha256:b32b683a63c515f5e77e21ec91a0a4f507f76d230dc0e245e744425f63961e86",
+      "event_hash": "sha256:75ca7442c9c76f08fd0903e359b971d58aea6fde2cb9c49ae24519fde927551c",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YIOS-GOLD-001-005",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YIOS-GOLD-001-SHADOW",
+      "sequence": 5,
+      "execution_intent_id": "EI-YIOS-GOLD-001-SHADOW",
+      "action_contract_id": "AC-YIOS-GOLD-001-SHADOW",
+      "idempotency_key": "yios-gold-001-g3-event-005",
+      "event_type": "SettlementClosed",
+      "occurred_at": "2026-09-09T19:52:25+08:00",
+      "recorded_at": "2026-09-09T19:52:25+08:00",
+      "payload": {
+        "status": "FAIL_CLOSED",
+        "new_capital_authority": false,
+        "new_execution_authority": false
+      },
+      "previous_event_hash": "sha256:75ca7442c9c76f08fd0903e359b971d58aea6fde2cb9c49ae24519fde927551c",
+      "event_hash": "sha256:fe2c7c767cf5c14858430edf8b1da8e667d42f213fb82c49737e42fd57d185c3",
+      "append_only": true
+    }
+  ],
+  "execution_settlement": {
+    "execution_settlement_id": "XS-YIOS-GOLD-001-SHADOW",
+    "schema_version": "0.1.0",
+    "execution_intent_id": "EI-YIOS-GOLD-001-SHADOW",
+    "action_contract_id": "AC-YIOS-GOLD-001-SHADOW",
+    "stream_id": "ES-YIOS-GOLD-001-SHADOW",
+    "execution_mode": "shadow",
+    "status": "FAIL_CLOSED",
+    "reconciliation": {
+      "capital_intent": {"status": "MATCHED", "observed_ref": "CA-YIOS-GOLD-001-SHADOW"},
+      "yuanli_execution": {"status": "SIMULATED_MATCH", "observed_ref": "ES-YIOS-GOLD-001-SHADOW"},
+      "execution_engine_oms": {"status": "NOT_APPLICABLE", "observed_ref": "OMS-NOT-INVOKED"},
+      "broker_custodian": {"status": "NOT_APPLICABLE", "observed_ref": "BROKER-NOT-CONNECTED"}
+    },
+    "drift": {
+      "unknown_external_orders": 0,
+      "unexplained_fills": 0,
+      "unexplained_position_delta": 0,
+      "unexplained_cash_delta": 0
+    },
+    "research_outcome_ref": "config/yios_g1/gold_g1_reality_trial.v1.json",
+    "execution_quality": {
+      "classification": "clean",
+      "notes": "Clean fail-closed denial. Capital gate denied admission; no order, OMS, broker, position, cash, or real-capital path was invoked."
+    },
+    "projection_is_truth": false,
+    "authority": {
+      "grants_new_capital_authority": false,
+      "grants_new_execution_authority": false
+    }
+  },
+  "chain_result": "FAIL_CLOSED_AT_CAPITAL_ADMISSION",
+  "non_authorizations": {
+    "position_sizing_authorized": false,
+    "yvn1_a1_runtime_authorized": false,
+    "veighna_invocation_authorized": false,
+    "broker_connection_authorized": false,
+    "broker_paper_authorized": false,
+    "live_execution_authorized": false,
+    "real_capital_movement_authorized": false,
+    "automatic_research_to_execution_authorized": false
+  }
+}

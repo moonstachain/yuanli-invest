@@ -1,0 +1,48 @@
+{
+  "position_passport_id": "PP-YIOS-GOLD-001-SHADOW",
+  "schema_version": "1.0.0",
+  "engine_thesis_id": "ET-YIOS-GOLD-001-SHADOW-DENIED",
+  "target_id": "GOLD",
+  "primary_engine": "ENG-R",
+  "expression": {
+    "expression_type": "shadow_no_position",
+    "instrument_ref": "GOLD.SHADOW.NOOP",
+    "direction_semantics": "NO_POSITION_DUE_TO_CAPITAL_ADMISSION_DENIAL"
+  },
+  "conditions": {
+    "entry": "DENIED while primary research settlement is INDETERMINATE under UNKNOWN = DENY.",
+    "add": "PROHIBITED; no capital admission and zero risk budget.",
+    "hold": "NO_POSITION; shadow state only.",
+    "trim": "NOT_APPLICABLE because no position exists.",
+    "exit": "CANCELLED immediately after fail-closed settlement."
+  },
+  "risk_contract": {
+    "risk_budget_class": "ZERO",
+    "max_loss_semantics": "ZERO_NO_CAPITAL_ADMISSION",
+    "path_risk_notes": "No exposure is created. This passport is a cancelled shadow artifact used only to test authority propagation."
+  },
+  "falsifier_refs": [
+    "config/yios_g1/gold_g1_reality_trial.v1.json#hypothesis_results/H1_OFFICIAL_DEMAND_STRUCTURAL",
+    "config/yios_g1/gold_g1_reality_trial.v1.json#primary_research_settlement_candidate"
+  ],
+  "settlement_basis": "docs/architecture/yios_g1/YIOS-G1-G1-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json",
+  "migration_policy": {
+    "silent_migration_prohibited": true,
+    "graduation_allowed": false,
+    "governed_event_required": true
+  },
+  "lifecycle": {
+    "status": "cancelled",
+    "created_at": "2026-09-09T19:50:00+08:00",
+    "as_of": "2026-09-09T19:55:00+08:00",
+    "valid_from": "2026-09-09T19:50:00+08:00",
+    "valid_to": "2026-09-09T19:55:00+08:00",
+    "closed_at": "2026-09-09T19:55:00+08:00"
+  },
+  "authority": {
+    "portfolio_weight_authority": false,
+    "position_sizing_authority": false,
+    "trade_execution_authority": false,
+    "live_execution_authority": false
+  }
+}
