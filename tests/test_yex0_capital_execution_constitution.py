@@ -8,6 +8,7 @@ from scripts import validate_yex0_capital_execution_constitution as yex0
 ROOT = Path(__file__).resolve().parents[1]
 VNEXT = ROOT / "packages/contracts/schemas/vnext"
 CONFIG = ROOT / "config/yex0/yex0_constitution.v0.1.json"
+ACCEPTANCE = ROOT / "docs/architecture/yex0/YEX0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 
 
 class YEX0SchemaTests(unittest.TestCase):
@@ -132,6 +133,22 @@ class YEX0RelationalTests(unittest.TestCase):
         b = self.bundle()
         b["execution_settlement"]["projection_is_truth"] = True
         self.assert_rejected(yex0.validate_ledger_integrity, b)
+
+
+class YEX0HumanAcceptanceTests(unittest.TestCase):
+    def test_acceptance_receipt_is_machine_checked(self):
+        self.assertTrue(ACCEPTANCE.exists())
+        yex0.validate_human_acceptance()
+
+    def test_acceptance_does_not_imply_merge_or_yvn1(self):
+        receipt = json.loads(ACCEPTANCE.read_text(encoding="utf-8"))
+        self.assertEqual(receipt["decision"], "ACCEPT_YEX0_CAPITAL_EXECUTION_CONSTITUTION")
+        self.assertEqual(receipt["reviewed_head_sha"], "8767005c8a78f5426cfcadc3fb643a221132d96b")
+        self.assertFalse(receipt["boundaries_preserved"]["merge_authorized"])
+        self.assertFalse(receipt["boundaries_preserved"]["yvn1_authorized"])
+        self.assertFalse(receipt["boundaries_preserved"]["broker_paper_authorized"])
+        self.assertFalse(receipt["boundaries_preserved"]["live_execution_authorized"])
+        self.assertEqual(receipt["required_merge_token"], "AUTHORIZE_YEX0_MERGE")
 
 
 if __name__ == "__main__":
