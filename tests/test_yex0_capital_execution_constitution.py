@@ -60,9 +60,9 @@ class YEX0SchemaTests(unittest.TestCase):
 
     def test_execution_settlement_requires_four_way_reconciliation(self):
         schema = self.load_schema("execution-settlement.schema.json")
-        recon = schema["properties"]["reconciliation"]["properties"]
+        reconciliation = schema["properties"]["reconciliation"]
         self.assertEqual(
-            set(recon["required"]),
+            set(reconciliation["required"]),
             {"capital_intent", "yuanli_execution", "execution_engine_oms", "broker_custodian"},
         )
         self.assertIn("research_outcome_ref", schema["properties"])
