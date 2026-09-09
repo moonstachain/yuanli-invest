@@ -9,6 +9,7 @@ VNEXT = ROOT / "packages" / "contracts" / "schemas" / "vnext"
 CONFIG = ROOT / "config" / "yvn1" / "yvn1_a0_shadow_execution.v0.1.json"
 SCENARIOS = ROOT / "fixtures" / "yvn1" / "yvn1_a0_golden_scenarios.v0.1.json"
 VALIDATOR = ROOT / "scripts" / "validate_yvn1_a0_shadow_execution.py"
+ACCEPTANCE = ROOT / "docs" / "architecture" / "yvn1" / "YVN1-A0-HUMAN-ACCEPTANCE-RECEIPT-v0.1.json"
 
 
 def load_validator():
@@ -78,6 +79,14 @@ class YVN1A0ContractTests(unittest.TestCase):
     def test_validator_exists_and_accepts_canonical_a0(self):
         yvn1 = load_validator()
         yvn1.validate_a0()
+
+    def test_human_acceptance_receipt_exists(self):
+        self.assertTrue(ACCEPTANCE.exists(), str(ACCEPTANCE))
+
+    def test_human_acceptance_is_machine_valid(self):
+        yvn1 = load_validator()
+        self.assertTrue(hasattr(yvn1, "validate_human_acceptance"))
+        yvn1.validate_human_acceptance()
 
 
 class YVN1A0AdversarialTests(unittest.TestCase):
