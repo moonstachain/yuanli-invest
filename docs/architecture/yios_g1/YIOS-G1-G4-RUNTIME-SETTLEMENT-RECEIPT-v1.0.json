@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "receipt_id": "YIOS-G1-G4-RUNTIME-SETTLEMENT-RECEIPT-v1.0",
+  "system_id": "YIOS-G1-G4",
+  "case_id": "YIOS-GOLD-001",
+  "stage": "GOLD_SHADOW_RUNTIME_SETTLEMENT",
+  "receipt_state": "CANDIDATE_PENDING_PROTECTED_MAIN_MERGE",
+  "scientific_input": "INDETERMINATE",
+  "capital_admission": "DENY",
+  "runtime_outcome": "FAIL_CLOSED_VALID",
+  "execution_settlement": "FAIL_CLOSED",
+  "four_way_reconciliation": {
+    "capital_intent": "MATCHED",
+    "yuanli_execution": "SIMULATED_MATCH",
+    "execution_engine_oms": "NOT_APPLICABLE",
+    "broker_custodian": "NOT_APPLICABLE"
+  },
+  "learning_outcome": "DENIAL_IS_VALID_EXECUTION_OUTCOME",
+  "evidence": {
+    "research_trial": "config/yios_g1/gold_g1_reality_trial.v1.json",
+    "shadow_action": "config/yios_g1/gold_g3_shadow_action.v1.json",
+    "runtime_settlement": "config/yios_g1/gold_g4_shadow_runtime_settlement.v1.json",
+    "validator": "scripts/validate_yios_g1_gold_shadow_runtime.py",
+    "tests": "tests/test_yios_g1_gold_shadow_runtime.py"
+  },
+  "authority_changes": {
+    "capital_authority_granted": false,
+    "position_sizing_authority_granted": false,
+    "execution_authority_granted": false,
+    "broker_authority_granted": false,
+    "veighna_authority_granted": false,
+    "real_capital_authority_granted": false,
+    "automatic_research_to_execution_authority_granted": false
+  },
+  "benchmark_activation_authorized_by_receipt": false,
+  "activation_rule": "Golden Benchmark activation requires protected-main presence, successful exact-head G4 CI, merge Reality readback, and separate registry settlement within the already authorized C0.3 scope."
+}
