@@ -7,7 +7,10 @@ from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
 
-from scripts.validate_yex0_capital_execution_constitution import validate_bundle as validate_yex0_bundle
+try:
+    from scripts.validate_yex0_capital_execution_constitution import validate_bundle as validate_yex0_bundle
+except ModuleNotFoundError:
+    from validate_yex0_capital_execution_constitution import validate_bundle as validate_yex0_bundle
 
 ROOT = Path(__file__).resolve().parents[1]
 TRIAL = ROOT / "config" / "yios_g1" / "gold_g1_reality_trial.v1.json"
