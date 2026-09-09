@@ -22,6 +22,8 @@ Mother loop:
 
 YIOS0 must make the answer to **“What is the current Yuanli Investment OS definition?”** resolvable without reconstructing it from chat history or scattered program documents.
 
+YIOS0 is a composition Canon and discovery layer. It does not replace the detailed authority of subordinate Canons such as YIP0, ME0 / ME1, YEX0, or accepted YVN1 stages.
+
 ---
 
 ## 1. Authority position
@@ -72,12 +74,12 @@ YIOS0 does not claim these laws all originated in YIOS0; it composes them into t
 
 ---
 
-## 2. One Canon, one Current pointer, one Status projection, one Human projection
+## 2. One system definition, one Current pointer, one Status projection, one Human projection
 
 YIOS0 v1.0 freezes this topology:
 
 ```text
-GitHub Canon
+GitHub YIOS0 System Definition
   │
   ├── Immutable Architecture Version
   │
@@ -96,7 +98,8 @@ Notion Human Projection
 
 The invariants are:
 
-`ONE_CANONICAL_DEFINITION_SOURCE = GitHub`  
+`ONE_SYSTEM_DEFINITION_ENTRYPOINT = GitHub / YIOS0`  
+`SUBORDINATE_CANONS_RETAIN_DOMAIN_AUTHORITY = true`  
 `NOTION_IS_PROJECTION = true`  
 `NOTION_CANON_WRITE_AUTHORITY = false`
 
@@ -115,7 +118,9 @@ docs/architecture/yios0/
 ├── YIOS0-STATUS-MATRIX.md
 ├── YIOS0-CHANGELOG.md
 ├── YIOS0-HUMAN-REVIEW-CARD-v1.0.md
-└── YIOS0-NOTION-PROJECTION-CONTRACT-v1.0.md
+├── YIOS0-NOTION-PROJECTION-CONTRACT-v1.0.md
+├── YIOS0-MACHINE-QUALIFICATION-RECEIPT-v1.0.md
+└── YIOS0-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json
 
 config/yios0/
 ├── yios0_architecture.v1.json
@@ -127,6 +132,8 @@ scripts/
 tests/
 └── test_yios0_canonical_definition.py
 ```
+
+Post-merge GitHub Reality evidence may be recorded in the merged PR conversation plus live protected-main readback. YIOS0 v1.0 does not require a second post-merge PR merely to store a merge SHA inside the repository.
 
 ### 3.1 `YIOS0-CANONICAL-ARCHITECTURE-v1.0.md`
 
@@ -179,12 +186,13 @@ Required fields:
   "canonical_architecture_path": "docs/architecture/yios0/YIOS0-CANONICAL-ARCHITECTURE-v1.0.md",
   "machine_contract_path": "config/yios0/yios0_architecture.v1.json",
   "status_projection_path": "docs/architecture/yios0/YIOS0-STATUS-MATRIX.md",
-  "architecture_authority": "human_accepted_merged",
+  "human_acceptance_receipt_path": "docs/architecture/yios0/YIOS0-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json",
+  "authority_policy": "current_only_when_present_on_protected_main_with_valid_human_acceptance",
   "runtime_status_is_separate": true
 }
 ```
 
-Before Human Acceptance / Merge, `architecture_authority` must remain a candidate state and cannot claim `human_accepted_merged`.
+The pointer must not contain a lifecycle value that becomes false merely because the branch is merged. Authority is established from protected-main presence plus the accepted Human Receipt and post-merge readback, not from a self-declared `human_accepted_merged` string in the pointer.
 
 ### 3.4 `YIOS0-STATUS-MATRIX.md`
 
@@ -196,11 +204,31 @@ It must explicitly state:
 
 and:
 
-`FACTUAL_AUTHORITY = underlying receipts / main files / external runtime readbacks`
+`FACTUAL_AUTHORITY = underlying receipts / main files / separately recorded external runtime readbacks`
+
+Every row must contain or resolve:
+
+- `status_known_as_of`;
+- `authority_state`;
+- `reality_state`;
+- `runtime_state`;
+- `evidence_ref`;
+- `open_authority_gap`, if one exists.
 
 This file may evolve without changing architecture version, because runtime maturity changes faster than architecture law.
 
 It must never fabricate a completed stage from roadmap intent.
+
+The validator checks structural and evidentiary consistency from repository-local facts. It does **not** make network calls to GitHub or Notion during CI. Live external facts are re-read during qualification / projection operations and captured with `known_as_of`.
+
+Refresh triggers include:
+
+- a child program changes accepted authority state;
+- a Reality settlement materially changes scientific state;
+- an unauthorized stage becomes separately authorized;
+- an architecture-relevant child program is deprecated or superseded.
+
+A stale Status Matrix does not change the architecture version, but Notion must not present stale status as current.
 
 ### 3.5 `YIOS0-CHANGELOG.md`
 
@@ -218,6 +246,25 @@ Major version is required when one or more of the following change incompatibly:
 - incompatible projection contract.
 
 Minor versions may add backward-compatible architecture detail without changing the mother laws.
+
+### 3.6 Qualification and Human Acceptance receipts
+
+`YIOS0-MACHINE-QUALIFICATION-RECEIPT-v1.0.md` binds:
+
+- candidate head SHA;
+- repository-gates run ID;
+- validator result;
+- contracts / governance result;
+- scope audit;
+- live status readback timestamp used to build the Status Matrix.
+
+`YIOS0-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json` binds:
+
+- decision `ACCEPT_YIOS0_CANONICAL_DEFINITION`;
+- reviewed machine-qualified head;
+- reviewed CI run;
+- explicit non-authorizations;
+- separate next merge token `AUTHORIZE_YIOS0_MERGE`.
 
 ---
 
@@ -408,7 +455,7 @@ The implementation must re-read live repo state before materializing the matrix.
 | Broker Paper | NONE | NOT_RUN | NOT_AUTHORIZED | No broker credential or paper authority |
 | Live Execution | NONE | NOT_RUN | NOT_AUTHORIZED | Real capital movement intentionally absent |
 
-The implementation must fail rather than preserve a stale row if current GitHub facts have changed.
+The materialized matrix must include `known_as_of` and evidence references. If implementation-time reality differs from this design-time baseline, implementation must use current facts and explicitly record the delta rather than copy this table blindly.
 
 ---
 
@@ -511,7 +558,7 @@ The `原力投研` journey page remains guest-first. The YIOS0 projection is a d
 The projection page should use Progressive Disclosure:
 
 1. **What Yuanli Investment OS is** — one sentence, human language.
-2. **Current version card** — architecture version / Canon commit / Canon URI / last sync / projection state.
+2. **Current version card** — architecture version / Canon commit / Canon URI / status-known-as-of / last sync / projection state.
 3. **Why it exists** — Lifetime Right-Tail Capture under Survival Constraints.
 4. **Four mother laws**.
 5. **Mother loop**.
@@ -539,7 +586,7 @@ After GitHub YIOS0 is separately Human Accepted and merged, the existing `原力
 
 Introducing a new `INVEST_CANON` enum is explicitly outside YIOS0 v1.0 scope and requires a separate Portal governance change.
 
-After independent Notion Projection Human Acceptance, `Projection State` may become `published` and the page may receive Notion verification.
+After independent Notion Projection Human Acceptance, `Projection State` may become `published` and the page may receive finite Notion verification. Default verification expiry for v1.0 is 90 days so stale projections become visible rather than silently remaining “current.”
 
 ### 10.5 Notion verification semantics
 
@@ -575,13 +622,16 @@ Every published Notion YIOS0 projection must expose:
 - `Architecture Version`
 - `Canon URI`
 - `Canon Commit SHA`
+- `Status Known As Of`
 - `Last Synced At`
 - `Projection State`
 - `Projection Verification State`
 
 ### 11.2 Drift rule
 
-If Notion claims a different architecture version or commit from `YIOS0-CURRENT`, the projection becomes `STALE` / requires review; it must not continue to present itself as current.
+If Notion claims a different architecture version or Canon commit from the merged `YIOS0-CURRENT`, the projection becomes stale / requires review; it must not continue to present itself as current.
+
+If the architecture version is unchanged but the status projection is older than a known child-program settlement change, only the **status section** is stale; this does not retroactively invalidate the architecture version.
 
 ### 11.3 v1.0 sync mechanism
 
@@ -623,7 +673,7 @@ A model may know the OS architecture and still have insufficient authority to an
 
 ## 13. Validation contract
 
-`validate_yios0_canonical_definition.py` must fail closed on at least the following:
+`validate_yios0_canonical_definition.py` must fail closed on at least the following repository-local conditions:
 
 1. missing immutable v1.0 Canon file;
 2. `YIOS0-CURRENT` points to a nonexistent or mismatched version;
@@ -635,14 +685,16 @@ A model may know the OS architecture and still have insufficient authority to an
 8. VeighNa is described as investment/research authority rather than provider/runtime role;
 9. live execution, broker paper, or real capital is implicitly authorized;
 10. status matrix uses a single ambiguous `PASS` instead of separate authority/reality/runtime semantics;
-11. a `REALITY_PROVEN` row lacks a supporting evidence / receipt reference;
-12. a `CANON_ACCEPTED_MERGED` row lacks accepted main authority evidence;
-13. B3 is represented as merged or scientifically supported while PR #72 remains Draft / Open / Not Merged;
-14. YGR0, YRP1, State Compiler, YAU1, YVN1-A1, VeighNa, Broker Paper, or Live are silently promoted above actual state;
+11. a `REALITY_PROVEN` row lacks `known_as_of` and a supporting evidence / receipt reference;
+12. a `CANON_ACCEPTED_MERGED` row lacks repository-local accepted authority evidence;
+13. the materialized B3 row omits `SCIENTIFIC_NO_GO`, omits the not-merged authority gap, or upgrades dynamic beta beyond the captured live readback;
+14. YGR0, YRP1, State Compiler, YAU1, YVN1-A1, VeighNa, Broker Paper, or Live are silently promoted above their captured current state;
 15. Notion projection contract allows direct Canon mutation;
 16. architecture version is automatically bumped by a runtime-only status change;
 17. `YIOS0` claims to supersede or rewrite YIP0 philosophical authority;
 18. `YIOS0` mutates existing YIP0 / ME0 / ME1 / YEX0 / YVN1-A0 receipts or contracts.
+
+Live GitHub / Notion facts such as PR state, protected-main head, and Notion projection metadata are checked during qualification and projection readback, not by network-dependent CI validation.
 
 ---
 
@@ -775,19 +827,22 @@ YIOS0 v1.0 does **not**:
 This Written Spec is acceptable only if the human reviewer agrees that:
 
 1. YIOS0 is an architecture/current-definition authority, not a new theory or runtime authority.
-2. GitHub is the single Canon; Notion is Human Projection.
-3. architecture version and runtime status are separate.
-4. human 12-layer architecture and machine 8-service architecture coexist without implying current deployment completeness.
-5. two spines and three buses preserve Knowledge / Action separation.
-6. status is represented as authority × reality × runtime, not one ambiguous PASS.
-7. negative evidence such as B3 cannot disappear from current status.
-8. YEX0 / YVN1-A0 authority cannot be expanded by YIOS0.
-9. Notion projection is guest-aware, progressive, and version-bound to GitHub.
-10. Domain Registry updates happen only after GitHub merge and use existing schema.
-11. reverse feedback cannot directly mutate Canon.
-12. implementation is split by Human Gates through GitHub Canon and Notion Projection.
-13. bootstrap uses YIOS0 as architecture context but still requires task-specific evidence.
-14. the design creates no broker, paper, live, or capital authorization.
+2. GitHub YIOS0 is the single system-definition entrypoint while subordinate Canons retain detailed domain authority.
+3. Notion is Human Projection, not Canon.
+4. architecture version and runtime status are separate.
+5. human 12-layer architecture and machine 8-service architecture coexist without implying current deployment completeness.
+6. two spines and three buses preserve Knowledge / Action separation.
+7. status is represented as authority × reality × runtime, not one ambiguous PASS.
+8. negative evidence such as B3 cannot disappear from current status.
+9. YEX0 / YVN1-A0 authority cannot be expanded by YIOS0.
+10. Notion projection is guest-aware, progressive, and version-bound to GitHub.
+11. Domain Registry updates happen only after GitHub merge and use existing schema.
+12. reverse feedback cannot directly mutate Canon.
+13. implementation is split by Human Gates through GitHub Canon and Notion Projection.
+14. bootstrap uses YIOS0 as architecture context but still requires task-specific evidence.
+15. current-pointer semantics do not self-declare merge authority.
+16. CI remains repository-local; live external facts are read during qualification / projection readback.
+17. the design creates no broker, paper, live, or capital authorization.
 
 ---
 
@@ -799,7 +854,7 @@ Its purpose is not to declare the system complete. Its purpose is to make the di
 
 Canonical principle:
 
-> **ONE CANON, ONE CURRENT POINTER, ONE REALITY STATUS PROJECTION, ONE HUMAN PROJECTION.**
+> **ONE SYSTEM DEFINITION, ONE CURRENT POINTER, ONE REALITY STATUS PROJECTION, ONE HUMAN PROJECTION.**
 
 System principle:
 
