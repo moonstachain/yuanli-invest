@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yvn1-shadow-execution-settlement:0.1.0",
+  "title": "ShadowExecutionSettlement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "settlement_id", "action_contract_id", "execution_plan_id", "ledger_root_hash", "final_projected_state", "capital_intent_state", "yuanli_execution_state", "shadow_oms_state", "synthetic_broker_state", "four_way_reconciliation", "failure_classification", "replay_determinism_result", "settlement_status", "non_authorizations"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "settlement_id": {"type": "string", "pattern": "^SES-[A-Z0-9-]+$"},
+    "action_contract_id": {"type": "string", "pattern": "^AC-[A-Z0-9-]+$"},
+    "execution_plan_id": {"type": "string", "pattern": "^EP-[A-Z0-9-]+$"},
+    "ledger_root_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "final_projected_state": {"enum": ["SETTLED", "REJECTED", "EXPIRED", "DRIFTED", "FAIL_CLOSED"]},
+    "capital_intent_state": {"type": "object"},
+    "yuanli_execution_state": {"type": "object"},
+    "shadow_oms_state": {"type": "object"},
+    "synthetic_broker_state": {"type": "object"},
+    "four_way_reconciliation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capital_intent", "yuanli_execution", "execution_engine_oms", "broker_custodian"],
+      "properties": {
+        "capital_intent": {"type": "string", "enum": ["MATCHED", "SIMULATED_MATCH", "DRIFTED"]},
+        "yuanli_execution": {"type": "string", "enum": ["MATCHED", "SIMULATED_MATCH", "DRIFTED"]},
+        "execution_engine_oms": {"type": "string", "enum": ["MATCHED", "SIMULATED_MATCH", "DRIFTED"]},
+        "broker_custodian": {"type": "string", "enum": ["MATCHED", "SIMULATED_MATCH", "DRIFTED"]}
+      }
+    },
+    "failure_classification": {"type": ["string", "null"]},
+    "replay_determinism_result": {"enum": ["PASS", "FAIL", "NOT_RUN"]},
+    "settlement_status": {"enum": ["SHADOW_EXECUTION_SETTLED", "SHADOW_EXECUTION_FAIL_CLOSED"]},
+    "non_authorizations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["broker_credentials", "broker_connection", "broker_paper", "live_execution", "real_capital_movement"],
+      "properties": {
+        "broker_credentials": {"const": false},
+        "broker_connection": {"const": false},
+        "broker_paper": {"const": false},
+        "live_execution": {"const": false},
+        "real_capital_movement": {"const": false}
+      }
+    }
+  }
+}
