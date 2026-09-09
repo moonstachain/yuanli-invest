@@ -832,3 +832,65 @@ NO FAILURE WITHOUT LEARNING
 ```
 
 YVN1-A0 freezes the deployment constitution required to test that law without placing any real order.
+
+---
+
+## 19. Human-gate separation
+
+YVN1-A0 uses four distinct Human Gates. One gate never implies the next.
+
+### Gate G0 — architecture acceptance
+
+Already received:
+
+```text
+ACCEPT_YVN1_A0_SHADOW_EXECUTION_DEPLOYMENT_ARCHITECTURE
+```
+
+Meaning: the in-chat architecture is accepted strongly enough to be written into this design spec.
+
+It does **not** approve implementation.
+
+### Gate G1 — written-spec acceptance
+
+Required next token:
+
+```text
+ACCEPT_YVN1_A0_WRITTEN_SPEC
+```
+
+Meaning: this exact written design is approved strongly enough to enter `writing-plans` and prepare the A0 implementation plan.
+
+It does **not** authorize VeighNa installation, A1 runtime execution, broker access, or A0 merge.
+
+### Gate G2 — A0 Human Acceptance after machine qualification
+
+A later candidate token may be frozen by the implementation artifacts as:
+
+```text
+ACCEPT_YVN1_A0_DEPLOYMENT_FREEZE
+```
+
+This gate may occur only after A0 TDD, validator and repository gates machine-qualify the exact candidate head.
+
+### Gate G3 — A0 merge authorization
+
+A later independent merge token may be frozen as:
+
+```text
+AUTHORIZE_YVN1_A0_MERGE
+```
+
+Merge authority is never implied by G0, G1 or G2.
+
+Only after a separately authorized merge and post-merge Reality readback may the architecture expose `YVN1-A1` as the next lawful battle.
+
+At every gate, the following remain false unless a later dedicated program explicitly changes them:
+
+```text
+veighna_invocation_authorized = false
+broker_credentials_authorized = false
+broker_paper_authorized = false
+live_execution_authorized = false
+real_capital_movement_authorized = false
+```
