@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-G1",
+  "case_id": "YIOS-GOLD-001",
+  "decision": "AUTHORIZE_GOLD_G1_REALITY_TRIAL",
+  "authorized_at": "2026-09-09T19:11:00+08:00",
+  "repository": "moonstachain/yuanli-invest",
+  "constitution_branch": "yios-g1-a0-gold-genesis-case-constitution",
+  "constitution_acceptance_record_head_sha": "cecb6b0979b054328bfe259e42704fcdce77c1e2",
+  "constitution_post_acceptance_repository_gate": {
+    "workflow": "repository-gates",
+    "run_number": 715,
+    "run_id": 34344437035,
+    "conclusion": "success",
+    "contracts": "success",
+    "governance": "success",
+    "full_unittest_discovery": "success"
+  },
+  "authorized_scope": [
+    "historical T0 evidence reconstruction with known_as_of <= 2024-01-31T23:59:59-05:00",
+    "GoldEvidencePack@T0",
+    "GoldState@T0",
+    "independent research claims with preregistered defeat conditions",
+    "B0 traditional macro baseline reconstruction",
+    "B1 null baseline",
+    "T+3M/T+6M/T+12M/T+24M future Reality readback",
+    "H1/H2/H3 settlement measurements",
+    "H4 exploratory learning",
+    "ablations and hard negatives",
+    "research-only candidate settlement package"
+  ],
+  "forbidden_scope": [
+    "capital admission",
+    "PositionPassport",
+    "portfolio or position sizing",
+    "YVN1-A1 runtime",
+    "VeighNa installation or invocation",
+    "broker credentials or connection",
+    "Broker Paper",
+    "Live Execution",
+    "real capital movement",
+    "automatic research-to-execution"
+  ],
+  "authority_separation": "RESEARCH_TRIAL_AUTHORITY_ONLY",
+  "candidate_cannot_self_settle": true,
+  "next_human_gate": "ACCEPT_GOLD_G1_RESEARCH_SETTLEMENT"
+}

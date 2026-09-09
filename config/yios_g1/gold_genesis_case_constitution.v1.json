@@ -1,0 +1,195 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-A0",
+  "case_id": "YIOS-GOLD-001",
+  "target_id": "GOLD",
+  "parent_architecture": "YIOS0-1.0.0",
+  "status": "CASE_CONSTITUTION_CANDIDATE",
+  "purpose": "FIRST_END_TO_END_GOLD_REALITY_LOOP_CONSTITUTION",
+  "mother_loop": [
+    "Reality",
+    "Knowledge",
+    "Trial",
+    "Settlement",
+    "Capital",
+    "Execution",
+    "Reality",
+    "Learning"
+  ],
+  "two_clock_law": {
+    "historical_t0": "2024-01-31T23:59:59-05:00",
+    "timezone": "America/New_York",
+    "historical_evidence_rule": "known_as_of <= T0",
+    "governance_clock": "2026-09-09",
+    "invariant": "GOVERNANCE_KNOWLEDGE_2026 != HISTORICAL_KNOWLEDGE_AT_T0",
+    "forbidden_from_t0_state": [
+      "YMQ4-B2 2026 receipt/result",
+      "YMQ4-B3 2026 receipt/result",
+      "YGR0 2026 settlement artifacts",
+      "any post-T0 price path",
+      "any post-T0 macro release",
+      "any post-T0 narrative"
+    ]
+  },
+  "primary_claim": {
+    "claim_id": "GOLD_EARLY_MONETARY_REGIME_REPRICING",
+    "authority": "RESEARCH_CANDIDATE",
+    "trade_instruction": false
+  },
+  "evidence_domains": [
+    "MONETARY_POLICY",
+    "REAL_RATE",
+    "USD",
+    "INFLATION",
+    "OFFICIAL_DEMAND",
+    "PRIVATE_DEMAND",
+    "FISCAL_SOVEREIGN_CREDIBILITY",
+    "NARRATIVE_REFLEXIVITY"
+  ],
+  "required_evidence_fields": [
+    "source_id",
+    "authority_level",
+    "observation_date",
+    "release_date",
+    "vintage_date",
+    "known_as_of",
+    "retrieved_at",
+    "revision_status",
+    "content_hash"
+  ],
+  "authority_hierarchy": {
+    "A_PRIMARY": "official_or_first_party_primary",
+    "B_MARKET_PRIMARY": "exchange_benchmark_admin_fund_issuer_or_primary_market_data",
+    "C_SECONDARY": "reputable_secondary_interpretation",
+    "D_UNVERIFIED": "inadmissible_for_decisive_claims",
+    "decisive_evidence_rule": "C_SECONDARY cannot independently settle a decisive claim; D_UNVERIFIED is never decisive"
+  },
+  "state_schema": [
+    "IdentityState",
+    "RealityState",
+    "MonetaryState",
+    "PriceState",
+    "DemandState",
+    "NarrativeState",
+    "RegimeState",
+    "UnknownState",
+    "FalsifierState",
+    "AuthorityState"
+  ],
+  "candidate_ontology": {
+    "species_candidate": "Monetary Scarcity",
+    "engine_candidate": "S / R",
+    "state_candidate": "Early Monetary-Regime Repricing",
+    "authority": "RESEARCH_CANDIDATE"
+  },
+  "baselines": {
+    "B0_TRADITIONAL_MACRO": {
+      "factors": ["gold_usd_oz", "usd", "inflation_yoy", "real_rate"],
+      "form": "fixed_linear_macro_baseline",
+      "default_training_window": ["1978-02-28", "2006-12-31"],
+      "role": "PROTOCOL_SIDE_EVALUATION_BENCHMARK",
+      "historical_t0_evidence": false
+    },
+    "B1_NULL_PRICE_ONLY": {
+      "form": "intercept_or_historical_mean",
+      "role": "WEAK_BASELINE_GUARD"
+    }
+  },
+  "hypotheses": {
+    "H1_OFFICIAL_DEMAND_STRUCTURAL": {
+      "mandatory": true,
+      "claim": "official-sector Gold demand remains structurally elevated rather than reverting to the pre-2020 norm",
+      "threshold_formula": "P75(rolling_12m_official_net_purchases, 2010-01-01..2019-12-31) using only data known at T0",
+      "support": "T+12M and T+24M rolling-12m official net purchases both above frozen threshold",
+      "defeat": "T+12M or T+24M at or below threshold with sufficient evidence authority"
+    },
+    "H2_TRADITIONAL_MACRO_DECOUPLING": {
+      "mandatory": true,
+      "claim": "Gold produces persistent positive residual performance relative to B0",
+      "support": "positive cumulative residual in >=3/4 windows AND T+12M>0 AND T+24M>0",
+      "defeat": "T+12M residual<=0 OR T+24M residual<=0"
+    },
+    "H3_PRICE_CONFIRMATION": {
+      "mandatory": true,
+      "claim": "candidate state is confirmed by durable rather than one-off price behavior",
+      "support": "positive cumulative Gold return in >=3/4 windows AND T+12M>0 AND T+24M>0",
+      "defeat": "T+12M return<=0 OR T+24M return<=0"
+    },
+    "H4_NARRATIVE_PRIVATE_DEMAND_BROADENING": {
+      "mandatory": false,
+      "decisive": false,
+      "role": "EXPLORATORY_LEARNING_ONLY"
+    }
+  },
+  "primary_settlement_law": {
+    "SUPPORTED": "H1 SUPPORTED AND H2 SUPPORTED AND H3 SUPPORTED AND no hard falsifier AND PIT integrity PASS",
+    "PARTIALLY_SUPPORTED": "meaningful mechanism support but one mandatory condition fails without stronger falsifier and evidence is sufficient",
+    "NOT_SUPPORTED": "mandatory defeat law or hard scientific falsifier with sufficient authority",
+    "INDETERMINATE": "decisive evidence unavailable, non-PIT, materially conflicting, or below required authority",
+    "price_up_alone_can_pass": false
+  },
+  "settlement_windows": {
+    "T+3M": "2024-04-30T23:59:59-04:00",
+    "T+6M": "2024-07-31T23:59:59-04:00",
+    "T+12M": "2025-01-31T23:59:59-05:00",
+    "T+24M": "2026-01-31T23:59:59-05:00",
+    "non_trading_day_rule": "use latest valid market observation on or before cutoff",
+    "window_drop_after_open": false
+  },
+  "scientific_metrics": [
+    "H1 threshold result at T+12M and T+24M",
+    "cumulative Gold return at all four windows",
+    "cumulative B0 residual at all four windows",
+    "B0/B1 RMSE and MAE over sealed forward monthly period where applicable",
+    "sign accuracy secondary only"
+  ],
+  "system_integrity_metrics": {
+    "future_leakage_count": 0,
+    "decisive_evidence_with_provenance_percent": 100,
+    "claim_has_pre_registered_defeat_condition": true,
+    "candidate_cannot_self_settle": true,
+    "research_authority_does_not_auto_promote": true,
+    "action_path_fail_closed_without_authority": true,
+    "historical_negative_evidence_not_rewritten": true
+  },
+  "ablations": [
+    "ABL-1_REMOVE_OFFICIAL_DEMAND",
+    "ABL-2_REMOVE_FISCAL_AND_NARRATIVE",
+    "ABL-3_AUTHORITY_DOWNGRADE_TO_SECONDARY",
+    "ABL-4_B0_ONLY_RECONSTRUCTION"
+  ],
+  "hard_negatives": [
+    "PRICE_UP_ONLY",
+    "OFFICIAL_DEMAND_ONLY",
+    "NARRATIVE_ONLY",
+    "POST_T0_LEAKAGE",
+    "B2_B3_RETROJECTION",
+    "NEGATIVE_EVIDENCE_REWRITE",
+    "RESEARCH_TO_CAPITAL_AUTO_PROMOTION",
+    "RESEARCH_TO_EXECUTION_AUTO_PROMOTION"
+  ],
+  "gates": {
+    "G0": "ACCEPT_GOLD_G1_CASE_CONSTITUTION",
+    "G1": "AUTHORIZE_GOLD_G1_REALITY_TRIAL",
+    "G2": "ACCEPT_GOLD_G1_RESEARCH_SETTLEMENT",
+    "G3": "AUTHORIZE_GOLD_G1_SHADOW_ACTION"
+  },
+  "non_authorizations": {
+    "reality_trial_authorized": false,
+    "capital_authorized": false,
+    "position_sizing_authorized": false,
+    "yvn1_a1_runtime_authorized": false,
+    "veighna_installation_authorized": false,
+    "veighna_invocation_authorized": false,
+    "broker_credentials_authorized": false,
+    "broker_connection_authorized": false,
+    "broker_paper_authorized": false,
+    "live_execution_authorized": false,
+    "real_capital_movement_authorized": false,
+    "automatic_research_to_execution_authorized": false
+  },
+  "learning_invariant": "LEARNING_CAN_REVISE_FUTURE_STATE; LEARNING_CANNOT_REWRITE_CASE_HISTORY",
+  "system_scientific_separation": "SYSTEM_PASS != GOLD_BULLISH_OUTCOME",
+  "compressed_authority_law": "PRICE_UP != THESIS_PROVEN != CAPITAL_AUTHORIZED != EXECUTION_AUTHORIZED"
+}

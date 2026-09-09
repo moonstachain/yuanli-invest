@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "program_id": "YIOS-G1",
+  "stage_id": "YIOS-G1-G1",
+  "case_id": "YIOS-GOLD-001",
+  "trial_state": "AUTHORIZED_NOT_YET_SETTLED",
+  "trial_started_at": "2026-09-09T19:14:00+08:00",
+  "constitution_acceptance_sha": "cecb6b0979b054328bfe259e42704fcdce77c1e2",
+  "authorization_receipt_commit_parent": "d92966b93dba94a369a0d3cc00cc5ea746c3fd49",
+  "historical_t0": "2024-01-31T23:59:59-05:00",
+  "historical_evidence_rule": "known_as_of <= T0",
+  "future_windows_sealed_until_measurement": ["T+3M", "T+6M", "T+12M", "T+24M"],
+  "capital_authority": false,
+  "execution_authority": false,
+  "broker_authority": false,
+  "settlement_authority": "INDEPENDENT_G2_HUMAN_ACCEPTANCE_REQUIRED"
+}
