@@ -1,0 +1,191 @@
+{
+  "capital_admission": {
+    "capital_admission_id": "CA-YEX0-SHADOW-001",
+    "schema_version": "0.1.0",
+    "research_settlement_ref": "SETTLEMENT-RESEARCH-SYNTHETIC-001",
+    "position_passport_id": "PP-YEX0-SHADOW-001",
+    "decision": "admit_shadow",
+    "capital_book_id": "BOOK-SHADOW",
+    "risk_budget": {"max_notional": 10000, "max_loss": 500},
+    "mode_eligibility": ["shadow"],
+    "human_decision_ref": "HUMAN-YEX0-SHADOW-APPROVAL-001",
+    "lifecycle": {
+      "created_at": "2026-09-09T03:30:00Z",
+      "valid_from": "2026-09-09T03:30:00Z",
+      "expires_at": "2026-09-09T04:30:00Z"
+    },
+    "authority": {
+      "order_submission_authority": false,
+      "live_execution_authority": false,
+      "real_capital_movement_authority": false
+    }
+  },
+  "execution_intent": {
+    "execution_intent_id": "EI-YEX0-SHADOW-001",
+    "schema_version": "0.1.0",
+    "capital_admission_id": "CA-YEX0-SHADOW-001",
+    "position_passport_id": "PP-YEX0-SHADOW-001",
+    "instrument_ref": "TEST.LOCAL",
+    "direction": "increase",
+    "quantity_delta": 100,
+    "limits": {
+      "max_quantity_abs": 100,
+      "max_notional": 10000,
+      "max_loss": 500,
+      "max_slippage_bps": 20
+    },
+    "allowed_venues": ["SIMULATED"],
+    "created_at": "2026-09-09T03:31:00Z",
+    "valid_from": "2026-09-09T03:31:00Z",
+    "expires_at": "2026-09-09T04:00:00Z",
+    "idempotency_key": "YEX0-INTENT-0001",
+    "self_execution_authorized": false
+  },
+  "action_contract": {
+    "action_contract_id": "AC-YEX0-SHADOW-001",
+    "schema_version": "0.1.0",
+    "execution_intent_id": "EI-YEX0-SHADOW-001",
+    "capital_admission_id": "CA-YEX0-SHADOW-001",
+    "human_approval_ref": "HUMAN-YEX0-SHADOW-APPROVAL-001",
+    "issued_at": "2026-09-09T03:32:00Z",
+    "expires_at": "2026-09-09T03:59:00Z",
+    "execution_mode": "shadow",
+    "idempotency_key": "YEX0-ACTION-0001",
+    "contract_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "scope": {
+      "max_quantity_abs": 100,
+      "max_notional": 10000,
+      "max_loss": 500,
+      "max_slippage_bps": 20,
+      "allowed_venues": ["SIMULATED"]
+    },
+    "live_execution_authorized": false,
+    "real_capital_movement_authorized": false
+  },
+  "execution_events": [
+    {
+      "event_id": "EE-YEX0-0001",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YEX0-SHADOW-001",
+      "sequence": 1,
+      "execution_intent_id": "EI-YEX0-SHADOW-001",
+      "action_contract_id": "AC-YEX0-SHADOW-001",
+      "idempotency_key": "YEX0-EVENT-0001",
+      "event_type": "IntentCreated",
+      "occurred_at": "2026-09-09T03:31:00Z",
+      "recorded_at": "2026-09-09T03:31:01Z",
+      "payload": {"intent_ref": "EI-YEX0-SHADOW-001"},
+      "previous_event_hash": null,
+      "event_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YEX0-0002",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YEX0-SHADOW-001",
+      "sequence": 2,
+      "execution_intent_id": "EI-YEX0-SHADOW-001",
+      "action_contract_id": "AC-YEX0-SHADOW-001",
+      "idempotency_key": "YEX0-EVENT-0002",
+      "event_type": "CapitalAdmissionObserved",
+      "occurred_at": "2026-09-09T03:31:10Z",
+      "recorded_at": "2026-09-09T03:31:11Z",
+      "payload": {"capital_admission_ref": "CA-YEX0-SHADOW-001"},
+      "previous_event_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "event_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YEX0-0003",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YEX0-SHADOW-001",
+      "sequence": 3,
+      "execution_intent_id": "EI-YEX0-SHADOW-001",
+      "action_contract_id": "AC-YEX0-SHADOW-001",
+      "idempotency_key": "YEX0-EVENT-0003",
+      "event_type": "ActionContractGranted",
+      "occurred_at": "2026-09-09T03:32:00Z",
+      "recorded_at": "2026-09-09T03:32:01Z",
+      "payload": {"action_contract_ref": "AC-YEX0-SHADOW-001"},
+      "previous_event_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "event_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YEX0-0004",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YEX0-SHADOW-001",
+      "sequence": 4,
+      "execution_intent_id": "EI-YEX0-SHADOW-001",
+      "action_contract_id": "AC-YEX0-SHADOW-001",
+      "idempotency_key": "YEX0-EVENT-0004",
+      "event_type": "FirewallPassed",
+      "occurred_at": "2026-09-09T03:32:05Z",
+      "recorded_at": "2026-09-09T03:32:06Z",
+      "payload": {"decision": "ALLOW"},
+      "previous_event_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "event_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YEX0-0005",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YEX0-SHADOW-001",
+      "sequence": 5,
+      "execution_intent_id": "EI-YEX0-SHADOW-001",
+      "action_contract_id": "AC-YEX0-SHADOW-001",
+      "idempotency_key": "YEX0-EVENT-0005",
+      "event_type": "ReconciliationMatched",
+      "occurred_at": "2026-09-09T03:40:00Z",
+      "recorded_at": "2026-09-09T03:40:01Z",
+      "payload": {"reconciliation": "four-way-shadow-fixture"},
+      "previous_event_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "event_hash": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "append_only": true
+    },
+    {
+      "event_id": "EE-YEX0-0006",
+      "schema_version": "0.1.0",
+      "stream_id": "ES-YEX0-SHADOW-001",
+      "sequence": 6,
+      "execution_intent_id": "EI-YEX0-SHADOW-001",
+      "action_contract_id": "AC-YEX0-SHADOW-001",
+      "idempotency_key": "YEX0-EVENT-0006",
+      "event_type": "SettlementClosed",
+      "occurred_at": "2026-09-09T03:41:00Z",
+      "recorded_at": "2026-09-09T03:41:01Z",
+      "payload": {"settlement_ref": "XS-YEX0-SHADOW-001"},
+      "previous_event_hash": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "event_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+      "append_only": true
+    }
+  ],
+  "execution_settlement": {
+    "execution_settlement_id": "XS-YEX0-SHADOW-001",
+    "schema_version": "0.1.0",
+    "execution_intent_id": "EI-YEX0-SHADOW-001",
+    "action_contract_id": "AC-YEX0-SHADOW-001",
+    "stream_id": "ES-YEX0-SHADOW-001",
+    "execution_mode": "shadow",
+    "status": "SETTLED",
+    "reconciliation": {
+      "capital_intent": {"status":"MATCHED","observed_ref":"CA-YEX0-SHADOW-001"},
+      "yuanli_execution": {"status":"MATCHED","observed_ref":"ES-YEX0-SHADOW-001"},
+      "execution_engine_oms": {"status":"SIMULATED_MATCH","observed_ref":"OMS-SIM-001"},
+      "broker_custodian": {"status":"SIMULATED_MATCH","observed_ref":"BROKER-SIM-001"}
+    },
+    "drift": {
+      "unknown_external_orders": 0,
+      "unexplained_fills": 0,
+      "unexplained_position_delta": 0,
+      "unexplained_cash_delta": 0
+    },
+    "research_outcome_ref": "SETTLEMENT-RESEARCH-SYNTHETIC-001",
+    "execution_quality": {"classification":"clean","notes":"Synthetic shadow fixture only; no broker or capital movement."},
+    "projection_is_truth": false,
+    "authority": {
+      "grants_new_capital_authority": false,
+      "grants_new_execution_authority": false
+    }
+  }
+}
