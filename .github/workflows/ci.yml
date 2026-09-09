@@ -45,6 +45,7 @@ jobs:
       - run: python scripts/validate_yex0_capital_execution_constitution.py
       - run: python scripts/validate_yvn1_a0_shadow_execution.py
       - run: python scripts/validate_yim0_methodology_projection.py
+      - run: python scripts/validate_yios0_canonical_definition.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
 
   governance:

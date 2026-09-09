@@ -1,0 +1,10 @@
+{
+  "system_id": "YIOS0",
+  "current_architecture_version": "1.0.0",
+  "canonical_architecture_path": "docs/architecture/yios0/YIOS0-CANONICAL-ARCHITECTURE-v1.0.md",
+  "machine_contract_path": "config/yios0/yios0_architecture.v1.json",
+  "status_projection_path": "docs/architecture/yios0/YIOS0-STATUS-MATRIX.md",
+  "human_acceptance_receipt_path": "docs/architecture/yios0/YIOS0-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json",
+  "authority_policy": "current_only_when_present_on_protected_main_with_valid_human_acceptance",
+  "runtime_status_is_separate": true
+}

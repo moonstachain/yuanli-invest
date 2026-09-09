@@ -1,0 +1,158 @@
+{
+  "identity": {
+    "system_id": "YIOS0",
+    "name": "Yuanli Investment OS",
+    "architecture_version": "1.0.0",
+    "authority_role": "System Architecture / Current Definition Authority",
+    "composition_canon": true,
+    "subordinate_canons_retain_domain_authority": true
+  },
+  "versioning": {
+    "architecture_version": "1.0.0",
+    "canonical_architecture_path": "docs/architecture/yios0/YIOS0-CANONICAL-ARCHITECTURE-v1.0.md",
+    "runtime_status_is_separate": true,
+    "runtime_only_change_bumps_architecture_version": false,
+    "major_rule": "breaking mother-loop, authority-topology, authority-separation, state-ontology, service-boundary, or projection-contract change",
+    "minor_rule": "backward-compatible architecture detail",
+    "patch_rule": "documentation or clarification without architecture semantic change"
+  },
+  "strategic_positioning": {
+    "system_type": "Governed Intelligence-to-Capital Machine",
+    "objective": "Lifetime Right-Tail Capture under Survival Constraints",
+    "final_external_judge": "Reality",
+    "purpose": "make current system definition, earned authority, Reality proof, design-only state, and non-authorization impossible to confuse"
+  },
+  "mother_loop": [
+    "Reality",
+    "Knowledge",
+    "Trial",
+    "Settlement",
+    "Capital",
+    "Execution",
+    "Reality",
+    "Learning"
+  ],
+  "mother_laws": [
+    "Reality > Belief",
+    "Every Intelligence Claim Must Carry a Pre-Registered Defeat Condition",
+    "ResearchPass != CapitalPass",
+    "ResearchAuthority != CapitalAuthority != ExecutionAuthority"
+  ],
+  "authority_topology": {
+    "yip0_remains_philosophy_authority": true,
+    "me0_me1_retain_ontology_authority": true,
+    "yex0_remains_capital_execution_constitution": true,
+    "yvn1_authority_limited_to_separately_accepted_stage": true,
+    "yios0_can_promote_child_authority": false,
+    "claim_authority_lte_evidence_authority": true,
+    "research_pass_ne_capital_pass": true,
+    "research_capital_execution_separate": true,
+    "credential_separation": "ResearchCredential != CapitalCredential != ExecutionCredential != BrokerCredential",
+    "research_production_has_broker_write_authority": false
+  },
+  "knowledge_spine": [
+    "External Reality",
+    "Evidence",
+    "PIT",
+    "State",
+    "Research Capability",
+    "Trial",
+    "Research Settlement",
+    "Learning"
+  ],
+  "action_spine": [
+    "Research Settlement",
+    "Capital Admission",
+    "PositionPassport",
+    "ExecutionIntent",
+    "ActionContract",
+    "Execution Runtime",
+    "Broker Reality",
+    "Reconciliation",
+    "Execution Settlement"
+  ],
+  "buses": {
+    "reality_bus": {
+      "direction": "world_to_yuanli",
+      "flow": ["External World", "Reality Gateway", "Evidence / PIT", "Research State Kernel"]
+    },
+    "intelligence_bus": {
+      "direction": "governed_reasoning_inside_yuanli",
+      "flow": ["State", "Capability", "Claim", "Trial", "Settlement", "Learning"]
+    },
+    "action_bus": {
+      "direction": "yuanli_to_world",
+      "flow": ["Research Settlement", "Capital Admission", "ActionContract", "Execution", "Market"]
+    },
+    "reality_bus_ne_action_bus": true,
+    "read_side_credential_cannot_become_execution_authority": true
+  },
+  "human_layers": [
+    {"id": "L0", "name": "Philosophy & Authority Constitution", "components": ["YIP0", "accepted research laws", "survival constraints"]},
+    {"id": "L1", "name": "Canon & Control Plane", "components": ["GitHub", "Constitution", "Schema", "Validator", "CI", "Version"]},
+    {"id": "L2", "name": "Reality Gateway", "components": ["Macro", "Filings", "IR", "Market", "Narrative", "Alternative Data"]},
+    {"id": "L3", "name": "Evidence & PIT Plane", "components": ["Release", "Vintage", "KnownAsOf", "Revision", "Provenance"]},
+    {"id": "L4", "name": "Research State Kernel", "components": ["Asset", "State", "Thesis", "Evidence", "Unknown", "Falsifier"]},
+    {"id": "L5", "name": "Research State Compiler", "components": ["AssetState@PIT", "ThesisState", "DriverState", "Context Compiler"]},
+    {"id": "L6", "name": "Research Capability Plane", "components": ["YMQ4", "Market Clock", "Narrative", "C/R/X", "Valuation", "Tail"]},
+    {"id": "L7", "name": "Research Trial Runtime", "components": ["YRP1", "Baseline", "PreRegistration", "KillGate", "Replay", "Benchmark"]},
+    {"id": "L8", "name": "Research Settlement & Learning", "components": ["Physical Settlement", "Scientific Settlement", "Authority Settlement", "LearningDelta"]},
+    {"id": "L9", "name": "Capital & Action Authority", "components": ["CapitalAdmission", "PositionPassport", "ExecutionIntent", "ActionContract", "Authorization Firewall"]},
+    {"id": "L10", "name": "Execution Runtime", "components": ["Yuanli Execution Runtime", "Provider Adapter", "VeighNa", "Broker"]},
+    {"id": "L11", "name": "Execution Settlement & Learning", "components": ["Reconciliation", "Execution Quality", "Golden Failure"]},
+    {"id": "L12", "name": "Human / AI Experience Plane", "components": ["ChatGPT", "Web Cockpit", "Notion Human Atlas"]}
+  ],
+  "machine_services": [
+    {"id": "M1", "name": "Reality Gateway", "role": "acquire and timestamp external Reality"},
+    {"id": "M2", "name": "Research State Kernel", "role": "store structured evidence/state and provenance"},
+    {"id": "M3", "name": "State Compiler", "role": "compile task-scoped point-in-time state objects"},
+    {"id": "M4", "name": "Research Capability Runtime", "role": "execute provider/model-specific research capabilities"},
+    {"id": "M5", "name": "YRP1 Trial & Settlement", "role": "preregistration, benchmark, kill gate, settlement and learning admission once separately accepted"},
+    {"id": "M6", "name": "Projection Gateway", "role": "expose low-authority projections to Notion, Web and ChatGPT"},
+    {"id": "M7", "name": "Capital Action Gateway", "role": "resolve whether settled research may consume capital authority"},
+    {"id": "M8", "name": "Execution Runtime", "role": "convert a valid ActionContract into governed execution events and reconciliation"}
+  ],
+  "experience_plane": {
+    "notion": {"role": "Human Projection", "authoritative": false, "canon_write_authority": false},
+    "chatgpt": {"role": "Universal Research Interface", "persistent_canon": false},
+    "web": {"role": "Dynamic Research Cockpit", "authoritative_state_source": false}
+  },
+  "deployment_domains": {
+    "control": ["GitHub"],
+    "research": ["Supabase / Postgres", "Object Storage", "Quant / AI Compute"],
+    "experience": ["Notion", "Web", "ChatGPT"],
+    "execution": ["Capital Action Gateway", "Yuanli Execution Runtime", "provider adapter"],
+    "topology_is_reference_not_deployment_mandate": true
+  },
+  "status_semantics": {
+    "axes": ["authority_state", "reality_state", "runtime_state"],
+    "authority_states": ["CANON_ACCEPTED_MERGED", "HUMAN_ACCEPTED_NOT_MERGED", "ARCHITECTURE_ACCEPTED", "DESIGN_CANDIDATE", "NONE"],
+    "reality_states": ["REALITY_PROVEN", "PARTIAL_REALITY_PROOF", "SCIENTIFIC_NO_GO", "NOT_RUN", "NOT_APPLICABLE"],
+    "runtime_states": ["MAIN_ACTIVE", "CANDIDATE_BRANCH", "DESIGN_ONLY", "NOT_IMPLEMENTED", "NOT_AUTHORIZED"],
+    "single_pass_label_sufficient": false,
+    "status_matrix_is_projection": true
+  },
+  "projection_contract": {
+    "direction": "GitHub Canon → Projection Contract → Notion Human Projection",
+    "one_way": true,
+    "notion_can_directly_mutate_canon": false,
+    "allowed_reverse_path": "Notion Comment / Review Request → GitHub Issue / Battle / PR → Human Review → Merge → New Canon Revision → Notion Reprojection",
+    "required_projection_fields": ["Canon System ID", "Architecture Version", "Canon URI", "Canon Commit SHA", "Status Known As Of", "Last Synced At", "Projection State", "Projection Verification State"],
+    "v1_sync_mode": "explicit_controlled_projection"
+  },
+  "bootstrap_contract": {
+    "order": ["YIOS0-CURRENT", "YIP0", "YIOS0 machine contract", "CANON-STATUS / underlying program state", "task-specific constitution / receipt / runtime evidence"],
+    "architecture_context_ne_task_evidence": true
+  },
+  "non_authorizations": {
+    "yvn1_a1_runtime": false,
+    "veighna_installation_or_invocation": false,
+    "broker_credentials": false,
+    "broker_connection": false,
+    "broker_paper": false,
+    "live_execution": false,
+    "real_capital_movement": false,
+    "portfolio_sizing": false,
+    "automatic_research_to_execution": false
+  }
+}
