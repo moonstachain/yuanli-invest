@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yex0-execution-intent:0.1.0",
+  "title": "ExecutionIntent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["execution_intent_id","schema_version","capital_admission_id","position_passport_id","instrument_ref","direction","quantity_delta","limits","allowed_venues","created_at","valid_from","expires_at","idempotency_key","self_execution_authorized"],
+  "properties": {
+    "execution_intent_id": {"type":"string","pattern":"^EI-[A-Z0-9-]+$"},
+    "schema_version": {"const":"0.1.0"},
+    "capital_admission_id": {"type":"string","pattern":"^CA-[A-Z0-9-]+$"},
+    "position_passport_id": {"type":"string","pattern":"^PP-[A-Z0-9-]+$"},
+    "instrument_ref": {"type":"string","minLength":1},
+    "direction": {"enum":["buy","sell","increase","decrease","flatten"]},
+    "quantity_delta": {"type":"number"},
+    "limits": {
+      "type":"object","additionalProperties":false,
+      "required":["max_quantity_abs","max_notional","max_loss","max_slippage_bps"],
+      "properties": {
+        "max_quantity_abs":{"type":"number","minimum":0},
+        "max_notional":{"type":"number","minimum":0},
+        "max_loss":{"type":"number","minimum":0},
+        "max_slippage_bps":{"type":"number","minimum":0}
+      }
+    },
+    "allowed_venues": {"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","minLength":1}},
+    "created_at": {"type":"string","format":"date-time"},
+    "valid_from": {"type":"string","format":"date-time"},
+    "expires_at": {"type":"string","format":"date-time"},
+    "idempotency_key": {"type":"string","minLength":8},
+    "self_execution_authorized": {"const":false}
+  }
+}

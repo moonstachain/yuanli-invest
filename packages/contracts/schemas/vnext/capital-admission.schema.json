@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:yex0-capital-admission:0.1.0",
+  "title": "CapitalAdmission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["capital_admission_id","schema_version","research_settlement_ref","position_passport_id","decision","capital_book_id","risk_budget","mode_eligibility","human_decision_ref","lifecycle","authority"],
+  "properties": {
+    "capital_admission_id": {"type":"string","pattern":"^CA-[A-Z0-9-]+$"},
+    "schema_version": {"const":"0.1.0"},
+    "research_settlement_ref": {"type":"string","minLength":1},
+    "position_passport_id": {"type":"string","pattern":"^PP-[A-Z0-9-]+$"},
+    "decision": {"enum":["admit_shadow","admit_broker_paper","deny"]},
+    "capital_book_id": {"type":"string","minLength":1},
+    "risk_budget": {
+      "type":"object","additionalProperties":false,
+      "required":["max_notional","max_loss"],
+      "properties": {
+        "max_notional":{"type":"number","minimum":0},
+        "max_loss":{"type":"number","minimum":0}
+      }
+    },
+    "mode_eligibility": {"type":"array","minItems":1,"uniqueItems":true,"items":{"enum":["shadow","broker_paper"]}},
+    "human_decision_ref": {"type":"string","minLength":1},
+    "lifecycle": {
+      "type":"object","additionalProperties":false,
+      "required":["created_at","valid_from","expires_at"],
+      "properties": {
+        "created_at":{"type":"string","format":"date-time"},
+        "valid_from":{"type":"string","format":"date-time"},
+        "expires_at":{"type":"string","format":"date-time"}
+      }
+    },
+    "authority": {
+      "type":"object","additionalProperties":false,
+      "required":["order_submission_authority","live_execution_authority","real_capital_movement_authority"],
+      "properties": {
+        "order_submission_authority":{"const":false},
+        "live_execution_authority":{"const":false},
+        "real_capital_movement_authority":{"const":false}
+      }
+    }
+  }
+}
