@@ -2,7 +2,7 @@
 
 **Case:** `YIOS-GOLD-001`  
 **Stage:** `G1 Reality Trial`  
-**Status:** `MACHINE_CANDIDATE / HUMAN_G2_REQUIRED`  
+**Status:** `MACHINE_QUALIFIED / HUMAN_G2_REQUIRED`  
 
 ## What Human G2 is being asked to accept
 
@@ -35,9 +35,18 @@ PRIMARY CLAIM                      INDETERMINATE
 15. No YVN1-A1, VeighNa, broker, paper, live, or real-capital authority was created.
 16. Hard negatives remain explicit and machine-readable.
 
-## Machine precheck target
+## Machine precheck
 
 `16/16 PASS`
+
+Evidence:
+
+- TDD RED: repository-gates `#719` / run `34345253903` at `853999d7971d713be178998c7df5f7762b8041ee`.
+- GREEN: repository-gates `#727` / run `34346019361` at `03d7d522c710d50d7da5efb00c8c0eb70c439e6b`.
+- Gold Reality Trial validator: PASS.
+- repository `contracts`: PASS.
+- repository `governance`: PASS.
+- full unittest discovery: PASS.
 
 ## Human decision
 
