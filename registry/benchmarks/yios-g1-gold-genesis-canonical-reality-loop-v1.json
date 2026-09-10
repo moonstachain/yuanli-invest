@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "object_type": "GoldenRealityLoopBenchmarkRegistryObject",
+  "benchmark_id": "GOLD_GENESIS_CANONICAL_REALITY_LOOP_v1",
+  "case_id": "YIOS-GOLD-001",
+  "program_id": "YIOS-G1-C0.3",
+  "registry_state": "REGISTERED_PENDING_REALITY_ACTIVATION",
+  "activation_target": "ACTIVE",
+  "benchmark_meaning": "SYSTEM_REALITY_LOOP_CORRECTNESS_NOT_GOLD_PRICE_PREDICTION",
+  "benchmark_question": "Can YIOS preserve scientific uncertainty through Capital and Execution boundaries, fail closed without manufacturing a trade, reconcile reality, and retain denial as valid learning?",
+  "canon_lineage": [
+    {"stage": "YIOS0", "commit_sha": "61412df120faca8b30d87572175e3be8ed021213"},
+    {"stage": "A0", "commit_sha": "fa5dc9bf73b200e5ee91debf6e95e6097fbbc17a"},
+    {"stage": "G1", "commit_sha": "6ca14e6edd2d9a48a3f3e1847aff87d77e180634"},
+    {"stage": "G3", "commit_sha": "558275fe3fb4dcd13e4809c466b336a9119f02fe"},
+    {"stage": "G4", "commit_sha": "b931a65a9a8532cca5d03992575e999015897361"}
+  ],
+  "frozen_settlement": {
+    "scientific_primary": "INDETERMINATE",
+    "capital_settlement": "DENY",
+    "runtime_settlement": "FAIL_CLOSED_VALID",
+    "learning": "DENIAL_IS_VALID_EXECUTION_OUTCOME"
+  },
+  "runtime_invariants": {
+    "unknown_semantics": "DENY",
+    "max_notional": 0,
+    "max_loss": 0,
+    "quantity_delta": 0,
+    "execution_mode": "SHADOW",
+    "provider": "INTERNAL_SYNTHETIC_ONLY",
+    "external_network_used": false,
+    "oms_invoked": false,
+    "broker_invoked": false,
+    "veighna_invoked": false,
+    "order_or_fill_events_allowed": false,
+    "four_way_reconciliation_required": true
+  },
+  "activation": {
+    "self_activation_authorized": false,
+    "required_reality_gates": [
+      "EXACT_HEAD_CI_SUCCESS",
+      "PROTECTED_MAIN_MERGE",
+      "FRESH_MAIN_READBACK",
+      "POST_MERGE_CI_SUCCESS"
+    ],
+    "effective_state_rule": "ACTIVE_IFF_ALL_REQUIRED_REALITY_GATES_PASS",
+    "activation_receipt_channel": "GOVERNED_PR_POST_MERGE_REALITY_RECEIPT"
+  },
+  "evidence_paths": {
+    "g1_research_trial": "config/yios_g1/gold_g1_reality_trial.v1.json",
+    "g3_shadow_action": "config/yios_g1/gold_g3_shadow_action.v1.json",
+    "g4_runtime_settlement": "config/yios_g1/gold_g4_shadow_runtime_settlement.v1.json",
+    "g4_runtime_receipt": "docs/architecture/yios_g1/YIOS-G1-G4-RUNTIME-SETTLEMENT-RECEIPT-v1.0.json",
+    "registry_validator": "scripts/validate_yios_g1_gold_genesis_benchmark_registry.py",
+    "registry_tests": "tests/test_yios_g1_gold_genesis_benchmark_registry.py"
+  },
+  "non_authorizations": {
+    "yvn1_a1": false,
+    "veighna_installation_or_invocation": false,
+    "broker_credentials_or_connection": false,
+    "broker_paper": false,
+    "live_execution": false,
+    "real_capital_movement": false,
+    "portfolio_or_position_sizing": false,
+    "automatic_research_to_execution": false
+  }
+}

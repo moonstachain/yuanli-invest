@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:schema:golden-reality-loop-benchmark-registry:1.0.0",
+  "title": "GoldenRealityLoopBenchmarkRegistryObject",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "object_type",
+    "benchmark_id",
+    "case_id",
+    "program_id",
+    "registry_state",
+    "activation_target",
+    "benchmark_meaning",
+    "benchmark_question",
+    "canon_lineage",
+    "frozen_settlement",
+    "runtime_invariants",
+    "activation",
+    "evidence_paths",
+    "non_authorizations"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "object_type": {"const": "GoldenRealityLoopBenchmarkRegistryObject"},
+    "benchmark_id": {"const": "GOLD_GENESIS_CANONICAL_REALITY_LOOP_v1"},
+    "case_id": {"const": "YIOS-GOLD-001"},
+    "program_id": {"const": "YIOS-G1-C0.3"},
+    "registry_state": {"const": "REGISTERED_PENDING_REALITY_ACTIVATION"},
+    "activation_target": {"const": "ACTIVE"},
+    "benchmark_meaning": {"const": "SYSTEM_REALITY_LOOP_CORRECTNESS_NOT_GOLD_PRICE_PREDICTION"},
+    "benchmark_question": {"type": "string", "minLength": 20},
+    "canon_lineage": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["stage", "commit_sha"],
+        "properties": {
+          "stage": {"enum": ["YIOS0", "A0", "G1", "G3", "G4"]},
+          "commit_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+        }
+      }
+    },
+    "frozen_settlement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scientific_primary", "capital_settlement", "runtime_settlement", "learning"],
+      "properties": {
+        "scientific_primary": {"const": "INDETERMINATE"},
+        "capital_settlement": {"const": "DENY"},
+        "runtime_settlement": {"const": "FAIL_CLOSED_VALID"},
+        "learning": {"const": "DENIAL_IS_VALID_EXECUTION_OUTCOME"}
+      }
+    },
+    "runtime_invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unknown_semantics", "max_notional", "max_loss", "quantity_delta", "execution_mode", "provider", "external_network_used", "oms_invoked", "broker_invoked", "veighna_invoked", "order_or_fill_events_allowed", "four_way_reconciliation_required"],
+      "properties": {
+        "unknown_semantics": {"const": "DENY"},
+        "max_notional": {"const": 0},
+        "max_loss": {"const": 0},
+        "quantity_delta": {"const": 0},
+        "execution_mode": {"const": "SHADOW"},
+        "provider": {"const": "INTERNAL_SYNTHETIC_ONLY"},
+        "external_network_used": {"const": false},
+        "oms_invoked": {"const": false},
+        "broker_invoked": {"const": false},
+        "veighna_invoked": {"const": false},
+        "order_or_fill_events_allowed": {"const": false},
+        "four_way_reconciliation_required": {"const": true}
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["self_activation_authorized", "required_reality_gates", "effective_state_rule", "activation_receipt_channel"],
+      "properties": {
+        "self_activation_authorized": {"const": false},
+        "required_reality_gates": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "EXACT_HEAD_CI_SUCCESS"},
+            {"const": "PROTECTED_MAIN_MERGE"},
+            {"const": "FRESH_MAIN_READBACK"},
+            {"const": "POST_MERGE_CI_SUCCESS"}
+          ],
+          "items": false,
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "effective_state_rule": {"const": "ACTIVE_IFF_ALL_REQUIRED_REALITY_GATES_PASS"},
+        "activation_receipt_channel": {"const": "GOVERNED_PR_POST_MERGE_REALITY_RECEIPT"}
+      }
+    },
+    "evidence_paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["g1_research_trial", "g3_shadow_action", "g4_runtime_settlement", "g4_runtime_receipt", "registry_validator", "registry_tests"],
+      "properties": {
+        "g1_research_trial": {"type": "string", "minLength": 1},
+        "g3_shadow_action": {"type": "string", "minLength": 1},
+        "g4_runtime_settlement": {"type": "string", "minLength": 1},
+        "g4_runtime_receipt": {"type": "string", "minLength": 1},
+        "registry_validator": {"type": "string", "minLength": 1},
+        "registry_tests": {"type": "string", "minLength": 1}
+      }
+    },
+    "non_authorizations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["yvn1_a1", "veighna_installation_or_invocation", "broker_credentials_or_connection", "broker_paper", "live_execution", "real_capital_movement", "portfolio_or_position_sizing", "automatic_research_to_execution"],
+      "properties": {
+        "yvn1_a1": {"const": false},
+        "veighna_installation_or_invocation": {"const": false},
+        "broker_credentials_or_connection": {"const": false},
+        "broker_paper": {"const": false},
+        "live_execution": {"const": false},
+        "real_capital_movement": {"const": false},
+        "portfolio_or_position_sizing": {"const": false},
+        "automatic_research_to_execution": {"const": false}
+      }
+    }
+  }
+}
