@@ -49,6 +49,7 @@ jobs:
       - run: python scripts/validate_yios_g1_gold_reality_trial.py
       - run: python scripts/validate_yios_g1_gold_shadow_action.py
       - run: python scripts/validate_yios_g1_gold_shadow_runtime.py
+      - run: python scripts/validate_yios_g1_gold_genesis_benchmark_registry.py
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
 
   governance:
