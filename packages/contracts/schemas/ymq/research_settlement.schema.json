@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:ymq:research-settlement:0.1.0",
+  "title": "ResearchSettlement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["settlement_id", "run_refs", "physical_status", "scientific_status", "authority_status", "baseline_result", "hard_negative_result", "ablation_result", "known_limitations", "next_authorized_stage", "settled_at"],
+  "properties": {
+    "settlement_id": {"type": "string", "pattern": "^YMQ-SETTLE-[A-Z0-9-]+$"},
+    "run_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^YMQ-RUN-"}},
+    "physical_status": {"enum": ["PHYSICAL_PASS", "PHYSICAL_FAIL"]},
+    "scientific_status": {"enum": ["SCIENTIFIC_PASS", "SCIENTIFIC_NO_GO", "SCIENTIFIC_INDETERMINATE", "NOT_SETTLED"]},
+    "authority_status": {"enum": ["NONE", "AWAITING_HUMAN_REVIEW", "HUMAN_ACCEPTED_RESEARCH_ONLY"]},
+    "baseline_result": {"type": "object"},
+    "hard_negative_result": {"type": "object"},
+    "ablation_result": {"type": "object"},
+    "known_limitations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "next_authorized_stage": {"type": ["string", "null"]},
+    "settled_at": {"type": "string", "format": "date-time"},
+    "receipt_is_ledger": {"const": true},
+    "status_is_projection": {"const": true}
+  }
+}
