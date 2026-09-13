@@ -4,7 +4,7 @@
   "title": "TransmissionEdgePIT",
   "type": "object",
   "additionalProperties": false,
-  "required": ["edge_id", "from_state_or_driver", "to_state_or_asset", "as_of", "method", "coefficient_or_effect", "confidence_or_uncertainty", "evidence_refs", "stability_window"],
+  "required": ["edge_id", "from_state_or_driver", "to_state_or_asset", "as_of", "method", "coefficient_or_effect", "confidence_or_uncertainty", "evidence_refs", "stability_window", "permanent_beta_claim"],
   "properties": {
     "edge_id": {"type": "string", "pattern": "^YMQ-EDGE-[A-Z0-9-]+$"},
     "from_state_or_driver": {"type": "string", "minLength": 1},
