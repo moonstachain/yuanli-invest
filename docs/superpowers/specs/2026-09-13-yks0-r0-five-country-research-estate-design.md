@@ -1,6 +1,7 @@
 # YKS0-R0｜Five-Country 1990–2026 Research Estate × Evidence Pack — Written Spec
 
-**Status:** `WRITTEN_SPEC_CANDIDATE`
+**Status:** `WRITTEN_SPEC_HUMAN_ACCEPTED`
+**Human decision:** `ACCEPT_YKS0_R0_RESEARCH_ESTATE_WRITTEN_SPEC`
 **Program:** `YKS0｜K-Shaped Society × Reality Distribution Regime`
 **Child battle:** `YKS0-R0｜Five-Country 1990–2026 Research Estate × Evidence Pack`
 **Parent Canon:** `YKS0-G0｜K-Shaped Society Constitution × Nine-Dimensional K Vector × Five-Country Replay Freeze`
@@ -279,4 +280,4 @@ Acceptance authorizes only a separate implementation plan. It does not authorize
 
 ## 20. Current stop line
 
-Until `ACCEPT_YKS0_R0_RESEARCH_ESTATE_WRITTEN_SPEC` is received: do not create research-estate files, populate machine registries, add validators, mutate Supabase/HF/Notion/UIG, claim R0 complete, or merge anything.
+Written Spec is Human Accepted. Implementation remains `NOT_AUTHORIZED` until a separate execution token is issued. Do not create research-estate files, populate machine registries, add validators, mutate Supabase/HF/Notion/UIG, claim R0 complete, or merge anything before that token.
