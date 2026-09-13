@@ -105,7 +105,7 @@
     "authority_default": "NONE_AWAITING_HUMAN_REVIEW"
   },
   "provider_policy": {
-    "law_control": {"providers": ["GitHub"], "authority": "LAW_CONTROL_ONLY", "replaceable": false},
+    "law_control": {"providers": ["GitHub"], "authority": "LAW_CONTROL_ONLY", "replaceable": true},
     "evidence_runtime_truth": {"providers": ["Postgres/Supabase", "Object Storage/NAS"], "authority": "EVIDENCE_RUNTIME_TRUTH_ONLY", "replaceable": true},
     "experiment_compute": {"providers": ["Hugging Face Jobs", "container runner"], "authority": "NONE", "replaceable": true},
     "experience_projection": {"providers": ["Web", "Hugging Face Space", "ChatGPT", "Notion"], "authority": "PROJECTION_ONLY", "replaceable": true},
