@@ -117,8 +117,10 @@ The six cases are fixed at design time. Exact weekly phase annotations must be f
 | `C2_GFC` | 2008-01-01 → 2009-12-31 | Acute shock hard negative / mixed | co-movement from funding stress and deleveraging can mimic herding |
 | `C3_CHINA_LEVERAGE` | 2014-07-01 → 2016-02-29 | Narrative/reflexive positive | leverage + policy + wealth narrative → convergence → reversal |
 | `C4_COVID` | 2020-01-01 → 2020-12-31 | Acute common-shock hard negative / mixed | one external shock can compress cross-asset behavior without a slow narrative epidemic |
-| `C5_INFLATION` | 2021-01-01 → 2023-06-30 | Mixed regime case | inflation/commodities/rates narrative intertwined with physical Reality |
+| `C5_INFLATION` | 2021-01-01 → 2022-10-31 | Mixed regime case | inflation/commodities/rates narrative intertwined with physical Reality |
 | `C6_AI` | 2022-11-01 → 2026-08-31 | Narrative-heavy positive | AI story diffusion, cross-asset reclassification and crowding |
+
+Case windows are intentionally non-overlapping so a held-out case can never re-enter training through another case ID.
 
 R0 is **not** allowed to drop a difficult case because the candidate performs poorly.
 
@@ -132,7 +134,9 @@ Weekly phase labels use the frozen state vocabulary:
 - `D3_CROWDED_SATURATION`
 - `D4_BREAK`
 
-Each label requires an annotation evidence packet independent of the candidate model outputs. Labels are research annotations, not ground-truth laws; their uncertainty must remain visible.
+Each label requires an annotation evidence packet independent of the candidate model outputs. Annotators may use only the predeclared chronology/evidence packet and may not inspect candidate feature values or held-out predictions before phase boundaries are frozen.
+
+Labels are research annotations, not ground-truth laws; their uncertainty must remain visible.
 
 ### 4.2 Cause tags
 
@@ -171,6 +175,10 @@ Minimum behavioral panel:
 - `C3–C6`: all six required unless a documented source-authority failure makes the case `INDETERMINATE`.
 
 Any asset substitution requires a versioned source/series contract and cannot occur after model reveal.
+
+### 5.2 Warm-up data
+
+Each scored case may read an additional trailing warm-up history strictly **before** the case start for volatility/correlation normalization. Warm-up rows are never scored as part of the held-out case and remain subject to normal PIT law.
 
 ---
 
@@ -218,51 +226,67 @@ while the physical data/replay audit may still PASS.
 
 ## 7｜Behavior/Herding sensor contract
 
-R0 behavior sensors are frozen before reveal.
+R0 uses a **weekly primary clock** to reduce asynchronous global-market close effects. Daily calculations may exist only as secondary diagnostics and cannot replace the weekly primary gate after reveal.
 
-### 7.1 Daily return scaling
+### 7.1 Canonical week
 
-For asset `i` on day `t`:
+- week boundary: Friday `23:59:59 UTC`;
+- each asset uses the last valid local market close/fix available on or before the week boundary;
+- missing/holiday semantics are retained explicitly;
+- an asset with no valid observation in the permitted week cannot be silently forward-filled across multiple weeks.
 
-`r_i,t = log(P_i,t / P_i,t-1)`
+### 7.2 Weekly return scaling
+
+For asset `i` in week `w`:
+
+`r_i,w = log(P_i,w / P_i,w-1)`
 
 To reduce domination by structurally high-volatility assets:
 
-`sigma_i,t-1 = realized volatility from the previous 63 valid trading observations only`
+`sigma_i,w-1 = realized volatility from the previous 52 valid weekly returns only`
 
-`zret_i,t = r_i,t / sigma_i,t-1`
+`zret_i,w = r_i,w / sigma_i,w-1`
 
-Minimum trailing observations: `40`.
+Minimum trailing observations: `26`.
 
-Current-day return is never used to estimate its own scaling volatility.
+Current-week return is never used to estimate its own scaling volatility.
 
-### 7.2 Cross-asset CSAD
+### 7.3 Cross-asset CSAD
 
-`CSAD_t = mean_i |zret_i,t - mean_j(zret_j,t)|`
+`CSAD_w = mean_i |zret_i,w - mean_j(zret_j,w)|`
 
-Weekly features:
+Frozen features:
 
-- median daily CSAD;
-- CSAD percentile using trailing-only history;
+- weekly CSAD;
+- CSAD percentile using the previous `104` valid weeks only, minimum `52`;
 - `ΔCSAD`;
 - `Δ²CSAD`;
-- count of days below trailing 20th percentile.
+- count/share of the last four weeks below the trailing 20th percentile.
 
 Low CSAD is interpreted only as **behavioral convergence**.
 
-### 7.3 CCK sensor
+### 7.4 CCK sensor
 
-A frozen rolling nonlinear dispersion regression estimates whether dispersion compresses disproportionately during large common moves.
+The PIT CCK diagnostic is estimated on the prior `104` valid weekly observations, minimum `52`:
 
-CCK outputs are secondary sensors; the regression is not allowed to define Narrative on its own.
+`CSAD_w = α + β1 * |M_w| + β2 * M_w² + ε_w`
 
-### 7.4 Dependency sensors
+where `M_w = mean_i(zret_i,w)`.
 
-At minimum:
+The current week is excluded from the estimation window. Frozen outputs are `β2`, its uncertainty statistic, and model fit diagnostics.
 
-- trailing pairwise dependency matrix;
+A negative `β2` is only a nonlinear convergence sensor; it is not a Narrative verdict.
+
+### 7.5 Dependency sensors
+
+Primary dependency window: previous `26` valid weekly observations, minimum `13`, excluding the current week.
+
+Frozen outputs:
+
+- pairwise Pearson dependency matrix on `zret`;
 - average absolute pairwise correlation;
-- dependency network density above a frozen threshold.
+- network density for `|corr| >= 0.50`;
+- first difference of average absolute correlation.
 
 DCC may be included as a preregistered secondary candidate if deterministic implementation and dependency versions are frozen before execution. R0 scientific validity may not depend on DCC being available.
 
@@ -295,7 +319,7 @@ If embeddings/LLMs are used for historical text classification:
 
 ### 8.2 Narrative identity
 
-Narrative cluster definitions must be frozen before model scoring and must not be renamed after seeing returns.
+Case-specific narrative cluster definitions, seed examples/lexicons and counter-narrative definitions must be frozen before model scoring and must not be renamed after seeing returns.
 
 ---
 
@@ -353,7 +377,7 @@ Weekly `StatePIT` rows.
 
 ### 11.2 Cross-case generalization
 
-Use **leave-one-case-out** evaluation.
+Use **leave-one-case-out** evaluation over the non-overlapping case windows.
 
 For each eligible held-out case:
 
@@ -374,7 +398,7 @@ R0 uses one simple interpretable multiclass classifier:
 - max iterations fixed in config;
 - no hyperparameter search.
 
-If the approved runtime cannot provide the dependency reproducibly, an equivalent deterministic linear implementation may be used only if frozen before any R0 outcome reveal.
+If the approved runtime cannot provide the dependency reproducibly, an equivalent deterministic linear implementation may be substituted only **before any R0 feature/outcome reveal** and must trigger a new preregistration revision.
 
 ### 11.4 Primary metrics
 
@@ -404,7 +428,7 @@ No trading-return metric is a primary R0 success criterion.
 
 1. candidate Macro F1 > each of B0, B1, B2 and B3;
 2. candidate Balanced Accuracy > each of B0, B1, B2 and B3;
-3. candidate improves Macro F1 versus `B1 Herding Only` in at least `4` eligible case blocks, or in every eligible block if fewer than 4 multimodal blocks exist but the minimum four-case coverage requirement is exactly met;
+3. candidate per-case Macro F1 > `B1 Herding Only` in at least `4` eligible held-out case blocks; if exactly four multimodal case blocks qualify, all four must improve;
 4. hard-negative false-positive rate for narrative-convergence states is `<= 20%`;
 5. zero PIT leakage violations;
 6. no post-reveal case/window/feature/model changes.
@@ -425,7 +449,7 @@ Independent of the scientific result:
 - all used documents/observations carry PIT provenance;
 - asset coverage rules are obeyed;
 - feature hashes are reproducible;
-- fold assignments are deterministic;
+- fold assignments are deterministic and case windows do not overlap;
 - physical run/receipt readback agrees;
 - no future leakage is found.
 
@@ -476,7 +500,7 @@ Expected challenge:
 
 Behavioral convergence can be mechanically induced.
 
-Hard-negative block boundaries must be frozen in the preregistration config before model execution.
+Hard-negative block boundaries must be frozen in the preregistration config before feature/model execution.
 
 ---
 
@@ -565,7 +589,8 @@ Immediate `PHYSICAL_FAIL` if any occurs:
 - feature/model hyperparameters are tuned against held-out case performance;
 - modern retrospective text enters the feature corpus;
 - a future index constituent list is used to reconstruct past breadth without point-in-time membership handling;
-- a missing historical value is filled from a later revision without an explicit preregistered rule.
+- a missing historical value is filled from a later revision without an explicit preregistered rule;
+- the same scored week appears in both training and held-out folds under different case IDs.
 
 ---
 
