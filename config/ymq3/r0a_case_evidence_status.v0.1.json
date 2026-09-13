@@ -1,0 +1,83 @@
+{
+  "status_id": "YMQ3-R0A-CASE-EVIDENCE-STATUS-v0.1",
+  "as_of": "2026-09-13T13:10:00Z",
+  "coverage_run_materialized": false,
+  "physical_fail": false,
+  "case_roles": {
+    "C1_DOTCOM": "NARRATIVE_HEAVY",
+    "C2_GFC": "ACUTE_SHOCK_HARD_NEGATIVE",
+    "C3_CHINA_LEVERAGE": "NARRATIVE_HEAVY",
+    "C4_COVID": "ACUTE_SHOCK_HARD_NEGATIVE",
+    "C5_INFLATION": "MIXED_REALITY_NARRATIVE",
+    "C6_AI": "NARRATIVE_HEAVY"
+  },
+  "cases": [
+    {
+      "case_id": "C1_DOTCOM",
+      "domain_statuses": {"MARKET":"PENDING_PROVIDER_BINDING","MACRO_VINTAGE":"PASS","OFFICIAL_ANCHOR":"PASS","NARRATIVE_CORPUS":"BLOCKED","LICENSE_RIGHTS":"BLOCKED","PIT_PROVENANCE":"PARTIAL"},
+      "coverage_materialized": false,
+      "pit_violation_count": 0,
+      "unknown_processing_rights_count": 0,
+      "unauthorized_raw_storage_count": 0,
+      "blocked_reasons": ["No rights-bound weekly multi-publisher 1999-2002 Story corpus is available to this run."],
+      "case_verdict": "BLOCKED"
+    },
+    {
+      "case_id": "C2_GFC",
+      "domain_statuses": {"MARKET":"PENDING_PROVIDER_BINDING","MACRO_VINTAGE":"PASS","OFFICIAL_ANCHOR":"PASS","NARRATIVE_CORPUS":"BLOCKED","LICENSE_RIGHTS":"BLOCKED","PIT_PROVENANCE":"PARTIAL"},
+      "coverage_materialized": false,
+      "pit_violation_count": 0,
+      "unknown_processing_rights_count": 0,
+      "unauthorized_raw_storage_count": 0,
+      "blocked_reasons": ["Hard-negative crisis weeks lack a rights-bound multi-publisher Story corpus in the current runtime."],
+      "case_verdict": "BLOCKED"
+    },
+    {
+      "case_id": "C3_CHINA_LEVERAGE",
+      "domain_statuses": {"MARKET":"PENDING_PROVIDER_BINDING","MACRO_VINTAGE":"PARTIAL","OFFICIAL_ANCHOR":"PASS","NARRATIVE_CORPUS":"BLOCKED","LICENSE_RIGHTS":"BLOCKED","PIT_PROVENANCE":"PARTIAL"},
+      "coverage_materialized": false,
+      "pit_violation_count": 0,
+      "unknown_processing_rights_count": 0,
+      "unauthorized_raw_storage_count": 0,
+      "blocked_reasons": ["The 2014-07-01..2015-02-18 pre-GDELT2 Chinese Story interval has no admitted multi-publisher corpus.", "China macro vintage reconstruction is sampled but not yet systematic."],
+      "case_verdict": "BLOCKED"
+    },
+    {
+      "case_id": "C4_COVID",
+      "domain_statuses": {"MARKET":"PENDING_PROVIDER_BINDING","MACRO_VINTAGE":"PASS","OFFICIAL_ANCHOR":"PASS","NARRATIVE_CORPUS":"PATH_EXISTS_NOT_MEASURED","LICENSE_RIGHTS":"PASS","PIT_PROVENANCE":"PATH_EXISTS_NOT_MEASURED"},
+      "coverage_materialized": false,
+      "pit_violation_count": 0,
+      "unknown_processing_rights_count": 0,
+      "unauthorized_raw_storage_count": 0,
+      "blocked_reasons": [],
+      "case_verdict": "READY_WITH_LIMITATIONS"
+    },
+    {
+      "case_id": "C5_INFLATION",
+      "domain_statuses": {"MARKET":"PENDING_PROVIDER_BINDING","MACRO_VINTAGE":"PASS","OFFICIAL_ANCHOR":"PASS","NARRATIVE_CORPUS":"PATH_EXISTS_NOT_MEASURED","LICENSE_RIGHTS":"PASS","PIT_PROVENANCE":"PATH_EXISTS_NOT_MEASURED"},
+      "coverage_materialized": false,
+      "pit_violation_count": 0,
+      "unknown_processing_rights_count": 0,
+      "unauthorized_raw_storage_count": 0,
+      "blocked_reasons": [],
+      "case_verdict": "READY_WITH_LIMITATIONS"
+    },
+    {
+      "case_id": "C6_AI",
+      "domain_statuses": {"MARKET":"PENDING_PROVIDER_BINDING","MACRO_VINTAGE":"PARTIAL","OFFICIAL_ANCHOR":"PASS","NARRATIVE_CORPUS":"PATH_EXISTS_NOT_MEASURED","LICENSE_RIGHTS":"PASS","PIT_PROVENANCE":"PATH_EXISTS_NOT_MEASURED"},
+      "coverage_materialized": false,
+      "pit_violation_count": 0,
+      "unknown_processing_rights_count": 0,
+      "unauthorized_raw_storage_count": 0,
+      "blocked_reasons": [],
+      "case_verdict": "READY_WITH_LIMITATIONS"
+    }
+  ],
+  "program_verdict": "INSUFFICIENT_EVIDENCE_INDETERMINATE",
+  "ready_cases": [],
+  "limited_cases": ["C4_COVID","C5_INFLATION","C6_AI"],
+  "blocked_cases": ["C1_DOTCOM","C2_GFC","C3_CHINA_LEVERAGE"],
+  "indeterminate_cases": [],
+  "next_stage_authorized": "REMEDIATION_ONLY",
+  "explicitly_not_authorized": ["YMQ3_R0_REALITY_AUDIT","YMQ3_R1_FORWARD_SHADOW","SCIENTIFIC_PASS","CAPITAL_ADMISSION","EXECUTION"]
+}
