@@ -64,11 +64,14 @@ class YMQOS0ContractTests(unittest.TestCase):
         self.assertEqual(cfg["parent_authority"]["scope"], "L2-L8_RESEARCH_SIDE_ONLY")
         self.assertFalse(cfg["parent_authority"]["parallel_investment_os"])
 
-    def test_physical_planes_are_exact(self):
+    def test_physical_planes_are_exact_and_provider_neutral(self):
         cfg = load_config()
         self.assertEqual([p["id"] for p in cfg["physical_planes"]], EXPECTED_PLANES)
         for plane in cfg["physical_planes"]:
             self.assertEqual(len(plane["primary_authority_roles"]), 1)
+            self.assertTrue(plane["provider_replaceable"])
+        for key in ("law_control", "evidence_runtime_truth", "experiment_compute", "experience_projection"):
+            self.assertTrue(cfg["provider_policy"][key]["replaceable"])
 
     def test_research_loop_and_objects_are_exact(self):
         cfg = load_config()
@@ -126,6 +129,7 @@ class YMQOS0ContractTests(unittest.TestCase):
         self.assertEqual(providers["experiment_compute"]["authority"], "NONE")
         self.assertTrue(providers["experiment_compute"]["replaceable"])
         self.assertEqual(providers["experience_projection"]["authority"], "PROJECTION_ONLY")
+        self.assertTrue(providers["provider_identity_never_grants_canon"])
 
     def test_non_authorizations_are_machine_explicit(self):
         cfg = load_config()
@@ -178,10 +182,28 @@ class YMQOS0ValidatorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             ymq.validate_pit_relations(bundle)
 
+    def test_release_after_known_as_of_is_rejected(self):
+        bundle = ymq.positive_fixture_bundle()
+        bundle["observation"]["release_time"] = "2020-03-12T00:00:00Z"
+        with self.assertRaises(ValueError):
+            ymq.validate_pit_relations(bundle)
+
+    def test_vintage_after_known_as_of_is_rejected(self):
+        bundle = ymq.positive_fixture_bundle()
+        bundle["observation"]["vintage_time"] = "2020-03-12T00:00:00Z"
+        with self.assertRaises(ValueError):
+            ymq.validate_pit_relations(bundle)
+
     def test_claim_authority_ceiling_is_enforced(self):
         bundle = ymq.positive_fixture_bundle()
         bundle["claim"]["claim_authority"] = "PRIMARY_EVIDENCE"
         bundle["claim"]["evidence_authority"] = "HYPOTHESIS"
+        with self.assertRaises(ValueError):
+            ymq.validate_claim_authority(bundle)
+
+    def test_claim_cannot_use_future_state(self):
+        bundle = ymq.positive_fixture_bundle()
+        bundle["claim"]["as_of"] = "2020-03-13T00:00:00Z"
         with self.assertRaises(ValueError):
             ymq.validate_claim_authority(bundle)
 
@@ -197,10 +219,28 @@ class YMQOS0ValidatorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             ymq.validate_learning_forward_only(learning)
 
+    def test_settlement_cannot_predate_run_completion(self):
+        bundle = ymq.positive_fixture_bundle()
+        bundle["settlement"]["settled_at"] = "2020-03-13T23:59:00Z"
+        with self.assertRaises(ValueError):
+            ymq.validate_lifecycle_relations(bundle)
+
+    def test_learning_cannot_predate_settlement(self):
+        bundle = ymq.positive_fixture_bundle()
+        bundle["learning"]["created_at"] = "2020-03-14T00:00:30Z"
+        with self.assertRaises(ValueError):
+            ymq.validate_lifecycle_relations(bundle)
+
     def test_research_pass_equal_capital_pass_semantics_are_rejected(self):
         cfg = load_config()
         cfg = copy.deepcopy(cfg)
         cfg["laws"]["research_pass_vs_capital_pass"] = "EQUAL"
+        with self.assertRaises(ValueError):
+            ymq.validate_contract(cfg)
+
+    def test_nonreplaceable_provider_policy_is_rejected(self):
+        cfg = copy.deepcopy(load_config())
+        cfg["provider_policy"]["law_control"]["replaceable"] = False
         with self.assertRaises(ValueError):
             ymq.validate_contract(cfg)
 
