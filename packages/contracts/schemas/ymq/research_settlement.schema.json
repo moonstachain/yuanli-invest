@@ -4,7 +4,7 @@
   "title": "ResearchSettlement",
   "type": "object",
   "additionalProperties": false,
-  "required": ["settlement_id", "run_refs", "physical_status", "scientific_status", "authority_status", "baseline_result", "hard_negative_result", "ablation_result", "known_limitations", "next_authorized_stage", "settled_at"],
+  "required": ["settlement_id", "run_refs", "physical_status", "scientific_status", "authority_status", "baseline_result", "hard_negative_result", "ablation_result", "known_limitations", "next_authorized_stage", "settled_at", "receipt_is_ledger", "status_is_projection"],
   "properties": {
     "settlement_id": {"type": "string", "pattern": "^YMQ-SETTLE-[A-Z0-9-]+$"},
     "run_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^YMQ-RUN-"}},
