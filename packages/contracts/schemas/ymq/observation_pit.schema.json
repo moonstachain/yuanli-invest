@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:ymq:observation-pit:0.1.0",
+  "title": "ObservationPIT",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["observation_id", "series_or_fact_id", "observation_time", "release_time", "vintage_time", "known_as_of", "value", "unit", "source_snapshot_id", "measurement_regime", "pit_status"],
+  "properties": {
+    "observation_id": {"type": "string", "pattern": "^YMQ-OBS-[A-Z0-9-]+$"},
+    "series_or_fact_id": {"type": "string", "minLength": 1},
+    "event_time": {"type": ["string", "null"], "format": "date-time"},
+    "observation_time": {"type": "string", "format": "date-time"},
+    "release_time": {"type": "string", "format": "date-time"},
+    "vintage_time": {"type": "string", "format": "date-time"},
+    "known_as_of": {"type": "string", "format": "date-time"},
+    "value": {},
+    "unit": {"type": "string", "minLength": 1},
+    "source_snapshot_id": {"type": "string", "pattern": "^YMQ-SS-"},
+    "measurement_regime": {"type": "string", "minLength": 1},
+    "pit_status": {"enum": ["QUALIFIED", "PROVISIONAL", "UNKNOWN", "FAIL_CLOSED"]},
+    "quality_flags": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}
