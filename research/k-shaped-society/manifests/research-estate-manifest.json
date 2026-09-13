@@ -1,0 +1,33 @@
+{
+  "estate_id": "YKS0-R0",
+  "program": "YKS0",
+  "title": "Five-Country 1990-2026 Research Estate × Evidence Pack",
+  "authority_state": "RESEARCH_CANDIDATE",
+  "reality_state": "DESKTOP_EVIDENCE_HARDENED",
+  "runtime_state": "NOT_STARTED",
+  "countries": ["US", "DE", "JP", "KR", "CN"],
+  "dimensions": ["K01", "K02", "K03", "K04", "K05", "K06", "K07", "K08", "K09"],
+  "root": "research/k-shaped-society/README.md",
+  "source_registry": "research/k-shaped-society/evidence/source-registry.json",
+  "evidence_claims": "research/k-shaped-society/evidence/evidence-claims.json",
+  "dimension_matrix": "research/k-shaped-society/dimensions/k-dimension-evidence-matrix.json",
+  "hypothesis_registry": "research/k-shaped-society/hypotheses/hypothesis-registry.json",
+  "case_registry": "research/k-shaped-society/replay/case-candidate-registry.json",
+  "pit_readiness": "research/k-shaped-society/replay/pit-readiness-matrix.json",
+  "desktop_settlement": "research/k-shaped-society/settlements/YKS0-R0-DESKTOP-SETTLEMENT.md",
+  "human_reports": [
+    "research/k-shaped-society/reports/YKS0-R0-FIVE-COUNTRY-1990-2026-RESEARCH.md",
+    "research/k-shaped-society/reports/YKS0-R0-DIVERGENCE-ASSET-MAP.md"
+  ],
+  "country_dossiers": [
+    "research/k-shaped-society/countries/US.md",
+    "research/k-shaped-society/countries/DE.md",
+    "research/k-shaped-society/countries/JP.md",
+    "research/k-shaped-society/countries/KR.md",
+    "research/k-shaped-society/countries/CN.md"
+  ],
+  "scientific_ceiling": "STRONG_PRIOR / FORMAL_PIT_VALIDATION_REQUIRED",
+  "production_runtime_authorized": false,
+  "capital_authorized": false,
+  "execution_authorized": false
+}

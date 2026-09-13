@@ -1,0 +1,33 @@
+{
+  "estate_id": "YKS0-R0",
+  "countries": ["US", "DE", "JP", "KR", "CN"],
+  "rule": "Formal replay admission requires PIT_NATIVE or separately validated PIT_RECONSTRUCTABLE; R0 does not perform that validation.",
+  "entries": [
+    {"country":"US","evidence_family":"aggregate macro releases","period":"1990-2026","pit_status":"PIT_RECONSTRUCTABLE","method_sources":["SRC-YKS0-US-FRED-ALFRED-001"],"gap":"per-series vintage/release audit"},
+    {"country":"US","evidence_family":"firm productivity/profit concentration","period":"1982-2026","pit_status":"UNKNOWN","method_sources":["SRC-YKS0-US-NBER-SUPERSTAR-001"],"gap":"retrospective micro evidence is not automatically public T0 evidence"},
+    {"country":"US","evidence_family":"equity breadth/equal-weight","period":"pre-2003","pit_status":"BACKTEST_OR_RESTATED","method_sources":["SRC-YKS0-US-SP-EQUALWEIGHT-001"],"gap":"S&P explicitly labels pre-launch history back-tested"},
+    {"country":"US","evidence_family":"equity breadth/equal-weight","period":"2003-2026","pit_status":"PIT_RECONSTRUCTABLE","method_sources":["SRC-YKS0-US-SP-EQUALWEIGHT-001"],"gap":"constituents, weights and corporate actions must be frozen by T0"},
+    {"country":"US","evidence_family":"wealth ownership","period":"current/retrospective","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-US-FED-DFA-001"],"gap":"historical DFA publication vintages not audited"},
+
+    {"country":"DE","evidence_family":"aggregate macro releases","period":"1990-2026","pit_status":"PIT_RECONSTRUCTABLE","method_sources":["SRC-YKS0-XC-OECD-REVISIONS-001"],"gap":"exact German series/release-calendar coverage"},
+    {"country":"DE","evidence_family":"wage bargaining institutions","period":"1990-2015","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-DE-OECD-BARGAIN-001"],"gap":"retrospective institutional series, no frozen historical release bundle"},
+    {"country":"DE","evidence_family":"firm profit/employment distribution","period":"1990-2026","pit_status":"UNKNOWN","method_sources":[],"gap":"primary firm distribution panel not registered"},
+    {"country":"DE","evidence_family":"equity large-versus-broad market","period":"recent","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-DE-STOXX-DAX-001"],"gap":"historical methodology/constituent and sector/global-exposure controls"},
+
+    {"country":"JP","evidence_family":"aggregate macro releases","period":"1990-2026","pit_status":"PIT_RECONSTRUCTABLE","method_sources":["SRC-YKS0-XC-OECD-REVISIONS-001"],"gap":"exact Japanese series/release-calendar coverage"},
+    {"country":"JP","evidence_family":"productivity-wage gap","period":"late-1990s-2026","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-JP-BOJ-WAGEPROD-001"],"gap":"retrospective study; original data vintages not reconstructed"},
+    {"country":"JP","evidence_family":"large-small firm profit-per-employee","period":"1990/2024 comparison","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-JP-BOJ-SMALLLARGE-001"],"gap":"historical release vintages not established"},
+    {"country":"JP","evidence_family":"Large70 versus TOPIX","period":"2025","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-JP-JPX-LARGE70-001"],"gap":"single dated counterexample, not full historical case bundle"},
+
+    {"country":"KR","evidence_family":"aggregate macro releases","period":"1990-2026","pit_status":"PIT_RECONSTRUCTABLE","method_sources":["SRC-YKS0-XC-OECD-REVISIONS-001"],"gap":"exact Korean series/release-calendar coverage"},
+    {"country":"KR","evidence_family":"chaebol/SME employment-productivity structure","period":"2013-2024 retrospective","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-KR-OECD-CHAEBOL-001","SRC-YKS0-KR-OECD-SMELEVEL-001","SRC-YKS0-KR-OECD-SMECATCHUP-001"],"gap":"historical source vintages and firm-universe definitions"},
+    {"country":"KR","evidence_family":"large-cohort versus total-market equity","period":"recent","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-KR-STOXX-200-001"],"gap":"cycle/sector controls and exact historical index reconstruction"},
+    {"country":"KR","evidence_family":"household wealth/ownership","period":"1990-2026","pit_status":"UNKNOWN","method_sources":[],"gap":"housing/equity ownership distribution pack absent"},
+
+    {"country":"CN","evidence_family":"aggregate macro/household current releases","period":"2025","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-CN-NBS-MACRO-001","SRC-YKS0-CN-NBS-HOUSEHOLD-001"],"gap":"not historical replay evidence"},
+    {"country":"CN","evidence_family":"industrial profit dispersion","period":"2025-2026","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-CN-NBS-PROFIT-2025-001","SRC-YKS0-CN-NBS-PROFIT-2026-001"],"gap":"industry-level, current releases; historical classification crosswalk absent"},
+    {"country":"CN","evidence_family":"macro historical vintages","period":"1990-2024","pit_status":"UNKNOWN","method_sources":[],"gap":"China archive/revision provenance is a primary G2 Evidence Sufficiency risk"},
+    {"country":"CN","evidence_family":"listed-firm/firm-level profit-employment and constituents","period":"1990-2026","pit_status":"UNKNOWN","method_sources":[],"gap":"survivorship-safe, corporate-action-safe PIT universe not built"},
+    {"country":"CN","evidence_family":"income inequality WDI","period":"1990-2022 retrospective","pit_status":"CURRENT_ONLY","method_sources":["SRC-YKS0-CN-WB-GINI-001"],"gap":"WDI retrospective history is not an original release-vintage chain"}
+  ]
+}
