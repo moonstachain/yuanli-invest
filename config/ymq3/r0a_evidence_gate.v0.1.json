@@ -1,0 +1,76 @@
+{
+  "identity": {
+    "program_id": "YMQ3-R0A",
+    "title": "Evidence Remediation",
+    "version": "0.1.0",
+    "purpose": "Decide evidence admissibility before any Story/Herding feature or model computation."
+  },
+  "cases": [
+    {"case_id": "C1_DOTCOM", "start_date": "1999-01-01", "end_date": "2002-12-31", "role": "NARRATIVE_HEAVY"},
+    {"case_id": "C2_GFC", "start_date": "2008-01-01", "end_date": "2009-12-31", "role": "ACUTE_SHOCK_HARD_NEGATIVE"},
+    {"case_id": "C3_CHINA_LEVERAGE", "start_date": "2014-07-01", "end_date": "2016-02-29", "role": "NARRATIVE_HEAVY"},
+    {"case_id": "C4_COVID", "start_date": "2020-01-01", "end_date": "2020-12-31", "role": "ACUTE_SHOCK_HARD_NEGATIVE"},
+    {"case_id": "C5_INFLATION", "start_date": "2021-01-01", "end_date": "2022-10-31", "role": "MIXED_REALITY_NARRATIVE"},
+    {"case_id": "C6_AI", "start_date": "2022-11-01", "end_date": "2026-08-31", "role": "NARRATIVE_HEAVY"}
+  ],
+  "mandatory_evidence_domains": [
+    "MARKET",
+    "MACRO_VINTAGE",
+    "OFFICIAL_ANCHOR",
+    "NARRATIVE_CORPUS",
+    "LICENSE_RIGHTS",
+    "PIT_PROVENANCE"
+  ],
+  "source_registry_verdicts": ["ADMIT", "ANNOTATION_ONLY", "UNKNOWN_DENY", "REJECT"],
+  "timestamp_authority_classes": [
+    "TS1_SOURCE_NATIVE",
+    "TS2_ARCHIVE_VERIFIED",
+    "TS3_PROVIDER_INDEXED",
+    "TS4_INFERRED_RETROSPECTIVE"
+  ],
+  "retrospective_timestamp_class": "TS4_INFERRED_RETROSPECTIVE",
+  "retrospective_allowed_as_story_feature": false,
+  "rights_axes": [
+    "processing_authority",
+    "raw_storage_authority",
+    "derived_feature_storage_authority",
+    "redistribution_authority"
+  ],
+  "rights_values": ["ALLOW", "DENY", "UNKNOWN"],
+  "unknown_rights_semantics": "DENY",
+  "public_readability_implies_storage_rights": false,
+  "story_time_rule": "publication_available_at <= canonical_week_end",
+  "current_revised_macro_can_substitute_historical_vintage": false,
+  "readiness_thresholds": {
+    "pit_violation_count": 0,
+    "unknown_processing_rights_count": 0,
+    "unauthorized_raw_storage_count": 0,
+    "timestamp_authority_rate_min": 0.95,
+    "scored_week_presence_rate_min": 0.8,
+    "median_eligible_documents_per_covered_week_min": 10,
+    "multi_publisher_week_rate_min": 0.7,
+    "distinct_publisher_groups_per_multi_publisher_week_min": 2,
+    "narrative_heavy_requires_media_family": true
+  },
+  "case_verdicts": ["READY", "READY_WITH_LIMITATIONS", "BLOCKED", "INDETERMINATE"],
+  "program_verdicts": [
+    "FULL6_READY",
+    "OPEN4_READY",
+    "INSUFFICIENT_EVIDENCE_INDETERMINATE",
+    "PHYSICAL_FAIL"
+  ],
+  "multimodal_minimum": {
+    "ready_cases_min": 4,
+    "narrative_heavy_ready_min": 2,
+    "acute_shock_hard_negative_ready_min": 1
+  },
+  "non_authorizations": [
+    "SCIENTIFIC_PASS",
+    "YMQ3_R1_FORWARD_SHADOW",
+    "CAPITAL_ADMISSION",
+    "PORTFOLIO_WEIGHTING",
+    "POSITION_SIZING",
+    "VEIGHNA_OR_BROKER_EXECUTION",
+    "REAL_CAPITAL_MOVEMENT"
+  ]
+}
