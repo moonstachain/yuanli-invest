@@ -1,0 +1,43 @@
+{
+  "run_id": "YMQ3-R0A-SETTLEMENT-20260913",
+  "code_sha": "f3afd9d833fc5f249fe2cc85388564c1d420f4a3",
+  "gate_version": "0.1.0",
+  "registry_hash": "gitblob:753b9bc86739852d9f46759e8d3b1f67c2426925",
+  "source_probe_receipt_hash": "gitblob:35a3c91caff2216e87cb56dbc147dae7d5120fe5",
+  "weekly_coverage_hash": "NOT_MATERIALIZED",
+  "case_verdicts": {
+    "C1_DOTCOM": "BLOCKED",
+    "C2_GFC": "BLOCKED",
+    "C3_CHINA_LEVERAGE": "BLOCKED",
+    "C4_COVID": "READY_WITH_LIMITATIONS",
+    "C5_INFLATION": "READY_WITH_LIMITATIONS",
+    "C6_AI": "READY_WITH_LIMITATIONS"
+  },
+  "program_verdict": "INSUFFICIENT_EVIDENCE_INDETERMINATE",
+  "blocked_reasons": [
+    "C1: no rights-bound weekly multi-publisher 1999-2002 Story corpus",
+    "C2: hard-negative crisis weeks lack rights-bound multi-publisher Story corpus",
+    "C3: pre-GDELT2 Chinese Story gap and incomplete macro-vintage reconstruction",
+    "C4-C6: topic-specific weekly coverage has not been materialized",
+    "MARKET: named cross-asset provider contract not bound in this run"
+  ],
+  "ready_cases": [],
+  "limited_cases": ["C4_COVID", "C5_INFLATION", "C6_AI"],
+  "blocked_cases": ["C1_DOTCOM", "C2_GFC", "C3_CHINA_LEVERAGE"],
+  "indeterminate_cases": [],
+  "pit_violation_count": 0,
+  "rights_violation_count": 0,
+  "non_authorizations": [
+    "YMQ3_R0_REALITY_AUDIT",
+    "YMQ3_R1_FORWARD_SHADOW",
+    "SCIENTIFIC_PASS",
+    "CAPITAL_ADMISSION",
+    "PORTFOLIO_WEIGHTING",
+    "POSITION_SIZING",
+    "VEIGHNA_OR_BROKER_EXECUTION",
+    "REAL_CAPITAL_MOVEMENT"
+  ],
+  "artifact_hash": "sha256:0a33c6096ac8717e5d0a84b549cdfeda9b4c2ef14ce4a333691e3d9cf940c3e6",
+  "hash_semantics": "artifact_hash is SHA-256 over the canonical sorted compact JSON of all receipt fields except artifact_hash/hash_semantics/receipt_verification_note.",
+  "receipt_verification_note": "code_sha is the exact pre-receipt implementation head qualified by repository-gates #816. This receipt itself requires a fresh exact-head repository-gates run before machine-qualification presentation."
+}
