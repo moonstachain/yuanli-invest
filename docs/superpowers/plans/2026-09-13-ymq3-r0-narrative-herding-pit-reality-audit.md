@@ -96,7 +96,21 @@ def test_scored_case_windows_do_not_overlap(self):
 
 - [ ] **Step 6: Freeze source tiers and text law.** `T4_RETROSPECTIVE` must be rejected as feature input. `publication_available_at <= week_end` is mandatory.
 
-- [ ] **Step 7: Freeze model law and scientific gate.** Encode B0/B1/B2/B3/C1 feature groups, seven ablations, hard negatives, LOCO folds, classifier parameters, metrics and exact PASS/NO-GO/INDETERMINATE rules.
+- [ ] **Step 7: Freeze model law and scientific gate.** Encode B0/B1/B2/B3/C1 feature groups, seven ablations, hard negatives, LOCO folds, classifier parameters, metrics and exact PASS/NO-GO/INDETERMINATE rules. Classifier config is frozen as:
+
+```json
+{
+  "algorithm": "multinomial_logistic_regression",
+  "standardizer": "StandardScaler_train_only",
+  "penalty": "l2",
+  "C": 1.0,
+  "solver": "lbfgs",
+  "class_weight": "balanced",
+  "max_iter": 2000,
+  "tol": 0.0001,
+  "hyperparameter_search": false
+}
+```
 
 - [ ] **Step 8: Pin the text model contract before corpus scoring.** Contract includes provider/model/revision, prompt/label ontology SHA, deterministic settings, and `generated_historical_facts_allowed=false`. If the final selected provider differs, revise preregistration **before** any corpus score is computed.
 
@@ -250,7 +264,7 @@ first_second_differences(series) -> tuple[list, list]
 
 - [ ] **Step 2: Test that LLM/model-generated text cannot masquerade as evidence.** Rows marked `synthetic_generated=true` are rejected from Story features.
 
-- [ ] **Step 3: Implement Topic Share, Source Breadth, HHI/inverse entropy, Semantic Coherence, Novelty, Counter-Narrative Share, Diffusion Velocity and Diffusion Acceleration exactly as preregistered.
+- [ ] **Step 3: Implement Topic Share, Source Breadth, HHI/inverse entropy, Semantic Coherence, Novelty, Counter-Narrative Share, Diffusion Velocity and Diffusion Acceleration exactly as preregistered.**
 
 - [ ] **Step 4: All trailing baselines must use only weeks strictly before the scored week.**
 
@@ -324,11 +338,11 @@ hard_negative_fpr(rows, predictions) -> float
 
 - [ ] **Step 2: Use `StandardScaler` fit on train only.** Test set uses frozen train mean/scale.
 
-- [ ] **Step 3: Use `LogisticRegression(C=1.0, penalty='l2', class_weight='balanced', max_iter=<value frozen in prereg>, random_state=<value frozen in prereg>)`.** Do not add hyperparameter search, CV tuning or feature selection.
+- [ ] **Step 3: Use `LogisticRegression(C=1.0, penalty='l2', solver='lbfgs', class_weight='balanced', max_iter=2000, tol=1e-4)`.** Do not add hyperparameter search, CV tuning or feature selection.
 
-- [ ] **Step 4: Fail closed if a training fold lacks enough state classes for the preregistered multiclass experiment.** Do not silently collapse labels after reveal.
+- [ ] **Step 4: Fail closed if a training fold lacks enough state classes for the preregistered multiclass experiment or if the solver emits a convergence failure.** Do not silently collapse labels, raise iterations or alter tolerance after reveal.
 
-- [ ] **Step 5: Return model metadata including sklearn version, feature order, scaler statistics and coefficient hash so the fold is reproducible.
+- [ ] **Step 5: Return model metadata including sklearn version, feature order, scaler statistics and coefficient hash so the fold is reproducible.**
 
 - [ ] **Step 6: Run:**
 
@@ -360,7 +374,7 @@ build_research_settlement(...) -> dict
 
 - [ ] **Step 1: Evaluate B0/B1/B2/B3/C1 on identical eligible folds.** No model-specific case dropping.
 
-- [ ] **Step 2: Compute aggregate Macro F1, Balanced Accuracy, per-case Macro F1, confusion matrices and hard-negative FPR.
+- [ ] **Step 2: Compute aggregate Macro F1, Balanced Accuracy, per-case Macro F1, confusion matrices and hard-negative FPR.**
 
 - [ ] **Step 3: Execute all seven frozen ablations:** Story removed; Herding removed; controls removed; CSAD-only; dependency-only; counter-narrative removed; Level-only/no Δ/Δ².
 
@@ -396,7 +410,7 @@ Authority remains `NONE/AWAITING_HUMAN_REVIEW` regardless of scientific result.
 - `ymq3_r0_job.py` receives exact preregistration SHA, code SHA, source/panel revisions and output location; produces a non-secret JSON receipt on stdout.
 - GitHub Actions PR mode runs only preflight/tests; full physical audit requires an explicit manual authorization path.
 
-- [ ] **Step 1: Validator checks all preregistration hashes, source-authority status, G0 contract version, dependency versions and forbidden authority fields.
+- [ ] **Step 1: Validator checks all preregistration hashes, source-authority status, G0 contract version, dependency versions and forbidden authority fields.**
 
 - [ ] **Step 2: GitHub workflow `pull_request` runs preflight only:** install pinned dependencies, validator, all YMQ3 tests, no external writes.
 
@@ -404,13 +418,16 @@ Authority remains `NONE/AWAITING_HUMAN_REVIEW` regardless of scientific result.
 
 - [ ] **Step 4: HF Jobs remains the preferred compute provider, but do not assume the chat-session OAuth is available inside GitHub Actions.** The current chat identity proves only that an HF account with `jobs` scope exists. Before a full run, separately verify the actual trusted runtime credential and runner identity.
 
-- [ ] **Step 5: HF job command must bind the exact Git SHA and container/dependency versions.** Conceptual command shape:
+- [ ] **Step 5: Bind the exact Git SHA and preregistration SHA through environment variables rather than free-form placeholders.** The canonical runner invocation is:
 
-```text
-python -m scripts.ymq3_r0_job --prereg <hash> --git-sha <sha> --mode full
+```bash
+python -m scripts.ymq3_r0_job \
+  --prereg-sha "$YMQ3_PREREG_SHA" \
+  --git-sha "$GITHUB_SHA" \
+  --mode full
 ```
 
-Do not expose token values in logs or receipts.
+Both variables must be non-empty and checked against the repository/run metadata before computation starts. Do not expose token values in logs or receipts.
 
 - [ ] **Step 6: Persist runtime receipt to Supabase `runtime.reality_gate_runs` / G0 ResearchSettlement lineage and upload the same non-secret receipt artifact.** Receipt includes input manifest hash, code SHA, prereg SHA, source panel revisions, physical/scientific/authority states, metrics hashes and artifact hash.
 
