@@ -3,14 +3,19 @@ from __future__ import annotations
 import importlib.util
 import json
 from pathlib import Path
+import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-VALIDATOR = ROOT / "scripts" / "validate_ymq3_r0a.py"
+SCRIPTS = ROOT / "scripts"
+VALIDATOR = SCRIPTS / "validate_ymq3_r0a.py"
 RECEIPT = ROOT / "artifacts" / "ymq3" / "r0a" / "YMQ3-R0A-PROBE-20260913" / "evidence-sufficiency-receipt.json"
 
 
 def load_validator():
+    scripts_path = str(SCRIPTS)
+    if scripts_path not in sys.path:
+        sys.path.insert(0, scripts_path)
     spec = importlib.util.spec_from_file_location("validate_ymq3_r0a", VALIDATOR)
     if spec is None or spec.loader is None:
         raise RuntimeError("cannot load R0A validator")
