@@ -1,0 +1,121 @@
+{
+  "artifact_id": "YMQ3-R0A-CASE-REMEDIATION-20260913",
+  "observed_at": "2026-09-13T13:00:00Z",
+  "rule": "This artifact records source-remediation findings only. It does not grant READY status without measured weekly coverage and rights-clean admitted inputs.",
+  "market_domain_note": "The user designated market prices as non-bottleneck. R0A has not yet bound a specific cross-asset market-data provider contract, so MARKET cannot contribute to a final READY claim in this run.",
+  "cases": [
+    {
+      "case_id": "C1_DOTCOM",
+      "public_stack": [
+        {"source_id": "SEC_EDGAR", "role": "company/filer primary evidence", "status": "ADMITTED_FOR_DECLARED_ROLE"},
+        {"source_id": "FED_OFFICIAL", "role": "policy/official anchors", "status": "ADMITTED_FOR_DECLARED_ROLE"},
+        {"source_id": "GDELT_1_EVENTS", "role": "event/attention context", "status": "NOT_PRIMARY_STORY"},
+        {"source_id": "GOOGLE_BOOKS_NGRAM", "role": "long-horizon context", "status": "NOT_WEEKLY_STORY"},
+        {"source_id": "INTERNET_ARCHIVE_WAYBACK", "role": "archive provenance candidate", "status": "RIGHTS_UNKNOWN_DENY"}
+      ],
+      "licensed_candidates": [
+        {
+          "provider": "Nexis Data+",
+          "evidence": "Official product material advertises decades-deep licensed news, historical access, API/bulk delivery, and Investment Insight/business-intelligence use cases.",
+          "admission": "NOT_ADMITTED",
+          "reason": "No Yuanli subscription/contract has been inspected; exact 1999-2002 publisher coverage, storage, derived-feature and redistribution rights are not yet bound."
+        },
+        {
+          "provider": "ProQuest TDM Studio",
+          "evidence": "Official material offers rights-cleared current/historical newspapers and TDM workbench; supplemental terms allow derived data for teaching/learning/research/analysis.",
+          "admission": "NOT_ADMITTED_FOR_CURRENT_USE",
+          "reason": "Public supplemental terms prohibit commercial use of TDM Studio materials/derived data; actual eligible database holdings and customer contract are absent."
+        }
+      ],
+      "weekly_story_coverage_materialized": false,
+      "remediation_verdict": "BLOCKED",
+      "blocked_reason": "No lawful, rights-bound, weekly multi-publisher 1999-2002 Story corpus is physically available to this run."
+    },
+    {
+      "case_id": "C2_GFC",
+      "public_stack": [
+        {"source_id": "FED_OFFICIAL", "role": "Bear/Lehman/AIG/policy chronology", "status": "ADMITTED_FOR_DECLARED_ROLE"},
+        {"source_id": "SEC_EDGAR", "role": "institution/company disclosures", "status": "ADMITTED_FOR_DECLARED_ROLE"},
+        {"source_id": "GDELT_1_EVENTS", "role": "event/attention context", "status": "NOT_PRIMARY_STORY"}
+      ],
+      "licensed_candidates": [
+        {"provider": "Nexis Data+", "admission": "NOT_ADMITTED", "reason": "Historical licensed-news capability is credible, but no contract or crisis-week coverage packet has been bound."},
+        {"provider": "ProQuest TDM Studio", "admission": "NOT_ADMITTED_FOR_CURRENT_USE", "reason": "Research TDM capability is strong, but public terms do not establish commercial/internal investment use for this project."}
+      ],
+      "hard_negative_week_coverage_materialized": false,
+      "weekly_story_coverage_materialized": false,
+      "remediation_verdict": "BLOCKED",
+      "blocked_reason": "The hard-negative crisis weeks lack a rights-bound multi-publisher Story corpus in the current runtime."
+    },
+    {
+      "case_id": "C3_CHINA_LEVERAGE",
+      "public_stack": [
+        {"source_id": "CSRC_OFFICIAL", "role": "dated market/regulatory anchors", "status": "ANNOTATION_ONLY_RIGHTS_UNRESOLVED"},
+        {"source_id": "PBOC_OFFICIAL", "role": "dated monetary/credit releases", "status": "PIT_SAMPLE_OBSERVED_RIGHTS_UNRESOLVED"},
+        {"source_id": "NBS_OFFICIAL", "role": "dated macro releases", "status": "PIT_SAMPLE_OBSERVED_RIGHTS_UNRESOLVED"},
+        {"source_id": "GDELT_2_GKG_MENTIONS", "role": "news metadata from 2015-02-19 onward", "status": "ADMITTED_BUT_DOES_NOT_COVER_CASE_START"},
+        {"source_id": "GDELT_1_EVENTS", "role": "event context", "status": "NOT_PRIMARY_STORY"}
+      ],
+      "licensed_candidates": [
+        {
+          "provider": "Wisers",
+          "evidence": "Official Wisers pages describe licensed Chinese-media coverage, a large historical database and API integration.",
+          "admission": "NOT_ADMITTED",
+          "reason": "Exact 2014-07..2016-02 archive coverage, machine-processing, raw-storage, derived-feature and redistribution rights require a customer contract/data dictionary."
+        },
+        {
+          "provider": "Wind",
+          "evidence": "Official Wind material describes real-time news from financial/industry media and authorized research distribution.",
+          "admission": "NOT_ADMITTED",
+          "reason": "Historical corpus scope and computational text-mining/storage rights are not established by the public product page."
+        },
+        {
+          "provider": "Choice",
+          "evidence": "A quant API exists, but a publicly surfaced end-user licence states the product is for personal, non-commercial/non-profit use unless separately authorized.",
+          "admission": "REJECT_FOR_UNCONTRACTED_COMMERCIAL_USE",
+          "reason": "No separate commercial text-mining licence has been produced."
+        }
+      ],
+      "pre_gdelt2_story_gap": "2014-07-01..2015-02-18",
+      "weekly_story_coverage_materialized": false,
+      "macro_vintage_reconstruction_materialized": false,
+      "remediation_verdict": "BLOCKED",
+      "blocked_reason": "Pre-Feb-2015 Chinese multi-publisher Story breadth and rights-clean macro-vintage reconstruction are not yet materialized."
+    },
+    {
+      "case_id": "C4_COVID",
+      "public_stack": [
+        {"source_id": "GDELT_2_GKG_MENTIONS", "role": "contemporaneous global-news metadata", "status": "ADMITTED"},
+        {"source_id": "WHO_OFFICIAL", "role": "pandemic chronology anchors", "status": "ANNOTATION_ONLY"},
+        {"source_id": "FED_OFFICIAL", "role": "policy/liquidity anchors", "status": "ADMITTED_FOR_DECLARED_ROLE"}
+      ],
+      "weekly_story_coverage_materialized": false,
+      "remediation_verdict": "READY_WITH_LIMITATIONS",
+      "limitation": "A lawful modern metadata path exists, but topic-specific weekly coverage statistics have not been physically compiled against the frozen thresholds."
+    },
+    {
+      "case_id": "C5_INFLATION",
+      "public_stack": [
+        {"source_id": "FRED_ALFRED", "role": "U.S. macro vintages", "status": "ADMITTED_FOR_DECLARED_ROLE"},
+        {"source_id": "GDELT_2_GKG_MENTIONS", "role": "contemporaneous news metadata", "status": "ADMITTED"},
+        {"source_id": "FED_OFFICIAL", "role": "policy anchors", "status": "ADMITTED_FOR_DECLARED_ROLE"}
+      ],
+      "weekly_story_coverage_materialized": false,
+      "remediation_verdict": "READY_WITH_LIMITATIONS",
+      "limitation": "Vintage-aware macro path exists, but topic-specific weekly Story coverage and source breadth have not been compiled."
+    },
+    {
+      "case_id": "C6_AI",
+      "public_stack": [
+        {"source_id": "GDELT_2_GKG_MENTIONS", "role": "contemporaneous news metadata", "status": "ADMITTED"},
+        {"source_id": "SEC_EDGAR", "role": "public-company disclosures", "status": "ADMITTED_FOR_DECLARED_ROLE"},
+        {"source_id": "OPENAI_PRIMARY", "role": "dated product/company anchors", "status": "ANNOTATION_ONLY_RIGHTS_UNRESOLVED"}
+      ],
+      "weekly_story_coverage_materialized": false,
+      "remediation_verdict": "READY_WITH_LIMITATIONS",
+      "limitation": "The modern source stack is promising, but no frozen topic corpus has yet demonstrated the weekly presence, timestamp and publisher-breadth thresholds."
+    }
+  ],
+  "program_prior_after_remediation": "INSUFFICIENT_EVIDENCE_INDETERMINATE",
+  "reason": "Zero cases are currently READY under the frozen threshold law; three are BLOCKED and three are READY_WITH_LIMITATIONS. This is a pre-compiler research finding, not yet the machine settlement."
+}
