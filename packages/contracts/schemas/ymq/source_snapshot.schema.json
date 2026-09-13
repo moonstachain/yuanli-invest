@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:ymq:source-snapshot:0.1.0",
+  "title": "SourceSnapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_snapshot_id", "source_id", "source_authority_tier", "source_class", "canonical_locator", "retrieved_at", "content_sha256", "storage_locator", "license_class", "runner_git_sha", "immutable"],
+  "properties": {
+    "source_snapshot_id": {"type": "string", "pattern": "^YMQ-SS-[A-Z0-9-]+$"},
+    "source_id": {"type": "string", "minLength": 1},
+    "source_authority_tier": {"enum": ["T1_OFFICIAL_PRIMARY", "T2_CONTEMPORANEOUS_ARCHIVE", "T3_ATTENTION_PROXY", "T4_RETROSPECTIVE"]},
+    "source_class": {"type": "string", "minLength": 1},
+    "canonical_locator": {"type": "string", "minLength": 1},
+    "retrieved_at": {"type": "string", "format": "date-time"},
+    "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "storage_locator": {"type": "string", "minLength": 1},
+    "license_class": {"type": "string", "minLength": 1},
+    "runner_git_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "supersedes_snapshot_id": {"type": ["string", "null"]},
+    "immutable": {"const": true}
+  }
+}

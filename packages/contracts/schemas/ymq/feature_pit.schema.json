@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:ymq:feature-pit:0.1.0",
+  "title": "FeaturePIT",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["feature_id", "feature_definition_version", "as_of", "input_observation_refs", "transform_git_sha", "value", "lookback_window", "normalization_rule"],
+  "properties": {
+    "feature_id": {"type": "string", "pattern": "^YMQ-FEAT-[A-Z0-9-]+$"},
+    "feature_definition_version": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "known_as_of": {"type": "string", "format": "date-time"},
+    "input_observation_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^YMQ-OBS-"}},
+    "transform_git_sha": {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+    "value": {},
+    "lookback_window": {"type": "string", "minLength": 1},
+    "normalization_rule": {"type": "string", "minLength": 1},
+    "input_manifest_hash": {"type": ["string", "null"], "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}

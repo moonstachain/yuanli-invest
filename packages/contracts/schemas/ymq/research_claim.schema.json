@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:ymq:research-claim:0.1.0",
+  "title": "ResearchClaim",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claim_id", "claim_type", "as_of", "statement", "evidence_refs", "evidence_authority", "claim_authority", "falsifier", "expiry_or_review_rule"],
+  "properties": {
+    "claim_id": {"type": "string", "pattern": "^YMQ-CLAIM-[A-Z0-9-]+$"},
+    "claim_type": {"enum": ["FACT", "ESTIMATE", "INFERENCE", "HYPOTHESIS", "PRACTITIONER_CLAIM"]},
+    "as_of": {"type": "string", "format": "date-time"},
+    "statement": {"type": "string", "minLength": 1},
+    "evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "evidence_authority": {"enum": ["HYPOTHESIS", "PRACTITIONER_CLAIM", "RESEARCH_SYNTHESIS", "INDEPENDENT_EMPIRICAL", "PRIMARY_EVIDENCE"]},
+    "claim_authority": {"enum": ["HYPOTHESIS", "PRACTITIONER_CLAIM", "RESEARCH_SYNTHESIS", "INDEPENDENT_EMPIRICAL", "PRIMARY_EVIDENCE"]},
+    "falsifier": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "expiry_or_review_rule": {"type": "string", "minLength": 1},
+    "counterevidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+  }
+}
