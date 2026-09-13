@@ -88,6 +88,7 @@ def validate_contract(cfg: dict[str, Any] | None = None) -> None:
     require([p["id"] for p in cfg["physical_planes"]] == EXPECTED_PLANES, "physical plane drift")
     for plane in cfg["physical_planes"]:
         require(len(plane["primary_authority_roles"]) == 1, f"plane must have one primary role: {plane['id']}")
+        require(plane["provider_replaceable"] is True, f"provider must remain replaceable: {plane['id']}")
     require([o["type"] for o in cfg["canonical_objects"]] == EXPECTED_OBJECTS, "canonical object drift")
     require([(e["id"], e["name"]) for e in cfg["engines"]] == EXPECTED_ENGINES, "engine role drift")
     require(cfg["pit_time_semantics"]["replay_rule"] == "known_as_of <= T0", "PIT replay law drift")
@@ -258,12 +259,16 @@ def validate_pit_relations(bundle: dict[str, Any]) -> None:
     feature = bundle["feature"]
     state = bundle["state"]
     edge = bundle["edge"]
-    require(obs["pit_status"] == "QUALIFIED", "non-qualified observation cannot enter fixture research chain")
+    require(obs["pit_status"] == "QUALIFIED", "non-qualified observation cannot enter research chain")
     require(obs["source_snapshot_id"] == bundle["source_snapshot"]["source_snapshot_id"], "observation/source snapshot mismatch")
+    require(parse_time(obs["release_time"]) <= parse_time(obs["known_as_of"]), "release occurs after known_as_of")
+    require(parse_time(obs["vintage_time"]) <= parse_time(obs["known_as_of"]), "vintage occurs after known_as_of")
     require(obs["observation_id"] in feature["input_observation_refs"], "feature does not reference observation")
-    require(feature["feature_id"] in state["feature_refs"], "state does not reference feature")
     require(parse_time(obs["known_as_of"]) <= parse_time(feature["as_of"]), "future observation knowledge entered feature")
+    require(parse_time(feature.get("known_as_of", feature["as_of"])) <= parse_time(feature["as_of"]), "feature known_as_of exceeds feature as_of")
+    require(feature["feature_id"] in state["feature_refs"], "state does not reference feature")
     require(parse_time(feature.get("known_as_of", feature["as_of"])) <= parse_time(state["as_of"]), "future feature knowledge entered state")
+    require(parse_time(state.get("known_as_of", state["as_of"])) <= parse_time(state["as_of"]), "state known_as_of exceeds state as_of")
     require(parse_time(state.get("known_as_of", state["as_of"])) <= parse_time(edge["as_of"]), "future state knowledge entered transmission edge")
     require(parse_time(edge.get("known_as_of", edge["as_of"])) <= parse_time(edge["as_of"]), "future edge knowledge")
 
@@ -272,7 +277,9 @@ def validate_claim_authority(bundle: dict[str, Any]) -> None:
     cfg = load_json(CONFIG)
     order = cfg["laws"]["evidence_authority_order"]
     claim = bundle["claim"]
-    require(claim["evidence_refs"], "claim has no evidence refs")
+    state = bundle["state"]
+    require(claim["evidence_refs"] == [state["state_id"]], "fixture claim/state evidence reference mismatch")
+    require(parse_time(state.get("known_as_of", state["as_of"])) <= parse_time(claim["as_of"]), "claim uses future state knowledge")
     require(claim["falsifier"], "claim has no falsifier")
     require(claim["evidence_authority"] in order and claim["claim_authority"] in order, "unknown authority class")
     require(order.index(claim["claim_authority"]) <= order.index(claim["evidence_authority"]), "ClaimAuthority exceeds EvidenceAuthority")
@@ -296,14 +303,27 @@ def validate_learning_forward_only(learning: dict[str, Any]) -> None:
     require(learning.get("status") in {"PROPOSED", "UNDER_REVIEW", "ACCEPTED_FOR_FUTURE", "REJECTED"}, "invalid LearningDelta state")
 
 
+def validate_lifecycle_relations(bundle: dict[str, Any]) -> None:
+    run = bundle["run"]
+    settlement = bundle["settlement"]
+    learning = bundle["learning"]
+    require(parse_time(run["started_at"]) <= parse_time(run["completed_at"]), "run completed before it started")
+    require(settlement["run_refs"] == [run["run_id"]], "settlement/run reference mismatch")
+    require(parse_time(run["completed_at"]) <= parse_time(settlement["settled_at"]), "settlement predates run completion")
+    require(learning["settlement_ref"] == settlement["settlement_id"], "LearningDelta settlement reference mismatch")
+    require(parse_time(settlement["settled_at"]) <= parse_time(learning["created_at"]), "LearningDelta predates settlement")
+
+
 def validate_provider_authority(cfg: dict[str, Any] | None = None) -> None:
     cfg = load_json(CONFIG) if cfg is None else cfg
     policy = cfg["provider_policy"]
     require(policy["provider_identity_never_grants_canon"] is True, "provider identity grants Canon")
+    for key in ("law_control", "evidence_runtime_truth", "experiment_compute", "experience_projection"):
+        require(policy[key]["replaceable"] is True, f"provider policy hard-wired: {key}")
+    require(policy["law_control"]["authority"] == "LAW_CONTROL_ONLY", "law plane authority drift")
+    require(policy["evidence_runtime_truth"]["authority"] == "EVIDENCE_RUNTIME_TRUTH_ONLY", "evidence plane authority drift")
     require(policy["experiment_compute"]["authority"] == "NONE", "compute provider received authority")
-    require(policy["experiment_compute"]["replaceable"] is True, "compute provider hard-wired")
     require(policy["experience_projection"]["authority"] == "PROJECTION_ONLY", "experience plane authority escalated")
-    require(policy["experience_projection"]["replaceable"] is True, "experience provider hard-wired")
 
 
 def validate_ymq4_lineage(cfg: dict[str, Any] | None = None) -> None:
@@ -365,8 +385,7 @@ def validate_all() -> None:
     validate_claim_authority(bundle)
     validate_settlement_separation(bundle["settlement"])
     validate_learning_forward_only(bundle["learning"])
-    require(bundle["learning"]["settlement_ref"] == bundle["settlement"]["settlement_id"], "LearningDelta settlement reference mismatch")
-    require(bundle["settlement"]["run_refs"] == [bundle["run"]["run_id"]], "settlement/run reference mismatch")
+    validate_lifecycle_relations(bundle)
     validate_human_docs()
     print("YMQ-OS0-G0 validator: PASS")
 
