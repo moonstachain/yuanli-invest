@@ -2,6 +2,7 @@
 
 **Status:** `WRITTEN_SPEC_HUMAN_ACCEPTED`
 **Human decision:** `ACCEPT_YKS0_R0_RESEARCH_ESTATE_WRITTEN_SPEC`
+**Implementation plan:** `docs/superpowers/plans/2026-09-13-yks0-r0-five-country-research-estate.md`
 **Program:** `YKS0｜K-Shaped Society × Reality Distribution Regime`
 **Child battle:** `YKS0-R0｜Five-Country 1990–2026 Research Estate × Evidence Pack`
 **Parent Canon:** `YKS0-G0｜K-Shaped Society Constitution × Nine-Dimensional K Vector × Five-Country Replay Freeze`
@@ -280,4 +281,4 @@ Acceptance authorizes only a separate implementation plan. It does not authorize
 
 ## 20. Current stop line
 
-Written Spec is Human Accepted. Implementation remains `NOT_AUTHORIZED` until a separate execution token is issued. Do not create research-estate files, populate machine registries, add validators, mutate Supabase/HF/Notion/UIG, claim R0 complete, or merge anything before that token.
+Written Spec is Human Accepted and the implementation plan exists. Implementation remains `NOT_AUTHORIZED` until a separate execution token is issued. Do not create research-estate files, populate machine registries, add validators, mutate Supabase/HF/Notion/UIG, claim R0 complete, or merge anything before that token.
