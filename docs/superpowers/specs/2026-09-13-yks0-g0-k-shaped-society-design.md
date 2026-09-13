@@ -1,6 +1,11 @@
 # YKS0-G0｜K-Shaped Society Constitution × Nine-Dimensional K Vector × Five-Country Replay Freeze
 
-**Status:** `WRITTEN_SPEC_CANDIDATE`  
+**Status:** `WRITTEN_SPEC_HUMAN_ACCEPTED`  
+**Human decision:** `ACCEPT_YKS0_G0_WRITTEN_SPEC`  
+**Accepted design commit:** `5094a6cb88cd6d98afaa63045e800fb2ffd34a9d`  
+**Accepted spec blob:** `58a851f0840e23a6d099299c83ca94183ed7551b`  
+**Implementation authority:** `NOT_AUTHORIZED`  
+**Merge authority:** `NOT_AUTHORIZED`  
 **Program:** `YKS0｜K-Shaped Society × Reality Distribution Regime`  
 **Parent architecture:** `YIOS0｜Yuanli Investment OS Canonical Architecture v1.0`  
 **Design mode:** YIOS0 Native Capability × Soul Ontology × UIG Federation × Supabase Reality Ledger × HF Blind Lab × Notion Human Atlas  
