@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MIGRATION = ROOT / "supabase/migrations/20260914_ymq_os0_g1_sovereign_stack.sql"
+HARDENING = ROOT / "supabase/migrations/20260914_ymq_os0_g1_fk_index_hardening.sql"
 
 
 class YMQOS0G1SupabaseContractTests(unittest.TestCase):
@@ -35,6 +36,15 @@ class YMQOS0G1SupabaseContractTests(unittest.TestCase):
         sql = MIGRATION.read_text().lower()
         self.assertIn("effective_after timestamptz not null", sql)
         self.assertIn("check (effective_after >= created_at)", sql)
+
+    def test_foreign_keys_have_leading_covering_indexes(self):
+        sql = HARDENING.read_text().lower()
+        self.assertIn(
+            "on evidence.claim_receipts (source_snapshot_id)", sql
+        )
+        self.assertIn(
+            "on runtime.learning_deltas (source_run_id)", sql
+        )
 
 
 if __name__ == "__main__":
