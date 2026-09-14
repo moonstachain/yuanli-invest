@@ -1,0 +1,9 @@
+{
+  "benchmark_id": "YMQ-OS0-G1-HF-BLIND-001",
+  "git_sha": "ce9a37d01b39591547ba4b13c1be143deba90f2e",
+  "authority": "COMPUTE_ONLY",
+  "capital_authorized": false,
+  "execution_authorized": false,
+  "inputs": ["Reality", "Evidence", "PIT"],
+  "canonical_sha256": "e1b8faf005c35fce9ad045f5cd51a66a55ef9e0b60a1cfec5b4504bfe1f6e238"
+}
