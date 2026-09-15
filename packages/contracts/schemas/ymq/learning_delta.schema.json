@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:yuanli-invest:ymq:learning-delta:0.1.0",
+  "title": "LearningDelta",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["learning_id", "settlement_ref", "proposed_change", "affected_capability_or_contract", "evidence_basis", "requires_human_review", "status", "rewrite_past_authorized"],
+  "properties": {
+    "learning_id": {"type": "string", "pattern": "^YMQ-LEARN-[A-Z0-9-]+$"},
+    "settlement_ref": {"type": "string", "pattern": "^YMQ-SETTLE-"},
+    "proposed_change": {"type": "string", "minLength": 1},
+    "affected_capability_or_contract": {"type": "string", "minLength": 1},
+    "evidence_basis": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "requires_human_review": {"const": true},
+    "status": {"enum": ["PROPOSED", "UNDER_REVIEW", "ACCEPTED_FOR_FUTURE", "REJECTED"]},
+    "rewrite_past_authorized": {"const": false},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

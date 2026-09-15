@@ -1,0 +1,153 @@
+{
+  "schema_version": "0.1.0",
+  "identity": {
+    "program_id": "YMQ-OS0-G0",
+    "name": "Yuanli Macro Quant Intelligence OS",
+    "stage": "MACRO_QUANT_CONSTITUTION_OBJECT_MODEL_PHYSICAL_PLANE_FREEZE",
+    "status": "implementation_candidate",
+    "system_kind": "YIOS0_RESEARCH_SUBSYSTEM"
+  },
+  "parent_authority": {
+    "system_id": "YIOS0",
+    "scope": "L2-L8_RESEARCH_SIDE_ONLY",
+    "parallel_investment_os": false,
+    "inherits": ["YIP0", "YIOS0", "ME0", "ME1"],
+    "action_side_authority": "YEX0_YVN1_SEPARATE"
+  },
+  "laws": {
+    "reality_over_belief": true,
+    "pre_registered_defeat_condition_required": true,
+    "claim_authority_le_evidence_authority": true,
+    "research_pass_vs_capital_pass": "NOT_EQUAL",
+    "authority_separation": ["ResearchAuthority", "CapitalAuthority", "ExecutionAuthority"],
+    "unknown_semantics": "DENY",
+    "receipt_is_ledger_status_is_projection": true,
+    "past_evidence_immutable": true,
+    "learning_forward_only": true,
+    "evidence_authority_order": ["HYPOTHESIS", "PRACTITIONER_CLAIM", "RESEARCH_SYNTHESIS", "INDEPENDENT_EMPIRICAL", "PRIMARY_EVIDENCE"]
+  },
+  "research_loop": [
+    "External Reality",
+    "Evidence Snapshot",
+    "PIT Observation",
+    "PIT Feature",
+    "PIT State",
+    "Transmission",
+    "Capability Run",
+    "Research Settlement",
+    "LearningDelta"
+  ],
+  "physical_planes": [
+    {
+      "id": "LAW_CONTROL",
+      "primary_authority_roles": ["LAW_CONTRACT_VERSION_ADMISSION"],
+      "providers": ["GitHub"],
+      "provider_replaceable": true
+    },
+    {
+      "id": "EVIDENCE_RUNTIME_TRUTH",
+      "primary_authority_roles": ["IMMUTABLE_EVIDENCE_PIT_RUNTIME_READBACK"],
+      "providers": ["Postgres/Supabase", "Object Storage/NAS"],
+      "provider_replaceable": true
+    },
+    {
+      "id": "EXPERIMENT_COMPUTE",
+      "primary_authority_roles": ["EPHEMERAL_REPRODUCIBLE_COMPUTE"],
+      "providers": ["Hugging Face Jobs", "container runner"],
+      "provider_replaceable": true
+    },
+    {
+      "id": "EXPERIENCE_PROJECTION",
+      "primary_authority_roles": ["HUMAN_AI_INSPECTION_PROJECTION"],
+      "providers": ["Web", "Hugging Face Space", "ChatGPT", "Notion"],
+      "provider_replaceable": true
+    }
+  ],
+  "canonical_objects": [
+    {"id": "O1", "type": "SourceSnapshot"},
+    {"id": "O2", "type": "ObservationPIT"},
+    {"id": "O3", "type": "FeaturePIT"},
+    {"id": "O4", "type": "StatePIT"},
+    {"id": "O5", "type": "TransmissionEdgePIT"},
+    {"id": "O6", "type": "ResearchClaim"},
+    {"id": "O7", "type": "CapabilityRun"},
+    {"id": "O8", "type": "ResearchSettlement"},
+    {"id": "O9", "type": "LearningDelta"}
+  ],
+  "pit_time_semantics": {
+    "required_clocks": ["event_time", "observation_time", "release_time", "vintage_time", "known_as_of", "retrieved_at", "ingested_at", "settled_at"],
+    "replay_rule": "known_as_of <= T0",
+    "unknown_semantics": "DENY",
+    "later_revision_substitution_prohibited": true,
+    "retrospective_text_as_pit_input_prohibited": true
+  },
+  "engines": [
+    {"id": "MQE1", "name": "Macro Reality Engine", "role": "marginal_macro_force_state"},
+    {"id": "MQE2", "name": "Industrial Reality Engine", "role": "industry_economic_transmission_state"},
+    {"id": "MQE3", "name": "Narrative × Herding Engine", "role": "story_belief_positioning_behavior_convergence_state"},
+    {"id": "MQE4", "name": "Dynamic Transmission Engine", "role": "time_varying_driver_asset_transmission_state"},
+    {"id": "MQE5", "name": "Price × Payoff Engine", "role": "priced_in_confirmation_payoff_state"}
+  ],
+  "capability_execution_contract": {
+    "required_bindings": ["battle_id", "capability_id", "capability_version", "git_sha", "source_panel_revisions", "known_as_of_or_T0", "parameter_contract", "baseline_id", "hard_negative_set", "ablation_set", "falsifiers", "runner_identity", "output_artifact_policy"],
+    "runner_substitution_allowed": true,
+    "deterministic_contract_required": true
+  },
+  "settlement_semantics": {
+    "axes": ["physical_status", "scientific_status", "authority_status"],
+    "valid_status_combinations": [
+      {"physical_status": "PHYSICAL_PASS", "scientific_status": "SCIENTIFIC_PASS"},
+      {"physical_status": "PHYSICAL_PASS", "scientific_status": "SCIENTIFIC_NO_GO"},
+      {"physical_status": "PHYSICAL_PASS", "scientific_status": "SCIENTIFIC_INDETERMINATE"},
+      {"physical_status": "PHYSICAL_FAIL", "scientific_status": "NOT_SETTLED"}
+    ],
+    "single_global_pass_prohibited": true,
+    "authority_default": "NONE_AWAITING_HUMAN_REVIEW"
+  },
+  "provider_policy": {
+    "law_control": {"providers": ["GitHub"], "authority": "LAW_CONTROL_ONLY", "replaceable": true},
+    "evidence_runtime_truth": {"providers": ["Postgres/Supabase", "Object Storage/NAS"], "authority": "EVIDENCE_RUNTIME_TRUTH_ONLY", "replaceable": true},
+    "experiment_compute": {"providers": ["Hugging Face Jobs", "container runner"], "authority": "NONE", "replaceable": true},
+    "experience_projection": {"providers": ["Web", "Hugging Face Space", "ChatGPT", "Notion"], "authority": "PROJECTION_ONLY", "replaceable": true},
+    "provider_identity_never_grants_canon": true
+  },
+  "ymq4_lineage": {
+    "preserve_historical_ids": true,
+    "ymq4_equals_mqe4_canon": false,
+    "inherited_evidence": ["YMQ4-DP1-A", "YMQ4-DP1-B", "YMQ4-B2"],
+    "b2": {"physical_status": "B2_BASELINE_MATERIALIZED_PASS", "economic_observation": "FIXED_BETA_BEATS_NULL"},
+    "b3": {"physical_status": "REALITY_PASS", "scientific_status": "SCIENTIFIC_NO_GO", "economic_observation": "DYNAMIC_BETA_DOES_NOT_BEAT_B2", "canon_authority": "NONE", "pr": 72, "merge_state": "DRAFT_OPEN_NOT_MERGED"}
+  },
+  "authority": {
+    "research_contract_authorized": true,
+    "capital_authorized": false,
+    "execution_authorized": false,
+    "broker_authorized": false,
+    "portfolio_sizing_authorized": false,
+    "position_sizing_authorized": false,
+    "order_submission_authorized": false,
+    "real_capital_movement_authorized": false,
+    "external_runtime_mutation_authorized": false
+  },
+  "non_authorizations": {
+    "supabase_runtime_mutation": false,
+    "hf_repository_write": false,
+    "ymq3_physical_run": false,
+    "portfolio_weighting": false,
+    "position_sizing": false,
+    "veighna_invocation": false,
+    "broker_credentials": false,
+    "broker_connection": false,
+    "broker_paper_orders": false,
+    "live_orders": false,
+    "real_capital_movement": false,
+    "automatic_canon_promotion": false
+  },
+  "versioning": {
+    "architecture_version": "0.1.0",
+    "contract_status": "candidate_only",
+    "current_pointer_self_authorizes": false,
+    "human_acceptance_required": true,
+    "protected_main_merge_required_for_canon": true
+  }
+}
