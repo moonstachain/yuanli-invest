@@ -1,0 +1,36 @@
+{
+  "manifest_id": "YMQ-OS0-G1-NOTION-PROJECTION-v0.1",
+  "system": "Notion",
+  "role": "PROJECTION_ONLY",
+  "canonical_truth": false,
+  "can_grant_authority": false,
+  "capital_authorized": false,
+  "execution_authorized": false,
+  "law_plane": {
+    "provider": "GitHub",
+    "repository": "moonstachain/yuanli-invest",
+    "authority": "CANON"
+  },
+  "reality_plane": {
+    "provider": "Supabase",
+    "project": "yuanli-invest-runtime",
+    "project_ref": "tbmoimbdhsrltvospwpu",
+    "authority": "REALITY_LEDGER"
+  },
+  "navigation": [
+    "Macro Reality",
+    "Evidence Gate",
+    "Narrative × Herding Reality Audit",
+    "Forward Shadow Runtime",
+    "Capital Intelligence",
+    "Learning / Review"
+  ],
+  "explicit_non_authorizations": [
+    "CANON_WRITE",
+    "EVIDENCE_TRUTH_MUTATION",
+    "CAPITAL_AUTHORITY",
+    "POSITION_SIZING",
+    "BROKER_EXECUTION",
+    "REAL_CAPITAL_MOVEMENT"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "contract_id": "YMQ-OS0-G1-SOVEREIGN-STACK-v0.1",
+  "planes": {
+    "law": {"provider": "GitHub", "authority": "CANON", "replaceable": false},
+    "reality": {"provider": "Supabase", "authority": "REALITY_LEDGER", "replaceable": true},
+    "experiment": {"provider": "HuggingFace", "authority": "COMPUTE_ONLY", "replaceable": true},
+    "experience": {"provider": "Notion", "authority": "PROJECTION_ONLY", "replaceable": true},
+    "runtime": {"provider": "YuanliGateway", "authority": "RESEARCH_ORCHESTRATION_ONLY", "replaceable": true}
+  },
+  "laws": {
+    "unknown_is_deny": true,
+    "research_not_capital": true,
+    "research_not_execution": true,
+    "claim_authority_lte_evidence_authority": true
+  },
+  "cross_plane_identity": {
+    "required": ["run_id", "git_sha", "as_of", "evidence_refs"],
+    "immutable_receipt": true
+  },
+  "explicitly_not_authorized": [
+    "CAPITAL_AUTHORITY",
+    "POSITION_SIZING",
+    "BROKER_EXECUTION",
+    "REAL_CAPITAL_MOVEMENT"
+  ]
+}
