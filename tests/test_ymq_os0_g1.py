@@ -60,16 +60,41 @@ class YMQOS0G1ContractTests(unittest.TestCase):
                 self.assertFalse(result["allowed"])
                 self.assertEqual(result["reason"], "AUTHORITY_DENY")
 
+    def test_runtime_denies_any_non_research_authority(self):
+        for authority in ("CANON", "ADMIN", "CAPITAL", "EXECUTION", None):
+            with self.subTest(authority=authority):
+                result = validate_runtime_request(
+                    {"intent": "research", "evidence_status": "PASS", "requested_authority": authority}
+                )
+                self.assertFalse(result["allowed"])
+                self.assertEqual(result["reason"], "AUTHORITY_DENY")
+
     def test_projection_manifest_cannot_be_truth_or_grant_authority(self):
         manifest = {
             "system": "Notion",
             "role": "PROJECTION_ONLY",
             "canonical_truth": False,
             "can_grant_authority": False,
+            "capital_authorized": False,
+            "execution_authorized": False,
         }
         self.assertEqual(validate_projection_manifest(manifest), [])
         manifest["canonical_truth"] = True
         self.assertIn("projection_cannot_be_canonical_truth", validate_projection_manifest(manifest))
+
+    def test_projection_manifest_denies_capital_and_execution_authority(self):
+        for field in ("capital_authorized", "execution_authorized"):
+            manifest = {
+                "system": "Notion",
+                "role": "PROJECTION_ONLY",
+                "canonical_truth": False,
+                "can_grant_authority": False,
+                "capital_authorized": False,
+                "execution_authorized": False,
+            }
+            manifest[field] = True
+            with self.subTest(field=field):
+                self.assertIn("projection_authority_leak", validate_projection_manifest(manifest))
 
 
 if __name__ == "__main__":
