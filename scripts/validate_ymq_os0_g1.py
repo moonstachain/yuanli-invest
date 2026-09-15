@@ -58,7 +58,7 @@ def validate_runtime_request(payload: dict[str, Any]) -> dict[str, Any]:
         return {"allowed": False, "reason": "UNKNOWN_DENY"}
     if payload.get("intent") in FORBIDDEN_RUNTIME_INTENTS:
         return {"allowed": False, "reason": "AUTHORITY_DENY"}
-    if payload.get("requested_authority") in {"CAPITAL", "EXECUTION"}:
+    if payload.get("requested_authority") != "RESEARCH":
         return {"allowed": False, "reason": "AUTHORITY_DENY"}
     return {"allowed": True, "reason": "RESEARCH_ONLY"}
 
@@ -71,6 +71,8 @@ def validate_projection_manifest(payload: dict[str, Any]) -> list[str]:
         errors.append("projection_cannot_be_canonical_truth")
     if payload.get("can_grant_authority") is not False:
         errors.append("projection_cannot_grant_authority")
+    if payload.get("capital_authorized") is not False or payload.get("execution_authorized") is not False:
+        errors.append("projection_authority_leak")
     return errors
 
 
