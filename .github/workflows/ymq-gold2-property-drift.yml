@@ -33,6 +33,7 @@ jobs:
           python -m unittest tests.test_ymq_gold2_blind_replay -v
           python -m unittest tests.test_ymq_gold2_configs -v
           python -m unittest tests.test_ymq_gold2_convergence -v
+          python -m unittest tests.test_ymq_gold2_live_shadow -v
       - name: Validate constitution
         run: python scripts/ymq_gold2_compiler.py
       - name: Compile accepted YIOS Gold T0 into unified Gold state
