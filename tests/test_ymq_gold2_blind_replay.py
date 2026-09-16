@@ -60,6 +60,11 @@ class Gold2BlindReplayTests(unittest.TestCase):
         early = [p for p in self.packets if p["window_id"] in {"R1", "R2", "R3"}]
         for packet in early:
             self.assertEqual(packet["property_drift_state"], "INSUFFICIENT_EVIDENCE")
+            self.assertEqual(packet["property_drift_eligibility"], "PRE_B2_OOS_NOT_ELIGIBLE")
+
+    def test_gfc_window_uses_actual_b2_oos_overlap(self):
+        r4 = next(p for p in self.packets if p["window_id"] == "R4")
+        self.assertEqual(r4["property_drift_eligibility"], "OOS_DIAGNOSTIC_APPLIED")
 
     def test_no_replay_grants_action_authority(self):
         for packet in self.packets:
