@@ -8,7 +8,7 @@ from typing import Any
 from scripts.yos_fin1_core import normalize_receipt
 
 DEFAULT_CLI = Path.home()/'.agents/skills/wind-mcp-skill/scripts/cli.mjs'
-FALLBACK_CLI = Path('/Users/liming/YuanliRemoteReadGateway/YOS-OBS2-v1/work/wind-skills-research/skills/wind-mcp-skill/scripts/cli.mjs')
+FALLBACK_CLI = Path.home()/'YuanliRemoteReadGateway/YOS-OBS2-v1/work/wind-skills-research/skills/wind-mcp-skill/scripts/cli.mjs'
 
 
 def classify_failure(text: str) -> str:

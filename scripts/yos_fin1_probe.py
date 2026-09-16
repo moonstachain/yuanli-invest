@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
-RUNTIME = Path('/Users/liming/YuanliRemoteReadGateway/YOS-OBS2-v1/runtime/yos-fin1-g0')
+RUNTIME = Path.home()/'YuanliRemoteReadGateway/YOS-OBS2-v1/runtime/yos-fin1-g0'
 
 
 def compile_qualification(*, wind: Mapping[str,Any], mx: Mapping[str,Any], wc: Mapping[str,Any]) -> dict[str,Any]:
