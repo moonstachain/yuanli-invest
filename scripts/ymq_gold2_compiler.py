@@ -94,28 +94,41 @@ def validate_unified_state(state: Mapping[str, Any], c: Mapping[str, Any] | None
 
 def classify_property_drift(
     *,
-    stable_factor_share: float,
-    residual_persistence: float,
+    coefficient_distance: float,
+    dominant_factor_match_share: float,
+    residual_bias_ratio: float,
     independent_evidence_count: int,
 ) -> str:
     """Classify explanatory-property drift without claiming alpha.
 
-    `stable_factor_share` is the share of explanatory contribution attributable to
-    the previously dominant factor family. `residual_persistence` is a bounded
-    diagnostic for unexplained persistence. These are research diagnostics, not
-    a trading signal.
+    Thresholds are frozen before the physical PIT run. They deliberately require
+    agreement across multiple diagnostics. None of the diagnostics is a forecast
+    or a portfolio signal.
     """
-    if not 0.0 <= stable_factor_share <= 1.0:
-        raise ValueError("stable_factor_share must be in [0,1]")
-    if not 0.0 <= residual_persistence <= 1.0:
-        raise ValueError("residual_persistence must be in [0,1]")
+    if coefficient_distance < 0.0:
+        raise ValueError("coefficient_distance must be non-negative")
+    if not 0.0 <= dominant_factor_match_share <= 1.0:
+        raise ValueError("dominant_factor_match_share must be in [0,1]")
+    if residual_bias_ratio < 0.0:
+        raise ValueError("residual_bias_ratio must be non-negative")
     if independent_evidence_count < 2:
         return "INSUFFICIENT_EVIDENCE"
-    if independent_evidence_count >= 4 and stable_factor_share <= 0.25 and residual_persistence >= 0.75:
+    if (
+        independent_evidence_count >= 3
+        and coefficient_distance >= 1.0
+        and dominant_factor_match_share <= 0.35
+        and residual_bias_ratio >= 0.25
+    ):
         return "DRIFT_CONFIRMED_RESEARCH_ONLY"
-    if stable_factor_share <= 0.45 and residual_persistence >= 0.60:
+    if independent_evidence_count >= 2 and (
+        coefficient_distance >= 0.50 or dominant_factor_match_share <= 0.50
+    ):
         return "DRIFT_CANDIDATE"
-    if stable_factor_share >= 0.60 and residual_persistence <= 0.40:
+    if (
+        coefficient_distance <= 0.35
+        and dominant_factor_match_share >= 0.65
+        and residual_bias_ratio <= 0.15
+    ):
         return "STABLE_PROPERTY"
     return "INSUFFICIENT_EVIDENCE"
 
