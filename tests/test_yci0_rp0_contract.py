@@ -101,5 +101,75 @@ class YCI0RP0ContractTests(unittest.TestCase):
         self.assertIn("reality_contract:explicit_non_authorizations_incomplete", errors)
 
 
+    def test_every_metric_declares_exact_required_timestamp_set(self):
+        expected = {
+            "observed_at",
+            "released_at",
+            "known_as_of",
+            "retrieved_at",
+            "revised_at",
+        }
+        for metric in self.metric_registry["metrics"]:
+            with self.subTest(metric_id=metric.get("metric_id")):
+                self.assertEqual(set(metric["required_timestamps"]), expected)
+
+    def test_validator_fails_closed_on_authority_leakage(self):
+        question = copy.deepcopy(self.question)
+        question["authority"] = "CAPITAL"
+        errors = validate_contract(question, self.reality_contract, self.metric_registry)
+        self.assertIn("question:authority_must_be_RESEARCH", errors)
+
+    def test_validator_fails_closed_on_invalid_closed_sets(self):
+        contract = copy.deepcopy(self.reality_contract)
+        contract["closed_sets"]["gate_status"].append("AUTHORIZED")
+        errors = validate_contract(self.question, contract, self.metric_registry)
+        self.assertIn("reality_contract:closed_sets_mismatch", errors)
+
+    def test_validator_fails_closed_on_incomplete_timestamps(self):
+        registry = copy.deepcopy(self.metric_registry)
+        registry["metrics"][0]["required_timestamps"].remove("known_as_of")
+        errors = validate_contract(self.question, self.reality_contract, registry)
+        self.assertIn(
+            f"metric:{registry['metrics'][0]['metric_id']}:required_timestamps_incomplete",
+            errors,
+        )
+
+    def test_validator_fails_closed_on_missing_metric_family(self):
+        registry = copy.deepcopy(self.metric_registry)
+        registry["metrics"] = [
+            metric
+            for metric in registry["metrics"]
+            if metric["family"] != "US_10Y_REAL_YIELD"
+        ]
+        errors = validate_contract(self.question, self.reality_contract, registry)
+        self.assertIn(
+            "metric_registry:required_family_missing:US_10Y_REAL_YIELD", errors
+        )
+
+    def test_validator_fails_closed_on_duplicate_metric_ids(self):
+        registry = copy.deepcopy(self.metric_registry)
+        duplicate_id = registry["metrics"][0]["metric_id"]
+        registry["metrics"][1]["metric_id"] = duplicate_id
+        errors = validate_contract(self.question, self.reality_contract, registry)
+        self.assertIn(f"metric:{duplicate_id}:duplicate_metric_id", errors)
+
+    def test_validator_fails_closed_on_non_unknown_fallback(self):
+        registry = copy.deepcopy(self.metric_registry)
+        registry["metrics"][0]["fallback"] = "PASS"
+        errors = validate_contract(self.question, self.reality_contract, registry)
+        self.assertIn(
+            f"metric:{registry['metrics'][0]['metric_id']}:fallback_must_be_UNKNOWN",
+            errors,
+        )
+
+    def test_validator_fails_closed_on_source_role_and_non_authorization_drift(self):
+        contract = copy.deepcopy(self.reality_contract)
+        contract["system_roles"]["wind_structured_mcp"] = "DECISION_AUTHORITY"
+        contract["explicitly_not_authorized"].remove("CAPITAL_AUTHORITY")
+        errors = validate_contract(self.question, contract, self.metric_registry)
+        self.assertIn("reality_contract:system_roles_mismatch", errors)
+        self.assertIn("reality_contract:explicit_non_authorizations_incomplete", errors)
+
+
 if __name__ == "__main__":
     unittest.main()
