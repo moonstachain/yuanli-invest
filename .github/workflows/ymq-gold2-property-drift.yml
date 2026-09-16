@@ -31,8 +31,12 @@ jobs:
           python -m unittest tests.test_ymq_gold2_compiler -v
           python -m unittest tests.test_ymq_gold2_property_drift -v
           python -m unittest tests.test_ymq_gold2_blind_replay -v
+          python -m unittest tests.test_ymq_gold2_configs -v
+          python -m unittest tests.test_ymq_gold2_convergence -v
       - name: Validate constitution
         run: python scripts/ymq_gold2_compiler.py
+      - name: Compile accepted YIOS Gold T0 into unified Gold state
+        run: python -m scripts.ymq_gold2_converge_yios | tee ymq-gold2-unified-state.json
       - name: Run read-only PIT property-drift diagnostics
         run: python -m scripts.ymq_gold2_property_drift | tee ymq-gold2-property-drift.json
       - name: Run fail-closed 8-regime blind replay core
@@ -42,6 +46,7 @@ jobs:
         with:
           name: ymq-gold2-reality-pack
           path: |
+            ymq-gold2-unified-state.json
             ymq-gold2-property-drift.json
             ymq-gold2-blind-replay.json
           if-no-files-found: error
