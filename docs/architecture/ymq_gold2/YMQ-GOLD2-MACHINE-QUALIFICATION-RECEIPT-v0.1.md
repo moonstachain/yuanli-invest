@@ -1,9 +1,9 @@
 # YMQ-GOLD2｜Machine Qualification Receipt v0.1
 
-**Program:** `YMQ-GOLD2｜Gold Monetary Regime × Property Drift × Timing Compiler`  
-**PR:** `#99`  
-**State:** `MACHINE_QUALIFIED / AWAITING_HUMAN_GATE`  
-**Qualification branch head:** `07927ea6790b6e9b28df4b504e4a46cf001bf6e2`  
+**Program:** `YMQ-GOLD2｜Gold Monetary Regime × Property Drift × Timing Compiler`
+**PR:** `#99`
+**State:** `MACHINE_QUALIFIED / AWAITING_HUMAN_GATE`
+**Qualification branch head:** `07927ea6790b6e9b28df4b504e4a46cf001bf6e2`
 **Base:** `main @ 2e5cefe98f0b2fff03720e28cd93e942b88b35f3`
 
 ## 1. What was physically proven
@@ -135,8 +135,8 @@ It explicitly keeps false:
 
 ### YMQ-GOLD2 Reality workflow
 
-Run: `35112012750`  
-Job: `104847861407`  
+Run: `35112012750`
+Job: `104847861407`
 Conclusion: `SUCCESS`
 
 Focused tests executed successfully:

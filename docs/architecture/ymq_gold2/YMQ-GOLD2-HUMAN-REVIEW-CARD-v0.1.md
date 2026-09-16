@@ -1,9 +1,9 @@
 # YMQ-GOLD2｜Human Review Card v0.1
 
-**PR:** `#99`  
-**Current state:** `AWAITING_HUMAN_GATE`  
-**Merge:** not authorized  
-**Live scheduler:** not authorized  
+**PR:** `#99`
+**Current state:** `AWAITING_HUMAN_GATE`
+**Merge:** not authorized
+**Live scheduler:** not authorized
 **Capital / sizing / execution:** not authorized
 
 ## Gate A｜Constitution
