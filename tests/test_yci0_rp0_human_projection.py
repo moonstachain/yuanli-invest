@@ -92,6 +92,12 @@ class HumanProjectionTests(unittest.TestCase):
         }
         self.assertTrue(set(result.patch).issubset(allowed))
 
+    def test_receipt_id_changes_with_different_inputs(self):
+        a = build_human_projection(current(), event(known="2026-09-17T00:00:00Z"), projection())
+        b = build_human_projection(current(), event(known="2026-09-18T00:00:00Z"), projection())
+        self.assertNotEqual(a.receipt.receipt_id, b.receipt.receipt_id)
+        self.assertNotEqual(a.receipt.request_hash, b.receipt.request_hash)
+
     def test_receipt_is_deterministic_for_same_input(self):
         a = build_human_projection(current(), event(), projection())
         b = build_human_projection(current(), event(), projection())
