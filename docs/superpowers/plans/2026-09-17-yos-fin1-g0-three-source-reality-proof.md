@@ -21,7 +21,7 @@
 ---
 
 ### Task 1: Freeze FIN1 source contract
-**Files:** Create `config/yos_fin1/fin1_source_contract.v0.1.json`; create `tests/test_yos_fin1_contract.py`.
+**Files:** Create `config/yos_fin1/fin1_source_contract.v0.1.json`; create `scripts/yos_fin1_core.py` with contract-loading/validation only; create `tests/test_yos_fin1_contract.py`.
 **Produces:** `load_contract()` / `validate_contract()` invariants consumed by all later tasks.
 - [ ] Write failing tests for provider roles, hard-false action authority, anti-echo roots, and required failure taxonomy.
 - [ ] Run `python -m pytest tests/test_yos_fin1_contract.py -q` and observe RED.
@@ -30,7 +30,7 @@
 - [ ] Commit.
 
 ### Task 2: Implement normalized provider receipt + comparator
-**Files:** Create `scripts/yos_fin1_core.py`; create `tests/test_yos_fin1_core.py`.
+**Files:** Modify `scripts/yos_fin1_core.py` to add routing/comparison; create `tests/test_yos_fin1_core.py`.
 **Produces:** `normalize_receipt()`, `compare_provider_receipts()`, `route_request()`.
 - [ ] Write tests for distinct evidence roots, same-provider anti-echo, PIT mismatch, semantic mismatch, and router T0/T1/T2-like decisions.
 - [ ] Run targeted tests RED.
