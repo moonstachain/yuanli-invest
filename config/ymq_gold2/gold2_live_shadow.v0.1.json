@@ -1,0 +1,68 @@
+{
+  "program": "YMQ-GOLD2",
+  "battle": "G6",
+  "version": "0.1.0",
+  "status": "CONTRACT_FROZEN_NOT_ACTIVATED",
+  "target": "GOLD",
+  "pilot_days": 30,
+  "provider_policy": {
+    "preferred_live_provider": "WIND",
+    "provider_replaceable": true,
+    "provider_authority": "EVIDENCE_ONLY",
+    "raw_body_git_persistence": false
+  },
+  "required_research_inputs": [
+    "gold_price",
+    "real_rate",
+    "usd",
+    "ust_context",
+    "inflation_expectations",
+    "policy_path_expectations",
+    "official_demand_if_authoritative",
+    "private_flow_positioning_if_authoritative",
+    "narrative_crowding_if_authoritative"
+  ],
+  "allowed_research_states": [
+    "WATCH",
+    "BUILDING",
+    "CONFIRMED_RESEARCH_ONLY",
+    "CROWDED",
+    "DETERIORATING",
+    "REGIME_SHIFT_CANDIDATE"
+  ],
+  "allowed_lifecycle_states": ["守", "攻", "持", "收", "等", "未知"],
+  "required_receipt_fields": [
+    "as_of",
+    "known_as_of_max",
+    "provider_receipts",
+    "property_drift_state",
+    "expectation_reality_state",
+    "valuation_state",
+    "drivers",
+    "falsifiers",
+    "unknowns",
+    "research_state",
+    "lifecycle_state"
+  ],
+  "scorecard": [
+    "pit_integrity",
+    "regime_detection_lag",
+    "false_regime_shift_rate",
+    "expectation_reality_resolution",
+    "property_drift_persistence",
+    "calibration_if_probabilistic",
+    "decision_regret",
+    "explanation_stability",
+    "unknown_rate"
+  ],
+  "authority": {
+    "live_scheduler_authorized": false,
+    "capital_authorized": false,
+    "sizing_authorized": false,
+    "execution_authorized": false,
+    "broker_action": false,
+    "veighna_authorized": false,
+    "canon_promotion_authorized": false
+  },
+  "human_gate": "G6_AUTHORIZE_LIVE_SHADOW_SCHEDULER"
+}

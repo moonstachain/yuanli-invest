@@ -1,0 +1,62 @@
+{
+  "program": "YMQ-GOLD2",
+  "target": "GOLD",
+  "status": "PENDING_HUMAN_EVIDENCE",
+  "purpose": "Independent RAY × Yiru × Machine judgments frozen before Reality settlement.",
+  "speaker_identity_rule": "Anonymous Get-note speakers must not be attributed to Yiru without explicit human confirmation.",
+  "candidate_source_refs": [
+    {
+      "source_type": "get_biji",
+      "note_id": "1921223064672310456",
+      "date": "2026-09-12",
+      "topic": "PB-ROE and PPI timing discussion",
+      "speaker_identity": "PENDING_HUMAN_ADJUDICATION"
+    },
+    {
+      "source_type": "get_biji",
+      "note_id": "1921456003296156592",
+      "date": "2026-09-16",
+      "topic": "Expectation-Reality / Valuation-Driver / Dynamic-Equilibrium commodity framework",
+      "speaker_identity": "PENDING_HUMAN_ADJUDICATION"
+    },
+    {
+      "source_type": "get_biji",
+      "note_id": "1921029074958431872",
+      "date": "2026-09-10",
+      "topic": "Global macro, bankroll and long-horizon investment discussion",
+      "speaker_identity": "PENDING_HUMAN_ADJUDICATION"
+    }
+  ],
+  "ray_regime_judgment": {
+    "status": "PENDING_HUMAN_EVIDENCE",
+    "known_as_of": null,
+    "claim": null,
+    "confidence": null,
+    "falsifiers": []
+  },
+  "yiru_timing_judgment": {
+    "status": "PENDING_HUMAN_EVIDENCE",
+    "known_as_of": null,
+    "claim": null,
+    "confidence": null,
+    "falsifiers": []
+  },
+  "machine_state_judgment": {
+    "status": "PENDING_MACHINE_REALITY_RUN",
+    "known_as_of": null,
+    "property_drift_state": null,
+    "expectation_reality_state": null,
+    "valuation_state": null,
+    "unknowns": []
+  },
+  "future_settlement": {
+    "status": "PENDING_REALITY",
+    "attribution_dimensions": ["information", "method", "luck", "unknown"]
+  },
+  "authority": {
+    "capital_authorized": false,
+    "sizing_authorized": false,
+    "execution_authorized": false,
+    "broker_action": false
+  }
+}

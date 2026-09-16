@@ -1,0 +1,144 @@
+{
+  "program": "YMQ-GOLD2",
+  "version": "0.1.0",
+  "status": "IMPLEMENTATION_CANDIDATE",
+  "target": {
+    "research_target": "GOLD",
+    "asset_form": "monetary_asset",
+    "pricing_archetype": "scarcity",
+    "genesis_role": "macro_quant_genesis_benchmark"
+  },
+  "north_star": "Reality-tested, machine-callable Gold research intelligence under survival and authority constraints.",
+  "upstream_authority": {
+    "os_canon": "docs/os-vnext/README.md",
+    "pit_panel": "gold_core_monthly_v0.1",
+    "pit_backfill_receipt": "docs/architecture/ymq4/YMQ4-DP1-B-REALITY-RECEIPT-v0.1.md",
+    "fixed_beta_baseline": "YMQ4-B2",
+    "fixed_beta_receipt": "docs/architecture/ymq4/YMQ4-B2-REALITY-RECEIPT-v0.1.md",
+    "dynamic_beta_candidate": "YMQ4-B3",
+    "dynamic_beta_settlement": "DYNAMIC_BETA_DOES_NOT_BEAT_B2",
+    "dynamic_beta_authority": "SCIENTIFIC_NO_GO / DRAFT / OPEN / NOT_MERGED",
+    "gold_genesis_case": "YIOS-GOLD-001",
+    "gold_genesis_constitution": "docs/architecture/yios_g1/YIOS-G1-A0-GOLD-GENESIS-CASE-CONSTITUTION-v1.md"
+  },
+  "invariants": [
+    "NEW_RESEARCH_MAY_LEARN_FROM_B3_NO_GO_BUT_MAY_NOT_RETUNE_B3_INTO_SUCCESS",
+    "PRICE_UP_DOES_NOT_PROVE_THESIS",
+    "PROPERTY_DRIFT_DOES_NOT_EQUAL_DYNAMIC_BETA_ALPHA",
+    "RESEARCH_QUALIFIED_DOES_NOT_EQUAL_CAPITAL_AUTHORIZED",
+    "CAPITAL_AUTHORIZED_DOES_NOT_EQUAL_EXECUTION_AUTHORIZED",
+    "HUMAN_JUDGMENT_MUST_NOT_BE_MACHINE_FABRICATED",
+    "LEARNING_CAN_REVISE_FUTURE_STATE_BUT_CANNOT_REWRITE_CASE_HISTORY"
+  ],
+  "unified_state": {
+    "required_fields": [
+      "as_of",
+      "known_as_of_max",
+      "source_panel",
+      "monetary_regime_state",
+      "real_rate_state",
+      "usd_state",
+      "inflation_state",
+      "fiscal_sovereign_state",
+      "official_demand_state",
+      "private_demand_state",
+      "narrative_state",
+      "crowding_state",
+      "price_state",
+      "implied_expectation_state",
+      "property_drift_state",
+      "expectation_reality_state",
+      "valuation_state",
+      "driver_state",
+      "engine_state",
+      "lifecycle_state",
+      "falsifiers",
+      "unknowns",
+      "authority_state"
+    ]
+  },
+  "allowed_states": {
+    "property_drift": [
+      "STABLE_PROPERTY",
+      "DRIFT_CANDIDATE",
+      "DRIFT_CONFIRMED_RESEARCH_ONLY",
+      "INSUFFICIENT_EVIDENCE"
+    ],
+    "expectation_reality": [
+      "REALITY_LED",
+      "EXPECTATION_LED",
+      "CONFIRMED",
+      "DIVERGENT",
+      "INDETERMINATE"
+    ],
+    "valuation": [
+      "UNDERPRICED",
+      "FAIR",
+      "OVERPRICED",
+      "UNIDENTIFIABLE"
+    ],
+    "lifecycle": ["守", "攻", "持", "收", "等", "未知"],
+    "live_shadow": [
+      "WATCH",
+      "BUILDING",
+      "CONFIRMED_RESEARCH_ONLY",
+      "CROWDED",
+      "DETERIORATING",
+      "REGIME_SHIFT_CANDIDATE"
+    ]
+  },
+  "valuation_lenses": [
+    "MACRO_FAIR_VALUE_LENS",
+    "MONETARY_REGIME_PREMIUM_LENS",
+    "REFLEXIVITY_POSITIONING_LENS"
+  ],
+  "evidence_domains": [
+    "monetary_policy",
+    "real_rate",
+    "usd",
+    "inflation",
+    "fiscal_sovereign_credibility",
+    "official_demand",
+    "private_demand",
+    "narrative_reflexivity",
+    "price_positioning"
+  ],
+  "replay_windows": [
+    {"id": "R1", "start": "1978-01-01", "end": "1980-12-31", "label": "inflation_monetary_disorder_peak"},
+    {"id": "R2", "start": "1981-01-01", "end": "1985-12-31", "label": "volcker_credibility_repair"},
+    {"id": "R3", "start": "1999-01-01", "end": "2002-12-31", "label": "gold_reactivation"},
+    {"id": "R4", "start": "2007-01-01", "end": "2009-12-31", "label": "global_financial_crisis"},
+    {"id": "R5", "start": "2011-01-01", "end": "2015-12-31", "label": "crowding_unwind_stronger_usd"},
+    {"id": "R6", "start": "2018-01-01", "end": "2020-12-31", "label": "real_rate_qe_reactivation"},
+    {"id": "R7", "start": "2022-01-01", "end": "2024-01-31", "label": "traditional_macro_tension_official_demand_rise"},
+    {"id": "R8", "start": "2024-02-01", "end": "2026-08-31", "label": "fiscal_reserve_architecture_repricing_candidate"}
+  ],
+  "human_triangulation": {
+    "required_slots": [
+      "ray_regime_judgment",
+      "yiru_timing_judgment",
+      "machine_state_judgment"
+    ],
+    "missing_human_state": "PENDING_HUMAN_EVIDENCE",
+    "machine_may_fill_human_slots": false
+  },
+  "authority": {
+    "research_authorized": true,
+    "capital_authorized": false,
+    "sizing_authorized": false,
+    "execution_authorized": false,
+    "broker_action": false,
+    "live_scheduler_authorized": false,
+    "canon_promotion_authorized": false
+  },
+  "hard_negatives": [
+    "POST_T0_EVIDENCE_IN_T0_STATE",
+    "B3_NO_GO_REWRITTEN_AS_SUCCESS",
+    "PROPERTY_DRIFT_LABELED_AS_ALPHA",
+    "MISSING_HUMAN_JUDGMENT_SYNTHESIZED",
+    "RESEARCH_STATE_GRANTS_CAPITAL_OR_EXECUTION",
+    "INFLATION_ONLY_SETTLES_GOLD_STATE",
+    "PRICE_APPRECIATION_ALONE_PROVES_THESIS",
+    "LONG_RUN_THESIS_BYPASSES_PRICE_OR_CROWDING"
+  ]
+}
