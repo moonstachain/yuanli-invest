@@ -123,7 +123,7 @@ Native0 currently has `Journey Stage`, `Gate Status`, and `Block Reason`, but th
 
 Native1 contains four bounded subsystems:
 
-1. **Machine Reality Outbox** — append-only delivery events in Supabase.
+1. **Machine Reality Outbox** — append-only business events in Supabase.
 2. **Notion Projection Binding** — deterministic mapping between runtime objects and Notion Human Objects.
 3. **Fail-Closed Transition Evaluator** — machine-safe state transitions and regressions.
 4. **Notion Projection Adapter** — authenticated, idempotent, auditable delivery into Native0 properties.
@@ -148,7 +148,7 @@ Native1 explicitly excludes:
 
 ### 5.1 Chosen approach: Transactional Outbox + Projection Adapter
 
-Use an additive Supabase outbox rather than direct database-trigger HTTP calls.
+Use an additive Supabase outbox rather than direct database-trigger HTTP calls as the source of delivery state.
 
 Why:
 
@@ -164,8 +164,8 @@ Why:
 ```text
 Supabase Reality/Evidence write
         ↓ same DB transaction
-runtime.human_projection_events  (append-only outbox)
-        ↓
+runtime.human_projection_events  (business event + delivery state)
+        ↓ asynchronous wake-up
 YMQ Notion Projection Adapter    (Supabase Edge Function)
         ↓
 validate authority + event + transition
@@ -181,6 +181,8 @@ ACK / RETRY / DEAD
 
 The Edge Function is transport/orchestration only. It cannot grant authority.
 
+The outbox is the durable source of pending work. A database webhook or other server-side Supabase wake-up mechanism may invoke the Edge Function after commit, but the webhook itself is not the source of truth. Before machine qualification, at least one physically verified wake-up path and one durable retry/recovery path MUST exist.
+
 ---
 
 ## 6. New Supabase Runtime Objects
@@ -189,7 +191,7 @@ All additions are under existing schema `runtime`.
 
 ### 6.1 `runtime.human_projection_events`
 
-Purpose: append-only transactional outbox.
+Purpose: transactional outbox.
 
 Required columns:
 
@@ -216,7 +218,7 @@ Required columns:
 Constraints:
 
 - authority may not exceed `RESEARCH`.
-- event rows are immutable except delivery-state fields.
+- event identity/business payload fields are immutable after insert; only operational delivery-state fields may change.
 - no anon/authenticated write policies.
 
 ### 6.2 `runtime.notion_projection_bindings`
@@ -240,7 +242,7 @@ Unique active binding per `(runtime_object_type, runtime_object_id, notion_objec
 
 ### 6.3 `runtime.human_projection_deliveries`
 
-Purpose: immutable delivery receipts.
+Purpose: immutable per-attempt delivery receipts.
 
 Required columns:
 
@@ -255,7 +257,7 @@ Required columns:
 - `error_class text null`
 - `created_at timestamptz not null default now()`
 
-No secrets or full Notion token values may appear in receipts.
+Each delivery attempt is a new immutable row. No secrets or full Notion token values may appear in receipts.
 
 ---
 
@@ -373,7 +375,14 @@ Add/freeze:
 
 Native1 does NOT pretend every 7-step transition is machine-provable today.
 
-### 10.1 Machine-enforceable transitions now
+### 10.1 Global transition rule
+
+- Automatic forward transitions may advance **at most one stage**.
+- A forward transition is allowed only when the Capital Question's current `Journey Stage` exactly matches the transition's source stage.
+- If a machine event implies a later stage while the current Human Object is earlier, Native1 writes only `Transition Suggestion` / `Transition Reason`; it MUST NOT skip intermediate stages.
+- Fail-closed regression to `02 EVIDENCE` is exempt from the one-step-forward rule.
+
+### 10.2 Machine-enforceable transitions now
 
 #### Any stage → EVIDENCE regression
 
@@ -395,6 +404,7 @@ This regression is allowed from any research stage because `UNKNOWN = DENY`.
 
 Trigger:
 
+- current `Journey Stage = 04 TRANSMISSION`,
 - `RESEARCH_PROJECTION_CREATED`,
 - admitted evidence status is not `BLOCKED/UNKNOWN`,
 - projection payload contains a non-empty defeat condition,
@@ -406,7 +416,7 @@ Effect:
 - `Gate Status = OPEN`
 - create or bind a Reality Audit work object.
 
-No claim of scientific PASS is implied.
+If the current stage is earlier than `04 TRANSMISSION`, write a transition suggestion only. No claim of scientific PASS is implied.
 
 #### AUDIT → SHADOW
 
@@ -424,7 +434,7 @@ Until then:
 
 Not active in Native1 unless a real Settlement object exists and a future Shadow authorization exists.
 
-### 10.2 Human-assisted / suggestion-only transitions
+### 10.3 Human-assisted / suggestion-only transitions
 
 The system currently lacks machine-authoritative Narrative and Transmission objects.
 
@@ -446,15 +456,26 @@ Supabase Edge Function name:
 
 ### Responsibilities
 
-1. receive or pull exactly one outbox event,
-2. load event by ID using service-role server-side access,
+1. receive exactly one event ID per invocation,
+2. load the durable outbox event by ID using service-role server-side access,
 3. verify event has `RESEARCH`-or-lower authority,
 4. recompute idempotency key / payload hash,
 5. resolve the Notion binding or explicit Human Context page ID,
 6. evaluate permitted transition,
 7. patch only whitelisted Notion properties,
-8. write a delivery receipt,
-9. ACK or RETRY the event.
+8. write an immutable per-attempt delivery receipt,
+9. ACK, RETRY, or DEAD-letter the event.
+
+### Wake-up / retry requirement
+
+Native1 does not make a direct network call from the Reality transaction. Event creation commits first; delivery happens asynchronously.
+
+Before G6 qualification, the deployed system must physically prove:
+
+- one server-side wake-up path that invokes `ymq-notion-projector` for a newly pending event, and
+- one durable recovery path that re-invokes due `RETRY` events after transient failure.
+
+The concrete mechanism may be a Supabase Database Webhook/Cron or equivalent server-side Supabase facility, but it must authenticate without storing secrets in GitHub and must be recorded in the qualification receipt. If no durable recovery path is physically configured, Native1 remains `INCOMPLETE`, even if a one-off manual Edge Function call succeeds.
 
 ### Forbidden behavior
 
@@ -490,6 +511,7 @@ Repeated delivery after timeout must either:
 - 429 / 5xx / transient network errors → exponential retry.
 - malformed target / authority violation / schema mismatch → DEAD or BLOCKED, no blind retry.
 - maximum retry count must be finite and configured.
+- an event in `RETRY` must carry `available_after`; a durable wake-up mechanism must eventually re-dispatch it.
 
 ### Ordering
 
@@ -512,6 +534,7 @@ A stale event with `known_as_of` older than the latest ACKed event for the same 
 | requested Capital/Execution authority | deny + optional `AUTHORITY_DENIED` event |
 | Notion user manually edits machine field | next valid machine projection may overwrite; machine truth remains Supabase |
 | schema property renamed/deleted in Notion | adapter fails closed with `SCHEMA_MISMATCH` |
+| wake-up/retry dispatcher missing | Native1 cannot qualify; manual call is not sufficient |
 
 ---
 
@@ -528,11 +551,12 @@ New tests must prove:
 3. event authority cannot exceed RESEARCH,
 4. idempotency key is unique,
 5. transition evaluator regresses to EVIDENCE on UNKNOWN/BLOCKED,
-6. adapter denies SHADOW promotion by default,
-7. stale events cannot overwrite newer state,
-8. duplicate delivery is idempotent,
-9. Notion patch whitelist excludes thesis/content/Capital/Execution authority fields,
-10. secret literals are absent from repository artifacts.
+6. forward transitions never skip a stage,
+7. adapter denies SHADOW promotion by default,
+8. stale events cannot overwrite newer state,
+9. duplicate delivery is idempotent,
+10. Notion patch whitelist excludes thesis/content/Capital/Execution authority fields,
+11. secret literals are absent from repository artifacts.
 
 ### Supabase Reality tests
 
@@ -557,6 +581,7 @@ Expected proof:
 5. synthetic `UNKNOWN` evidence regresses DEMO to EVIDENCE.
 6. attempted `AUDIT → SHADOW` remains BLOCKED.
 7. Notion is read back and compared with Supabase delivery receipt.
+8. at least one transient-failure retry is re-dispatched through the durable recovery path.
 
 The demo must remain visibly labelled `DEMO`.
 
@@ -606,11 +631,11 @@ Bind one DEMO Question → Projection → Audit flow and verify machine-owned fi
 
 ### G5｜Adversarial Replay
 
-Test duplicate, stale, UNKNOWN, schema mismatch, Notion outage, and unauthorized Shadow transition.
+Test duplicate, stale, UNKNOWN, schema mismatch, Notion outage, durable retry, and unauthorized Shadow transition.
 
 ### G6｜Qualification
 
-Fresh exact-head repository tests + Supabase readback + Notion readback + advisor checks + receipt.
+Fresh exact-head repository tests + Supabase readback + Notion readback + durable wake-up/retry proof + advisor checks + receipt.
 
 ---
 
@@ -623,7 +648,9 @@ Native1 may be declared machine-qualified only when all of the following are phy
 - one DEMO event reaches Notion through the adapter and is read back,
 - duplicate and stale events are harmless,
 - UNKNOWN/BLOCKED evidence regresses or blocks the workflow,
+- forward transitions never skip an unproven intermediate stage,
 - SHADOW promotion remains denied without independent authorization,
+- one durable wake-up path and one durable retry path are physically proven,
 - delivery receipts contain no secrets,
 - Notion remains projection-only,
 - GitHub protected checks are GREEN on exact head,
