@@ -52,8 +52,7 @@ class Gold2UnifiedStateTests(unittest.TestCase):
         }
 
     def test_state_passes_with_pit_and_zero_execution_authority(self):
-        state = self.base_state()
-        gold2.validate_unified_state(state)
+        gold2.validate_unified_state(self.base_state())
 
     def test_state_rejects_future_leakage(self):
         state = self.base_state()
@@ -71,20 +70,40 @@ class Gold2UnifiedStateTests(unittest.TestCase):
 class Gold2ResearchCompilerTests(unittest.TestCase):
     def test_property_drift_is_not_alpha_claim(self):
         state = gold2.classify_property_drift(
-            stable_factor_share=0.35,
-            residual_persistence=0.72,
-            independent_evidence_count=3,
+            coefficient_distance=0.8,
+            dominant_factor_match_share=0.4,
+            residual_bias_ratio=0.2,
+            independent_evidence_count=2,
         )
         self.assertEqual(state, "DRIFT_CANDIDATE")
         self.assertNotIn("ALPHA", state)
 
+    def test_property_drift_can_confirm_research_only(self):
+        state = gold2.classify_property_drift(
+            coefficient_distance=1.2,
+            dominant_factor_match_share=0.25,
+            residual_bias_ratio=0.35,
+            independent_evidence_count=3,
+        )
+        self.assertEqual(state, "DRIFT_CONFIRMED_RESEARCH_ONLY")
+
     def test_property_drift_fails_to_insufficient_evidence(self):
         state = gold2.classify_property_drift(
-            stable_factor_share=0.2,
-            residual_persistence=0.8,
+            coefficient_distance=2.0,
+            dominant_factor_match_share=0.1,
+            residual_bias_ratio=0.8,
             independent_evidence_count=1,
         )
         self.assertEqual(state, "INSUFFICIENT_EVIDENCE")
+
+    def test_property_stability_requires_joint_diagnostics(self):
+        state = gold2.classify_property_drift(
+            coefficient_distance=0.2,
+            dominant_factor_match_share=0.8,
+            residual_bias_ratio=0.1,
+            independent_evidence_count=2,
+        )
+        self.assertEqual(state, "STABLE_PROPERTY")
 
     def test_expectation_reality_labels(self):
         self.assertEqual(gold2.classify_expectation_reality(0.8, 0.2, True), "REALITY_LED")
