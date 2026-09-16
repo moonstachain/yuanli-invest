@@ -1,0 +1,59 @@
+{
+  "program": "YMQ-GOLD2",
+  "battle": "G6-LIVE-SHADOW",
+  "version": "0.1.0",
+  "status": "HUMAN_AUTHORIZED_ACTIVE_SHADOW_ONLY",
+  "target": "GOLD",
+  "pilot_days": 30,
+  "start_date": "2026-09-16",
+  "end_date_exclusive": "2026-10-16",
+  "schedule": {
+    "timezone": "LOCAL_MACHINE",
+    "cadence": "DAILY",
+    "hour": 8,
+    "minute": 10,
+    "run_at_load": true
+  },
+  "provider": {
+    "name": "WIND",
+    "authority": "EVIDENCE_ONLY",
+    "provider_replaceable": true,
+    "raw_body_git_persistence": false,
+    "metrics": {
+      "real_rate": {
+        "code": "G1147404",
+        "label": "美国:长期国债平均实际收益率:大于10年"
+      },
+      "usd": {
+        "code": "M0000271",
+        "label": "美元指数"
+      },
+      "gold_price": {
+        "code": "S0031645",
+        "label": "现货价(伦敦市场):黄金:美元"
+      }
+    },
+    "adapter_compatibility": {
+      "economic_data.query_economic_indicator_data.observation": "string"
+    }
+  },
+  "research_defaults": {
+    "property_drift_state": "DRIFT_CANDIDATE",
+    "property_drift_lineage": "YMQ-GOLD2-G1 qualified through 2026-08; carry-forward until recomputed",
+    "expectation_reality_state": "INDETERMINATE",
+    "valuation_state": "UNIDENTIFIABLE",
+    "research_state": "WATCH",
+    "lifecycle_state": "未知"
+  },
+  "authority": {
+    "research_authorized": true,
+    "live_scheduler_authorized": true,
+    "capital_authorized": false,
+    "sizing_authorized": false,
+    "execution_authorized": false,
+    "broker_action": false,
+    "veighna_authorized": false,
+    "canon_promotion_authorized": false
+  },
+  "authorization_basis": "Explicit Human approval in ChatGPT on 2026-09-16 for H1 merge + H2 30-Day Gold Live Shadow; no real-money authority granted."
+}
