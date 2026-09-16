@@ -1,8 +1,9 @@
 # YCI0-RP0｜Written Spec Acceptance Receipt
 
-**Status:** ACCEPTED / IMPLEMENTATION_PLAN_AUTHORIZED  
+**Status:** ACCEPTED / IMPLEMENTATION_PLAN_READY  
 **Date:** 2026-09-16  
-**Spec:** `docs/superpowers/specs/2026-09-16-yci0-rp0-ai-infra-end-to-end-capital-intelligence-proof-design.md`
+**Spec:** `docs/superpowers/specs/2026-09-16-yci0-rp0-ai-infra-end-to-end-capital-intelligence-proof-design.md`  
+**Implementation Plan:** `docs/superpowers/plans/2026-09-16-yci0-rp0-ai-infra-end-to-end-capital-intelligence-proof.md`
 
 ## Human Decision
 
@@ -26,4 +27,4 @@ The Human Principal explicitly accepted `YCI0-RP0-G0` and authorized transition 
 
 ## Execution Discipline
 
-Implementation must proceed RED → GREEN → task review → fresh verification. Existing YMQ / Native1 / Wind / Brain interfaces must be audited and reused before introducing duplicate infrastructure.
+Implementation must follow the accepted plan task-by-task with RED → GREEN → task review → fresh verification. Existing YMQ / Native1 / Wind / Brain interfaces must be audited and reused before introducing duplicate infrastructure.
