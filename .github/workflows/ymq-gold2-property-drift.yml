@@ -17,7 +17,7 @@ env:
   YMQ4_SUPABASE_SECRET_KEY: ${{ secrets.YMQ4_SUPABASE_SECRET_KEY }}
 
 jobs:
-  g1-read-only-reality:
+  gold2-read-only-reality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,13 +30,18 @@ jobs:
         run: |
           python -m unittest tests.test_ymq_gold2_compiler -v
           python -m unittest tests.test_ymq_gold2_property_drift -v
+          python -m unittest tests.test_ymq_gold2_blind_replay -v
       - name: Validate constitution
         run: python scripts/ymq_gold2_compiler.py
       - name: Run read-only PIT property-drift diagnostics
         run: python -m scripts.ymq_gold2_property_drift | tee ymq-gold2-property-drift.json
-      - name: Upload non-secret research receipt
+      - name: Run fail-closed 8-regime blind replay core
+        run: python -m scripts.ymq_gold2_blind_replay | tee ymq-gold2-blind-replay.json
+      - name: Upload non-secret research receipts
         uses: actions/upload-artifact@v4
         with:
-          name: ymq-gold2-property-drift
-          path: ymq-gold2-property-drift.json
+          name: ymq-gold2-reality-pack
+          path: |
+            ymq-gold2-property-drift.json
+            ymq-gold2-blind-replay.json
           if-no-files-found: error
