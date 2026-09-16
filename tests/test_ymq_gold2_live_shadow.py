@@ -1,0 +1,116 @@
+import json
+import tempfile
+import unittest
+from datetime import date
+from pathlib import Path
+from unittest import mock
+
+from scripts import ymq_gold2_live_shadow as shadow
+
+
+class ActivationContractTests(unittest.TestCase):
+    def test_activation_authorizes_scheduler_only(self):
+        cfg = shadow.load_activation()
+        shadow.validate_activation(cfg)
+        self.assertTrue(cfg["authority"]["live_scheduler_authorized"])
+        for field in (
+            "capital_authorized",
+            "sizing_authorized",
+            "execution_authorized",
+            "broker_action",
+            "veighna_authorized",
+            "canon_promotion_authorized",
+        ):
+            self.assertFalse(cfg["authority"][field])
+
+    def test_activation_rejects_execution_authority(self):
+        cfg = shadow.load_activation()
+        cfg["authority"]["execution_authorized"] = True
+        with self.assertRaises(ValueError):
+            shadow.validate_activation(cfg)
+
+    def test_pilot_window_is_bounded(self):
+        cfg = shadow.load_activation()
+        self.assertEqual(cfg["pilot_days"], 30)
+        self.assertEqual(cfg["start_date"], "2026-09-16")
+        self.assertEqual(cfg["end_date_exclusive"], "2026-10-16")
+        self.assertEqual(shadow.pilot_state(date(2026, 9, 16), cfg), "ACTIVE")
+        self.assertEqual(shadow.pilot_state(date(2026, 10, 15), cfg), "ACTIVE")
+        self.assertEqual(shadow.pilot_state(date(2026, 10, 16), cfg), "EXPIRED")
+
+
+class WindAdapterTests(unittest.TestCase):
+    def test_parse_wind_cli_response_requires_exact_metric_code(self):
+        payload = {
+            "content": [{"type": "text", "text": json.dumps({
+                "metrics": [{
+                    "meta": {"code": "G1147404", "name": "real yield", "endDate": "20260915"},
+                    "date": ["20260915"],
+                    "value": [3.05],
+                }]
+            })}],
+            "isError": False,
+        }
+        metric = shadow.parse_wind_cli_response(json.dumps(payload), expected_code="G1147404")
+        self.assertEqual(metric["meta"]["code"], "G1147404")
+        self.assertEqual(metric["latest_value"], 3.05)
+        self.assertEqual(metric["latest_date"], "20260915")
+
+    def test_parse_wind_cli_response_rejects_wrong_metric(self):
+        payload = {
+            "content": [{"type": "text", "text": json.dumps({
+                "metrics": [{"meta": {"code": "WRONG"}, "date": [], "value": []}]
+            })}],
+            "isError": False,
+        }
+        with self.assertRaises(ValueError):
+            shadow.parse_wind_cli_response(json.dumps(payload), expected_code="G1147404")
+
+    @mock.patch("scripts.ymq_gold2_live_shadow.subprocess.run")
+    def test_query_uses_backend_compatible_string_observation(self, run):
+        run.return_value = mock.Mock(
+            returncode=0,
+            stdout=json.dumps({
+                "content": [{"type": "text", "text": json.dumps({
+                    "metrics": [{
+                        "meta": {"code": "M0000271", "name": "DXY", "endDate": "20260915"},
+                        "date": ["20260915"],
+                        "value": [97.5],
+                    }]
+                })}],
+                "isError": False,
+            }),
+            stderr="",
+        )
+        out = shadow.query_wind_metric(Path("/tmp/cli.mjs"), "M0000271", observation="5")
+        self.assertEqual(out["latest_value"], 97.5)
+        argv = run.call_args.args[0]
+        request_json = json.loads(argv[-1])
+        self.assertEqual(request_json["observation"], "5")
+
+
+class ReceiptTests(unittest.TestCase):
+    def test_build_receipt_is_research_only_and_fail_closed(self):
+        cfg = shadow.load_activation()
+        metrics = {
+            "real_rate": {"meta": {"code": "G1147404"}, "latest_date": "20260915", "latest_value": 3.05, "raw_sha256": "a"},
+            "usd": {"meta": {"code": "M0000271"}, "latest_date": "20260915", "latest_value": 97.5, "raw_sha256": "b"},
+            "gold_price": {"meta": {"code": "S0031645"}, "latest_date": "20260915", "latest_value": 4400.0, "raw_sha256": "c"},
+        }
+        receipt = shadow.build_receipt(metrics, cfg, as_of=date(2026, 9, 16))
+        self.assertEqual(receipt["research_state"], "WATCH")
+        self.assertEqual(receipt["expectation_reality_state"], "INDETERMINATE")
+        self.assertEqual(receipt["valuation_state"], "UNIDENTIFIABLE")
+        self.assertFalse(receipt["authority"]["capital_authorized"])
+        self.assertFalse(receipt["authority"]["execution_authorized"])
+        self.assertIn("policy_path_expectations", receipt["unknowns"])
+
+    def test_write_receipt_never_writes_to_repo_by_default(self):
+        with tempfile.TemporaryDirectory() as td:
+            target = shadow.write_receipt({"status": "OK", "as_of": "2026-09-16"}, Path(td))
+            self.assertTrue(target.exists())
+            self.assertTrue(str(target).startswith(td))
+
+
+if __name__ == "__main__":
+    unittest.main()
