@@ -106,6 +106,13 @@ class ProjectionCompilerTests(unittest.TestCase):
         with self.assertRaises(ProjectionError):
             compile_projection(question, reality_card(), context_pack(), narrative(), p)
 
+    def test_projection_denies_non_research_question_authority(self):
+        for authority in ("CAPITAL", "EXECUTION", "NONE"):
+            question = {"question_id": "YCI0-RP0-CQ-001", "as_of": "2026-09-17T00:00:00Z", "authority": authority}
+            with self.subTest(authority=authority):
+                with self.assertRaises(ProjectionError):
+                    compile_projection(question, reality_card(), context_pack(), narrative(), payoff())
+
     def test_projection_is_research_only_and_preserves_lineage(self):
         question = {"question_id": "YCI0-RP0-CQ-001", "as_of": "2026-09-17T00:00:00Z", "authority": "RESEARCH"}
         projection = compile_projection(question, reality_card(), context_pack(), narrative(), payoff())
