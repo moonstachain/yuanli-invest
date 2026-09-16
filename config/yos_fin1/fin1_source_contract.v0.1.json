@@ -1,0 +1,35 @@
+{
+  "program": "YOS-FIN1-G0",
+  "status": "IMPLEMENTATION_CANDIDATE",
+  "providers": {
+    "WIND": {"role": "REALITY_EVIDENCE", "authority_ceiling": "EVIDENCE_ONLY"},
+    "MIAOXIANG_DATA": {"role": "REALITY_EVIDENCE", "authority_ceiling": "EVIDENCE_ONLY"},
+    "MIAOXIANG_SEARCH": {"role": "AUTHORED_KNOWLEDGE", "authority_ceiling": "KNOWLEDGE_CANDIDATE_INPUT"},
+    "WENCAI_OPEN_DATA": {"role": "RESEARCH_CANDIDATE", "authority_ceiling": "PENDING_PIT_VALIDATION"},
+    "WENCAI_SCREEN": {"role": "RESEARCH_CANDIDATE", "authority_ceiling": "NO_EVIDENCE_AUTHORITY"},
+    "WENCAI_BROWSER": {"role": "DISCOVERY_ONLY", "authority_ceiling": "NO_CANON_AUTHORITY"}
+  },
+  "anti_echo": {
+    "distinct_provider_roots_required": true,
+    "same_provider_requery_counts_as_corroboration": false
+  },
+  "failure_taxonomy": [
+    "AUTH_MISSING", "AUTH_REJECTED", "QUOTA_OR_CREDIT_BLOCK", "ENDPOINT_DRIFT",
+    "SCHEMA_DRIFT", "ENTITY_UNRESOLVED", "PIT_MISSING", "SEMANTIC_MISMATCH",
+    "PROVIDER_UNAVAILABLE", "DISCOVERY_ONLY", "UNKNOWN"
+  ],
+  "authority": {
+    "research_authorized": true,
+    "capital_authorized": false,
+    "sizing_authorized": false,
+    "execution_authorized": false,
+    "broker_action": false,
+    "veighna_authorized": false,
+    "canon_promotion_authorized": false,
+    "production_scheduler_authorized": false
+  },
+  "security": {
+    "raw_authenticated_body_git_persistence": false,
+    "secret_echo_authorized": false
+  }
+}
