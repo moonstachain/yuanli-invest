@@ -34,6 +34,27 @@ def _window_rows(rows: list[dict[str, Any]], start: str, end: str) -> list[dict[
     return [row for row in rows if s <= _date(row["decision_date"]) <= e]
 
 
+def _property_drift_for_window(
+    window: dict[str, Any],
+    rolling: list[dict[str, Any]],
+    fixed_coef: dict[str, float],
+) -> tuple[str, str]:
+    """Return (state, eligibility) using only overlap with canonical B2 OOS."""
+    window_start = _date(window["start"])
+    window_end = _date(window["end"])
+    overlap_start = max(window_start, b2.OOS_START)
+    overlap_end = min(window_end, b2.OOS_END)
+    if overlap_start > overlap_end:
+        return "INSUFFICIENT_EVIDENCE", "PRE_B2_OOS_NOT_ELIGIBLE"
+    state = drift.block_summary(
+        rolling,
+        fixed_coef,
+        overlap_start,
+        overlap_end,
+    )["property_drift_state"]
+    return state, "OOS_DIAGNOSTIC_APPLIED"
+
+
 def build_replay_packets(panel_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     constitution = gold2.load_constitution()
     gold2.validate_constitution(constitution)
@@ -52,16 +73,11 @@ def build_replay_packets(panel_rows: list[dict[str, Any]]) -> list[dict[str, Any
         if _date(known_as_of_max) > _date(window["end"]):
             raise ValueError(f"future leakage in replay window {window['id']}")
 
-        # Property-drift diagnosis is eligible only inside the canonical B2 OOS era.
-        if _date(window["start"]) >= b2.OOS_START:
-            property_state = drift.block_summary(
-                rolling,
-                fixed_coef,
-                _date(window["start"]),
-                _date(window["end"]),
-            )["property_drift_state"]
-        else:
-            property_state = "INSUFFICIENT_EVIDENCE"
+        property_state, property_eligibility = _property_drift_for_window(
+            window,
+            rolling,
+            fixed_coef,
+        )
 
         packet = {
             "window_id": window["id"],
@@ -77,6 +93,7 @@ def build_replay_packets(panel_rows: list[dict[str, Any]]) -> list[dict[str, Any
                 "net_real_rate_change_pp": _sum(rows, "real_rate_change"),
             },
             "property_drift_state": property_state,
+            "property_drift_eligibility": property_eligibility,
             "expectation_reality_state": "INDETERMINATE",
             "valuation_state": "UNIDENTIFIABLE",
             "unknowns": [
