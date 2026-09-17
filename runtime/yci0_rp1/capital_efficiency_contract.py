@@ -7,6 +7,7 @@ from pathlib import Path
 MANDATORY_COMPONENTS = ('INCREMENTAL_ROIC', 'CASH_CONVERSION', 'CAPITAL_INTENSITY')
 REQUIRED_COHORTS = ('HYPERSCALER', 'COMPUTE', 'NETWORKING', 'POWER_ELECTRICAL')
 DIRECTIONS = {'HIGHER_IS_MORE_EFFICIENT', 'LOWER_IS_MORE_EFFICIENT'}
+MIN_RAW_QUARTERS = {'INCREMENTAL_ROIC': 11, 'CASH_CONVERSION': 7, 'CAPITAL_INTENSITY': 7}
 REPRESENTATIVES = {
     'HYPERSCALER': 'MSFT',
     'COMPUTE': 'NVDA',
@@ -68,7 +69,7 @@ def _validate_metric(raw: dict) -> CapitalEfficiencyMetricSpec:
         raise ValueError(f'unknown directionality: {spec.directionality}')
     if spec.authority != 'RESEARCH':
         raise ValueError(f'authority must be RESEARCH: {spec.metric_id}')
-    if spec.minimum_derived_observations != 4 or spec.minimum_raw_quarters < 8:
+    if spec.minimum_derived_observations != 4 or spec.minimum_raw_quarters != MIN_RAW_QUARTERS[spec.component]:
         raise ValueError(f'invalid observation minimums: {spec.metric_id}')
     return spec
 

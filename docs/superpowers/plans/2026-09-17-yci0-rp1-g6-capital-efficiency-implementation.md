@@ -21,7 +21,7 @@
 - `Capital Intensity = TTM Capex / TTM Revenue`.
 - Directionality closed set is exactly `HIGHER_IS_MORE_EFFICIENT` and `LOWER_IS_MORE_EFFICIENT`.
 - Raw Level / Delta / Delta2 are preserved; only oriented values are used for G6 efficiency-state classification.
-- Four consecutive derived quarterly observations require at least eight consecutive raw filing quarters for Incremental ROIC.
+- Four consecutive derived quarterly Incremental ROIC observations require at least eleven consecutive raw filing quarters; four consecutive TTM Cash Conversion/Capital Intensity observations require at least seven. First-proof acquisition uses at least eleven quarters per representative.
 - Every PASS observation must retain `source → raw snapshot → normalized components → calculation receipt → known_as_of → content hash → evidence receipt`.
 - Missing mandatory component, unstable denominator, accounting-regime break, missing PIT semantics, missing raw/hash lineage, insufficient history, semantic ambiguity, entity collision, or unregistered directionality => `UNKNOWN`.
 - No 0–100 score and no market-cap/revenue/subjective weighting.
@@ -161,7 +161,7 @@ git commit -m "feat(yci0-rp1): compile entity-safe capital efficiency"
 
 - [ ] **Step 1: Write RED reconstruction tests**
 
-Cover exactly: TTM NOPAT tax-rate 0–50% guard; operating invested-capital formula; positive/economically-meaningful YoY denominator; eight-quarter minimum for four derived observations; CFO/NOPAT near-zero guard; capex/revenue TTM; fiscal-calendar/accounting-regime break; calculation receipt containing every source fact/hash.
+Cover exactly: TTM NOPAT tax-rate 0–50% guard; operating invested-capital formula; positive/economically-meaningful YoY denominator; eleven-quarter minimum for four consecutive Incremental ROIC observations and seven-quarter minimum for four consecutive TTM Cash Conversion/Capital Intensity observations; CFO/NOPAT near-zero guard; capex/revenue TTM; fiscal-calendar/accounting-regime break; calculation receipt containing every source fact/hash.
 
 - [ ] **Step 2: Run RED tests**
 
@@ -213,7 +213,7 @@ def test_archive_receipt_grants_zero_downstream_authority(self):
 
 - [ ] **Step 2: Implement source acquisition with first-party priority**
 
-For each entity, acquire at least eight consecutive filing quarters from SEC EDGAR company filings/XBRL facts or filed exhibits. Archive the raw bytes used for every required accounting fact to private S3 and SHA-readback. Do not mark PASS if a required GAAP concept cannot be mapped consistently through all required quarters; emit `UNKNOWN` with the exact semantic/accounting break.
+For each entity, acquire at least eleven consecutive filing quarters from SEC EDGAR company filings/XBRL facts or filed exhibits. Archive the raw bytes used for every required accounting fact to private S3 and SHA-readback. Do not mark PASS if a required GAAP concept cannot be mapped consistently through all required quarters; emit `UNKNOWN` with the exact semantic/accounting break.
 
 - [ ] **Step 3: Validate all three mandatory metrics per representative**
 

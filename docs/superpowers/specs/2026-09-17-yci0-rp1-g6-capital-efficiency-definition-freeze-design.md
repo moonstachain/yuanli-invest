@@ -1,10 +1,10 @@
 # YCI0-RP1-G6｜Capital Efficiency Definition Freeze — Design
 
-**Date:** 2026-09-17  
-**Status:** DESIGN / HUMAN REVIEW REQUIRED  
-**Program:** `YCI0｜Yuanli Capital Intelligence Spine`  
-**Flagship:** `YCI0-RP1｜AI Infra First Live Reality Admission`  
-**Question:** `YCI0-RP0-CQ-001`  
+**Date:** 2026-09-17
+**Status:** ACCEPTED / POST-ACCEPTANCE EVIDENCE-HORIZON HARDENING (2026-09-17)
+**Program:** `YCI0｜Yuanli Capital Intelligence Spine`
+**Flagship:** `YCI0-RP1｜AI Infra First Live Reality Admission`
+**Question:** `YCI0-RP0-CQ-001`
 **Authority:** `RESEARCH_ONLY`
 
 ## 1. Purpose
@@ -177,7 +177,7 @@ Canonical measurement regime:
 - quarterly observations;
 - every observation represents a TTM economic measure known at that filing/release date;
 - at least four consecutive PIT-qualified **derived G6 observations** are required for first production admission;
-- because Incremental ROIC uses `t` versus `t-4`, producing four consecutive quarterly G6 observations requires at least eight consecutive quarters of raw filing history;
+- one Incremental ROIC observation requires at least eight consecutive raw quarters because both `TTM_t` and `TTM_{t-4}` must be reconstructed; producing four consecutive quarterly Incremental ROIC observations requires at least eleven consecutive raw quarters (`t=7..10` over raw quarters `0..10`); Cash Conversion and Capital Intensity require at least seven raw quarters for four consecutive TTM observations; first-proof source acquisition therefore uses at least eleven consecutive raw quarters per representative so all three components align;
 - Reality Compiler may use the latest three valid derived observations for Level / Δ / Δ², consistent with current RP0 behavior;
 - raw calculations must retain every source quarter required to reconstruct each TTM value and its prior-year comparison.
 

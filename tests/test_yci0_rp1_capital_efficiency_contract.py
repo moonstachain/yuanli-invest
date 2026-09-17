@@ -30,7 +30,8 @@ class CapitalEfficiencyContractTests(unittest.TestCase):
             self.assertEqual(spec.authority, 'RESEARCH')
             self.assertIn(spec.directionality, {'HIGHER_IS_MORE_EFFICIENT', 'LOWER_IS_MORE_EFFICIENT'})
             self.assertEqual(spec.minimum_derived_observations, 4)
-            self.assertGreaterEqual(spec.minimum_raw_quarters, 8)
+            expected = {'INCREMENTAL_ROIC': 11, 'CASH_CONVERSION': 7, 'CAPITAL_INTENSITY': 7}[spec.component]
+            self.assertEqual(spec.minimum_raw_quarters, expected)
             self.assertIn('KNOWN_AS_OF', spec.pit_policy)
             self.assertIn('RAW_HASH_LINEAGE', spec.pit_policy)
 

@@ -33,7 +33,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 11
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.HYPERSCALER.MSFT.CASH_CONVERSION",
@@ -45,7 +45,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 7
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.HYPERSCALER.MSFT.CAPITAL_INTENSITY",
@@ -57,7 +57,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 7
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.COMPUTE.NVDA.INCREMENTAL_ROIC",
@@ -69,7 +69,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 11
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.COMPUTE.NVDA.CASH_CONVERSION",
@@ -81,7 +81,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 7
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.COMPUTE.NVDA.CAPITAL_INTENSITY",
@@ -93,7 +93,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 7
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.NETWORKING.ANET.INCREMENTAL_ROIC",
@@ -105,7 +105,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 11
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.NETWORKING.ANET.CASH_CONVERSION",
@@ -117,7 +117,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 7
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.NETWORKING.ANET.CAPITAL_INTENSITY",
@@ -129,7 +129,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 7
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.POWER_ELECTRICAL.ETN.INCREMENTAL_ROIC",
@@ -141,7 +141,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 11
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.POWER_ELECTRICAL.ETN.CASH_CONVERSION",
@@ -153,7 +153,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 7
     },
     {
       "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.POWER_ELECTRICAL.ETN.CAPITAL_INTENSITY",
@@ -165,7 +165,7 @@
       "authority": "RESEARCH",
       "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
       "minimum_derived_observations": 4,
-      "minimum_raw_quarters": 8
+      "minimum_raw_quarters": 7
     }
   ]
 }
