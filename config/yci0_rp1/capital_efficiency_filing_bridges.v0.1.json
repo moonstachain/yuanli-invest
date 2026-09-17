@@ -1,0 +1,69 @@
+{
+  "contract_id": "YCI0-RP1-G6-FILING-XBRL-BRIDGE-v0.1",
+  "authority": "RESEARCH",
+  "fallback_only": true,
+  "raw_archive_required": true,
+  "semantic_equivalence_required": true,
+  "entities": {
+    "NVDA": {
+      "base_series": {
+        "CURRENT_MARKETABLE_SECURITIES": [
+          "MarketableSecuritiesCurrent"
+        ]
+      },
+      "filings": {
+        "FY2026_10K": {
+          "accession": "0001045810-26-000021",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125_htm.xml"
+        },
+        "FY2027_Q1_10Q": {
+          "accession": "0001045810-26-000052",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426_htm.xml"
+        },
+        "FY2027_Q2_10Q": {
+          "accession": "0001045810-26-000075",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726_htm.xml"
+        }
+      },
+      "rules": [
+        {
+          "rule_id": "NVDA_MARKETABLE_FY2026_ANCHOR",
+          "proof_type": "FILING_INSTANT_XBRL",
+          "normalized_concept": "CURRENT_MARKETABLE_SECURITIES",
+          "fiscal_period": "2026Q4",
+          "filing_id": "FY2026_10K",
+          "concept": "MarketableSecuritiesAndEquitySecuritiesFVNI",
+          "instant": "2026-01-25"
+        },
+        {
+          "rule_id": "NVDA_MARKETABLE_FY2027_Q1_DISAGG",
+          "proof_type": "DISAGGREGATION_RECONCILIATION",
+          "normalized_concept": "CURRENT_MARKETABLE_SECURITIES",
+          "fiscal_period": "2027Q1",
+          "filing_id": "FY2027_Q1_10Q",
+          "components": [
+            "DebtSecuritiesCurrent",
+            "EquitySecuritiesFvNi"
+          ],
+          "instant": "2026-04-26",
+          "reconcile_instant": "2026-01-25",
+          "anchor_rule_id": "NVDA_MARKETABLE_FY2026_ANCHOR"
+        },
+        {
+          "rule_id": "NVDA_MARKETABLE_FY2027_Q2_DISAGG",
+          "proof_type": "DISAGGREGATION_RECONCILIATION",
+          "normalized_concept": "CURRENT_MARKETABLE_SECURITIES",
+          "fiscal_period": "2027Q2",
+          "filing_id": "FY2027_Q2_10Q",
+          "components": [
+            "DebtSecuritiesCurrent",
+            "EquitySecuritiesFvNi"
+          ],
+          "instant": "2026-07-26",
+          "reconcile_instant": "2026-01-25",
+          "anchor_rule_id": "NVDA_MARKETABLE_FY2026_ANCHOR"
+        }
+      ]
+    }
+  }
+}

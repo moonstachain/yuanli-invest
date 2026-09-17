@@ -1,0 +1,6 @@
+{
+  "purpose": "Synthetic-only schema fixture; contains no production filing values.",
+  "required_fields": ["entity_id", "fiscal_period", "known_as_of", "source_locator", "content_hash", "concept", "value", "unit", "accounting_regime"],
+  "normalized_flow_concepts": ["REVENUE", "OPERATING_INCOME", "PRETAX_INCOME", "INCOME_TAX_EXPENSE", "OPERATING_CASH_FLOW", "CAPEX"],
+  "normalized_stock_concepts": ["TOTAL_ASSETS", "CASH", "CURRENT_MARKETABLE_SECURITIES", "TOTAL_CURRENT_LIABILITIES", "SHORT_TERM_BORROWINGS", "CURRENT_MATURITIES_LONG_TERM_DEBT", "CURRENT_FINANCE_LEASE_LIABILITIES"]
+}

@@ -1,368 +1,208 @@
-# HANDOFF｜YIOS0 当前会话交接
+# HANDOFF｜YCI0-RP1 当前会话交接
 
 > 下次开新会话，第一句话：**先读 HANDOFF.md。**
 
-更新时间：2026-09-09  
-Repository：`moonstachain/yuanli-invest`  
-Working branch：`yios0-canonical-definition-design`  
-Protected main：`e2f06e039dccca45d178ab017654005cdb135666`  
-YIOS0 design head before this handoff：`43679be1b5ee3f594ead1eba99a2116f6ae16e4f`
+更新时间：2026-09-17
+Repository：`moonstachain/yuanli-invest`
+Current branch：`yci0-rp1-live-evidence-20260917`
+Draft PR：`#102｜YCI0-RP1｜First Live Reality Admission`
+Base branch：`yci0-rp0-ai-infra-proof-20260916`
+Current program：`YCI0｜Yuanli Capital Intelligence Spine`
+Current flagship：`YCI0-RP1｜AI Infra First Live Reality Admission`
+
+> **恢复纪律：** 不重新设计总体架构；不重做 Microsoft / NVIDIA / Eaton / Arista / Financing 五维；不重做 G6 definition / contract / compiler / reconstruction / raw archive；不提前进入 Narrative / Price / Shadow / Capital / Execution。直接从 `G6 Evidence Bridge` 恢复。
 
 ---
 
-## 1｜当前任务
+# 1｜当前真实状态
 
-当前主任务是：
+当前阶段只做 `Reality Admission`。
 
-# `YIOS0｜Yuanli Investment OS Canonical Definition`
+6 个 Reality dimensions：
+
+1. `hyperscaler_capex = ACCELERATING / HIGH` ✅
+2. `compute = ACCELERATING / HIGH` ✅
+3. `networking = ACCELERATING / HIGH` ✅
+4. `power_grid = DECELERATING / HIGH` ✅
+5. `financing_regime = MIXED / MEDIUM` ✅
+6. `capital_efficiency = UNKNOWN`
 
-目标不是再造一套投资理论，而是把已经成立、已经被接受或已经运行到不同阶段的原力投研能力，编译成一个**稳定、可发现、可版本化、机器可解析、人类可理解的系统级定义**。
+当前全局：
 
-YIOS0 的母循环已经冻结为：
+`PARTIAL_REALITY_STATE_5_OF_6 / OVERALL_REALITY_UNSETTLED / HOLD_AT_02_EVIDENCE`
 
-`Reality → Knowledge → Trial → Settlement → Capital → Execution → Reality → Learning`
+不能把五个局部维度升级成整体 AI Infra 结论。
 
-YIOS0 的定位是：
+# 2｜必须长期保持的法权纪律
 
-- GitHub 上的 **System Architecture / Current Definition Authority**；
-- 不替代 YIP0、ME0/ME1、YEX0、YVN1 等子 Canon 的领域法权；
-- 不创造新的科学结论；
-- 不授予 Capital Authority 或 Execution Authority；
-- Notion 只作为 Human Projection，不是 Truth / Canon。
+- `Reality > Belief`
+- `ClaimAuthority <= EvidenceAuthority`
+- `UNKNOWN = DENY`
+- `ResearchAuthority != CapitalAuthority != ExecutionAuthority`
+- `ResearchPass != CapitalPass`
+- `Provider Availability != Semantic Equivalence`
+- `RAW ARCHIVE PASS != SEMANTIC COVERAGE PASS`
+- `Numeric Acceleration != Evidence PASS != Partial Reality != Overall Reality != Research PASS`
+- GitHub = Law Plane
+- Supabase = Machine Reality / Evidence / Runtime Ledger
+- Notion = Human Intelligence Workbench / Projection，不是 Machine Truth
+- Human Principal retains Capital Authority
+- Execution remains LOCKED
 
-本会话刚刚完成的 Human Gate 是：
+当前严禁：BUY / SELL、position sizing、broker order、Capital Authority、Execution Authority、post-hoc Shadow rewrite。
 
-`ACCEPT_YIOS0_WRITTEN_SPEC`
+# 3｜五个已闭合 Reality dimensions
 
-这表示 Written Spec 已被接受，允许进入 **Writing Plan**；它**不等于实现授权、不等于合并授权**。
+- Microsoft / Hyperscaler Capex: total-company cash paid PP&E `19.394 → 29.876 → 30.876 → 35.802B`，`ACCELERATING / HIGH`。不是 AI-only capex。
+- NVIDIA / Compute: Data Center revenue `51.2 → 62.3 → 75.2 → 89.0B`，`ACCELERATING / HIGH`。
+- Eaton / Power-Grid: Electrical Americas rolling-12m organic order growth `7 → 16 → 42 → 41%`，`DECELERATING / HIGH`。不是 demand collapse。
+- Arista / Networking: total quarterly revenue `2.308 → 2.488 → 2.709 → 3.036B`，`ACCELERATING / HIGH`。不是 AI-only networking revenue。
+- Financing Regime: DGS10 + DFII10 + broad USD proxy，`MIXED / MEDIUM`。Treasury yields 不是 corporate funding spread；broad USD proxy 不是 literal ICE DXY。
 
----
+# 4｜Production Reality State
 
-## 2｜已经完成的内容
+Latest production state card：`ba6ab0a7-59dd-4799-abc7-1412a86c8d42`
+Runtime run：`43e010ed-d8d9-4867-914f-339879c992b0`
+State hash：`db84f7a0ff505edffaeaee9b320d776d8f51fcf448fb586ff1bfdea0e7eee40b`
+Known-as-of ceiling：`2026-08-26T23:59:59Z`
+Evidence refs：`28 PASS claim receipts`
+Scope：`PARTIAL_REALITY_STATE_5_OF_6`
+Authority：`RESEARCH`
 
-### A. YIOS0 Architecture 已批准
+G6 本轮 **没有 production mutation**，因此以上 state card/runtime run 不变。
 
-已完成并接受 YIOS0 的系统级架构设计。核心结构包括：
+# 5｜Notion Human Workbench
 
-- One System Definition；
-- One Stable Current Pointer；
-- One Dynamic Status Projection；
-- One Machine Contract；
-- One Notion Human Projection Contract；
-- 12 层 Human Architecture；
-- 8 个 Machine Service Boundaries；
-- Knowledge Spine / Action Spine；
-- Reality Bus / Intelligence Bus / Action Bus；
-- Authority / Reality / Runtime 三轴状态模型。
+Flagship Page ID：`3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-### B. Written Spec 已完成并经过自我审查
+必须保持：
 
-Spec 文件：
+- Active = YES
+- Authority = RESEARCH_ONLY
+- Machine Evidence Status = PASS
+- Human Evidence Status = READY
+- Machine Gate Status = OPEN
+- Human Gate Status = OPEN
+- Journey Stage = 02 EVIDENCE
+- Human Delta = UNKNOWN
+- Human Delta2 = UNKNOWN
+- Transition Suggestion = HOLD
+- Machine Source ID = `SUPABASE://runtime/ai_infra_state_cards/ba6ab0a7-59dd-4799-abc7-1412a86c8d42`
+- Runtime Projection ID = `43e010ed-d8d9-4867-914f-339879c992b0`
 
-`docs/superpowers/specs/2026-09-09-yios0-canonical-definition-design.md`
+# 6｜G6 Capital Efficiency：定义与实现已经完成
 
-当前设计分支头：
+Human ACCEPT 的 construct：`Marginal Capital Productivity Stack`。
 
-`43679be1b5ee3f594ead1eba99a2116f6ae16e4f`
+Mandatory components：
 
-该 Spec 已特别修正过几个容易出错的语义：
+1. Incremental ROIC
+2. Cash Conversion
+3. Capital Intensity
 
-1. YIOS0 是系统定义与发现层，不升级子系统法权；
-2. `YIOS0-STATUS-MATRIX.md` 是动态 Projection，不是事实法权本身；
-3. `yios0_current.json` 不能通过自声明的 `human_accepted_merged` 字段制造 Canon；
-4. Notion 只能消费 GitHub Projection Contract，不能写回 Canon；
-5. Architecture Version 与 Runtime / Program Status 必须分离。
+Frozen cohorts / representatives：
 
-### C. Protected main 已重新 Reality Readback
+- HYPERSCALER / MSFT
+- COMPUTE / NVDA
+- NETWORKING / ANET
+- POWER_ELECTRICAL / ETN
 
-当前 protected `main`：
+关键提交：
 
-`e2f06e039dccca45d178ab017654005cdb135666`
+- `e0d07bd` definition spec
+- `f9b67c6` implementation plan
+- `8a8e35a` machine contract
+- `0163869` entity-safe / direction-aware compiler
+- `330273d` evidence-horizon hardening：4 个连续 Incremental ROIC derived points 实际至少需要 **11 个 raw quarters**
+- `60dc19f` deterministic PIT reconstruction
+- `af09757` optional current-debt disclosure handling
+- `06b6122` four-cohort SEC raw archive / source proof
+- `84ef58b` cumulative-flow Q4 reconstruction hardening
+- `f4b28b0` semantic coverage diagnostics
+- `62a9761` sparse optional disclosure / alias guard alignment
+- `25c1160` governed filed-XBRL semantic bridge
+- `6a64155` admission gate support for governed filed-XBRL archives
 
-required checks：
+最新本地完整回归：`345 tests PASS`；repository / leak / governance / manifest validators 全 PASS。
 
-- `contracts`
-- `governance`
+# 7｜G6 Reality Proof：NVDA Bridge PASS，Coverage 6/12
 
-当前设计分支相对 `main`：
+GitHub Actions：`YCI0 RP1 Capital Efficiency Evidence`
+Latest run：`35210577631`（run #7，SUCCESS）
+Artifact：`10491722055 / yci0-rp1-g6-capital-efficiency-receipt`
+Head：`6a64155980ee95205584fa45fe6daf070a1c30f3`
 
-- `ahead_by = 2`
-- `behind_by = 0`
+11 个 governed raw objects 已 private S3 + SHA readback：8 个 MSFT/NVDA/ANET/ETN `companyfacts + submissions`，外加 3 个 NVDA filed-XBRL fallback。
 
-因此当前分支没有落后于主干，不需要先做 rebase 才能继续写 Implementation Plan。
+Coverage：
 
-### D. 关键上游法权已物理回读
+- MSFT / HYPERSCALER = QUALIFIED，3/3；
+- NVDA / COMPUTE = QUALIFIED，3/3；filed-XBRL disaggregation bridge 3/3 proofs PASS；
+- ANET / NETWORKING = UNKNOWN：`NO_SINGLE_TAG_COVERS_LATEST_11:CAPEX`；
+- ETN / POWER_ELECTRICAL = UNKNOWN：`NO_SINGLE_TAG_COVERS_LATEST_11:OPERATING_INCOME`。
 
-当前 main 上已确认：
+真实 admission decision：
 
-- `YIP0`：accepted + merged；
-- `ME0`：accepted + merged；
-- `ME1`：accepted + merged；
-- `YEX0`：accepted + merged；
-- `YVN1-A0`：accepted + merged；
-- `YVN1-A1`：仍未授权；
-- VeighNa / broker paper / live execution / real capital movement：仍未授权。
+`BLOCKED_BY_COVERAGE / 6_OF_12_IDENTITIES / MUTATION_COUNT_0 / G6_UNKNOWN / PARTIAL_REALITY_STATE_5_OF_6 / HOLD_AT_02_EVIDENCE`
 
-同时保留：
+正式 receipt：`docs/architecture/yci0_rp1/receipts/YCI0-RP1-G6-CAPITAL-EFFICIENCY-EVIDENCE.md`
 
-`ResearchAuthority != CapitalAuthority != ExecutionAuthority`
+NVDA 已证明的关键 bridge：
 
-`ResearchPass != CapitalPass`
+1. CAPEX：CompanyFacts aggregation gap，经同标准 filed accounting record + cumulative Q4 reconstruction 闭合；
+2. FY2026 current marketable anchor：`51.951B`；
+3. FY2027 Q1：Debt `39.065B` + Equity `12.886B` 在 comparative date 精确回勾 `51.951B` 后，才允许新期 debt+equity 合计；
+4. FY2027 Q2：独立重复同一 reconciliation；
+5. current debt optional aliases 只有在重叠期值一致时才允许合并。
 
-`ClaimAuthority <= EvidenceAuthority`
+# 8｜当前唯一真实断点：ANET × ETN Evidence Bridge
 
-`UNKNOWN = DENY`
+不要再重做 NVDA bridge。当前只剩两个 load-bearing evidence gaps：
 
-`Receipt = Ledger; Status = Projection`
+1. **ANET CAPEX**：季度 `PaymentsToAcquirePropertyPlantAndEquipment` 与年度 `PaymentsToAcquireProductiveAssets` 语义并不等价。必须从 accession-specific first-party filing 找到 PP&E-only 年度金额，或精确拆出 software/intangible 部分；否则保持 UNKNOWN。
+2. **ETN OPERATING_INCOME**：最近窗口标准 `OperatingIncomeLoss` 不连续。必须证明 company-specific operating-profit concept 与冻结的 company-level operating income 语义等价；不得拿 segment profit 或 EBITDA 替代。
+3. 每个 bridge 独立 semantic-equivalence proof + RED tests + raw archive/readback。
+4. 未到 12/12 前，G6 production mutation 必须继续为 0。
+5. 只有 12/12 mandatory identities qualified，才允许 additive production write + physical readback。
+6. 即使未来 6/6 成立，仍保持 `02 EVIDENCE / HOLD`，直到独立 Human transition gate。
 
-### E. Gold / Dynamic Repricing 的当前状态已纳入 YIOS0 设计语义
+禁止为了补齐 6/6 改用 generic ROIC、FCF margin、Revenue/Capex，或跨 accounting regime 拼接。
 
-YIOS0 的 Status Matrix 设计要求不能把路线图写成现实。
+# 9｜Hard Negatives
 
-目前需继续保持区分：
+1. `Provider Availability != Semantic Equivalence`。
+2. `Raw Archive PASS != Semantic Coverage PASS`。
+3. 一个公司当前存在某个 XBRL tag，不代表同一个 tag 覆盖冻结的 11-quarter regime。
+4. Optional disclosure 在不同季度忽隐忽现，不能默认当作 0；只有契约允许并证明“未单独披露”时才可 0-default。
+5. G6 不能用静态 ROIC、Revenue growth、FCF margin 或 generic Capex/Revenue 替代三个 mandatory components。
+6. `5/6 qualified != overall AI Infra Reality settled`。
+7. controlled orchestration != Native1 event-driven automation。
+8. Shadow 代码能跑 != Shadow Authority granted。
 
-- Gold DP1-A / DP1-B / B2：main 上存在 Reality evidence / baseline；
-- YMQ4-B3：科学结论为 NO-GO for the preregistered candidate，但当前没有进入 main 的 YMQ4-B3 Canon receipt；
-- YGR0：设计候选，不得伪装成 settled Canon；
-- YRP1：架构已讨论/批准，但不能被 YIOS0 预授权为已实现 runtime。
+# 10｜GitHub / Supabase / Notion 坐标
 
----
+Repository：`moonstachain/yuanli-invest`
+Branch：`yci0-rp1-live-evidence-20260917`
+Draft PR：`#102｜YCI0-RP1｜First Live Reality Admission`
+Base：`yci0-rp0-ai-infra-proof-20260916`
+Supabase project ref：`tbmoimbdhsrltvospwpu`
+Raw bucket：`ymq4-raw-evidence`
+Notion flagship：`3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-## 3｜当前卡住的问题 / 尚未完成
+# 11｜新会话启动检查清单
 
-当前不是技术阻塞，而是**流程 Gate 尚未走完**。
+1. 读取当前 branch 的 `HANDOFF.md`。
+2. 回读 PR #102 最新 head/base/CI。
+3. 检查 production state card `ba6ab0a7...` 与 runtime run `43e010ed...`，确认仍为 5/6。
+4. 不重做 Microsoft / NVIDIA / Eaton / Arista / Financing 五维。
+5. 不重做 G6 definition、contract、compiler、reconstruction、raw archive。
+6. 先读 G6 receipt 和 latest cloud run `35210577631`。
+7. NVDA bridge 已 PASS，不重做；当前唯一研究断点是 ANET CAPEX + ETN OPERATING_INCOME。
+8. 12/12 未证明前，禁止 G6 production mutation。
+9. 未来 production mutation 后必须 physical readback。
+10. Journey 始终保持 `02 EVIDENCE / HOLD`，直到单独 Human transition gate。
+11. 禁止 Narrative / Price / Shadow / Capital / Execution 越权。
 
-### 3.1 Writing Plan 尚未落盘
+# 12｜一句话恢复点
 
-`ACCEPT_YIOS0_WRITTEN_SPEC` 已通过后，已经开始进入 `superpowers:writing-plans`，但在真正创建 Implementation Plan 文件之前，用户要求先写本 HANDOFF。
-
-所以当前最直接的未完成项是：
-
-> 把 Written Spec 编译成可逐任务执行的 Implementation Plan。
-
-计划文件建议：
-
-`docs/superpowers/plans/2026-09-09-yios0-canonical-definition.md`
-
-### 3.2 YIOS0 实现尚未开始
-
-以下文件都还没有创建：
-
-```text
-docs/architecture/yios0/
-├── YIOS0-CANONICAL-ARCHITECTURE-v1.0.md
-├── YIOS0-CURRENT.md
-├── YIOS0-STATUS-MATRIX.md
-├── YIOS0-CHANGELOG.md
-├── YIOS0-HUMAN-REVIEW-CARD-v1.0.md
-├── YIOS0-NOTION-PROJECTION-CONTRACT-v1.0.md
-├── YIOS0-MACHINE-QUALIFICATION-RECEIPT-v1.0.md
-└── YIOS0-HUMAN-ACCEPTANCE-RECEIPT-v1.0.json
-
-config/yios0/
-├── yios0_architecture.v1.json
-└── yios0_current.json
-
-scripts/
-└── validate_yios0_canonical_definition.py
-
-tests/
-└── test_yios0_canonical_definition.py
-```
-
-### 3.3 Notion Projection 尚未执行
-
-Notion 只能在 GitHub YIOS0 Candidate 完成、Human Acceptance、单独 Merge Authorization、protected-main readback 之后，再基于 Projection Contract 写入/更新。
-
-不能现在提前把 Candidate 写成“当前 Canon”。
-
-### 3.4 Merge 仍需独立授权
-
-即使后续 YIOS0 machine qualification + Human Review PASS：
-
-- Human Acceptance ≠ Merge；
-- Merge 需要独立 token；
-- 推荐 token：`AUTHORIZE_YIOS0_MERGE`。
-
-在这个 token 之前，不要自动 merge protected main。
-
----
-
-## 4｜下一步计划
-
-下一个会话请严格按下面顺序继续：
-
-### Step 1｜先读本文件和 Written Spec
-
-首先读取：
-
-- `HANDOFF.md`
-- `docs/superpowers/specs/2026-09-09-yios0-canonical-definition-design.md`
-- 当前 `main` head 和 branch head
-
-并确认没有新的主干漂移。
-
-### Step 2｜完成 Writing Plan
-
-使用 `superpowers:writing-plans`，输出可直接执行的 YIOS0 Implementation Plan。
-
-计划必须至少覆盖：
-
-1. TDD RED：先写 YIOS0 contract tests；
-2. machine architecture contract；
-3. stable current pointer；
-4. dynamic Status Matrix；
-5. Canonical Architecture v1.0；
-6. Changelog；
-7. Notion Projection Contract；
-8. fail-closed validator；
-9. CI hook；
-10. Machine Qualification Receipt；
-11. Human Review Card；
-12. Human Acceptance Receipt；
-13. separate merge gate；
-14. post-merge protected-main Reality readback；
-15. only-after-merge Notion projection。
-
-### Step 3｜Implementation Plan 完成后再进入执行
-
-推荐继续采用：
-
-`EXECUTE_YIOS0_PLAN_SUBAGENT_DRIVEN`
-
-在用户明确授权前，不要把“计划已完成”误读为“允许实现”。
-
-### Step 4｜实施时坚持 TDD + Fail Closed
-
-实施阶段建议：
-
-`RED → minimal machine contracts → validator → GREEN → architecture docs → status projection → full repo gates → machine receipt → Human Review`
-
-不要先写大段漂亮 Canon 再补 validator。
-
-### Step 5｜Human Gate 与 Merge Gate 分离
-
-Machine Qualified 后先停在：
-
-`YIOS0_CANONICAL_DEFINITION_MACHINE_QUALIFIED / AWAITING_HUMAN_REVIEW`
-
-Human Acceptance 推荐：
-
-`ACCEPT_YIOS0_CANONICAL_DEFINITION`
-
-之后仍需独立：
-
-`AUTHORIZE_YIOS0_MERGE`
-
-### Step 6｜Merge 后才做 Notion Projection
-
-GitHub protected main 重新 readback 成功后，才允许：
-
-`GitHub Canon → Projection Contract → Notion Human Projection`
-
-Notion feedback 只能形成 review request / issue / battle / PR candidate，不能直接改变 Canon。
-
----
-
-## 5｜踩过的坑 / 需要持续防守的 Hard Negatives
-
-### Pitfall 1｜把“系统状态”写成一个 PASS
-
-YIOS0 已冻结三轴：
-
-- Authority State
-- Reality State
-- Runtime / Deployment State
-
-禁止用一个 `PASS` 概括所有事情。
-
-### Pitfall 2｜Projection 冒充 Truth
-
-`YIOS0-STATUS-MATRIX.md`、Notion、Web、ChatGPT 都属于 Projection / Experience。
-
-真正的事实法权来自 underlying receipts、main files、独立 runtime evidence。
-
-### Pitfall 3｜Current Pointer 自我授权
-
-`yios0_current.json` 不能靠内部字段声称自己已是 Canon。
-
-Current 的成立必须来自：
-
-`protected-main presence + valid Human Acceptance + merge/readback reality`。
-
-### Pitfall 4｜Human Acceptance 偷渡 Merge
-
-历史 YIP0 / ME0 / ME1 / YEX0 / YVN1 均已证明：
-
-`ACCEPT_* != AUTHORIZE_*_MERGE`
-
-YIOS0 必须继续保持这一纪律。
-
-### Pitfall 5｜Notion 反向污染 Canon
-
-Notion 是低法权 Human Projection。
-
-禁止：
-
-`Notion edit → silently changes GitHub Canon`。
-
-### Pitfall 6｜把路线图写成已经实现
-
-尤其注意：
-
-- YRP1 future procedure；
-- State Compiler；
-- YVN1-A1 runtime；
-- VeighNa adapter；
-- broker paper/live execution。
-
-只要没有独立 Reality evidence / authority receipt，就必须保持 NOT_IMPLEMENTED / NOT_AUTHORIZED / DESIGN_ONLY 等真实状态。
-
-### Pitfall 7｜YIOS0 吞掉子 Canon 的法权
-
-YIOS0 是 composition / discovery authority，不是“大一统超级 Canon”。
-
-YIP0、ME0/ME1、YEX0、YVN1 的细节法权继续由其自身文件与 receipts 决定。
-
-### Pitfall 8｜Architecture Version 与 Runtime Status 绑死
-
-架构可以仍是 v1.0，而子系统 runtime 状态持续演化。
-
-不要因为 Status Matrix 更新就自动 bump architecture major version。
-
-### Pitfall 9｜CI 中做网络查询
-
-YIOS0 validator 应基于 repository-local facts fail-closed。
-
-Live GitHub / Notion / external runtime readback 应在 qualification / projection operation 里执行并记录 `known_as_of`，不要把 CI 变成不稳定网络依赖。
-
-### Pitfall 10｜把 execution architecture 当成 execution authorization
-
-YEX0 / YVN1-A0 已进入 main，但仍然：
-
-- no YVN1-A1 runtime authority；
-- no VeighNa invocation；
-- no broker credential；
-- no broker paper；
-- no live order；
-- no real capital movement。
-
-YIOS0 只能准确描述这个边界，不能改变它。
-
----
-
-## 6｜下一会话最小启动指令
-
-第一句话直接说：
-
-# `先读 HANDOFF.md。`
-
-然后继续：
-
-> 读取 YIOS0 Written Spec 和当前 GitHub main/branch Reality，完成 `YIOS0 Implementation Plan`。不要重新讨论已经接受的架构；不要开始实现，直到 Implementation Plan 完成并得到明确执行授权。
-
----
-
-## 7｜当前状态一句话
-
-# `YIOS0 Architecture ACCEPTED → Written Spec ACCEPTED → Implementation Plan PENDING → Implementation NOT STARTED → Merge NOT AUTHORIZED → Notion Projection NOT STARTED`
+> **YCI0-RP1 五个 Reality dimensions 仍为 production `PARTIAL_REALITY_STATE_5_OF_6`；G6 当前已由 MSFT+NVDA 得到 6/12 identities qualified，NVDA governed filed-XBRL bridge 已 cloud PASS，但 ANET CAPEX 与 ETN OPERATING_INCOME 仍 fail-closed，因此 G6 继续 UNKNOWN、production mutation=0。当前唯一断点是这两个 first-party semantic bridge；Notion 继续 HOLD @ 02 EVIDENCE，Capital/Execution 继续 LOCKED。**

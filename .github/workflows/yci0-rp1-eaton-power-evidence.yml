@@ -1,0 +1,65 @@
+name: YCI0 RP1 Eaton Power Grid Evidence
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/yci0-rp1-eaton-power-evidence.yml'
+      - 'scripts/yci0_rp1_eaton_power_archive.py'
+      - 'docs/architecture/yci0_rp1/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  eaton-power-grid-raw-evidence:
+    runs-on: ubuntu-latest
+    env:
+      YMQ4_SUPABASE_S3_ACCESS_KEY_ID: ${{ secrets.YMQ4_SUPABASE_S3_ACCESS_KEY_ID }}
+      YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY: ${{ secrets.YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY }}
+      YMQ4_RAW_BUCKET: ymq4-raw-evidence
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install archive runtime dependencies
+        run: python -m pip install 'boto3>=1.35,<2' 'requests>=2.32,<3' 'pypdf>=6,<7'
+      - name: Fail closed on missing S3 secret bindings
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$YMQ4_SUPABASE_S3_ACCESS_KEY_ID"
+          test -n "$YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY"
+      - name: Eaton raw sources to private S3 and SHA readback
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/yci0_rp1_eaton_power_archive.py | tee yci0-rp1-eaton-power-receipt.json
+      - name: Require PASS and zero downstream authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          with open('yci0-rp1-eaton-power-receipt.json', encoding='utf-8') as fh:
+              receipt = json.load(fh)
+          if receipt.get('status') != 'PASS':
+              raise SystemExit('Eaton power-grid raw receipt is not PASS')
+          auth = receipt.get('authority') or {}
+          if any(auth.values()):
+              raise SystemExit(f'authority leakage: {auth}')
+          rows = receipt.get('archived') or []
+          if len(rows) != 4:
+              raise SystemExit(f'expected four quarters, got {len(rows)}')
+          for row in rows:
+              if row.get('sha256') != row.get('storage_readback_sha256'):
+                  raise SystemExit(f"SHA readback mismatch: {row.get('quarter')}")
+          PY
+      - name: Upload non-secret receipt
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: yci0-rp1-eaton-power-receipt
+          path: yci0-rp1-eaton-power-receipt.json
+          retention-days: 30
