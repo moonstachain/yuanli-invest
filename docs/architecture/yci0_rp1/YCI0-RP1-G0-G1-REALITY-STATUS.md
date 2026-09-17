@@ -1,81 +1,96 @@
 # YCI0-RP1｜First Live Reality Admission Status
 
-**Status:** `LIVE_EVIDENCE_ADMITTED / HUMAN_STATE_CHANGED / EVENT_DRIVEN_AUTOMATION_NOT_PROVEN`  
+**Status:** `RAW_EVIDENCE_PASS / PARTIAL_REALITY_PROVEN / OVERALL_REALITY_UNKNOWN / HOLD_AT_EVIDENCE`  
 **As of:** 2026-09-17  
 **Question:** `YCI0-RP0-CQ-001`  
 **Authority:** `RESEARCH_ONLY`
 
 ## What is physically proven
 
-1. A first-party Microsoft FY26 Q4 cash-PP&E observation has entered the production `yuanli-invest-runtime` evidence/PIT chain.
-2. The same measurement regime now contains four FY26 quarterly observations: Q1/Q2/Q3/Q4.
-3. Every observation has its own release date / `known_as_of`, source identity, source snapshot reference, and `LIMITED` Claim Receipt.
-4. The production Capital Question exists in Supabase and remains at `02 EVIDENCE / OPEN / RESEARCH`.
-5. The Notion flagship object is no longer DEMO-only. Its Human state changed from `Evidence Status=UNKNOWN, Gate Status=UNKNOWN` to `Evidence Status=LIMITED, Gate Status=OPEN`.
-6. `Delta` and `Delta2` are explicitly `UNKNOWN` despite the rising numeric series, because Evidence has not passed.
+1. Microsoft FY26 Q1–Q4 `Additions to property and equipment` is a same-regime PIT series in production `yuanli-invest-runtime`.
+2. All four official Microsoft IR HTML sources are archived in private Supabase S3 bucket `ymq4-raw-evidence`; every object passed SHA-256 readback in GitHub Actions run `35175000233`.
+3. Original `LIMITED` Claim Receipts remain preserved. Four new raw-backed Claim Receipts are `PASS / RESEARCH_ONLY`.
+4. Wind provider-equivalence was physically run and returned `NON_EQUIVALENT / ADJACENT_METRIC`; Wind `资本性支出` is not silently merged with Microsoft `PaymentsToAcquirePropertyPlantAndEquipment`.
+5. The existing Reality State Compiler ran on PASS-only evidence. `hyperscaler_capex = ACCELERATING / HIGH`, Level `35.802` USD bn, Δ `+4.926` bn, Δ² `+3.926` bn.
+6. `financing_regime`, `compute`, `networking`, `power_grid`, and `capital_efficiency` remain `UNKNOWN`; therefore overall AI-Infra Reality is not promoted to ACCELERATING.
+7. A production `runtime.ai_infra_state_cards` object and `runtime.agent_runs` receipt exist under `RESEARCH` authority.
+8. Notion Human Workbench now maps Machine Evidence `PASS` to Human Evidence `READY`, while `Journey Stage = 02 EVIDENCE`, `Delta = UNKNOWN`, `Delta2 = UNKNOWN`, and `Transition Suggestion = HOLD` remain unchanged.
 
 ## Production identities
 
-- Source Q4: `msft_ir_fy26q4`
-- Q4 snapshot: `5252b801-6e93-4b2e-a13b-635edab619b2`
-- Q4 PIT observation: `420ecff8-c7d5-42c1-8a2a-fa9164781d8b`
-- Q4 Claim Receipt: `4e8f9828-bf9b-4440-ae97-b0d0362bac43`
 - Series: `MSFT_CASH_PAID_PP&E_QUARTERLY_USD_BN`
 - Measurement regime: `CASH_PAID_PP&E_TOTAL_COMPANY`
+- Latest Q4 PIT observation: `420ecff8-c7d5-42c1-8a2a-fa9164781d8b`
+- Latest Q4 raw snapshot: `74a948fc-c933-4ba2-b805-7ecfdf957b77`
+- Latest Q4 PASS Claim Receipt: `9f115287-f6ec-4554-abfe-f0ecc93138c2`
+- Reality compiler run: `b51f5f09-fff4-4bf2-bf26-9214b2460454`
+- Reality state card: `00e253ba-faf6-4d93-8383-41ebb50ef0b3`
+- State hash: `e2aeb2eb69fcb0e1c49b3124243bf396c38f098405fa47b8312adc653c9882b0`
 - Notion flagship page: `3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
+
+## Raw evidence archive
+
+GitHub Actions workflow `YCI0 RP1 Raw Evidence Hardening` completed successfully.
+
+- FY26 Q1 SHA: `7efece9d7ddd7b476626a1121d4c3f7fa9319d193172bfdc4371a1d6f8e31493`
+- FY26 Q2 SHA: `7cc6f4d206a82e21528cf989f6b76bac968c68ada558c793aa474b8671497736`
+- FY26 Q3 SHA: `22a59b32663d27004be464e2e464aa7cea1bd49a75e51fd9f6a5587b2cb90bab`
+- FY26 Q4 SHA: `f568e717722897a62ba0c0a6847cb78148a3d7d18df2963126273814f4a15af4`
+
+Every stored object had `raw_sha256 == storage_readback_sha256`. The archive proof itself granted no Research/Capital/Execution authority.
 
 ## Evidence boundary
 
-The four admitted values are:
+The admitted values are:
 
 `19.394 → 29.876 → 30.876 → 35.802` USD billions.
 
-These are total-company cash paid for property and equipment. They are a hyperscaler infrastructure-demand proxy, not an AI-only capex series.
+These are total-company additions/cash paid for property and equipment. They are a hyperscaler infrastructure-demand proxy, **not AI-only capex**.
 
-All Claim Receipts remain `LIMITED` because the first pass froze normalized first-party facts in GitHub but did not archive the original provider bytes in the Evidence Vault.
+## Wind equivalence boundary
 
-## Wind status
+Wind `stock_data.get_stock_fundamentals` returned a field family named `资本性支出`, with period/value conventions that do not establish accounting-definition equivalence with Microsoft first-party `us-gaap:PaymentsToAcquirePropertyPlantAndEquipment`.
 
-The authorized remote computer was offline during this gate, so Wind MCP equivalence was not run.
+Verdict:
 
-`WIND_PROVIDER_EQUIVALENCE = NOT_RUN_RUNTIME_UNAVAILABLE`
+`WIND_PROVIDER_EQUIVALENCE = NON_EQUIVALENT / ADJACENT_METRIC`
 
-No Wind response, provider timestamp, or parity result is fabricated.
+`PROVIDER_AVAILABILITY != SEMANTIC_EQUIVALENCE`
 
-## Correct fail-closed state
+## Current machine/human state
 
 - `Journey Stage = 02 EVIDENCE`
+- Human `Evidence Status = READY`
+- Machine `Evidence Status = PASS`
 - `Gate Status = OPEN`
-- `Evidence Status = LIMITED`
-- `Machine Evidence Status = UNKNOWN`
-- `Delta = UNKNOWN`
-- `Delta2 = UNKNOWN`
+- `Machine Gate Status = OPEN`
+- overall `Delta = UNKNOWN`
+- overall `Delta2 = UNKNOWN`
 - `Transition Suggestion = HOLD`
 - `Capital Authority = NOT GRANTED`
 - `Execution Authority = NOT GRANTED`
 
+The Human page deliberately does not show `Delta=UP` or `Delta2=ACCELERATING` because only one Reality dimension is qualified.
+
 ## What is not yet proven
 
-- raw original source-byte archival;
-- Wind provider equivalence;
-- Evidence `PASS`;
-- automated/event-driven Supabase → Notion delivery through Native1;
-- Reality State Compiler output for this live series;
-- Research Projection;
+- sufficient Reality coverage to state overall AI-Infra Reality;
+- live `compute` dimension;
+- live `power_grid` dimension;
+- automated/event-driven Supabase → Notion delivery through qualified Native1 outbox/projector;
+- Narrative/Transmission Research Projection;
 - Shadow Authority;
 - real Forward Shadow / Settlement / Learning.
 
 ## Next execution order
 
-1. Restore Wind runtime / remote computer.
-2. Query the mapped Microsoft capex metric or explicit equivalent through Wind and compare period/value/unit/lineage.
-3. Archive original first-party source bytes in the Evidence Vault and bind their SHA-256 to the snapshots.
-4. Re-evaluate Claim Receipts for `PASS` eligibility; do not upgrade by operator preference.
-5. Only if Evidence passes, run the existing Reality State Compiler on the same-regime series.
-6. Project the resulting live machine event into Notion through qualified event-driven binding; do not treat the current controlled orchestration as Native1 automation proof.
+1. Admit one same-regime, first-party, PIT-valid Compute series and archive its raw bytes.
+2. Compile `compute` Level/Δ/Δ² without cross-metric contamination.
+3. Admit one same-regime, first-party, PIT-valid Power/Grid series and archive its raw bytes.
+4. Recompile the multi-dimensional Reality State Card.
+5. Only if Reality coverage is sufficient may Human Review consider `02 EVIDENCE → 03 NARRATIVE`; no automatic promotion is authorized here.
+6. Separately complete Native1 event-driven delivery proof; controlled orchestration is not automation proof.
 
-## Strategic stop condition
+## Strategic law
 
-Until steps 1–4 are complete, do not generate a live Narrative/Transmission/Price-Payoff Research Projection from this series.
-
-`NUMERIC_ACCELERATION != EVIDENCE_PASS != REALITY_ACCELERATING != RESEARCH_PASS`
+`NUMERIC_ACCELERATION != EVIDENCE_PASS != PARTIAL_REALITY_STATE != OVERALL_REALITY != RESEARCH_PASS`
