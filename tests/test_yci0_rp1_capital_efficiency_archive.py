@@ -10,6 +10,7 @@ from scripts.yci0_rp1_capital_efficiency_archive import (
     latest_consecutive_window,
     manifest_entities,
     select_tag_for_target_periods,
+    select_optional_tag_for_target_periods,
     synthetic_receipt,
 )
 
@@ -83,6 +84,24 @@ class CapitalEfficiencyArchiveTests(unittest.TestCase):
         )
         self.assertEqual(blockers,[])
         self.assertEqual([(f.fiscal_period, f.value) for f in facts],[("2024Q4",254)])
+
+    def test_sparse_single_optional_tag_is_allowed_and_missing_periods_remain_zero_semantics(self):
+        tag, regime_break = select_optional_tag_for_target_periods(
+            ["LongTermDebtCurrent", "DebtCurrent"],
+            {"LongTermDebtCurrent": {"2024Q4", "2026Q3", "2026Q4"}, "DebtCurrent": set()},
+            {"2024Q4","2025Q1","2025Q2","2025Q3","2025Q4","2026Q1","2026Q2","2026Q3","2026Q4"},
+        )
+        self.assertEqual(tag,"LongTermDebtCurrent")
+        self.assertFalse(regime_break)
+
+    def test_split_optional_tags_without_bridge_still_fail_closed(self):
+        tag, regime_break = select_optional_tag_for_target_periods(
+            ["LongTermDebtCurrent", "DebtCurrent"],
+            {"LongTermDebtCurrent": {"2025Q4"}, "DebtCurrent": {"2026Q1"}},
+            {"2025Q4","2026Q1"},
+        )
+        self.assertIsNone(tag)
+        self.assertTrue(regime_break)
 
     def test_split_capex_taxonomy_cannot_be_silently_bridged(self):
         result = audit_tag_regime(

@@ -343,6 +343,22 @@ def select_tag_for_target_periods(candidates: list[str], periods_by_tag: dict[st
     return None
 
 
+def select_optional_tag_for_target_periods(
+    candidates: list[str],
+    periods_by_tag: dict[str, set[str]],
+    target_periods: set[str],
+) -> tuple[str | None, bool]:
+    covering = select_tag_for_target_periods(candidates, periods_by_tag, target_periods)
+    if covering is not None:
+        return covering, False
+    active = [tag for tag in candidates if periods_by_tag.get(tag, set()) & target_periods]
+    if len(active) == 1:
+        return active[0], False
+    if len(active) > 1:
+        return None, True
+    return None, False
+
+
 def _consecutive_last_four(periods: list[str]) -> bool:
     if len(periods) < 4:
         return False
@@ -404,10 +420,10 @@ def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict
     for normalized in OPTIONAL_NORMALIZED:
         candidates = normalized_candidates[normalized]
         periods_by_tag = {tag: {f.fiscal_period for f in normalized_for(normalized, tag)} for tag in candidates if tag in gaap}
-        tag = select_tag_for_target_periods(candidates, periods_by_tag, target)
+        tag, regime_break = select_optional_tag_for_target_periods(candidates, periods_by_tag, target)
         if tag is not None:
             selected[normalized] = tag
-        elif any(periods & target for periods in periods_by_tag.values()):
+        elif regime_break:
             blockers.append(f"OPTIONAL_DISCLOSURE_REGIME_BREAK:{normalized}")
 
     if blockers:
