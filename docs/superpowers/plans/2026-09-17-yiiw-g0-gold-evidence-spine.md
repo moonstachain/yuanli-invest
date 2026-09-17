@@ -6,7 +6,7 @@
 
 **Architecture:** Reuse the existing `evidence.sources` / `evidence.source_snapshots` / `pit.observations` / private raw-evidence storage substrate. Add only the missing semantic contracts, registries, model-run/state metadata, narrow read API, and Workbench projection. Existing GOLD2 scientific conclusions and G6/G7 runtime remain operational and are wrapped rather than rewritten.
 
-**Tech Stack:** Python 3.12; LinkML 1.11.1; Pydantic 2.12.5; FastAPI 0.135.3; JSON Schema; Supabase PostgreSQL/Storage; stdlib hashing/JSON; existing Wind MCP CLI; Jinja2 legacy Workbench. DuckDB/Polars are explicitly deferred in G0 because the current Gold slice does not require them to prove the truth spine.
+**Tech Stack:** Python 3.12; LinkML 1.11.1; Pydantic 2.13.0; FastAPI 0.135.3; JSON Schema; Supabase PostgreSQL/Storage; stdlib hashing/JSON; existing Wind MCP CLI; Jinja2 legacy Workbench. DuckDB/Polars are explicitly deferred in G0 because the current Gold slice does not require them to prove the truth spine.
 
 **Spec:** `docs/superpowers/specs/2026-09-17-yiiw-g0-gold-evidence-spine-production-backend-skeleton-design.md`
 
@@ -88,48 +88,80 @@ Set `pyproject.toml` runtime dependencies to include exactly the currently quali
 ```toml
 dependencies = [
   "fastapi==0.135.3",
-  "pydantic==2.12.5",
+  "pydantic==2.13.0",
 ]
 
 [project.optional-dependencies]
 dev = [
   "httpx==0.28.1",
-  "jsonschema==4.25.1",
+  "jsonschema==4.26.0",
   "linkml==1.11.1",
 ]
 ```
 
 Do not add DuckDB, Polars, Temporal, Supabase Python SDK, Kafka, or NATS in G0.
 
+Install the declared Python 3.12 environment before running contract generation/tests:
+
+```bash
+python3.12 -m pip install -e '.[dev]'
+python3.12 -c "import fastapi,pydantic,jsonschema,linkml; print('YIIW_G0_DEPS_OK')"
+```
+
 - [ ] **Step 2: Write failing contract tests**
 
 The first tests must prove that time semantics cannot collapse and that forbidden authority cannot validate:
 
 ```python
-def test_evidence_requires_three_distinct_time_fields():
-    with pytest.raises(ValidationError):
-        Evidence(
-            evidence_id="EVD-X",
-            provider="WIND",
-            metric_id="GOLD_SPOT_USD_OZ",
-            entity_id="GOLD",
-            instrument_id="XAU_SPOT",
-            value=4300.0,
-            unit="USD/OZ",
-            observed_at="2026-09-17T00:00:00Z",
-            known_as_of="2026-09-17T00:00:00Z",
-            raw_sha256="0" * 64,
-            authority="REALITY_EVIDENCE",
-            quality_state="VALID",
-        )
+import unittest
+from pydantic import ValidationError
 
 
-def test_state_rejects_capital_authority():
-    with pytest.raises(ValidationError):
-        StateAtPIT(..., authority={"capital_authorized": True})
+class YIIWG0ContractTests(unittest.TestCase):
+    def test_evidence_requires_retrieved_at(self):
+        with self.assertRaises(ValidationError):
+            Evidence(
+                evidence_id="EVD-X",
+                provider="WIND",
+                source_snapshot_id="SNAP-X",
+                metric_id="GOLD_SPOT_USD_OZ",
+                entity_id="GOLD",
+                instrument_id="XAU_SPOT",
+                value=4300.0,
+                unit="USD/OZ",
+                observed_at="2026-09-17T00:00:00Z",
+                known_as_of="2026-09-17T00:00:00Z",
+                raw_sha256="0" * 64,
+                authority="REALITY_EVIDENCE",
+                quality_state="VALID",
+            )
+
+    def test_state_rejects_capital_authority(self):
+        with self.assertRaises(ValidationError):
+            StateAtPIT(
+                target_id="GOLD",
+                as_of="2026-09-17T08:10:00Z",
+                knowledge_cutoff="2026-09-17T08:10:00Z",
+                evidence_refs=["EVD-GOLD"],
+                model_run_refs=["RUN-GOLD"],
+                property_drift_state="DRIFT_CANDIDATE",
+                expectation_reality_state="INDETERMINATE",
+                valuation_state="UNIDENTIFIABLE",
+                research_state="WATCH",
+                lifecycle_state="未知",
+                unknowns=[],
+                authority={
+                    "research_authorized": True,
+                    "capital_authorized": True,
+                    "sizing_authorized": False,
+                    "execution_authorized": False,
+                    "broker_action": False,
+                    "veighna_authorized": False,
+                    "canon_promotion_authorized": False,
+                },
+                state_hash="0" * 64,
+            )
 ```
-
-Use `unittest` if the repository test harness remains stdlib-only; preserve the same assertions.
 
 - [ ] **Step 3: Run the focused test and verify RED**
 
@@ -219,7 +251,6 @@ Requirements:
 
 ```sql
 check (authority_ceiling in ('EVIDENCE_ONLY','RESEARCH_ONLY'))
-check (raw_sha256 ~ '^[0-9a-f]{64}$')
 check (known_as_of <= as_of)
 check (capital_authorized = false)
 check (execution_authorized = false)
@@ -290,7 +321,8 @@ Define:
 
 ```python
 class RawEvidenceStore(Protocol):
-    def put(self, *, content: bytes, source_id: str, retrieved_at: datetime) -> RawObjectRef: ...
+    def put(self, *, content: bytes, source_id: str, retrieved_at: datetime) -> RawObjectRef:
+        raise NotImplementedError
 ```
 
 Implement a Supabase Storage adapter using HTTP with server-side environment variables only. It must never log authorization headers or raw bodies.
@@ -382,8 +414,8 @@ git commit -m "YIIW-G0: compile reproducible GoldState at PIT"
 
 **Interfaces:**
 - Repository methods:
-  - `save_snapshot(...) -> str`
-  - `save_observation(...) -> str`
+  - `save_snapshot(*, source_id: str, retrieved_at: datetime, sha256: str, storage_bucket: str, storage_path: str, request_template: str, runner_commit: str | None) -> str`
+  - `save_observation(*, series_id: str, value_numeric: float, observation_date: date, release_date: date, vintage_date: date, known_as_of: date, snapshot_id: str, pit_status: str, measurement_regime: str | None) -> str`
   - `save_model_run(run: ModelRun) -> str`
   - `save_state(state: StateAtPIT) -> str`
   - `get_state(target_id: str, as_of: datetime | None) -> StateAtPIT | None`
