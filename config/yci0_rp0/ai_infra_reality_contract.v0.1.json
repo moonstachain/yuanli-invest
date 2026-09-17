@@ -1,0 +1,73 @@
+{
+  "contract_id": "YCI0-RP0-AI-INFRA-REALITY-v0.1",
+  "schema_version": "0.1",
+  "question_id": "YCI0-RP0-CQ-001",
+  "laws": {
+    "reality_over_belief": true,
+    "claim_authority_lte_evidence_authority": true,
+    "unknown_is_deny": true,
+    "research_not_capital": true,
+    "research_not_execution": true,
+    "research_pass_not_capital_pass": true
+  },
+  "system_roles": {
+    "wind_structured_mcp": "SENSOR_EVIDENCE_ONLY",
+    "wind_alice": "AUTHORED_KNOWLEDGE_CANDIDATE",
+    "supabase": "REALITY_EVIDENCE_RUNTIME",
+    "yuanli_brain": "CONTEXT_ROUTER",
+    "ymq": "RESEARCH_COMPILER",
+    "notion": "HUMAN_WORKBENCH"
+  },
+  "closed_sets": {
+    "authority": ["RESEARCH"],
+    "evidence_status": ["PASS", "CURRENT_CONTEXT_ONLY", "BLOCKED", "UNKNOWN"],
+    "reality_state": ["ACCELERATING", "STABLE", "DECELERATING", "MIXED", "UNKNOWN"],
+    "narrative_stage": ["D0", "D1", "D2", "D3", "D4", "UNKNOWN"],
+    "gate_status": ["OPEN", "PASS", "BLOCKED", "UNKNOWN", "NO_GO"]
+  },
+  "human_journey_stages": [
+    "01 DISCOVER",
+    "02 EVIDENCE",
+    "03 NARRATIVE",
+    "04 TRANSMISSION",
+    "05 AUDIT",
+    "06 SHADOW",
+    "07 LEARNING"
+  ],
+  "reality_evidence_required_fields": [
+    "evidence_id",
+    "metric_id",
+    "entity_id",
+    "metric_name",
+    "value",
+    "unit",
+    "period",
+    "source_type",
+    "source_name",
+    "source_locator",
+    "observed_at",
+    "released_at",
+    "known_as_of",
+    "retrieved_at",
+    "revised_at",
+    "vintage",
+    "evidence_status",
+    "receipt_id",
+    "content_hash",
+    "authority"
+  ],
+  "pit_rules": {
+    "known_as_of_required_for_pit": true,
+    "recorded_at_cannot_substitute_for_known_as_of": true,
+    "unproven_release_or_vintage_semantics": "CURRENT_CONTEXT_ONLY",
+    "missing_or_blocked_required_evidence": "UNKNOWN"
+  },
+  "explicitly_not_authorized": [
+    "CAPITAL_AUTHORITY",
+    "EXECUTION_AUTHORITY",
+    "SHADOW_AUTHORITY_EXPANSION",
+    "BROKER_ACTION",
+    "PORTFOLIO_SIZING_AUTOMATION",
+    "REAL_CAPITAL_MOVEMENT"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "version": "0.1",
+  "authority": "RESEARCH",
+  "provider": "yuanli_brain",
+  "scope": "task_bounded_context_only",
+  "allowed_categories": [
+    "historical_analogues",
+    "yuanli_patterns",
+    "prior_judgments",
+    "bottleneck_migration_patterns",
+    "hard_negatives",
+    "prior_learning_deltas",
+    "recommended_capabilities"
+  ],
+  "max_items_per_category": {
+    "historical_analogues": 3,
+    "yuanli_patterns": 3,
+    "prior_judgments": 3,
+    "bottleneck_migration_patterns": 3,
+    "hard_negatives": 3,
+    "prior_learning_deltas": 3,
+    "recommended_capabilities": 3
+  },
+  "max_total_items": 12,
+  "admitted_freshness_states": [
+    "FRESH"
+  ],
+  "full_vault_scopes_denied": [
+    "full_vault",
+    "unbounded",
+    "all",
+    "*"
+  ],
+  "automatic_canon_promotion": false,
+  "live_ob_mutation": false,
+  "capital_authority": false,
+  "execution_authority": false
+}
