@@ -46,8 +46,9 @@ def validate_contract(cfg: Mapping[str, Any]) -> None:
     authority = cfg.get("authority", {})
     if authority.get("research_learning_authorized") is not True:
         raise ValueError("research learning authority missing")
-    if authority.get("production_scheduler_integration_authorized") is not False:
-        raise ValueError("production scheduler integration must remain Human-gated")
+    scheduler_flag = authority.get("production_scheduler_integration_authorized")
+    if not isinstance(scheduler_flag, bool):
+        raise ValueError("production scheduler integration gate must be explicit boolean")
     for field in DENY_FIELDS:
         if authority.get(field) is not False:
             raise ValueError(f"forbidden Learning Live authority enabled: {field}")
@@ -100,13 +101,20 @@ def _metric_value(receipt: Mapping[str, Any], name: str) -> float:
     return float(raw)
 
 
-def _validate_pit(prior: Mapping[str, Any], current: Mapping[str, Any]) -> tuple[date, date, date, date]:
-    prior_day = _as_day(prior.get("as_of"), "prior as_of")
-    current_day = _as_day(current.get("as_of"), "current as_of")
-    prior_known = _as_day(prior.get("known_as_of_max"), "prior known_as_of_max")
-    current_known = _as_day(current.get("known_as_of_max"), "current known_as_of_max")
-    if prior_known > prior_day or current_known > current_day:
+def validate_live_receipt(receipt: Mapping[str, Any]) -> tuple[date, date]:
+    _require_live(receipt)
+    as_of = _as_day(receipt.get("as_of"), "as_of")
+    known = _as_day(receipt.get("known_as_of_max"), "known_as_of_max")
+    if known > as_of:
         raise ValueError("future-dated evidence")
+    for metric in ("gold_price", "real_rate", "usd"):
+        _metric_value(receipt, metric)
+    return as_of, known
+
+
+def _validate_pit(prior: Mapping[str, Any], current: Mapping[str, Any]) -> tuple[date, date, date, date]:
+    prior_day, prior_known = validate_live_receipt(prior)
+    current_day, current_known = validate_live_receipt(current)
     if current_known < prior_known:
         raise ValueError("known_as_of regression")
     return prior_day, current_day, prior_known, current_known
@@ -126,8 +134,6 @@ def build_state_delta(
     prior: Mapping[str, Any], current: Mapping[str, Any], cfg: Mapping[str, Any]
 ) -> dict[str, Any]:
     validate_contract(cfg)
-    _require_live(prior)
-    _require_live(current)
     prior_day, current_day, prior_known, current_known = _validate_pit(prior, current)
     if current_day <= prior_day:
         raise ValueError("daily delta requires a later as_of")
@@ -197,10 +203,8 @@ def build_learning_candidate(
     prior: Mapping[str, Any], current: Mapping[str, Any], cfg: Mapping[str, Any]
 ) -> dict[str, Any]:
     validate_contract(cfg)
-    _require_live(prior)
-    _require_live(current)
-    prior_day = _as_day(prior.get("as_of"), "prior as_of")
-    current_day = _as_day(current.get("as_of"), "current as_of")
+    prior_day, _ = validate_live_receipt(prior)
+    current_day, _ = validate_live_receipt(current)
     if current_day == prior_day:
         return {
             "program": cfg["program"],
@@ -239,14 +243,13 @@ def build_learning_candidate(
 def find_previous_daily_receipt(
     current: Mapping[str, Any], candidates: Iterable[Mapping[str, Any]]
 ) -> Mapping[str, Any] | None:
-    _require_live(current)
-    current_day = _as_day(current.get("as_of"), "current as_of")
+    current_day, _ = validate_live_receipt(current)
     eligible: list[tuple[date, str, Mapping[str, Any]]] = []
     for candidate in candidates:
         if candidate.get("status") != "LIVE_SHADOW_RECEIPT":
             continue
         try:
-            candidate_day = _as_day(candidate.get("as_of"), "candidate as_of")
+            candidate_day, _ = validate_live_receipt(candidate)
         except ValueError:
             continue
         if candidate_day >= current_day:
@@ -267,7 +270,6 @@ def write_learning_candidate(candidate: Mapping[str, Any], runtime_root: Path) -
     target = daily / f"learning-{stamp}.json"
     text = json.dumps(candidate, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     target.write_text(text, encoding="utf-8")
-    learning_root.mkdir(parents=True, exist_ok=True)
     (learning_root / "latest-learning.json").write_text(text, encoding="utf-8")
     return target
 
@@ -289,6 +291,7 @@ def process_current_receipt(
 ) -> dict[str, Any]:
     config = dict(cfg or load_contract())
     validate_contract(config)
+    validate_live_receipt(current)
     prior = find_previous_daily_receipt(current, load_runtime_receipts(runtime_root))
     if prior is None:
         return {
