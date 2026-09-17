@@ -28,7 +28,7 @@ PACKS = {
     "capabilities": ("research-capability.schema.json", "ResearchCapability", 12),
 }
 
-EXPECTED_COUNTS = {
+R2_SNAPSHOT_COUNTS = {
     "theories": 19, "hypotheses": 12, "factors": 6, "algorithms": 6,
     "benchmarks": 7, "skills": 12, "data-fields": 25, "providers": 0,
     "capabilities": 12,
@@ -120,16 +120,19 @@ def main() -> None:
 
     idx = load_json(REGISTRY_INDEX)
     observed_counts = {item["name"]: item["entry_count"] for item in idx["registries"]}
-    assert observed_counts == EXPECTED_COUNTS, (observed_counts, EXPECTED_COUNTS)
-    assert idx["entry_count_total"] == 99 == sum(EXPECTED_COUNTS.values())
+    # R2 is an immutable historical snapshot; the live registries may grow later.
+    # Current registry counts must never fall below what R2 admitted.
+    for name, expected in R2_SNAPSHOT_COUNTS.items():
+        assert observed_counts[name] >= expected, f"R2 snapshot objects missing from current registry: {name}"
+    assert idx["entry_count_total"] == sum(observed_counts.values()), "current registry total drift"
     assert idx["silent_promotion_prohibited"] is True
     assert idx["r0_gold_seed_pack_promoted"] is False
     assert idx["r0_gold_seed_pack_compiled_to_specified"] is True
     assert idx["canon_entry_count"] == 0
-    assert idx["provider_adapter_count"] == 0
-    for name, expected in EXPECTED_COUNTS.items():
+    assert idx["provider_adapter_count"] == observed_counts["providers"]
+    for name in R2_SNAPSHOT_COUNTS:
         subindex = load_json(REGISTRY / name / "_index.json")
-        assert subindex["entry_count"] == expected, f"subindex count drift: {name}"
+        assert subindex["entry_count"] == observed_counts[name], f"current subindex count drift: {name}"
 
     seed = load_json(R0_SEED)
     seed_ids = {item["capability_id"] for item in seed["capabilities"]}
@@ -195,7 +198,14 @@ def main() -> None:
     xa_bench = next(b for b in objects["benchmarks"] if b["benchmark_id"] == "BENCH-XA-CONDITIONAL-TAIL-V1")
     assert not any(metric.lower() in {"accuracy", "raw_accuracy"} for metric in xa_bench["metric_set"])
 
-    assert load_json(REGISTRY / "providers" / "_index.json")["entry_count"] == 0
+    provider_index = load_json(REGISTRY / "providers" / "_index.json")
+    provider_schema = load_json(SCHEMAS / "provider-adapter.schema.json")
+    provider_validator = Draft202012Validator(provider_schema)
+    for pack_file in provider_index.get("pack_files", []):
+        provider = load_json(REGISTRY / "providers" / pack_file)
+        errors = sorted(provider_validator.iter_errors(provider), key=lambda e: list(e.path))
+        assert not errors, f"provider:{pack_file} schema errors: {[e.message for e in errors[:5]]}"
+        assert provider["canonical_semantics_may_not_be_redefined"] is True
 
     r1_state = load_json(R1 / "R1-STATE.json")
     assert r1_state["status"] == "accepted_merged"
@@ -211,7 +221,8 @@ def main() -> None:
     assert r2_state["capability_maturity"] == "specified"
     assert r2_state["hypothesis_status"] == "preregistered"
     assert r2_state["benchmark_status"] == "protocol_only_not_passed"
-    assert r2_state["provider_adapter_count"] == 0 and r2_state["canon_entry_count"] == 0
+    assert r2_state["provider_adapter_count"] == R2_SNAPSHOT_COUNTS["providers"] == 0
+    assert r2_state["canon_entry_count"] == 0
     assert r2_state["r3_authority"] == "not_authorized"
     assert r2_state["q1_state_change"] == "none"
     assert r2_state["a6_state_change"] == "none"

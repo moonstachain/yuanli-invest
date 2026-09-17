@@ -207,5 +207,22 @@ class MiaoxiangMcpClientTests(unittest.TestCase):
         self.assertTrue(seen["initialized"])
 
 
+class MiaoxiangRegistryEvolutionTests(unittest.TestCase):
+    def test_r2_validator_accepts_post_r2_provider_growth_without_rewriting_history(self):
+        import subprocess, sys
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[1]
+        proc = subprocess.run([sys.executable, str(root / "scripts/validate_r2_gold_pack.py")], cwd=root, capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        current = json.loads((root / "registry/registry-index.json").read_text())
+        providers = next(item for item in current["registries"] if item["name"] == "providers")
+        self.assertEqual(providers["entry_count"], 1)
+        self.assertEqual(current["provider_adapter_count"], 1)
+        self.assertEqual(current["entry_count_total"], 100)
+        r2_state = json.loads((root / "docs/architecture/r2/R2-STATE.json").read_text())
+        self.assertEqual(r2_state["provider_adapter_count"], 0)
+
+
+
 if __name__ == "__main__":
     unittest.main()
