@@ -17,9 +17,7 @@ Five AI-Infra Reality dimensions now have PIT-qualified series, governed raw evi
 | Power/Grid | Eaton Electrical Americas rolling-12m organic order growth | 41% | -1 pct | -27 pct | DECELERATING | HIGH |
 | Financing Regime | DGS10 + DFII10 + broad trade-weighted USD proxy | multi-metric | mixed | mixed | MIXED | MEDIUM |
 
-`capital_efficiency` remains `UNKNOWN`.
-
-Therefore the correct global state is `PARTIAL_REALITY_STATE_5_OF_6`, not a settled overall AI-Infra thesis.
+`capital_efficiency` remains `UNKNOWN`. Therefore the correct global state is `PARTIAL_REALITY_STATE_5_OF_6`, not a settled overall AI-Infra thesis.
 
 ## Evidence and provider boundaries
 
@@ -36,21 +34,22 @@ Electrical Americas rolling-12-month organic order growth: `7% → 16% → 42% �
 Total quarterly revenue: `2.308 → 2.488 → 2.709 → 3.036` USD bn. Company-filed SEC EX-99 raw sources passed private S3 SHA readback. Boundary: networking-vendor demand proxy, not AI-only networking revenue.
 
 ### Financing Regime
-Sampling policy is frozen to the last valid market observation in each **complete month**, Apr-Jul 2026, avoiding partial-August versus month-end contamination.
+Sampling policy is frozen to the last valid market observation in each complete month, Apr-Jul 2026, avoiding partial-August versus month-end contamination.
 
 - DGS10 nominal 10Y: `4.40 → 4.45 → 4.44 → 4.75`; latest Δ `+0.31`, Δ² `+0.32`; `ACCELERATING`.
 - DFII10 real 10Y: `1.94 → 2.07 → 2.20 → 2.47`; latest Δ `+0.27`, Δ² `+0.14`; `ACCELERATING`.
 - Broad trade-weighted USD proxy: `118.6710 → 118.8783 → 120.9248 → 119.7034`; latest Δ `-1.2214`, Δ² `-3.2679`; `DECELERATING`.
 
-The existing compiler therefore produces `financing_regime = MIXED / MEDIUM`; metrics are compiled independently before aggregation.
+The existing compiler therefore produces `financing_regime = MIXED / MEDIUM`; metrics are compiled independently before aggregation. DGS10 workflow run `35187024943` passed FRED raw CSV → private `ymq4-raw-evidence` → SHA-256 readback; DFII10 and DTWEXBGS reuse governed YMQ4-DP1B raw archive. USD is a Federal Reserve broad trade-weighted USD proxy, not literal ICE DXY; Treasury yields are market financing proxies, not direct corporate funding spreads.
 
-Financing evidence lineage:
+### Capital Efficiency / G6
+The accepted Marginal Capital Productivity Stack is now implemented and reality-tested against first-party SEC structured evidence. Machine contract, direction-aware/entity-safe compiler, deterministic TTM reconstruction, and private raw archive/readback are all proven.
 
-- DGS10 workflow run `35187024943` passed FRED raw CSV → private `ymq4-raw-evidence` → SHA-256 readback; raw SHA `c4bd527f...eecaaf6`.
-- DFII10 and DTWEXBGS reuse the governed YMQ4-DP1B raw archive, whose Reality receipt proves immutable raw-object capture, provenance snapshots, PIT reconstruction, database readback, and zero future leakage.
-- 12 YCI0 canonical observations and 12 `PASS / RESEARCH_ONLY` claim receipts were physically written and read back.
-- USD metric is the Federal Reserve broad trade-weighted USD index proxy, **not literal ICE DXY**.
-- Treasury yields are market-observation financing proxies, **not direct corporate funding spreads**.
+Cloud evidence run `35200548325` archived `companyfacts + submissions` for MSFT/NVDA/ANET/ETN to private S3 with SHA readback. Coverage did not reach the frozen four-cohort threshold: only MSFT qualifies all three mandatory components. NVDA, ANET, and ETN fail closed on 11-quarter tag continuity or optional-disclosure regime breaks. The real admission gate returns `BLOCKED_BY_COVERAGE`, `3/12` metric identities qualified, and `mutation_count=0`.
+
+Formal receipt: `docs/architecture/yci0_rp1/receipts/YCI0-RP1-G6-CAPITAL-EFFICIENCY-EVIDENCE.md`.
+
+This is a successful Reality test of the governance contract, not a failed attempt to force 6/6.
 
 ## Production state
 
@@ -61,30 +60,31 @@ Known-as-of ceiling: `2026-08-26T23:59:59Z`
 Evidence refs: `28 PASS receipts`
 Notion flagship page: `3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-The Human Workbench must remain `02 EVIDENCE / READY / OPEN / HOLD`; overall Delta and Delta2 stay `UNKNOWN`. Local dimension deltas are not projected into the overall Capital Question.
+No G6 production mutation occurred. The Human Workbench must remain `02 EVIDENCE / READY / OPEN / HOLD`; overall Delta and Delta2 stay `UNKNOWN`.
 
 ## What remains unknown
 
-Only one load-bearing Reality dimension remains: `capital_efficiency`.
+`capital_efficiency` remains the only load-bearing UNKNOWN Reality dimension, now for explicit accounting-evidence reasons rather than because its definition or software is missing. Current first-party SEC structured evidence qualifies MSFT but does not yet provide a single-regime 11-quarter reconstruction for NVDA, ANET, and ETN under the frozen contract.
 
-Native1 event-driven Supabase → Notion delivery is also not proven by this controlled orchestration. No Narrative/Transmission Research Projection, Shadow Authority, Capital Authority, sizing, broker, or Execution authority is granted.
+Native1 event-driven Supabase → Notion delivery is also not proven. No Narrative/Transmission Research Projection, Shadow Authority, Capital Authority, sizing, broker, or Execution authority is granted.
 
 ## Next execution order
 
-1. Freeze a defensible Capital Efficiency economic/accounting definition before selecting any proxy.
-2. Only then admit same-regime PIT evidence for that frozen definition.
-3. Recompile the 6/6 Reality card.
-4. Human Review may consider `02 EVIDENCE → 03 NARRATIVE` only after an explicit coverage gate; no automatic transition is authorized.
+1. Do not relax the G6 definition or stitch incompatible XBRL tags merely to reach 6/6.
+2. For NVDA / ANET / ETN, search first-party filing tables / filed exhibits / accession-specific facts for stable bridges that preserve the accepted accounting regime.
+3. Any bridge must get its own semantic-equivalence proof and RED tests before admission.
+4. Re-run the same G6 archive → reconstruction → admission gate; only 12/12 identities may trigger additive production write/readback.
+5. Even if 6/6 later succeeds, keep `02 EVIDENCE / HOLD` until a separate Human coverage-transition gate.
 
 ## Strategic laws
 
 `PROVIDER_AVAILABILITY != SEMANTIC_EQUIVALENCE`
 
-`MULTI_METRIC DIMENSION != CROSS_METRIC TIME SERIES`
+`RAW ARCHIVE PASS != SEMANTIC COVERAGE PASS`
 
-`TREASURY YIELDS != DIRECT CORPORATE FUNDING SPREADS`
+`ENTITY_IDENTITY MUST NOT COLLAPSE INTO METRIC_ID`
 
-`BROAD USD PROXY != LITERAL ICE DXY`
+`RAW METRIC DIRECTION != ECONOMIC EFFICIENCY DIRECTION`
 
 `5/6 QUALIFIED != OVERALL AI INFRA REALITY SETTLED`
 
