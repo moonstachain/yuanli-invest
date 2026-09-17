@@ -6,6 +6,7 @@ from pathlib import Path
 from unittest import mock
 
 from scripts import ymq_gold2_live_shadow as shadow
+from scripts import ymq_gold2_learning_live as learning
 
 
 class ActivationContractTests(unittest.TestCase):
@@ -110,6 +111,62 @@ class ReceiptTests(unittest.TestCase):
             target = shadow.write_receipt({"status": "OK", "as_of": "2026-09-16"}, Path(td))
             self.assertTrue(target.exists())
             self.assertTrue(str(target).startswith(td))
+
+
+class LearningIntegrationTests(unittest.TestCase):
+    def _live_receipt(self, day, gold, real_rate, usd, known):
+        return {
+            "status": "LIVE_SHADOW_RECEIPT",
+            "as_of": day,
+            "known_as_of_min": known,
+            "known_as_of_max": known,
+            "provider_receipts": {
+                "gold_price": {"metric_code": "S0031645", "latest_date": known, "latest_value": gold},
+                "real_rate": {"metric_code": "G1147404", "latest_date": known, "latest_value": real_rate},
+                "usd": {"metric_code": "M0000271", "latest_date": known, "latest_value": usd},
+            },
+            "property_drift_state": "DRIFT_CANDIDATE",
+            "expectation_reality_state": "INDETERMINATE",
+            "valuation_state": "UNIDENTIFIABLE",
+            "research_state": "WATCH",
+            "lifecycle_state": "未知",
+            "unknowns": ["policy_path_expectations"],
+        }
+
+    def test_learning_hook_is_inert_without_separate_production_authorization(self):
+        current = self._live_receipt("2026-09-17", 4328.2, 3.06, 100.3293, "2026-09-16")
+        with tempfile.TemporaryDirectory() as td:
+            result = shadow.emit_learning_live(current, Path(td))
+            self.assertEqual(result["status"], "LEARNING_INTEGRATION_NOT_AUTHORIZED")
+            self.assertFalse(Path(td, "learning").exists())
+
+    def test_learning_hook_runs_only_with_explicit_activation(self):
+        prior = self._live_receipt("2026-09-16", 4296.15, 3.05, 99.6335, "2026-09-15")
+        current = self._live_receipt("2026-09-17", 4328.2, 3.06, 100.3293, "2026-09-16")
+        cfg = learning.load_contract()
+        cfg["authority"]["production_scheduler_integration_authorized"] = True
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            shadow.write_receipt(prior, root)
+            shadow.write_receipt(current, root)
+            result = shadow.emit_learning_live(current, root, learning_cfg=cfg)
+            self.assertEqual(result["status"], "LEARNING_CANDIDATE_ONLY")
+            self.assertTrue(Path(td, "learning", "latest-learning.json").exists())
+            self.assertFalse(result["accepted_learning"])
+
+    def test_learning_failure_does_not_mutate_successful_provider_receipt(self):
+        current = self._live_receipt("2026-09-17", 4328.2, 3.06, 100.3293, "2026-09-16")
+        original = json.loads(json.dumps(current, ensure_ascii=False))
+        cfg = learning.load_contract()
+        cfg["authority"]["production_scheduler_integration_authorized"] = True
+        broken = dict(current)
+        broken["known_as_of_max"] = "not-a-date"
+        with tempfile.TemporaryDirectory() as td:
+            result = shadow.emit_learning_live(broken, Path(td), learning_cfg=cfg)
+            self.assertEqual(result["status"], "LEARNING_FAIL_CLOSED")
+            self.assertEqual(current, original)
+            self.assertNotIn("error", result)
+            self.assertIn("error_type", result)
 
 
 if __name__ == "__main__":
