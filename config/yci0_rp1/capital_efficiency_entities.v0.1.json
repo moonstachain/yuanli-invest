@@ -66,10 +66,10 @@
     "CAPEX": ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"],
     "TOTAL_ASSETS": ["Assets"],
     "CASH": ["CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents"],
-    "CURRENT_MARKETABLE_SECURITIES": ["ShortTermInvestments", "MarketableSecuritiesCurrent"],
+    "CURRENT_MARKETABLE_SECURITIES": ["ShortTermInvestments", "MarketableSecuritiesCurrent", "DebtSecuritiesCurrent", "AvailableForSaleSecuritiesDebtSecuritiesCurrent"],
     "TOTAL_CURRENT_LIABILITIES": ["LiabilitiesCurrent"],
     "SHORT_TERM_BORROWINGS": ["ShortTermBorrowings"],
-    "CURRENT_MATURITIES_LONG_TERM_DEBT": ["LongTermDebtCurrent"],
+    "CURRENT_MATURITIES_LONG_TERM_DEBT": ["LongTermDebtCurrent", "DebtCurrent"],
     "CURRENT_FINANCE_LEASE_LIABILITIES": ["FinanceLeaseLiabilityCurrent"]
   }
 }

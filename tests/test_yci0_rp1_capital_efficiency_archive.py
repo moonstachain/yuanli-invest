@@ -1,0 +1,64 @@
+import subprocess
+import sys
+import unittest
+from pathlib import Path
+
+from scripts.yci0_rp1_capital_efficiency_archive import (
+    audit_tag_regime,
+    latest_consecutive_window,
+    manifest_entities,
+    select_tag_for_target_periods,
+    synthetic_receipt,
+)
+
+
+class CapitalEfficiencyArchiveTests(unittest.TestCase):
+    def test_archive_manifest_requires_all_four_frozen_entities(self):
+        self.assertEqual(set(manifest_entities()), {"MSFT", "NVDA", "ANET", "ETN"})
+
+    def test_archive_receipt_grants_zero_downstream_authority(self):
+        receipt = synthetic_receipt()
+        self.assertFalse(any(receipt["authority"].values()))
+
+    def test_script_entrypoint_imports_runtime_from_repo_root(self):
+        root=Path(__file__).resolve().parents[1]
+        proc=subprocess.run([sys.executable, str(root / "scripts/yci0_rp1_capital_efficiency_archive.py"), "--help"], cwd=root, text=True, capture_output=True)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+
+    def test_latest_horizon_requires_one_tag_to_cover_all_target_periods(self):
+        target={f"2025Q{q}" for q in range(1,5)}
+        tag=select_tag_for_target_periods(
+            ["OldTag", "NewTag"],
+            {"OldTag": {"2025Q1", "2025Q2"}, "NewTag": {"2025Q3", "2025Q4"}},
+            target,
+        )
+        self.assertIsNone(tag)
+
+    def test_latest_consecutive_window_returns_latest_exact_quarters(self):
+        periods=["2023Q4", "2024Q1", "2024Q2", "2024Q3", "2024Q4", "2025Q1"]
+        self.assertEqual(latest_consecutive_window(periods, 4), ["2024Q2", "2024Q3", "2024Q4", "2025Q1"])
+
+    def test_missing_mandatory_operating_income_fails_closed(self):
+        result = audit_tag_regime(
+            available_tags={"Revenues", "Assets"},
+            required_candidates={"OPERATING_INCOME": ["OperatingIncomeLoss"]},
+        )
+        self.assertEqual(result["status"], "UNKNOWN")
+        self.assertIn("MISSING_TAG:OPERATING_INCOME", result["blockers"])
+
+    def test_split_capex_taxonomy_cannot_be_silently_bridged(self):
+        result = audit_tag_regime(
+            available_tags={"PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"},
+            required_candidates={"CAPEX": ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"]},
+            coverage={
+                "PaymentsToAcquirePropertyPlantAndEquipment": {"Q1", "Q2", "Q3"},
+                "PaymentsToAcquireProductiveAssets": {"FY"},
+            },
+            required_period_types={"Q1", "Q2", "Q3", "FY"},
+        )
+        self.assertEqual(result["status"], "UNKNOWN")
+        self.assertIn("NO_SINGLE_TAG_COVERS:CAPEX", result["blockers"])
+
+
+if __name__ == "__main__":
+    unittest.main()
