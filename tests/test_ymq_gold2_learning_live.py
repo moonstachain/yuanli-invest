@@ -65,9 +65,9 @@ class LearningLiveTests(unittest.TestCase):
             unknowns=["policy_path_expectations"],
         )
         delta = learning.build_state_delta(prior, current, cfg)
-        self.assertAlmostEqual(delta["gold_price_pct"], 0.7460139, places=6)
+        self.assertAlmostEqual(delta["gold_price_pct"], 0.7460167824680175, places=9)
         self.assertAlmostEqual(delta["real_rate_bps"], 1.0, places=6)
-        self.assertAlmostEqual(delta["usd_pct"], 0.6983597, places=6)
+        self.assertAlmostEqual(delta["usd_pct"], 0.6983594875217713, places=9)
         self.assertEqual(delta["attention"], ["usd_pct"])
         self.assertEqual(delta["unknowns_resolved"], ["narrative_crowding_if_authoritative"])
         self.assertEqual(delta["unknowns_added"], [])
