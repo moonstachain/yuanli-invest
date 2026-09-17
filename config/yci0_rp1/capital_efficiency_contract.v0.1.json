@@ -1,0 +1,171 @@
+{
+  "contract_id": "YCI0-RP1-G6-CAPITAL-EFFICIENCY-v0.1",
+  "authority": "RESEARCH",
+  "mandatory_components": [
+    "INCREMENTAL_ROIC",
+    "CASH_CONVERSION",
+    "CAPITAL_INTENSITY"
+  ],
+  "required_cohorts": [
+    "HYPERSCALER",
+    "COMPUTE",
+    "NETWORKING",
+    "POWER_ELECTRICAL"
+  ],
+  "representatives": {
+    "HYPERSCALER": "MSFT",
+    "COMPUTE": "NVDA",
+    "NETWORKING": "ANET",
+    "POWER_ELECTRICAL": "ETN"
+  },
+  "directionality_closed_set": [
+    "HIGHER_IS_MORE_EFFICIENT",
+    "LOWER_IS_MORE_EFFICIENT"
+  ],
+  "metrics": [
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.HYPERSCALER.MSFT.INCREMENTAL_ROIC",
+      "cohort": "HYPERSCALER",
+      "entity_id": "MSFT",
+      "component": "INCREMENTAL_ROIC",
+      "directionality": "HIGHER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.HYPERSCALER.MSFT.CASH_CONVERSION",
+      "cohort": "HYPERSCALER",
+      "entity_id": "MSFT",
+      "component": "CASH_CONVERSION",
+      "directionality": "HIGHER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.HYPERSCALER.MSFT.CAPITAL_INTENSITY",
+      "cohort": "HYPERSCALER",
+      "entity_id": "MSFT",
+      "component": "CAPITAL_INTENSITY",
+      "directionality": "LOWER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.COMPUTE.NVDA.INCREMENTAL_ROIC",
+      "cohort": "COMPUTE",
+      "entity_id": "NVDA",
+      "component": "INCREMENTAL_ROIC",
+      "directionality": "HIGHER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.COMPUTE.NVDA.CASH_CONVERSION",
+      "cohort": "COMPUTE",
+      "entity_id": "NVDA",
+      "component": "CASH_CONVERSION",
+      "directionality": "HIGHER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.COMPUTE.NVDA.CAPITAL_INTENSITY",
+      "cohort": "COMPUTE",
+      "entity_id": "NVDA",
+      "component": "CAPITAL_INTENSITY",
+      "directionality": "LOWER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.NETWORKING.ANET.INCREMENTAL_ROIC",
+      "cohort": "NETWORKING",
+      "entity_id": "ANET",
+      "component": "INCREMENTAL_ROIC",
+      "directionality": "HIGHER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.NETWORKING.ANET.CASH_CONVERSION",
+      "cohort": "NETWORKING",
+      "entity_id": "ANET",
+      "component": "CASH_CONVERSION",
+      "directionality": "HIGHER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.NETWORKING.ANET.CAPITAL_INTENSITY",
+      "cohort": "NETWORKING",
+      "entity_id": "ANET",
+      "component": "CAPITAL_INTENSITY",
+      "directionality": "LOWER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.POWER_ELECTRICAL.ETN.INCREMENTAL_ROIC",
+      "cohort": "POWER_ELECTRICAL",
+      "entity_id": "ETN",
+      "component": "INCREMENTAL_ROIC",
+      "directionality": "HIGHER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.POWER_ELECTRICAL.ETN.CASH_CONVERSION",
+      "cohort": "POWER_ELECTRICAL",
+      "entity_id": "ETN",
+      "component": "CASH_CONVERSION",
+      "directionality": "HIGHER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    },
+    {
+      "metric_id": "AIINFRA.CAPITAL_EFFICIENCY.POWER_ELECTRICAL.ETN.CAPITAL_INTENSITY",
+      "cohort": "POWER_ELECTRICAL",
+      "entity_id": "ETN",
+      "component": "CAPITAL_INTENSITY",
+      "directionality": "LOWER_IS_MORE_EFFICIENT",
+      "unit": "ratio",
+      "authority": "RESEARCH",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_KNOWN_AS_OF_RAW_HASH_LINEAGE",
+      "minimum_derived_observations": 4,
+      "minimum_raw_quarters": 8
+    }
+  ]
+}
