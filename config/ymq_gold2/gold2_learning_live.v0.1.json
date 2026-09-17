@@ -25,7 +25,7 @@
   },
   "authority": {
     "research_learning_authorized": true,
-    "production_scheduler_integration_authorized": false,
+    "production_scheduler_integration_authorized": true,
     "accepted_learning_authorized": false,
     "capital_authorized": false,
     "sizing_authorized": false,
@@ -35,5 +35,5 @@
     "asset_promotion_authorized": false,
     "canon_promotion_authorized": false
   },
-  "authorization_basis": "Explicit Human approval in ChatGPT on 2026-09-17 to implement Data Live to Learning Live as research-only; merge and production scheduler integration remain a separate Human Gate."
+  "authorization_basis": "Explicit Human approvals in ChatGPT on 2026-09-17: ACCEPT_G7_RESEARCH_LEARNING_IMPLEMENTATION and AUTHORIZE_G7_PRODUCTION_INTEGRATION. Production authorization is limited to invoking the existing research-only G7 post-processor after a successful G6 LIVE_SHADOW_RECEIPT; it grants no accepted-learning, capital, sizing, execution, broker, VeighNa, asset-promotion, or Canon authority."
 }

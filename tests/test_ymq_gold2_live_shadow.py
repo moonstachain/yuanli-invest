@@ -135,8 +135,10 @@ class LearningIntegrationTests(unittest.TestCase):
 
     def test_learning_hook_is_inert_without_separate_production_authorization(self):
         current = self._live_receipt("2026-09-17", 4328.2, 3.06, 100.3293, "2026-09-16")
+        cfg = learning.load_contract()
+        cfg["authority"]["production_scheduler_integration_authorized"] = False
         with tempfile.TemporaryDirectory() as td:
-            result = shadow.emit_learning_live(current, Path(td))
+            result = shadow.emit_learning_live(current, Path(td), learning_cfg=cfg)
             self.assertEqual(result["status"], "LEARNING_INTEGRATION_NOT_AUTHORIZED")
             self.assertFalse(Path(td, "learning").exists())
 
