@@ -80,6 +80,15 @@ class CapitalEfficiencyReconstructionTests(unittest.TestCase):
         self.assertEqual(inputs["operating_invested_capital_t"], Decimal("5670"))
         self.assertEqual(inputs["operating_invested_capital_t_minus_4"], Decimal("4870"))
 
+    def test_optional_current_interest_bearing_components_default_to_zero_when_not_separately_disclosed(self):
+        facts=[f for f in quarter_facts(11) if f.concept not in {"SHORT_TERM_BORROWINGS", "CURRENT_MATURITIES_LONG_TERM_DEBT", "CURRENT_FINANCE_LEASE_LIABILITIES"}]
+        out=reconstruct_entity_observations(facts, entity_spec())
+        roic=[x for x in out if x.component == "INCREMENTAL_ROIC" and x.fiscal_period == "2025Q3"][0]
+        self.assertEqual(roic.status, "PASS")
+        self.assertEqual(roic.formula_inputs["short_term_borrowings_t"], Decimal("0"))
+        self.assertEqual(roic.formula_inputs["current_maturities_long_term_debt_t"], Decimal("0"))
+        self.assertEqual(roic.formula_inputs["current_finance_lease_liabilities_t"], Decimal("0"))
+
     def test_tax_rate_outside_zero_to_fifty_percent_fails_nopat_components_closed(self):
         out=reconstruct_entity_observations(quarter_facts(11, Decimal("0.60")), entity_spec())
         latest=[x for x in out if x.fiscal_period == "2025Q3"]

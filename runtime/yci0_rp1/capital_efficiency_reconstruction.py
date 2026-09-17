@@ -12,10 +12,11 @@ FLOW_CONCEPTS = {
     "REVENUE", "OPERATING_INCOME", "PRETAX_INCOME", "INCOME_TAX_EXPENSE",
     "OPERATING_CASH_FLOW", "CAPEX",
 }
-OIC_CONCEPTS = {
-    "TOTAL_ASSETS", "CASH", "CURRENT_MARKETABLE_SECURITIES",
-    "TOTAL_CURRENT_LIABILITIES", "SHORT_TERM_BORROWINGS",
-    "CURRENT_MATURITIES_LONG_TERM_DEBT", "CURRENT_FINANCE_LEASE_LIABILITIES",
+OIC_MANDATORY_CONCEPTS = {
+    "TOTAL_ASSETS", "CASH", "CURRENT_MARKETABLE_SECURITIES", "TOTAL_CURRENT_LIABILITIES",
+}
+OIC_OPTIONAL_INTEREST_BEARING_CONCEPTS = {
+    "SHORT_TERM_BORROWINGS", "CURRENT_MATURITIES_LONG_TERM_DEBT", "CURRENT_FINANCE_LEASE_LIABILITIES",
 }
 
 
@@ -113,13 +114,22 @@ def _ttm_nopat(index: dict[tuple[str, str], FilingFact], periods: list[str], spe
 
 
 def _operating_invested_capital(index: dict[tuple[str, str], FilingFact], period: str, spec: dict[str, Any]) -> tuple[Decimal | None, str | None, list[FilingFact], dict[str, Decimal]]:
-    rows, missing = _collect(index, [period], sorted(OIC_CONCEPTS))
+    rows, missing = _collect(index, [period], sorted(OIC_MANDATORY_CONCEPTS))
     if missing:
         return None, missing, rows, {}
+    optional_rows: list[FilingFact] = []
+    values = {r.concept: r.value for r in rows}
+    for concept in sorted(OIC_OPTIONAL_INTEREST_BEARING_CONCEPTS):
+        item = _fact(index, period, concept)
+        if item is None:
+            values[concept] = Decimal("0")
+        else:
+            optional_rows.append(item)
+            values[concept] = item.value
+    rows = rows + optional_rows
     regime = _regime_reason(rows, str(spec["accounting_regime"]))
     if regime:
         return None, regime, rows, {}
-    values = {r.concept: r.value for r in rows}
     nibcl = (
         values["TOTAL_CURRENT_LIABILITIES"]
         - values["SHORT_TERM_BORROWINGS"]
@@ -221,8 +231,8 @@ def reconstruct_entity_observations(facts: Iterable[FilingFact], entity_spec: di
         base_period = periods[i - 4]
         base_ttm_periods = periods[i - 7 : i - 3]
         base_nopat, base_nopat_reason, base_nopat_rows, base_nopat_inputs = _ttm_nopat(index, base_ttm_periods, entity_spec)
-        oic_t, oic_t_reason, oic_t_rows, _ = _operating_invested_capital(index, period, entity_spec)
-        oic_base, oic_base_reason, oic_base_rows, _ = _operating_invested_capital(index, base_period, entity_spec)
+        oic_t, oic_t_reason, oic_t_rows, oic_t_inputs = _operating_invested_capital(index, period, entity_spec)
+        oic_base, oic_base_reason, oic_base_rows, oic_base_inputs = _operating_invested_capital(index, base_period, entity_spec)
         roic_rows = nopat_rows + base_nopat_rows + oic_t_rows + oic_base_rows
         roic_reason = nopat_reason or base_nopat_reason or oic_t_reason or oic_base_reason or _regime_reason(roic_rows, str(entity_spec["accounting_regime"]))
         roic_inputs: dict[str, Decimal] = {}
@@ -235,6 +245,11 @@ def reconstruct_entity_observations(facts: Iterable[FilingFact], entity_spec: di
             roic_inputs["operating_invested_capital_t"] = oic_t
         if oic_base is not None:
             roic_inputs["operating_invested_capital_t_minus_4"] = oic_base
+        for concept, name in (("SHORT_TERM_BORROWINGS", "short_term_borrowings"), ("CURRENT_MATURITIES_LONG_TERM_DEBT", "current_maturities_long_term_debt"), ("CURRENT_FINANCE_LEASE_LIABILITIES", "current_finance_lease_liabilities")):
+            if concept in oic_t_inputs:
+                roic_inputs[f"{name}_t"] = oic_t_inputs[concept]
+            if concept in oic_base_inputs:
+                roic_inputs[f"{name}_t_minus_4"] = oic_base_inputs[concept]
         if roic_reason is None and None not in (nopat, base_nopat, oic_t, oic_base):
             delta_ic = oic_t - oic_base  # type: ignore[operator]
             roic_inputs["invested_capital_delta_yoy"] = delta_ic
