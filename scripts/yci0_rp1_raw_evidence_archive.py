@@ -12,8 +12,10 @@ Execution authority. It emits a non-secret receipt for a later admission gate.
 from __future__ import annotations
 
 import hashlib
+import html
 import json
 import os
+import re
 import sys
 import urllib.request
 from datetime import datetime, timezone
@@ -70,13 +72,20 @@ def fetch(url: str) -> tuple[int, str, bytes]:
         )
 
 
+def _visible_text(text: str) -> str:
+    unescaped = html.unescape(text)
+    without_tags = re.sub(r"<[^>]+>", " ", unescaped)
+    return re.sub(r"\s+", " ", without_tags).strip()
+
+
 def validation_facts(raw: bytes, *, value_millions_usd: int) -> dict[str, Any]:
     text = raw.decode("utf-8", "ignore")
+    visible = _visible_text(text)
     formatted = f"{value_millions_usd:,}"
     return {
-        "has_row_label": "Additions to property and equipment" in text,
+        "has_row_label": "Additions to property and equipment" in visible,
         "has_xbrl_tag": "PaymentsToAcquirePropertyPlantAndEquipment" in text,
-        "has_expected_value": formatted in text,
+        "has_expected_value": formatted in visible or formatted in text,
         "expected_value": formatted,
         "bytes": len(raw),
         "sha256": hashlib.sha256(raw).hexdigest(),
@@ -98,7 +107,7 @@ def validate_raw(
         if not facts["has_xbrl_tag"]:
             raise RuntimeError(f"{quarter} official page missing expected PP&E XBRL tag")
     elif not facts["has_row_label"]:
-        raise RuntimeError(f"{quarter} official page missing PP&E row label")
+        raise RuntimeError(f"{quarter} official page missing normalized PP&E row label")
     return facts
 
 
