@@ -1,68 +1,67 @@
 # YCI0-RP1｜First Live Reality Admission Status
 
-**Status:** `RAW_EVIDENCE_PASS / PARTIAL_REALITY_3_OF_6 / HOLD_AT_EVIDENCE`  
-**As of:** 2026-09-17  
-**Question:** `YCI0-RP0-CQ-001`  
+**Status:** `RAW_EVIDENCE_PASS / PARTIAL_REALITY_4_OF_6 / HOLD_AT_EVIDENCE`
+**As of:** 2026-09-17
+**Question:** `YCI0-RP0-CQ-001`
 **Authority:** `RESEARCH_ONLY`
 
 ## What is physically proven
 
-Three independent AI-Infra Reality dimensions now have same-regime PIT series, raw evidence archive, PASS receipts, and existing Reality Compiler output.
+Four independent AI-Infra Reality dimensions now have same-regime PIT series, raw evidence archive, PASS receipts, and existing Reality Compiler output.
 
 | Dimension | Canonical first-party series | Level | Δ | Δ² | State | Confidence |
 |---|---|---:|---:|---:|---|---|
 | Hyperscaler Capex | Microsoft total-company cash paid PP&E | 35.802 USD bn | +4.926 bn | +3.926 bn | ACCELERATING | HIGH |
 | Compute | NVIDIA quarterly Data Center revenue | 89.0 USD bn | +13.8 bn | +0.9 bn | ACCELERATING | HIGH |
+| Networking | Arista total quarterly revenue | 3.036 USD bn | +0.327 bn | +0.106 bn | ACCELERATING | HIGH |
 | Power/Grid | Eaton Electrical Americas rolling-12m organic order growth | 41% | -1 pct | -27 pct | DECELERATING | HIGH |
 
-`financing_regime`, `networking`, and `capital_efficiency` remain `UNKNOWN`.
+`financing_regime` and `capital_efficiency` remain `UNKNOWN`.
 
-Therefore the correct global state is `PARTIAL_REALITY_STATE_3_OF_6`, not overall `AI_INFRA = ACCELERATING`.
+Therefore the correct global state is `PARTIAL_REALITY_STATE_4_OF_6`, not overall `AI_INFRA = ACCELERATING`.
 
 ## Evidence and provider boundaries
 
 ### Microsoft / Hyperscaler Capex
 
-FY26 Q1-Q4: `19.394 → 29.876 → 30.876 → 35.802` USD bn.
-
-All four Microsoft IR raw HTML sources are archived in private Supabase S3 and passed SHA-256 readback. Wind returned adjacent `资本性支出`, but semantic equivalence to `PaymentsToAcquirePropertyPlantAndEquipment` was not proven.
+FY26 Q1-Q4: `19.394 → 29.876 → 30.876 → 35.802` USD bn. Four Microsoft IR raw sources passed private S3 SHA readback. Wind returned adjacent `资本性支出`, but semantic equivalence to the canonical cash-paid PP&E series was not proven.
 
 Boundary: total-company PP&E proxy, not AI-only capex.
 
 ### NVIDIA / Compute
 
-Quarterly Data Center revenue: `51.2 → 62.3 → 75.2 → 89.0` USD bn.
-
-All four NVIDIA Newsroom raw HTML sources are archived in private Supabase S3 and passed SHA-256 readback. Wind returned an adjacent `数据中心产品 / 主营项目收入` family that was not accepted as the canonical quarterly series.
+Quarterly Data Center revenue: `51.2 → 62.3 → 75.2 → 89.0` USD bn. Four NVIDIA Newsroom raw sources passed private S3 SHA readback. Wind adjacency was not accepted as canonical identity.
 
 ### Eaton / Power-Grid
 
 Electrical Americas rolling-12-month organic order growth: `7% → 16% → 42% → 41%`.
 
-Eaton's direct web host repeatedly timed out from the authorized remote computer and GitHub runner. This was classified as a transport failure, not evidence failure. The same company-filed earnings releases were then archived from SEC EDGAR EX-99 exhibits. GitHub Actions run `35180591793` passed raw archive + S3 SHA readback for all four quarters.
+Eaton direct-host transport was unreliable, so the same company-filed EX-99 releases were archived from SEC EDGAR. Raw archive + S3 SHA readback passed for all four quarters. Wind exact metric was unavailable.
 
-Wind exact-metric query returned no data. Verdict: `NOT_AVAILABLE / FIRST_PARTY_ONLY`.
+`DECELERATING / HIGH` means marginal rollover at a high level; it does not mean demand collapse.
 
-The Power/Grid compiler output is `DECELERATING / HIGH`: the level remains very high at 41%, while latest Δ=-1 pct and Δ²=-27 pct. This is marginal rollover, not demand collapse.
+### Arista / Networking
+
+Total quarterly revenue: `2.308 → 2.488 → 2.709 → 3.036` USD bn.
+
+Arista IR direct pages were unreliable from the authorized remote computer, so the same company-authored earnings releases filed as SEC EX-99 exhibits were used. GitHub Actions run `35185238836` passed 4/4 raw archive + private S3 SHA readback with zero downstream authority.
+
+Boundary: networking-vendor demand proxy, not AI-only networking revenue.
 
 ## Production state
 
-Latest Reality compiler run: `1b94c035-16b0-4e32-b248-aa507b17cfb3`  
-Latest Reality state card: `6a1a685f-1a2c-4be4-b97d-b9916167c2a6`  
-State hash: `d00d2ef3994eb9ff669948fb6e5e0a1a09a87659e3be563e66d133dd54363998`  
-Known-as-of ceiling: `2026-08-26T23:59:59Z`  
+Latest Reality compiler run: `cd85c293-0e90-4352-9356-2b6c36617077`
+Latest Reality state card: `ace0b0ca-4c50-4158-8e50-30eeb84f085f`
+State hash: `a71d66d2b0672d101590497fe1e2412e11a5a7311dcf16efa7019e9dc10a0733`
+Known-as-of ceiling: `2026-08-26T23:59:59Z`
+Evidence refs: `16 PASS receipts`
 Notion flagship page: `3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-The Supabase Capital Question remains:
+The Human Workbench must remain:
 
 - `Journey Stage = 02 EVIDENCE`
+- `Evidence Status = READY`
 - `Gate Status = OPEN`
-- `Authority = RESEARCH`
-
-The Notion Human Workbench remains:
-
-- Human `Evidence Status = READY`
-- Machine `Evidence Status = PASS`
 - overall `Delta = UNKNOWN`
 - overall `Delta2 = UNKNOWN`
 - `Transition Suggestion = HOLD`
@@ -71,9 +70,8 @@ Local dimension Δ/Δ² are not projected into the overall Capital Question.
 
 ## What remains unknown
 
-The flagship question is not yet qualified to enter Narrative because three Reality dimensions are still missing:
+Two load-bearing Reality dimensions are still missing:
 
-- `networking`
 - `financing_regime`
 - `capital_efficiency`
 
@@ -83,20 +81,21 @@ No Narrative/Transmission Research Projection, Shadow Authority, Capital Authori
 
 ## Next execution order
 
-1. Admit one same-regime, PIT-valid Networking series with raw first-party archive.
-2. Admit Financing Regime from qualified official/structured macro evidence.
-3. Admit Capital Efficiency only after its accounting definition is frozen; do not substitute generic margins or ROIC by convenience.
-4. Recompile the full Reality card.
-5. Human Review may then decide whether evidence is sufficient for `02 EVIDENCE → 03 NARRATIVE`; no automatic transition is authorized.
+1. Admit Financing Regime using PIT-qualified official/structured macro evidence.
+2. Freeze a defensible Capital Efficiency accounting definition before selecting any proxy.
+3. Recompile Reality after each admission.
+4. Only after an explicit coverage gate may Human Review consider `02 EVIDENCE → 03 NARRATIVE`; no automatic transition is authorized.
 
 ## Strategic laws
 
 `PROVIDER_AVAILABILITY != SEMANTIC_EQUIVALENCE`
 
+`NETWORKING VENDOR REVENUE != AI-ONLY NETWORKING REVENUE`
+
 `HIGH LEVEL + NEGATIVE Δ² != DEMAND COLLAPSE`
 
 `LOCAL Δ² != OVERALL Δ²`
 
-`3/6 QUALIFIED != OVERALL AI INFRA REALITY SETTLED`
+`4/6 QUALIFIED != OVERALL AI INFRA REALITY SETTLED`
 
 `REALITY STATE != RESEARCH PASS != CAPITAL PASS`
