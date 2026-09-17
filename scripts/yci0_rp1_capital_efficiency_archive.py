@@ -46,6 +46,50 @@ def manifest_entities() -> tuple[str, ...]:
     return tuple(_load_registry()["entities"].keys())
 
 
+def build_concept_coverage_diagnostics(
+    normalized: str,
+    candidates: list[str],
+    gaap: dict[str, Any],
+    normalized_by_tag: dict[str, list[Any]],
+    target_periods: set[str],
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for tag in candidates:
+        tag_obj = gaap.get(tag)
+        if tag_obj is None:
+            continue
+        normalized_periods = sorted(
+            {str(f.fiscal_period) for f in normalized_by_tag.get(tag, [])},
+            key=_period_ordinal,
+        )
+        raw = _original_facts(tag_obj)
+        target_years = {int(period[:4]) for period in target_periods}
+        raw_facts = []
+        for item in sorted(raw, key=lambda x: (x.get("filed", ""), x.get("accn", ""), x.get("start") or "", x.get("end") or "")):
+            end = str(item.get("end") or "")
+            fy = item.get("fy")
+            end_year = int(end[:4]) if len(end) >= 4 and end[:4].isdigit() else None
+            if fy not in target_years and end_year not in target_years:
+                continue
+            raw_facts.append({
+                key: (str(item.get(key)) if key == "val" and item.get(key) is not None else item.get(key))
+                for key in ("fy", "fp", "start", "end", "filed", "accn", "form", "val", "frame")
+            })
+        rows.append({
+            "normalized": normalized,
+            "tag": tag,
+            "label": tag_obj.get("label"),
+            "description": tag_obj.get("description"),
+            "covered_target_periods": [p for p in normalized_periods if p in target_periods],
+            "all_normalized_periods": normalized_periods,
+            "raw_accessions": sorted({str(x.get("accn")) for x in raw if x.get("accn")}),
+            "raw_fiscal_period_types": sorted({str(x.get("fp")) for x in raw if x.get("fp")}),
+            "raw_fact_count": len(raw),
+            "raw_facts": raw_facts,
+        })
+    return rows
+
+
 def synthetic_receipt() -> dict[str, Any]:
     return {
         "status": "PASS",
@@ -335,6 +379,7 @@ def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict
     target = set(anchor_periods)
     selected: dict[str, str] = {"TOTAL_ASSETS": anchor_tag} if anchor_tag else {}
     blockers: list[str] = []
+    coverage_diagnostics: dict[str, list[dict[str, Any]]] = {}
 
     for normalized in MANDATORY_NORMALIZED:
         if normalized == "TOTAL_ASSETS":
@@ -344,6 +389,11 @@ def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict
         tag = select_tag_for_target_periods(candidates, periods_by_tag, target)
         if tag is None:
             blockers.append(f"NO_SINGLE_TAG_COVERS_LATEST_11:{normalized}")
+            coverage_diagnostics[normalized] = build_concept_coverage_diagnostics(
+                normalized, candidates, gaap,
+                {candidate: normalized_for(normalized, candidate) for candidate in candidates if candidate in gaap},
+                target,
+            )
         else:
             selected[normalized] = tag
 
@@ -359,7 +409,8 @@ def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict
     if blockers:
         return {
             "entity_id": entity, "cohort": cfg["cohort"], "qualification": "UNKNOWN",
-            "selected_tags": selected, "blockers": sorted(set(blockers)), "target_periods": anchor_periods, "derived": {},
+            "selected_tags": selected, "blockers": sorted(set(blockers)), "target_periods": anchor_periods,
+            "coverage_diagnostics": coverage_diagnostics, "derived": {},
         }
 
     normalized_facts: list[FilingFact] = []

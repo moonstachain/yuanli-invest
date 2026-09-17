@@ -5,6 +5,7 @@ from pathlib import Path
 
 from scripts.yci0_rp1_capital_efficiency_archive import (
     audit_tag_regime,
+    build_concept_coverage_diagnostics,
     latest_consecutive_window,
     manifest_entities,
     select_tag_for_target_periods,
@@ -45,6 +46,29 @@ class CapitalEfficiencyArchiveTests(unittest.TestCase):
         )
         self.assertEqual(result["status"], "UNKNOWN")
         self.assertIn("MISSING_TAG:OPERATING_INCOME", result["blockers"])
+
+    def test_concept_diagnostics_expose_semantics_and_target_coverage_without_bridging(self):
+        gaap={
+            "OldTag": {"label":"Purchases of property and equipment", "description":"Cash paid for PP&E", "units":{"USD":[
+                {"form":"10-Q","fp":"Q1","fy":2025,"start":"2025-01-01","end":"2025-03-31","filed":"2025-05-01","accn":"a1","val":10},
+            ]}},
+            "NewTag": {"label":"Purchases of productive assets", "description":"Cash paid for productive assets", "units":{"USD":[
+                {"form":"10-K","fp":"FY","fy":2025,"start":"2025-01-01","end":"2025-12-31","filed":"2026-02-01","accn":"a2","val":40},
+            ]}},
+        }
+        normalized={
+            "OldTag":[type("F",(),{"fiscal_period":"2025Q1","source_locator":"sec://a1"})()],
+            "NewTag":[type("F",(),{"fiscal_period":"2025Q4","source_locator":"sec://a2"})()],
+        }
+        out=build_concept_coverage_diagnostics(
+            "CAPEX", ["OldTag","NewTag"], gaap, normalized, {"2025Q1","2025Q2","2025Q3","2025Q4"}
+        )
+        self.assertEqual([x["tag"] for x in out],["OldTag","NewTag"])
+        self.assertEqual(out[0]["label"],"Purchases of property and equipment")
+        self.assertEqual(out[0]["covered_target_periods"],["2025Q1"])
+        self.assertEqual(out[1]["raw_accessions"],["a2"])
+        self.assertEqual(out[1]["raw_facts"][0]["accn"],"a2")
+        self.assertEqual(out[1]["raw_facts"][0]["fp"],"FY")
 
     def test_split_capex_taxonomy_cannot_be_silently_bridged(self):
         result = audit_tag_regime(
