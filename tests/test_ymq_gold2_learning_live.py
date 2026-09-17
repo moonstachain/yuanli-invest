@@ -1,8 +1,7 @@
 import json
 import tempfile
+import unittest
 from pathlib import Path
-
-import pytest
 
 from scripts import ymq_gold2_learning_live as learning
 
@@ -34,104 +33,102 @@ def receipt(day, gold, real_rate, usd, known=None, *, status="LIVE_SHADOW_RECEIP
     return out
 
 
-def test_contract_keeps_learning_non_authoritative():
-    cfg = learning.load_contract(CONTRACT)
-    learning.validate_contract(cfg)
-    assert cfg["status"] == "HUMAN_AUTHORIZED_RESEARCH_LEARNING_ONLY"
-    assert cfg["authority"]["research_learning_authorized"] is True
-    for field in (
-        "accepted_learning_authorized", "capital_authorized", "sizing_authorized",
-        "execution_authorized", "broker_action", "veighna_authorized",
-        "asset_promotion_authorized", "canon_promotion_authorized",
-    ):
-        assert cfg["authority"][field] is False
+class LearningLiveTests(unittest.TestCase):
+    def test_contract_keeps_learning_non_authoritative(self):
+        cfg = learning.load_contract(CONTRACT)
+        learning.validate_contract(cfg)
+        self.assertEqual(cfg["status"], "HUMAN_AUTHORIZED_RESEARCH_LEARNING_ONLY")
+        self.assertTrue(cfg["authority"]["research_learning_authorized"])
+        for field in (
+            "accepted_learning_authorized", "capital_authorized", "sizing_authorized",
+            "execution_authorized", "broker_action", "veighna_authorized",
+            "asset_promotion_authorized", "canon_promotion_authorized",
+        ):
+            self.assertFalse(cfg["authority"][field])
+
+    def test_contract_freezes_attention_thresholds_and_scoring_law(self):
+        cfg = learning.load_contract(CONTRACT)
+        self.assertEqual(cfg["attention_thresholds"], {
+            "gold_price_pct_abs": 1.0,
+            "real_rate_bps_abs": 10.0,
+            "usd_pct_abs": 0.5,
+        })
+        self.assertTrue(cfg["settlement"]["directional_scoring_requires_preregistered_claim"])
+        self.assertEqual(cfg["settlement"]["missing_claim_state"], "NOT_SCORABLE")
+        self.assertEqual(cfg["settlement"]["known_as_of_regression"], "FAIL_CLOSED")
+
+    def test_delta_math_attention_and_unknown_resolution(self):
+        cfg = learning.load_contract(CONTRACT)
+        prior = receipt("2026-09-16", 4296.15, 3.05, 99.6335, known="2026-09-15")
+        current = receipt(
+            "2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16",
+            unknowns=["policy_path_expectations"],
+        )
+        delta = learning.build_state_delta(prior, current, cfg)
+        self.assertAlmostEqual(delta["gold_price_pct"], 0.7460139, places=6)
+        self.assertAlmostEqual(delta["real_rate_bps"], 1.0, places=6)
+        self.assertAlmostEqual(delta["usd_pct"], 0.6983597, places=6)
+        self.assertEqual(delta["attention"], ["usd_pct"])
+        self.assertEqual(delta["unknowns_resolved"], ["narrative_crowding_if_authoritative"])
+        self.assertEqual(delta["unknowns_added"], [])
+        self.assertEqual(delta["state_transitions"], {})
+
+    def test_known_as_of_regression_fails_closed(self):
+        cfg = learning.load_contract(CONTRACT)
+        prior = receipt("2026-09-16", 4296.15, 3.05, 99.63, known="2026-09-15")
+        current = receipt("2026-09-17", 4300.0, 3.05, 99.7, known="2026-09-14")
+        with self.assertRaisesRegex(ValueError, "known_as_of regression"):
+            learning.build_state_delta(prior, current, cfg)
+
+    def test_settlement_without_preregistered_claim_is_not_scorable(self):
+        cfg = learning.load_contract(CONTRACT)
+        prior = receipt("2026-09-16", 4296.15, 3.05, 99.63, known="2026-09-15")
+        current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
+        delta = learning.build_state_delta(prior, current, cfg)
+        settlement = learning.build_settlement(prior, current, delta, cfg)
+        self.assertEqual(settlement["pit_integrity"], "PASS")
+        self.assertEqual(settlement["directional_claim_score"], "NOT_SCORABLE")
+        self.assertEqual(settlement["regime_detection_lag"], "PENDING")
+        self.assertEqual(settlement["decision_regret"], "NOT_APPLICABLE")
+
+    def test_learning_candidate_is_non_authoritative_and_hashed(self):
+        cfg = learning.load_contract(CONTRACT)
+        prior = receipt("2026-09-16", 4296.15, 3.05, 99.63, known="2026-09-15")
+        current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
+        candidate = learning.build_learning_candidate(prior, current, cfg)
+        self.assertEqual(candidate["status"], "LEARNING_CANDIDATE_ONLY")
+        self.assertFalse(candidate["accepted_learning"])
+        self.assertFalse(candidate["authority"]["canon_promotion_authorized"])
+        self.assertEqual(len(candidate["source_receipts"]["prior_sha256"]), 64)
+        self.assertEqual(len(candidate["source_receipts"]["current_sha256"]), 64)
+        self.assertGreaterEqual(candidate["unknown_rate"], 0)
+        self.assertLessEqual(candidate["unknown_rate"], 1)
+
+    def test_same_day_receipts_are_skipped_for_daily_learning(self):
+        cfg = learning.load_contract(CONTRACT)
+        prior = receipt("2026-09-17", 4328.1, 3.06, 100.3, known="2026-09-16")
+        current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
+        result = learning.build_learning_candidate(prior, current, cfg)
+        self.assertEqual(result["status"], "DUPLICATE_DAY_SKIPPED")
+
+    def test_find_previous_daily_receipt_ignores_same_day_and_failures(self):
+        current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
+        same_day = receipt("2026-09-17", 4320.0, 3.06, 100.2, known="2026-09-16")
+        previous = receipt("2026-09-16", 4296.15, 3.05, 99.6335, known="2026-09-15")
+        failed = receipt("2026-09-15", 0, 0, 0, status="PROVIDER_FAIL_CLOSED")
+        self.assertEqual(learning.find_previous_daily_receipt(current, [failed, same_day, previous]), previous)
+
+    def test_private_write_creates_learning_tree_only(self):
+        cfg = learning.load_contract(CONTRACT)
+        prior = receipt("2026-09-16", 4296.15, 3.05, 99.63, known="2026-09-15")
+        current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
+        candidate = learning.build_learning_candidate(prior, current, cfg)
+        with tempfile.TemporaryDirectory() as td:
+            target = learning.write_learning_candidate(candidate, Path(td))
+            self.assertTrue(target.exists())
+            self.assertTrue(Path(td, "learning", "latest-learning.json").exists())
+            self.assertIn("learning", target.parts)
 
 
-def test_contract_freezes_attention_thresholds_and_scoring_law():
-    cfg = learning.load_contract(CONTRACT)
-    assert cfg["attention_thresholds"] == {
-        "gold_price_pct_abs": 1.0,
-        "real_rate_bps_abs": 10.0,
-        "usd_pct_abs": 0.5,
-    }
-    assert cfg["settlement"]["directional_scoring_requires_preregistered_claim"] is True
-    assert cfg["settlement"]["missing_claim_state"] == "NOT_SCORABLE"
-    assert cfg["settlement"]["known_as_of_regression"] == "FAIL_CLOSED"
-
-
-def test_delta_math_attention_and_unknown_resolution():
-    cfg = learning.load_contract(CONTRACT)
-    prior = receipt("2026-09-16", 4296.15, 3.05, 99.6335, known="2026-09-15")
-    current = receipt(
-        "2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16",
-        unknowns=["policy_path_expectations"],
-    )
-    delta = learning.build_state_delta(prior, current, cfg)
-    assert delta["gold_price_pct"] == pytest.approx(0.7460139, rel=1e-6)
-    assert delta["real_rate_bps"] == pytest.approx(1.0)
-    assert delta["usd_pct"] == pytest.approx(0.6983597, rel=1e-6)
-    assert delta["attention"] == ["usd_pct"]
-    assert delta["unknowns_resolved"] == ["narrative_crowding_if_authoritative"]
-    assert delta["unknowns_added"] == []
-    assert delta["state_transitions"] == {}
-
-
-def test_known_as_of_regression_fails_closed():
-    cfg = learning.load_contract(CONTRACT)
-    prior = receipt("2026-09-16", 4296.15, 3.05, 99.63, known="2026-09-15")
-    current = receipt("2026-09-17", 4300.0, 3.05, 99.7, known="2026-09-14")
-    with pytest.raises(ValueError, match="known_as_of regression"):
-        learning.build_state_delta(prior, current, cfg)
-
-
-def test_settlement_without_preregistered_claim_is_not_scorable():
-    cfg = learning.load_contract(CONTRACT)
-    prior = receipt("2026-09-16", 4296.15, 3.05, 99.63, known="2026-09-15")
-    current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
-    delta = learning.build_state_delta(prior, current, cfg)
-    settlement = learning.build_settlement(prior, current, delta, cfg)
-    assert settlement["pit_integrity"] == "PASS"
-    assert settlement["directional_claim_score"] == "NOT_SCORABLE"
-    assert settlement["regime_detection_lag"] == "PENDING"
-    assert settlement["decision_regret"] == "NOT_APPLICABLE"
-
-
-def test_learning_candidate_is_non_authoritative_and_hashed():
-    cfg = learning.load_contract(CONTRACT)
-    prior = receipt("2026-09-16", 4296.15, 3.05, 99.63, known="2026-09-15")
-    current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
-    candidate = learning.build_learning_candidate(prior, current, cfg)
-    assert candidate["status"] == "LEARNING_CANDIDATE_ONLY"
-    assert candidate["accepted_learning"] is False
-    assert candidate["authority"]["canon_promotion_authorized"] is False
-    assert len(candidate["source_receipts"]["prior_sha256"]) == 64
-    assert len(candidate["source_receipts"]["current_sha256"]) == 64
-    assert 0 <= candidate["unknown_rate"] <= 1
-
-
-def test_same_day_receipts_are_skipped_for_daily_learning():
-    cfg = learning.load_contract(CONTRACT)
-    prior = receipt("2026-09-17", 4328.1, 3.06, 100.3, known="2026-09-16")
-    current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
-    result = learning.build_learning_candidate(prior, current, cfg)
-    assert result["status"] == "DUPLICATE_DAY_SKIPPED"
-
-
-def test_find_previous_daily_receipt_ignores_same_day_and_failures():
-    current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
-    same_day = receipt("2026-09-17", 4320.0, 3.06, 100.2, known="2026-09-16")
-    previous = receipt("2026-09-16", 4296.15, 3.05, 99.6335, known="2026-09-15")
-    failed = receipt("2026-09-15", 0, 0, 0, status="PROVIDER_FAIL_CLOSED")
-    assert learning.find_previous_daily_receipt(current, [failed, same_day, previous]) == previous
-
-
-def test_private_write_creates_learning_tree_only():
-    cfg = learning.load_contract(CONTRACT)
-    prior = receipt("2026-09-16", 4296.15, 3.05, 99.63, known="2026-09-15")
-    current = receipt("2026-09-17", 4328.2, 3.06, 100.3293, known="2026-09-16")
-    candidate = learning.build_learning_candidate(prior, current, cfg)
-    with tempfile.TemporaryDirectory() as td:
-        target = learning.write_learning_candidate(candidate, Path(td))
-        assert target.exists()
-        assert Path(td, "learning", "latest-learning.json").exists()
-        assert "learning" in target.parts
+if __name__ == "__main__":
+    unittest.main()
