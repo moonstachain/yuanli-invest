@@ -1,0 +1,75 @@
+{
+  "contract_id": "YCI0-RP1-G6-ENTITY-RECONSTRUCTION-v0.1",
+  "authority": "RESEARCH",
+  "normalization_unit": "USD",
+  "flow_basis": "QUARTERLY_NORMALIZED_THEN_TTM",
+  "entities": {
+    "MSFT": {
+      "cohort": "HYPERSCALER",
+      "sec_cik": "0000789019",
+      "submissions_url": "https://data.sec.gov/submissions/CIK0000789019.json",
+      "companyfacts_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+      "accounting_regime": "US_GAAP_COMPANY_LEVEL",
+      "tax_rate_min": "0",
+      "tax_rate_max": "0.50",
+      "minimum_invested_capital_delta": "100000000",
+      "near_zero_nopat": "1000000",
+      "required_raw_quarters_incremental_roic": 11,
+      "required_raw_quarters_ttm": 7
+    },
+    "NVDA": {
+      "cohort": "COMPUTE",
+      "sec_cik": "0001045810",
+      "submissions_url": "https://data.sec.gov/submissions/CIK0001045810.json",
+      "companyfacts_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+      "accounting_regime": "US_GAAP_COMPANY_LEVEL",
+      "tax_rate_min": "0",
+      "tax_rate_max": "0.50",
+      "minimum_invested_capital_delta": "100000000",
+      "near_zero_nopat": "1000000",
+      "required_raw_quarters_incremental_roic": 11,
+      "required_raw_quarters_ttm": 7
+    },
+    "ANET": {
+      "cohort": "NETWORKING",
+      "sec_cik": "0001596532",
+      "submissions_url": "https://data.sec.gov/submissions/CIK0001596532.json",
+      "companyfacts_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001596532.json",
+      "accounting_regime": "US_GAAP_COMPANY_LEVEL",
+      "tax_rate_min": "0",
+      "tax_rate_max": "0.50",
+      "minimum_invested_capital_delta": "25000000",
+      "near_zero_nopat": "1000000",
+      "required_raw_quarters_incremental_roic": 11,
+      "required_raw_quarters_ttm": 7
+    },
+    "ETN": {
+      "cohort": "POWER_ELECTRICAL",
+      "sec_cik": "0001551182",
+      "submissions_url": "https://data.sec.gov/submissions/CIK0001551182.json",
+      "companyfacts_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001551182.json",
+      "accounting_regime": "US_GAAP_COMPANY_LEVEL",
+      "tax_rate_min": "0",
+      "tax_rate_max": "0.50",
+      "minimum_invested_capital_delta": "100000000",
+      "near_zero_nopat": "1000000",
+      "required_raw_quarters_incremental_roic": 11,
+      "required_raw_quarters_ttm": 7
+    }
+  },
+  "normalized_concepts": {
+    "REVENUE": ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues"],
+    "OPERATING_INCOME": ["OperatingIncomeLoss"],
+    "PRETAX_INCOME": ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest", "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments"],
+    "INCOME_TAX_EXPENSE": ["IncomeTaxExpenseBenefit"],
+    "OPERATING_CASH_FLOW": ["NetCashProvidedByUsedInOperatingActivities"],
+    "CAPEX": ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"],
+    "TOTAL_ASSETS": ["Assets"],
+    "CASH": ["CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents"],
+    "CURRENT_MARKETABLE_SECURITIES": ["ShortTermInvestments", "MarketableSecuritiesCurrent"],
+    "TOTAL_CURRENT_LIABILITIES": ["LiabilitiesCurrent"],
+    "SHORT_TERM_BORROWINGS": ["ShortTermBorrowings"],
+    "CURRENT_MATURITIES_LONG_TERM_DEBT": ["LongTermDebtCurrent"],
+    "CURRENT_FINANCE_LEASE_LIABILITIES": ["FinanceLeaseLiabilityCurrent"]
+  }
+}
