@@ -142,6 +142,34 @@ def _compile_dimension(name: str, rows: list[RealityEvidence]) -> DimensionState
     return DimensionState(name, level, delta, delta2, state, confidence, all_refs, latest_known)
 
 
+def _compile_capital_efficiency_dimension(rows: list[RealityEvidence], as_of: str) -> DimensionState:
+    from pathlib import Path
+
+    try:
+        from runtime.yci0_rp1.capital_efficiency_compiler import compile_capital_efficiency
+        from runtime.yci0_rp1.capital_efficiency_contract import load_capital_efficiency_contract
+
+        root = Path(__file__).resolve().parents[2]
+        contract = load_capital_efficiency_contract(
+            root / "config/yci0_rp1/capital_efficiency_contract.v0.1.json"
+        )
+        result = compile_capital_efficiency(rows, as_of, contract)
+        return DimensionState(
+            dimension="capital_efficiency",
+            level=result.level,
+            delta=result.delta,
+            delta2=result.delta2,
+            state=result.state,
+            confidence=result.confidence,
+            evidence_refs=result.evidence_refs,
+            known_as_of=result.known_as_of,
+        )
+    except (FileNotFoundError, KeyError, ValueError):
+        return DimensionState(
+            "capital_efficiency", UNKNOWN, UNKNOWN, UNKNOWN, RealityState.UNKNOWN, "LOW", (), None
+        )
+
+
 def compile_reality_state(evidence: Iterable[RealityEvidence], as_of: str) -> RealityStateCard:
     eligible = [
         item
@@ -150,8 +178,11 @@ def compile_reality_state(evidence: Iterable[RealityEvidence], as_of: str) -> Re
         and item.known_as_of is not None
         and item.known_as_of <= as_of
     ]
-    dimensions = {
-        name: _compile_dimension(name, [item for item in eligible if _belongs(item.metric_id, prefixes)])
-        for name, prefixes in DIMENSION_PREFIXES.items()
-    }
+    dimensions: dict[str, DimensionState] = {}
+    for name, prefixes in DIMENSION_PREFIXES.items():
+        rows = [item for item in eligible if _belongs(item.metric_id, prefixes)]
+        if name == "capital_efficiency":
+            dimensions[name] = _compile_capital_efficiency_dimension(rows, as_of)
+        else:
+            dimensions[name] = _compile_dimension(name, rows)
     return RealityStateCard(as_of=as_of, dimensions=dimensions)
