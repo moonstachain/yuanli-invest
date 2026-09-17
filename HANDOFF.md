@@ -10,31 +10,31 @@ Base branch：`yci0-rp0-ai-infra-proof-20260916`
 Current program：`YCI0｜Yuanli Capital Intelligence Spine`  
 Current flagship：`YCI0-RP1｜AI Infra First Live Reality Admission`
 
-> **Supersedes:** 旧的 `YIOS0` HANDOFF。YIOS0 的历史状态仍由其 Spec/Plan/receipts 决定，但本根目录 HANDOFF 现在以 YCI0-RP1 为当前恢复入口。
+> **恢复纪律：** 不重新设计总体架构，不重新做 Microsoft/NVIDIA 已通过的 Evidence，不提前进入 Narrative/Price/Shadow。先从当前 `Power/Grid raw archive failure` 恢复。
 
 ---
 
 # 1｜当前任务
 
-当前主任务不是继续扩架构，而是让真实世界逐层进入已经搭好的资本智能主脊柱：
+当前主任务是继续完成 `YCI0-RP1｜First Live Reality Admission`，让真实世界逐维进入资本智能主脊柱：
 
 `Reality → Evidence/PIT → Context → YMQ Compiler → Human Work → Audit → Shadow → Settlement → Learning → Reuse`
 
-当前母战役：
-
-# `YCI0-RP1｜First Live Reality Admission`
-
 母问题：
 
-> **AI Infrastructure 的 Reality 是否仍在加速；瓶颈是否正在从 GPU 向网络、电力/电网、冷却或资本效率迁移；市场 Narrative 是否领先 Reality；当前 Price 是否仍然提供 Right-Tail Payoff？**
+> **AI Infrastructure 的 Reality 是否仍在加速；瓶颈是否正在从 GPU 向网络、电力/电网、冷却或资本效率迁移；市场 Narrative 是否领先 Reality；当前 Price 是否仍提供 Right-Tail Payoff？**
 
-当前阶段只做 `Reality Admission`，不进入 Narrative/Price/Capital。
+**当前阶段只做 Reality Admission。**
 
-现在的执行原则：
+还不能进入：
 
-> **先把 6 个 Reality dimensions 一项项做成 first-party → PIT → raw archive → PASS receipt → Level/Δ/Δ²。**
+- Narrative / Herding
+- Price × Payoff
+- Capital sizing
+- Shadow
+- Execution
 
-当前 6 个维度：
+当前 6 个 Reality dimensions：
 
 1. `hyperscaler_capex`
 2. `compute`
@@ -43,16 +43,16 @@ Current flagship：`YCI0-RP1｜AI Infra First Live Reality Admission`
 5. `financing_regime`
 6. `capital_efficiency`
 
-当前已经闭合 2/6：
+当前真实进度：
 
-- `hyperscaler_capex = ACCELERATING / HIGH`
-- `compute = ACCELERATING / HIGH`
+- `hyperscaler_capex = ACCELERATING / HIGH` ✅
+- `compute = ACCELERATING / HIGH` ✅
+- `power_grid = LIMITED / RAW_ARCHIVE_FAILED` 🟡
+- `networking = UNKNOWN`
+- `financing_regime = UNKNOWN`
+- `capital_efficiency = UNKNOWN`
 
-当前正在攻：
-
-- `power_grid`
-
-整体状态仍必须保持：
+整体仍必须保持：
 
 # `PARTIAL_REALITY_STATE_2_OF_6 / OVERALL_REALITY_UNKNOWN / HOLD_AT_02_EVIDENCE`
 
@@ -60,7 +60,7 @@ Current flagship：`YCI0-RP1｜AI Infra First Live Reality Admission`
 
 # 2｜必须长期保持的法权纪律
 
-这些不是背景知识，而是当前 Runtime / Human Work 的硬约束：
+以下是硬约束，不是文案：
 
 - `Reality > Belief`
 - `ClaimAuthority <= EvidenceAuthority`
@@ -73,14 +73,14 @@ Current flagship：`YCI0-RP1｜AI Infra First Live Reality Admission`
 - GitHub = Law Plane
 - Supabase = Machine Reality / Evidence / Runtime Ledger
 - Wind structured MCP = Sensor / Evidence input
-- Wind Alice = Authored Knowledge Candidate, not first-party evidence by default
-- Yuanli Brain = Context / Memory / Capability Router, not final decision authority
+- Wind Alice = Authored Knowledge Candidate，不是 first-party evidence
+- Yuanli Brain = Context / Memory / Capability Router，不是最终投资答案
 - YMQ = Research Decision Compiler
 - Notion = Human Intelligence Workbench / Projection，不是 Machine Truth
 - Human Principal retains Capital Authority
 - Execution remains LOCKED
 
-严禁在本任务里偷偷引入：
+严禁在当前 battle 中偷偷引入：
 
 - BUY / SELL
 - position sizing
@@ -91,31 +91,21 @@ Current flagship：`YCI0-RP1｜AI Infra First Live Reality Admission`
 
 ---
 
-# 3｜YCI0-RP0 已完成到哪里
+# 3｜RP0 工程底座已完成到哪里
 
-RP0 是当前 RP1 的上游工程底座。
+RP1 直接复用 RP0，不另造平行系统。
 
-## 3.1 Task 1｜RP0 Contract + Question + Wind Metric Registry ✅
-
-完成：
-
-- AI Infra mother question
-- Wind minimum metric registry
-- closed-set contract
-- fail-closed validation
-- negative tests
+## Task 1｜Contract + Question + Wind Metric Registry ✅
 
 关键 commit：
 
 `8c1c6c8e865c8881df978b7a586e15e2c09caa48`
 
-补强后 targeted tests 从 7 → 15；全量回归通过。
+已冻结 AI Infra mother question、Wind minimum metric registry、closed-set contract、negative/fail-closed tests。
 
-## 3.2 Task 2｜PIT RealityEvidence ✅
+## Task 2｜PIT RealityEvidence ✅
 
-commit：
-
-`0b0fc47`
+commit：`0b0fc47`
 
 已证明：
 
@@ -124,13 +114,11 @@ commit：
 - authority leakage → `BLOCKED`
 - PIT semantics fail-closed
 
-## 3.3 Task 3｜Supabase Research Loop Persistence ✅ / Production Qualified
+## Task 3｜Supabase Research Loop Persistence ✅ / Production Qualified
 
-commit：
+commit：`36d4334`
 
-`36d4334`
-
-已真实应用到唯一确认项目：
+Production target：
 
 `yuanli-invest-runtime`
 
@@ -138,13 +126,13 @@ Supabase project ref：
 
 `tbmoimbdhsrltvospwpu`
 
-已生产验证：
+已物理验证：
 
 - RP0 runtime tables
 - 17 条 Evidence/PIT/Runtime FK
 - RLS
 - RESEARCH authority checks
-- service-role-only RPCs
+- service-role-only RPC
 - Shadow T0 immutable trigger
 
 状态：
@@ -153,11 +141,9 @@ Supabase project ref：
 
 非阻塞技术债：8 个 FK index performance INFO。
 
-## 3.4 Task 4｜Yuanli Brain Context Pack ✅
+## Task 4｜Yuanli Brain Context Pack ✅
 
-commit：
-
-`948906c`
+commit：`948906c`
 
 已实现 bounded Context Gateway：
 
@@ -167,98 +153,69 @@ commit：
 - provenance/freshness mandatory
 - stale/not-proven 不得 admitted
 - full-vault dump 拒绝
-- nested Capital/Execution authorization 字段 recursive fail-closed
+- nested Capital/Execution authorization recursive fail-closed
 - deterministic `context_hash`
 
-## 3.5 Task 5｜AI Infra Reality State Compiler ✅
+## Task 5｜AI Infra Reality State Compiler ✅
 
-commit：
-
-`df0274f`
+commit：`df0274f`
 
 已冻结：
 
 - Level / Δ / Δ²
 - as_of / PIT future exclusion
-- multi-metric 分组后再聚合
+- multi-metric 先分 metric 再聚合
 - 禁止 cross-metric contamination
-- 任一 required metric UNKNOWN/BLOCKED → dimension fail-closed UNKNOWN
+- required metric 中任一 UNKNOWN/BLOCKED → dimension fail-closed UNKNOWN
 
-## 3.6 Task 6｜Narrative × Transmission × Price × Payoff Compiler ✅
+## Task 6｜Narrative × Transmission × Price × Payoff Compiler ✅ / CURRENTLY NOT USED
 
-已完成纯研究编译器：
+能力已完成，但 RP1 当前 Reality coverage 不足，所以暂不进入。
 
-- Narrative/Transmission = `LIMITED`
-- Price/Payoff = `RESEARCH`
-- ResearchProjection = `RESEARCH`
-- 空 defeat condition → 不得 Audit eligible
-- 禁止自动生成 trade/capital authority
+## Task 7｜Notion Human Work Binding ✅ / LIMITED
 
-## 3.7 Task 7｜Notion Human Work Binding ✅ / LIMITED
-
-已完成 Native1 semantics compatibility adapter。
-
-只允许 machine-owned fields，不覆盖 Human thesis/body。
-
-已物理证明 synthetic UNKNOWN event：
-
-`04 TRANSMISSION → 02 EVIDENCE`
-
-Notion flagship：
+Flagship：
 
 `YCI0-RP0-CQ-001`
 
-Page ID：
+Notion Page ID：
 
 `3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-当前结论：
+已证明 machine-owned fields / synthetic UNKNOWN fail-close transition。
 
-`SCHEMA_BINDING_PROVEN / LIVE_EVENT_DRIVEN_AUTOMATION_PENDING`
+当前重要限制：
 
-重要：后续真实 Live Evidence → Notion 的更新目前仍是**受控 orchestration**，不能称 Native1 outbox/projector automation 已证明。
+> RP1 的真实 Live Evidence → Notion 更新仍是 **controlled orchestration**，不能声称 Native1 outbox/projector event-driven automation 已经证明。
 
-## 3.8 Task 8｜Reality Audit × Shadow ✅ / Real Shadow BLOCKED
+## Task 8｜Reality Audit × Shadow ✅ / Real Shadow BLOCKED
 
-commit：
+commit：`c897ac4`
 
-`c897ac4`
+能力已实现，但真实旗舰没有独立 Shadow Authority。
 
-已实现：
-
-- RealityAudit
-- Shadow T0 immutable freeze contract
-- Audit PASS gate
-- Shadow Authority gate
-- T+30/T+90/T+180 schedule
-- zero Capital/Execution assertions
-
-但是：
-
-当前没有独立 RP0/RP1 Shadow Authority。
-
-真实 flagship 必须保持：
+必须保持：
 
 `SHADOW_PREREGISTRATION_BLOCKED`
 
-不能通过 `shadow_authorized=true` 人工绕过。
+不能人工传 `shadow_authorized=true` 绕过。
 
-## 3.9 Task 9 / Task 10
+## Task 9 / Task 10
 
 尚未正式闭合：
 
-- Task 9 Settlement × LearningDelta × Brain Reuse
-- Task 10 HF Blind Ablation × Final Qualification
+- Settlement × LearningDelta × Brain Reuse
+- HF Blind Ablation × Final Qualification
 
-可以继续做 Capability，但真实 Settlement 必须等真实 Shadow + 真实未来时间。
+真实 Settlement 必须等待真实 Shadow + 真实未来时间。
 
 ---
 
-# 4｜YCI0-RP1 已经完成的 Reality Proof
+# 4｜RP1 已经完成的真实 Evidence / Reality Proof
 
-## 4.1 G0.5｜Hyperscaler Capex：Microsoft ✅ PASS
+## 4.1 Hyperscaler Capex｜Microsoft ✅ PASS
 
-Canonical first-party metric：
+Canonical series：
 
 `MSFT_CASH_PAID_PP&E_QUARTERLY_USD_BN`
 
@@ -266,7 +223,7 @@ Measurement regime：
 
 `CASH_PAID_PP&E_TOTAL_COMPANY`
 
-重要边界：
+边界：
 
 > **这是 Microsoft 全公司 cash paid / additions to PP&E，不是 AI-only capex。**
 
@@ -276,46 +233,30 @@ FY26 Q1–Q4：
 
 known_as_of：
 
-- FY26 Q1: `2025-10-29`
-- FY26 Q2: `2026-01-28`
-- FY26 Q3: `2026-04-29`
-- FY26 Q4: `2026-07-29`
+- FY26Q1 `2025-10-29`
+- FY26Q2 `2026-01-28`
+- FY26Q3 `2026-04-29`
+- FY26Q4 `2026-07-29`
 
-### Raw evidence
+Raw evidence：
 
-Microsoft official pages 已通过 GitHub Actions 写入 private Supabase S3：
+- Microsoft first-party HTML
+- private Supabase S3 bucket：`ymq4-raw-evidence`
+- 四份 source SHA == S3 readback SHA
+- 原 LIMITED receipts 保留
+- 新 raw-backed receipts = `PASS / RESEARCH_ONLY`
 
-bucket：
+Wind equivalence：
 
-`ymq4-raw-evidence`
-
-四份 raw HTML 均：
-
-`source SHA == S3 readback SHA`
-
-原 `LIMITED` receipts 保留；新增 raw-backed `PASS / RESEARCH_ONLY` receipts。
-
-### Wind equivalence
-
-实际调用 Wind `get_stock_fundamentals`。
-
-Wind 返回：
-
-`资本性支出`
-
-但 period/value/definition 与 Microsoft IR `PaymentsToAcquirePropertyPlantAndEquipment` 不一致。
-
-冻结 verdict：
-
-`NON_EQUIVALENT / ADJACENT_METRIC`
+- Wind 返回“资本性支出”
+- 与 Microsoft `PaymentsToAcquirePropertyPlantAndEquipment` period/value/definition 不等价
+- verdict：`NON_EQUIVALENT / ADJACENT_METRIC`
 
 Receipt：
 
 `docs/architecture/yci0_rp1/receipts/YCI0-RP1-G0.5-WIND-PROVIDER-EQUIVALENCE.md`
 
-### Reality Compiler result
-
-`hyperscaler_capex`：
+Reality result：
 
 - Level = `35.802B`
 - Δ = `+4.926B`
@@ -331,9 +272,11 @@ run：
 
 `b51f5f09-fff4-4bf2-bf26-9214b2460454`
 
-## 4.2 G2｜Compute：NVIDIA Data Center Revenue ✅ PASS
+---
 
-Canonical metric：
+## 4.2 Compute｜NVIDIA Data Center Revenue ✅ PASS
+
+Canonical series：
 
 `NVDA_DATA_CENTER_REVENUE_QUARTERLY_USD_BN`
 
@@ -343,10 +286,10 @@ Measurement regime：
 
 连续四季：
 
-- FY26 Q3 = `51.2B`
-- FY26 Q4 = `62.3B`
-- FY27 Q1 = `75.2B`
-- FY27 Q2 = `89.0B`
+- FY26Q3 = `51.2B`
+- FY26Q4 = `62.3B`
+- FY27Q1 = `75.2B`
+- FY27Q2 = `89.0B`
 
 known_as_of：
 
@@ -355,50 +298,36 @@ known_as_of：
 - `2026-05-20`
 - `2026-08-26`
 
-### Raw evidence
+Raw evidence：
 
-四份 NVIDIA Newsroom 原始 HTML 均已：
+- NVIDIA Newsroom first-party HTML
+- GitHub Actions：`YCI0 RP1 NVDA Compute Evidence`
+- 成功 run：`35178170769`
+- 四份 raw HTML → private S3 → SHA readback PASS
+- downstream authority 全 false
 
-`download → private S3 → SHA readback PASS`
+Production PASS Claim Receipt IDs：
 
-GitHub Actions：
+- FY26Q3：`25d9f1f0-e74c-4ec7-82ec-025585e12366`
+- FY26Q4：`eb6ec500-3528-499e-9cb7-473e1f95b8f1`
+- FY27Q1：`8c1a92c2-defc-4e47-95be-02da47688804`
+- FY27Q2：`b9982a3f-59ab-4aa5-b75d-0a9af5da1110`
 
-`YCI0 RP1 NVDA Compute Evidence`
-
-关键成功 run：
-
-`35178170769`
-
-artifact：
-
-`yci0-rp1-nvda-compute-receipt`
-
-### Wind equivalence
+Wind equivalence：
 
 Wind 返回：
 
 `数据中心产品 / 主营项目收入`
 
-但 period/value 与 NVIDIA Newsroom quarterly `Data Center revenue` 无法证明相同。
+与 NVIDIA Newsroom quarterly `Data Center revenue` 不能证明语义/期间/数值相同。
 
-冻结：
+verdict：
 
 `NON_EQUIVALENT / ADJACENT_SEGMENT_CONTEXT`
 
-不换汇、不推断、不拼接。
+禁止换汇后硬拼。
 
-### PASS receipts
-
-Production Claim Receipt IDs：
-
-- FY26Q3: `25d9f1f0-e74c-4ec7-82ec-025585e12366`
-- FY26Q4: `eb6ec500-3528-499e-9cb7-473e1f95b8f1`
-- FY27Q1: `8c1a92c2-defc-4e47-95be-02da47688804`
-- FY27Q2: `b9982a3f-59ab-4aa5-b75d-0a9af5da1110`
-
-### Reality Compiler result
-
-`compute`：
+Reality result：
 
 - Level = `89.0B`
 - Δ = `+13.8B`
@@ -406,11 +335,17 @@ Production Claim Receipt IDs：
 - State = `ACCELERATING`
 - Confidence = `HIGH`
 
-## 4.3 Multi-dimensional production state ✅
+正式 receipt：
 
-Microsoft + NVIDIA 一起进入同一个现有 Reality State Compiler。
+`docs/architecture/yci0_rp1/receipts/YCI0-RP1-G2-NVDA-COMPUTE-REALITY-RECEIPT.md`
 
-结果：
+---
+
+## 4.3 Multi-dimensional Reality State ✅
+
+Microsoft + NVIDIA 已进入同一个 Reality State Compiler。
+
+当前 6 维结果：
 
 - `hyperscaler_capex = ACCELERATING / HIGH`
 - `compute = ACCELERATING / HIGH`
@@ -419,7 +354,7 @@ Microsoft + NVIDIA 一起进入同一个现有 Reality State Compiler。
 - `financing_regime = UNKNOWN`
 - `capital_efficiency = UNKNOWN`
 
-Scope：
+scope：
 
 `PARTIAL_REALITY_STATE_2_OF_6`
 
@@ -435,95 +370,106 @@ state hash：
 
 `a1a2b4f0b94ba766906be0a7e6af9950d9f292e05f9c5c144e76b81c4d6fa26e`
 
-## 4.4 Notion Human Workbench 当前真实状态 ✅
+**不能把 2/6 accelerating 升级为 overall AI Infra accelerating。**
+
+---
+
+# 5｜Notion Human Workbench 当前真实状态
 
 Flagship page：
 
 `3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-当前 properties：
+当前：
 
 - `Active = YES`
 - `Authority = RESEARCH_ONLY`
-- `Machine Evidence Status = PASS`
+- Machine `Evidence Status = PASS`
 - Human `Evidence Status = READY`
-- `Machine Gate Status = OPEN`
+- Machine `Gate Status = OPEN`
 - Human `Gate Status = OPEN`
 - `Journey Stage = 02 EVIDENCE`
 - Human `Delta = UNKNOWN`
 - Human `Delta2 = UNKNOWN`
 - `Transition Suggestion = HOLD`
+- `Machine Source ID = SUPABASE://runtime/ai_infra_state_cards/65e4ab4f-0923-4fde-9518-9b7b2c4accff`
+- `Runtime Projection ID = d82d5df6-5f03-46e3-a7ed-342853323153`
 
-重要语义映射：
+重要 vocabulary boundary：
 
-> Machine `PASS` ≠ Human enum `PASS`。
+> Machine `PASS` 映射为 Human `READY`。
 
 Human `Evidence Status` enum 只有：
 
 `READY / LIMITED / BLOCKED / UNKNOWN`
 
-因此 machine PASS 映射为 Human READY。
-
-这不是 bug，是 Human/Machine vocabulary boundary。
+不要给 Human enum 写 `PASS`。
 
 ---
 
-# 5｜当前正在卡住的问题
+# 6｜当前卡住的问题：Power/Grid｜Eaton
 
-## 5.1 Power/Grid：Eaton raw archive FAIL-CLOSED
+## 6.1 选定的 first-party proxy
 
-选择的 first-party proxy：
+Metric：
 
 `Eaton Electrical Americas rolling-12-month organic order growth`
 
-原因：
+Canonical series ID：
+
+`ETN_ELECTRICAL_AMERICAS_R12M_ORDER_ORGANIC_GROWTH_PCT`
+
+Measurement regime：
+
+`EATON_ELECTRICAL_AMERICAS_R12M_ORGANIC_ORDER_GROWTH`
+
+选择原因：
 
 - 更接近新增电力基础设施需求；
 - organic 尽量隔离 acquisition effect；
-- Eaton 公开披露持续强调 data-center momentum。
+- Eaton 多季披露持续提到 data-center momentum / data centers as growth driver；
+- 比单纯 sales 更接近“新增需求边际”。
 
-Normalized series：
+边界：
+
+> **这是 Electrical Americas 电气基础设施需求 proxy，不是 AI-only orders，也不是 data-center-only orders。**
+
+## 6.2 normalized first-party series 已存在，但只允许 LIMITED
+
+连续四季：
 
 `7% → 16% → 42% → 41%`
-
-对应：
 
 - 2025Q3 = `7%`
 - 2025Q4 = `16%`
 - 2026Q1 = `42%`
 - 2026Q2 = `41%`
 
-边界：
+这些 normalized first-party facts 已进入 Supabase，但由于 raw archive 未通过，必须保持：
 
-> **这是 Electrical Americas 总订单有机增速 proxy，不是 AI-only / data-center-only orders。**
+`LIMITED / RAW_ARCHIVE_PENDING_OR_FAILED`
 
-当前 Supabase 状态：
+不要把它们送进 PASS-only Reality Compiler。
 
-`LIMITED / RAW_ARCHIVE_PENDING`
+## 6.3 Wind exact metric = NOT AVAILABLE
 
-### Wind status
-
-Wind exact query：
-
-`公司代码=ETN.N, 截止日期=2026-06-30, 请求指标=Electrical Americas 12个月滚动平均订单有机增速`
-
-结果：
+真实 Wind MCP 查询结果：
 
 `没找到数据`
 
-冻结：
+所以冻结为：
 
 `NOT_AVAILABLE / FIRST_PARTY_ONLY`
 
-Wind absence ≠ 0。
+不要把“没找到数据”当 0，也不要用其他 Wind 字段偷偷替代 exact metric。
 
-### Raw archive blocker
+## 6.4 Raw archive 当前明确 FAIL，不是 pending
 
-GitHub Actions：
+GitHub Actions workflow：
 
 `YCI0 RP1 Eaton Power Grid Evidence`
 
-最新明确失败 run：
+最新失败 run：
 
 `35178796079`
 
@@ -531,372 +477,264 @@ job：
 
 `105066286475`
 
-失败点：
+失败发生在：
 
 `Eaton raw sources to private S3 and SHA readback`
 
-真实原因不是数据冲突，而是：
+根因：
 
-`www.eaton.com` source read timeout / MaxRetryError
+Eaton first-party website `www.eaton.com` 响应超时。
 
-日志：
+关键错误：
 
-`ReadTimeoutError(... read timeout=60)`
+`ReadTimeoutError / MaxRetryError / requests.exceptions.ConnectionError`
 
-最终：
+当前脚本已经设置：
 
-`requests.exceptions.ConnectionError`
+- Retry total/connect/read = 5
+- connect timeout = 20s
+- read timeout = 60s
 
-所以当前不能把 Eaton 升 PASS，也不能正式运行 `power_grid` Reality State。
+仍在第一条 2025Q3 source 上失败：
 
-当前正确状态：
-
-# `POWER_GRID = LIMITED / RAW_SOURCE_TRANSPORT_BLOCKED / COMPILER_NOT_AUTHORIZED`
-
-## 5.2 Event-driven Supabase → Notion 仍未证明
-
-虽然 Live Evidence 已经改变了 Notion Human state，但当前是受控 orchestration。
-
-仍然不能声称：
-
-`Native1 outbox → projector → Notion = PROVEN`
-
-后续要单独做一条真实 event-driven proof。
-
-## 5.3 Shadow 仍然没有 Authority
-
-RP0 的 Shadow 机制代码可用，但没有独立 Shadow Authorization。
+`https://www.eaton.com/us/en-us/company/news-insights/news-releases/2025/eaton-reports-record-third-quarter-2025-results-with-accelerating-orders.html`
 
 因此：
 
-`SHADOW_PREREGISTRATION_BLOCKED`
+# `EATON_RAW_ARCHIVE = FAIL_CLOSED`
 
-不能为了后续 Settlement 强行打开。
+不能生成 PASS receipt，不能把 `power_grid` 从 UNKNOWN 升级。
 
-## 5.4 Settlement / Learning 还不能真实发生
+## 6.5 相关文件
 
-在真实 Shadow 未授权、T0 未冻结、未来时间尚未经过前：
+Archive script：
 
-`SETTLEMENT_PENDING_REALITY`
+`scripts/yci0_rp1_eaton_power_archive.py`
 
-可以开发 capability，不能制造真实 outcome。
+Workflow：
+
+`.github/workflows/yci0-rp1-eaton-power-evidence.yml`
+
+Normalized receipt：
+
+`docs/architecture/yci0_rp1/receipts/YCI0-RP1-G3-EATON-POWER-NORMALIZED-LIMITED.md`
+
+Wind receipt：
+
+`docs/architecture/yci0_rp1/receipts/YCI0-RP1-G3-EATON-WIND-NOT-AVAILABLE.md`
 
 ---
 
-# 6｜下一步严格执行顺序
+# 7｜下一步严格执行顺序
 
-下一个会话不要重新讨论 architecture，也不要重跑 Microsoft/NVIDIA。
+## Step 1｜不要先研究新标的；先修 Eaton raw-source admission
 
-第一句话：
+优先级最高。
 
-# `先读 HANDOFF.md。`
+目标：让同一 Eaton first-party source 能进入 private S3，并得到 `source SHA == S3 readback SHA`。
 
-然后按下面顺序继续。
+建议按顺序尝试：
 
-## Step 1｜先处理 Eaton raw archive transport blocker
+1. **寻找 Eaton 官方 PDF / earnings-complete PDF / investor-relations static asset**，优先替代动态 news page；
+2. 若官方 PDF 可稳定下载，直接把 canonical raw source 切换为 Eaton first-party PDF；
+3. 如果 PDF URL 也不稳定，查 Eaton 官方其他区域域名 / static CDN，但必须仍属于 Eaton first-party；
+4. 可以增加 downloader fallback（HTTP/1.1 / curl / alternate Eaton official URL），但不能引入第三方转载来冒充 first-party；
+5. raw archive 成功前，保留现有 LIMITED receipts，不删除、不覆盖。
 
-不要重复无脑 retry `www.eaton.com`。
+### 完成条件
 
-优先策略：
+- 4 quarters all raw archived
+- each source SHA == S3 readback SHA
+- exact metric markers validated
+- downstream authority all false
+- workflow PASS
 
-1. 寻找 Eaton 官方同一披露的可稳定 first-party surface：
-   - Eaton official PDF
-   - Eaton investor-relations earnings PDF
-   - Eaton official regional mirror
-   - Eaton official SEC-linked earnings exhibit（只有主体仍是 Eaton first-party/official filing 才可）
-2. 保持同一 measurement regime：
-   - `Electrical Americas rolling-12-month organic order growth`
-3. 必须验证四季 exact markers：
-   - `Electrical Americas`
-   - `twelve-month rolling average`
-   - `up 7% / 16% / 42% / 41%`
-4. 只有 raw bytes 成功写入 private S3 且 `SHA == readback SHA` 后才创建新 PASS receipts。
-5. 旧 LIMITED receipts 必须保留，不能原地改写历史。
+然后才：
 
-如果找不到稳定 first-party raw surface：
+- 新增 raw-backed `PASS / RESEARCH_ONLY` receipts
+- 保留旧 LIMITED receipts
+- 执行 `power_grid` Reality Compiler
 
-> 保持 `LIMITED / BLOCKED`，不要为了凑 3/6 换成另一个定义不一致的指标。
-
-## Step 2｜Eaton raw PASS 后再 requalify Evidence
-
-新增 raw-backed `PASS / RESEARCH_ONLY` Claim Receipts。
-
-不要更新旧 receipts。
-
-再 physical readback：
-
-`Source → Raw Snapshot → PIT Observation → PASS Claim Receipt`
-
-## Step 3｜运行 Power/Grid Reality State Compiler
-
-只有 Step 2 PASS 后才能运行。
+## Step 2｜如果 Eaton PASS，运行第三维 Reality Compiler
 
 预期输入：
 
 `7 → 16 → 42 → 41`
 
-不要事先写死结论。
+**不要提前写死结论。**
 
-让 compiler 决定：
+很可能出现：
 
-- Level
-- Δ
-- Δ²
-- State
-- Confidence
+- Level 很高
+- 最近 Δ = -1ppt
+- Δ² 显著转负
 
-特别注意：
+但只有 raw-backed PASS 后，compiler 才能正式输出 `power_grid` 状态。
 
-该序列很可能表现为：
+## Step 3｜更新 multi-dimensional card
 
-> **Level 高，但最新 Δ² 转弱/转负。**
+如果 Power/Grid 通过，则重新编译：
 
-这是推断，不是当前已冻结 machine result；只有 raw gate 通过后才能正式生成。
+- hyperscaler_capex
+- compute
+- power_grid
+- networking UNKNOWN
+- financing UNKNOWN
+- capital_efficiency UNKNOWN
 
-## Step 4｜更新 Multi-dimensional State Card
-
-如果 Power/Grid PASS，则形成：
+此时 scope 可能进入：
 
 `PARTIAL_REALITY_STATE_3_OF_6`
 
-但仍不能自动把 overall AI Infra Reality 升级成 ACCELERATING。
+**仍不要自动推进到 Narrative。**
 
-需要明确反结论：
+是否从 `02 EVIDENCE` 前进必须由明确 Reality coverage policy 决定，不要临时拍脑袋。
 
-> `3 qualified dimensions != overall Reality conclusion`
+## Step 4｜随后再攻 Networking
 
-## Step 5｜Notion 继续 HOLD，除非 transition contract 明确允许
+Power/Grid 闭合后再选 Networking 的 first-party canonical metric。
 
-即便 Power/Grid 通过，默认仍：
+优先方向：
 
-`Journey Stage = 02 EVIDENCE`
+- NVIDIA / Broadcom / Arista / optics 的 first-party networking revenue/backlog
+- 必须保持 same-regime 4-point PIT series
+- 先 first-party，再 Wind equivalence
+- 不同 metric 不混算
 
-直到足够 Reality coverage / frozen transition law 允许推进。
+## Step 5｜等 Reality coverage 足够，再回到 Narrative / Transmission
 
-不要因为 3/6 就手工改成 Narrative。
-
-## Step 6｜下一维优先级
-
-Power/Grid 后建议：
-
-1. `networking`
-2. `financing_regime`
-3. `capital_efficiency`
-
-依旧遵守：
-
-`first-party → PIT → raw archive → PASS → compiler`
-
-## Step 7｜Reality coverage 足够后，才进入 RP1-G2 Full Research Projection
-
-那时才运行：
-
-`Reality → Narrative → Transmission → Price/Payoff → ResearchProjection`
-
-输出仍仅：
-
-`RESEARCH Projection + Defeat Condition`
-
-不允许自动 Capital/Execution。
-
-## Step 8｜单独解决 Shadow Authority
-
-设计并走：
-
-`Shadow Admission Gate`
-
-至少：
-
-- Audit PASS
-- Defeat condition frozen
-- Evidence bundle frozen
-- Context hash frozen
-- Projection hash frozen
-- Human Shadow approval
-- Capital=false
-- Execution=false
-
-之后才允许真实 T0 Shadow。
+当前禁止提前进入。
 
 ---
 
-# 7｜踩过的坑 / Hard Negatives
+# 8｜踩过的坑 / 不要重复
 
-## Pitfall 1｜Provider 有数据 ≠ 同一个指标
+## 坑 1｜Wind 有字段 ≠ semantic equivalence
 
-Microsoft：
+Microsoft 与 NVIDIA 都出现过：
 
-Wind `资本性支出` ≠ IR `cash paid for PP&E`。
-
-NVIDIA：
-
-Wind `数据中心产品主营收入` ≠ Newsroom quarterly `Data Center revenue`，无法证明 same regime。
+Wind 返回“看起来相关”的字段，但定义/期间/单位/数值不完全相同。
 
 纪律：
 
-`Provider Availability != Semantic Equivalence`
+> `PROVIDER_AVAILABILITY != SEMANTIC_EQUIVALENCE`
 
-禁止换汇/期间推断/名称相似就拼接。
+只能标 `ADJACENT_METRIC / CONTEXT`，不能替换 first-party series。
 
-## Pitfall 2｜Raw source transport failure ≠ Evidence false
+## 坑 2｜数值序列向上 ≠ Evidence PASS
 
-Eaton 是典型例子。
+Microsoft 最初就是：
 
-当前失败是：
+数值看起来明显加速，但 raw bytes 未 archive 时只能 LIMITED。
 
-`source transport / read timeout`
+纪律：
 
-不是：
+> `NUMERIC_ACCELERATION != EVIDENCE_PASS`
 
-`7/16/42/41 被证伪`
+## 坑 3｜GitHub normalized receipt ≠ raw Evidence Vault
 
-要把：
+Markdown receipt 有价值，但不能替代 provider raw bytes。
 
-- source fact
-- archive transport
-- evidence authority
+必须：
 
-分开记录。
+`provider raw → private S3 → SHA readback`
 
-## Pitfall 3｜Normalized receipt ≠ raw Evidence Vault
+之后才可做 Evidence requalification。
 
-Microsoft 第一阶段已经踩过：
+## 坑 4｜不要覆盖旧 LIMITED receipt
 
-GitHub normalized receipt 有用，但不等于 raw source archived。
+Evidence 升级时：
 
-最终 PASS 依赖 raw first-party bytes + immutable SHA lineage。
+- 保留旧 LIMITED
+- 新增 PASS receipt
 
-## Pitfall 4｜同一 statement 插入后 base-table 立即读取的 Postgres 可见性
+这样 lineage 能看到“当时为何不能 PASS”。
 
-批量 CTE 曾出现：
+## 坑 5｜Notion Human enum 与 Machine enum 不一致
 
-Source Snapshot 已插入，但后续同 statement 没按预期读到 freshly inserted rows，导致 Observation/Claim 没跟上。
+Machine：`PASS`
 
-处理：
+Human：`READY`
 
-分阶段写入 + physical readback。
+不要强行把 PASS 写进 Human select。
 
-不要只看 SQL `no error`。
+## 坑 6｜多个 metric 不能直接串成一个时间序列算 Δ/Δ²
 
-## Pitfall 5｜UUID[] 类型必须显式正确
+Task 5 已经发现并修复 cross-metric contamination。
 
-`runtime.agent_runs.evidence_refs` 是 `uuid[]`。
+必须：
 
-曾因为传 `text[]` 被数据库拒绝。
+先按 metric_id 编译，再在 dimension 聚合。
 
-数据库拒绝是好事；修类型，不改研究语义。
+## 坑 7｜同一 SQL statement 的 data-modifying CTE 可见性曾导致“部分成功”
 
-## Pitfall 6｜Machine vocabulary ≠ Human vocabulary
+Microsoft Q1–Q3 初次批量写入时，Source Snapshot 已插入，但后续 Observation / Claim Receipt 没跟上。
 
-Notion Human `Evidence Status` 没有 PASS，只有：
+以后每次 production write 都必须 physical readback：
 
-`READY / LIMITED / BLOCKED / UNKNOWN`
+`Source → Snapshot → Observation → Claim Receipt`
 
-因此：
+不要因为 SQL 无报错就宣布闭环。
 
-`Machine PASS → Human READY`
+## 坑 8｜`agent_runs.evidence_refs` 是 `uuid[]`
 
-不要强塞机器枚举破坏 Human schema。
+曾误传 `text[]`，数据库正确拒绝。
 
-## Pitfall 7｜两个维度加速 ≠ 整体 AI Infra 加速
+不要再重复类型错误。
 
-当前已经有：
+## 坑 9｜Eaton 官网网络层本身不稳定
 
-- Capex accelerating
-- Compute accelerating
+本机：HTTP/2 `INTERNAL_ERROR`
 
-但整体仍：
+GitHub runner：持续 ReadTimeout / MaxRetryError
 
-`UNKNOWN`
+这不等于 source 不存在，但意味着**当前 downloader/URL path 不可靠**。
 
-这条纪律必须继续保持。
+优先找 Eaton 官方静态 PDF / CDN，而不是无限增加 retry。
 
-## Pitfall 8｜数值漂亮 ≠ Evidence 过关
+## 坑 10｜Notion controlled orchestration ≠ event-driven automation
 
-Microsoft 在 LIMITED 阶段，即使 `19.394 → 29.876 → 30.876 → 35.802` 看起来很好，也把 Delta/Delta2 钉死 UNKNOWN。
+当前 Live Evidence 更新 Notion 是 controlled orchestration。
 
-只有 raw-backed PASS 后才运行 compiler。
+不能宣称：
 
-## Pitfall 9｜GitHub Actions success ≠ Research promotion authorized
+`Native1 event-driven outbox/projector PROVEN`
 
-Raw archive workflows 都明确：
+## 坑 11｜2/6 accelerating ≠ overall accelerating
 
-- evidence_promotion_authorized = false
-- research_authorized = false
-- capital_authorized = false
-- execution_authorized = false
+当前最重要的科学纪律：
 
-CI 只证明 source archive/receipt，不自动升级研究法权。
+> `Two Qualified Accelerating Dimensions != Overall AI Infra Reality Acceleration`
 
-## Pitfall 10｜受控 Notion mutation ≠ event-driven architecture 已证明
+Human Workbench 仍 HOLD at `02 EVIDENCE`。
 
-当前 Live Evidence → Notion 是真实 Human state change，
+## 坑 12｜不要因为 Shadow 代码能跑就授权真实 Shadow
 
-但不是 Native1 automatic outbox/projector proof。
-
-必须继续区分。
-
-## Pitfall 11｜Workflow retry 不应掩盖 source-side blocker
-
-Eaton 已多次 source timeout。
-
-不要继续无脑 rerun 同 URL。
-
-下一步应换 Eaton 官方稳定 surface，而不是增加 retry 数量来制造“坚持”。
-
-## Pitfall 12｜不要让架构成功替代 Reality 闭环
-
-当前系统已经足够复杂。
-
-在第一条完整 `Reality → Projection → Shadow → Settlement → Learning → Reuse` 真闭环完成前：
-
-- 不新增第六研究引擎
-- 不新增 Agent 大层
-- 不新增资本/执行权限
-- 不做全资产 rollout
+Shadow capability 已有，但 authority 仍 BLOCKED。
 
 ---
 
-# 8｜关键 GitHub / Supabase / Notion 坐标
+# 9｜GitHub / Production 当前关键地址与状态
 
-## GitHub
-
-Repo：
+Repository：
 
 `moonstachain/yuanli-invest`
 
-RP0 branch：
-
-`yci0-rp0-ai-infra-proof-20260916`
-
-RP1 branch：
+Branch：
 
 `yci0-rp1-live-evidence-20260917`
 
-RP1 Draft PR：
+Draft PR：
 
-`#102`
+`#102｜YCI0-RP1｜First Live Reality Admission`
 
-关键 receipts：
+PR 当前仍：
 
-- `docs/architecture/yci0_rp1/YCI0-RP1-G0-G1-REALITY-STATUS.md`
-- `docs/architecture/yci0_rp1/receipts/YCI0-RP1-G0.5-WIND-PROVIDER-EQUIVALENCE.md`
-- `docs/architecture/yci0_rp1/receipts/YCI0-RP1-G2-NVDA-WIND-EQUIVALENCE.md`
-- `docs/architecture/yci0_rp1/receipts/YCI0-RP1-G2-COMPUTE-REALITY-RECEIPT.md`
-- `docs/architecture/yci0_rp1/receipts/YCI0-RP1-G3-EATON-WIND-AVAILABILITY.md`
-- `docs/architecture/yci0_rp1/receipts/YCI0-RP1-G3-EATON-NORMALIZED-LIMITED.md`
+- open
+- draft
+- mergeable
 
-raw workflows/scripts：
-
-- `.github/workflows/yci0-rp1-raw-evidence.yml`
-- `.github/workflows/yci0-rp1-nvda-compute-evidence.yml`
-- `.github/workflows/yci0-rp1-eaton-power-grid-evidence.yml`
-- `scripts/yci0_rp1_nvda_compute_archive.py`
-- `scripts/yci0_rp1_eaton_power_archive.py`
-
-## Supabase
-
-Project：
+Supabase：
 
 `yuanli-invest-runtime`
 
@@ -904,42 +742,49 @@ Project ref：
 
 `tbmoimbdhsrltvospwpu`
 
-Private raw bucket：
+Raw Evidence bucket：
 
 `ymq4-raw-evidence`
 
-Latest 2/6 state card：
+Notion flagship：
 
-`65e4ab4f-0923-4fde-9518-9b7b2c4accff`
+`YCI0-RP1｜AI Infra First Live Reality Admission`
 
-Latest run：
-
-`d82d5df6-5f03-46e3-a7ed-342853323153`
-
-## Notion
-
-Flagship Capital Question page：
+Page ID：
 
 `3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-Current state：
+Current state card：
 
-`READY / OPEN / 02 EVIDENCE / HOLD / RESEARCH_ONLY`
+`65e4ab4f-0923-4fde-9518-9b7b2c4accff`
 
----
+Current run：
 
-# 9｜下次会话最小启动指令
-
-第一句话：
-
-# `先读 HANDOFF.md。`
-
-然后执行：
-
-> **从 `YCI0-RP1-G3｜Power/Grid Reality Admission` 恢复。不要重做 Microsoft/NVIDIA。先读取 Eaton raw archive 最新 workflow/logs；当前已确认 `www.eaton.com` timeout 是 transport blocker。优先寻找 Eaton 官方可稳定下载的一手 PDF/IR surface，完成 raw S3 SHA readback 后才允许 LIMITED→新 PASS receipt，再运行 power_grid Level/Δ/Δ² compiler。继续保持 overall AI Infra Reality UNKNOWN、Notion HOLD @ 02 EVIDENCE，除非独立 Gate 明确允许推进。**
+`d82d5df6-5f03-46e3-a7ed-342853323153`
 
 ---
 
-# 10｜当前状态一句话
+# 10｜新会话启动检查清单
 
-# `RP0 ENGINEERING SPINE MOSTLY BUILT → RP1 LIVE REALITY ACTIVE → CAPEX PASS/ACCELERATING → COMPUTE PASS/ACCELERATING → POWER_GRID LIMITED/RAW_TRANSPORT_BLOCKED → OVERALL REALITY UNKNOWN → NOTION HOLD @ EVIDENCE → SHADOW BLOCKED → CAPITAL LOCKED → EXECUTION LOCKED`
+新会话收到：
+
+> **先读 HANDOFF.md。**
+
+之后按顺序：
+
+1. 读取当前 branch `yci0-rp1-live-evidence-20260917` 的 `HANDOFF.md`；
+2. 回读 PR #102 最新 head，不假设本地状态；
+3. 检查 `YCI0 RP1 Eaton Power Grid Evidence` 最新 run；
+4. 当前已知失败基线：run `35178796079` / job `105066286475`；
+5. 不重做 Microsoft/NVIDIA；
+6. 从 **Eaton official static/PDF raw-source fallback** 开始；
+7. raw archive 未 PASS 前，Power/Grid 必须保持 LIMITED/UNKNOWN；
+8. raw PASS 后：新增 PASS receipts → Reality Compiler → multi-dimensional card；
+9. 仍不得提前进入 Narrative/Price/Shadow；
+10. 每一步 production mutation 后必须 physical readback。
+
+---
+
+# 11｜一句话恢复点
+
+> **YCI0-RP1 已真实闭合 Microsoft hyperscaler capex 与 NVIDIA compute 两个 PASS-backed accelerating Reality dimensions；当前卡在 Eaton Power/Grid first-party raw archive，normalized 7→16→42→41 已 LIMITED 入账，但 Eaton 官网在 GitHub runner 多次 ReadTimeout，必须先找到稳定的 Eaton first-party static/PDF source 并完成 S3 SHA readback，之后才能把 Power/Grid 升为 PASS 并运行第三维 Reality Compiler。**
