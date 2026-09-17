@@ -1,0 +1,16 @@
+{
+  "provider_adapter_id": "PROVIDER-EASTMONEY-MIAOXIANG",
+  "provider_name": "Eastmoney Miaoxiang",
+  "provider_class": "licensed_vendor",
+  "license_boundary": "User-authorized licensed financial-data access for evidence/research only; no redistribution, execution authority, sizing authority, or Canon promotion is implied.",
+  "mappings": [
+    {
+      "field_id": "FIELD-INSTRUMENT-PRICE",
+      "provider_field": "mx_macro_data :: 伦敦金现(美元/盎司)",
+      "transformation": "Select the latest non-empty daily observation; preserve provider series label, source, observation date and unit; never substitute a semantically adjacent gold series silently.",
+      "point_in_time_compatibility": "native",
+      "revision_handling": "Each query is timestamped and raw-hashed outside Git; later provider corrections become new evidence receipts and do not overwrite prior lineage."
+    }
+  ],
+  "canonical_semantics_may_not_be_redefined": true
+}
