@@ -78,6 +78,42 @@ class G6AdmissionTests(unittest.TestCase):
         self.assertEqual([x["content_hash"] for x in out],["a","b"])
         self.assertEqual(out[0]["x"],1)
 
+    def test_governed_filing_xbrl_archives_extend_base_eight_without_raw_coverage_failure(self):
+        r=partial_receipt()
+        r["qualified_entities"]=["MSFT","NVDA"]
+        for entity in r["entities"]:
+            if entity["entity_id"]=="NVDA":
+                entity["qualification"]="QUALIFIED"
+                entity["blockers"]=[]
+                entity["derived"]={
+                    component:{"qualified":True,"latest_four_periods":["2026Q3","2026Q4","2027Q1","2027Q2"],"latest_four_values":["1","2","3","4"],"latest_four_receipts":[f"NVDA-{component}-{i}" for i in range(4)]}
+                    for component in ("INCREMENTAL_ROIC","CASH_CONVERSION","CAPITAL_INTENSITY")
+                }
+        for filing_id in ("FY2026_10K","FY2027_Q1_10Q","FY2027_Q2_10Q"):
+            r["archives"].append({"entity_id":"NVDA","kind":"filing_xbrl","filing_id":filing_id,"sha256":filing_id,"storage_readback_sha256":filing_id})
+        r["expected_raw_archive_count"]=11
+        d=build_admission_decision(r)
+        self.assertEqual(d["admission_status"],"BLOCKED_BY_COVERAGE")
+        self.assertEqual(d["qualified_metric_identities"],6)
+        self.assertEqual(d["mutation_count"],0)
+        self.assertEqual(d["qualified_entities"],["MSFT","NVDA"])
+        self.assertNotIn("RAW_ARCHIVE_COVERAGE_MISMATCH",d["blockers"])
+
+    def test_ungoverned_extra_archive_kind_fails_raw_readback_closed(self):
+        r=full_receipt()
+        r["archives"].append({"entity_id":"NVDA","kind":"mystery_blob","sha256":"x","storage_readback_sha256":"x"})
+        r["expected_raw_archive_count"]=9
+        d=build_admission_decision(r)
+        self.assertEqual(d["admission_status"],"BLOCKED_BY_RAW_READBACK")
+        self.assertIn("RAW_ARCHIVE_UNGOVERNED_KIND:NVDA:mystery_blob",d["blockers"])
+
+    def test_declared_archive_count_mismatch_fails_raw_readback_closed(self):
+        r=full_receipt()
+        r["expected_raw_archive_count"]=9
+        d=build_admission_decision(r)
+        self.assertEqual(d["admission_status"],"BLOCKED_BY_RAW_READBACK")
+        self.assertIn("RAW_ARCHIVE_COUNT_MISMATCH:9:8",d["blockers"])
+
     def test_archive_authority_leakage_blocks_all_mutation(self):
         r=full_receipt(); r["authority"]["research_authorized"]=True
         d=build_admission_decision(r)

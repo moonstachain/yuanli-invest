@@ -68,15 +68,33 @@ def _base_decision(status: str, blockers: list[str]) -> dict[str, Any]:
 def _raw_readback_blockers(receipt: dict[str, Any]) -> list[str]:
     blockers: list[str] = []
     rows = receipt.get("archives") or []
-    expected = {(entity, kind) for entity in REPRESENTATIVES.values() for kind in ("companyfacts", "submissions")}
-    actual = {(str(row.get("entity_id")), str(row.get("kind"))) for row in rows}
+    representatives = set(REPRESENTATIVES.values())
+    base_kinds = {"companyfacts", "submissions"}
+    allowed_kinds = base_kinds | {"filing_xbrl"}
+    expected_base = {(entity, kind) for entity in representatives for kind in base_kinds}
+    actual_base = {
+        (str(row.get("entity_id")), str(row.get("kind")))
+        for row in rows
+        if str(row.get("kind")) in base_kinds
+    }
     if receipt.get("status") != "PASS" or receipt.get("archive_mode") != "PRIVATE_S3_SHA_READBACK":
         blockers.append("ARCHIVE_NOT_PRIVATE_S3_PASS")
-    if actual != expected:
+    if actual_base != expected_base:
         blockers.append("RAW_ARCHIVE_COVERAGE_MISMATCH")
+
+    expected_count = receipt.get("expected_raw_archive_count")
+    if expected_count is not None and int(expected_count) != len(rows):
+        blockers.append(f"RAW_ARCHIVE_COUNT_MISMATCH:{expected_count}:{len(rows)}")
+
     for row in rows:
+        entity_id = str(row.get("entity_id"))
+        kind = str(row.get("kind"))
+        if kind not in allowed_kinds or entity_id not in representatives:
+            blockers.append(f"RAW_ARCHIVE_UNGOVERNED_KIND:{entity_id}:{kind}")
+        elif kind == "filing_xbrl" and not str(row.get("filing_id") or "").strip():
+            blockers.append(f"RAW_ARCHIVE_UNGOVERNED_FILING_XBRL:{entity_id}:MISSING_FILING_ID")
         if not row.get("sha256") or row.get("sha256") != row.get("storage_readback_sha256"):
-            blockers.append(f"RAW_READBACK_MISMATCH:{row.get('entity_id')}:{row.get('kind')}")
+            blockers.append(f"RAW_READBACK_MISMATCH:{entity_id}:{kind}")
     return blockers
 
 
