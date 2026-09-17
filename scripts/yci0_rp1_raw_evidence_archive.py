@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import sys
 import urllib.request
 from datetime import datetime, timezone
 from typing import Any
@@ -56,7 +57,10 @@ def require_env(name: str) -> str:
 def fetch(url: str) -> tuple[int, str, bytes]:
     req = urllib.request.Request(
         url,
-        headers={"User-Agent": "Mozilla/5.0 YuanliEvidenceBot/1.0"},
+        headers={
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/152 Safari/537.36 YuanliEvidenceBot/1.0",
+            "Accept-Language": "en-US,en;q=0.9",
+        },
     )
     with urllib.request.urlopen(req, timeout=45) as response:
         return (
@@ -66,15 +70,36 @@ def fetch(url: str) -> tuple[int, str, bytes]:
         )
 
 
-def validate_raw(raw: bytes, *, value_millions_usd: int, require_xbrl: bool) -> None:
+def validation_facts(raw: bytes, *, value_millions_usd: int) -> dict[str, Any]:
     text = raw.decode("utf-8", "ignore")
-    if "Additions to property and equipment" not in text:
-        raise RuntimeError("official page missing PP&E row label")
     formatted = f"{value_millions_usd:,}"
-    if formatted not in text:
-        raise RuntimeError(f"official page missing expected PP&E value {formatted}")
-    if require_xbrl and "PaymentsToAcquirePropertyPlantAndEquipment" not in text:
-        raise RuntimeError("official page missing expected PP&E XBRL tag")
+    return {
+        "has_row_label": "Additions to property and equipment" in text,
+        "has_xbrl_tag": "PaymentsToAcquirePropertyPlantAndEquipment" in text,
+        "has_expected_value": formatted in text,
+        "expected_value": formatted,
+        "bytes": len(raw),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+    }
+
+
+def validate_raw(
+    raw: bytes,
+    *,
+    quarter: str,
+    value_millions_usd: int,
+    require_xbrl: bool,
+) -> dict[str, Any]:
+    facts = validation_facts(raw, value_millions_usd=value_millions_usd)
+    print(json.dumps({"quarter": quarter, "validation": facts}, sort_keys=True), file=sys.stderr)
+    if not facts["has_expected_value"]:
+        raise RuntimeError(f"{quarter} official page missing expected PP&E value {facts['expected_value']}")
+    if require_xbrl:
+        if not facts["has_xbrl_tag"]:
+            raise RuntimeError(f"{quarter} official page missing expected PP&E XBRL tag")
+    elif not facts["has_row_label"]:
+        raise RuntimeError(f"{quarter} official page missing PP&E row label")
+    return facts
 
 
 def s3_client(access_key_id: str, secret_access_key: str):
@@ -96,12 +121,13 @@ def archive_one(client, quarter: str, spec: dict[str, Any]) -> dict[str, Any]:
     status, content_type, raw = fetch(spec["url"])
     if status != 200:
         raise RuntimeError(f"{quarter} source HTTP status {status}")
-    validate_raw(
+    facts = validate_raw(
         raw,
+        quarter=quarter,
         value_millions_usd=int(spec["value_millions_usd"]),
         require_xbrl=bool(spec["require_xbrl"]),
     )
-    sha = hashlib.sha256(raw).hexdigest()
+    sha = facts["sha256"]
     path = f"yci0-rp1/msft/fy26/{quarter.lower()}/{sha}.html"
     client.put_object(
         Bucket=BUCKET,
