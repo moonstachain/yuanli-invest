@@ -1,7 +1,10 @@
 import subprocess
 import sys
 import unittest
+from decimal import Decimal
 from pathlib import Path
+
+from runtime.yci0_rp1.capital_efficiency_reconstruction import FilingFact
 
 from scripts.yci0_rp1_capital_efficiency_archive import (
     audit_tag_regime,
@@ -11,6 +14,8 @@ from scripts.yci0_rp1_capital_efficiency_archive import (
     manifest_entities,
     select_tag_for_target_periods,
     select_optional_tag_for_target_periods,
+    merge_optional_alias_series,
+    select_mandatory_source_for_target_periods,
     synthetic_receipt,
 )
 
@@ -102,6 +107,41 @@ class CapitalEfficiencyArchiveTests(unittest.TestCase):
         )
         self.assertIsNone(tag)
         self.assertTrue(regime_break)
+
+    def test_mandatory_bridge_source_requires_full_target_coverage(self):
+        source=select_mandatory_source_for_target_periods(
+            ["MarketableSecuritiesCurrent","DebtSecuritiesCurrent"],
+            {"MarketableSecuritiesCurrent":{"2026Q1","2026Q2"},"DebtSecuritiesCurrent":{"2026Q4"}},
+            {"2026Q1","2026Q2","2026Q3","2026Q4"},
+            {"2026Q1","2026Q2","2026Q3","2026Q4"},
+        )
+        self.assertEqual(source,"__BRIDGE__")
+
+    def test_partial_mandatory_bridge_cannot_bypass_single_tag_gate(self):
+        source=select_mandatory_source_for_target_periods(
+            ["MarketableSecuritiesCurrent","DebtSecuritiesCurrent"],
+            {"MarketableSecuritiesCurrent":{"2026Q1","2026Q2"},"DebtSecuritiesCurrent":{"2026Q4"}},
+            {"2026Q1","2026Q2","2026Q3","2026Q4"},
+            {"2026Q3","2026Q4"},
+        )
+        self.assertIsNone(source)
+
+    def test_optional_alias_union_requires_overlap_value_equivalence(self):
+        def f(period,value,tag):
+            return FilingFact(entity_id="NVDA",fiscal_period=period,known_as_of="2026-01-01T00:00:00Z",source_locator=f"sec://{tag}",content_hash=f"{tag}-{period}",concept="CURRENT_MATURITIES_LONG_TERM_DEBT",value=Decimal(str(value)),unit="USD",accounting_regime="US_GAAP_COMPANY_LEVEL")
+        series,proof,regime_break=merge_optional_alias_series(["LongTermDebtCurrent","DebtCurrent"],{"LongTermDebtCurrent":[f("2026Q3",999,"lt"),f("2026Q4",999,"lt")],"DebtCurrent":[f("2026Q4",999,"d"),f("2027Q1",1000,"d")]})
+        self.assertFalse(regime_break)
+        self.assertEqual([x.fiscal_period for x in series],["2026Q3","2026Q4","2027Q1"])
+        self.assertEqual(proof["status"],"PASS")
+        self.assertEqual(proof["overlap_periods"],["2026Q4"])
+
+    def test_optional_alias_union_fails_closed_on_overlap_value_mismatch(self):
+        def f(period,value,tag):
+            return FilingFact(entity_id="NVDA",fiscal_period=period,known_as_of="2026-01-01T00:00:00Z",source_locator=f"sec://{tag}",content_hash=f"{tag}-{period}",concept="CURRENT_MATURITIES_LONG_TERM_DEBT",value=Decimal(str(value)),unit="USD",accounting_regime="US_GAAP_COMPANY_LEVEL")
+        series,proof,regime_break=merge_optional_alias_series(["LongTermDebtCurrent","DebtCurrent"],{"LongTermDebtCurrent":[f("2026Q4",999,"lt")],"DebtCurrent":[f("2026Q4",1000,"d")]})
+        self.assertTrue(regime_break)
+        self.assertEqual(series,[])
+        self.assertEqual(proof["reason"],"OPTIONAL_ALIAS_VALUE_MISMATCH")
 
     def test_split_capex_taxonomy_cannot_be_silently_bridged(self):
         result = audit_tag_regime(

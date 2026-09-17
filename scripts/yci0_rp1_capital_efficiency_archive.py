@@ -18,8 +18,10 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from runtime.yci0_rp1.capital_efficiency_reconstruction import FilingFact, reconstruct_entity_observations
+from runtime.yci0_rp1.filing_xbrl_bridge import apply_filing_bridge_rules
 
 ENTITY_REGISTRY = ROOT / "config/yci0_rp1/capital_efficiency_entities.v0.1.json"
+BRIDGE_REGISTRY = ROOT / "config/yci0_rp1/capital_efficiency_filing_bridges.v0.1.json"
 PROJECT_REF = "tbmoimbdhsrltvospwpu"
 REGION = "us-east-2"
 BUCKET = os.getenv("YMQ4_RAW_BUCKET", "ymq4-raw-evidence")
@@ -40,6 +42,10 @@ PERIOD_TYPES = {"Q1", "Q2", "Q3", "FY"}
 
 def _load_registry() -> dict[str, Any]:
     return json.loads(ENTITY_REGISTRY.read_text(encoding="utf-8"))
+
+
+def _load_bridge_registry() -> dict[str, Any]:
+    return json.loads(BRIDGE_REGISTRY.read_text(encoding="utf-8"))
 
 
 def manifest_entities() -> tuple[str, ...]:
@@ -156,15 +162,21 @@ def _s3_client():
     )
 
 
-def _archive(s3, entity: str, kind: str, raw: bytes) -> dict[str, Any]:
+def _archive(
+    s3, entity: str, kind: str, raw: bytes, *, extension: str = "json",
+    content_type: str = "application/json", metadata: dict[str, str] | None = None,
+) -> dict[str, Any]:
     sha = _sha(raw)
-    key = f"yci0-rp1/capital-efficiency/{entity.lower()}/{kind}/{sha}.json"
-    s3.put_object(Bucket=BUCKET, Key=key, Body=raw, ContentType="application/json", Metadata={"sha256": sha, "proof-contract": "YCI0-RP1-G6-CAPITAL-EFFICIENCY"})
+    ext = extension.lstrip(".")
+    key = f"yci0-rp1/capital-efficiency/{entity.lower()}/{kind}/{sha}.{ext}"
+    object_metadata = {"sha256": sha, "proof-contract": "YCI0-RP1-G6-CAPITAL-EFFICIENCY"}
+    object_metadata.update(metadata or {})
+    s3.put_object(Bucket=BUCKET, Key=key, Body=raw, ContentType=content_type, Metadata=object_metadata)
     reread = s3.get_object(Bucket=BUCKET, Key=key)["Body"].read()
     reread_sha = _sha(reread)
     if reread_sha != sha:
         raise RuntimeError(f"S3 SHA mismatch for {entity}/{kind}: {reread_sha} != {sha}")
-    return {"kind": kind, "bytes": len(raw), "sha256": sha, "storage_bucket": BUCKET, "storage_path": key, "storage_readback_sha256": reread_sha}
+    return {"kind": kind, "bytes": len(raw), "sha256": sha, "content_type": content_type, "storage_bucket": BUCKET, "storage_path": key, "storage_readback_sha256": reread_sha}
 
 
 def _iso_acceptance(value: str | None) -> str | None:
@@ -343,6 +355,20 @@ def select_tag_for_target_periods(candidates: list[str], periods_by_tag: dict[st
     return None
 
 
+def select_mandatory_source_for_target_periods(
+    candidates: list[str],
+    periods_by_tag: dict[str, set[str]],
+    target_periods: set[str],
+    bridge_periods: set[str],
+) -> str | None:
+    tag = select_tag_for_target_periods(candidates, periods_by_tag, target_periods)
+    if tag is not None:
+        return tag
+    if target_periods.issubset(bridge_periods):
+        return "__BRIDGE__"
+    return None
+
+
 def select_optional_tag_for_target_periods(
     candidates: list[str],
     periods_by_tag: dict[str, set[str]],
@@ -359,6 +385,36 @@ def select_optional_tag_for_target_periods(
     return None, False
 
 
+def merge_optional_alias_series(
+    candidates: list[str],
+    facts_by_tag: dict[str, list[FilingFact]],
+) -> tuple[list[FilingFact], dict[str, Any], bool]:
+    active = [tag for tag in candidates if facts_by_tag.get(tag)]
+    if not active:
+        return [], {"status": "PASS", "reason": "OPTIONAL_NOT_DISCLOSED", "overlap_periods": []}, False
+    if len(active) == 1:
+        rows = sorted(facts_by_tag[active[0]], key=lambda f: _period_ordinal(f.fiscal_period))
+        return rows, {"status": "PASS", "reason": "SINGLE_OPTIONAL_TAG", "overlap_periods": []}, False
+
+    by_period: dict[str, list[tuple[str, FilingFact]]] = defaultdict(list)
+    for tag in active:
+        for fact in facts_by_tag[tag]:
+            by_period[fact.fiscal_period].append((tag, fact))
+    overlap = sorted([p for p, rows in by_period.items() if len(rows) > 1], key=_period_ordinal)
+    if not overlap:
+        return [], {"status": "UNKNOWN", "reason": "OPTIONAL_ALIAS_NO_OVERLAP", "overlap_periods": []}, True
+    for period, rows in by_period.items():
+        if len({fact.value for _, fact in rows}) > 1:
+            return [], {"status": "UNKNOWN", "reason": "OPTIONAL_ALIAS_VALUE_MISMATCH", "overlap_periods": overlap}, True
+
+    merged: list[FilingFact] = []
+    for period in sorted(by_period, key=_period_ordinal):
+        rows = by_period[period]
+        chosen = next((fact for tag in candidates for row_tag, fact in rows if row_tag == tag), rows[0][1])
+        merged.append(chosen)
+    return merged, {"status": "PASS", "reason": "OPTIONAL_ALIAS_OVERLAP_EQUIVALENT", "overlap_periods": overlap}, False
+
+
 def _consecutive_last_four(periods: list[str]) -> bool:
     if len(periods) < 4:
         return False
@@ -366,9 +422,10 @@ def _consecutive_last_four(periods: list[str]) -> bool:
     return vals == list(range(vals[0], vals[0] + 4))
 
 
-def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict[str, list[str]], companyfacts: dict[str, Any], submissions: dict[str, Any], raw_sha: str) -> dict[str, Any]:
+def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict[str, list[str]], companyfacts: dict[str, Any], submissions: dict[str, Any], raw_sha: str, bridge_series: dict[str, list[FilingFact]] | None = None) -> dict[str, Any]:
     gaap = companyfacts.get("facts", {}).get("us-gaap", {})
     acceptance = _acceptance_map(submissions)
+    bridge_series = bridge_series or {}
     cache: dict[tuple[str, str], list[FilingFact]] = {}
 
     def normalized_for(normalized: str, tag: str) -> list[FilingFact]:
@@ -406,8 +463,9 @@ def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict
             continue
         candidates = normalized_candidates[normalized]
         periods_by_tag = {tag: {f.fiscal_period for f in normalized_for(normalized, tag)} for tag in candidates if tag in gaap}
-        tag = select_tag_for_target_periods(candidates, periods_by_tag, target)
-        if tag is None:
+        bridge_periods = {f.fiscal_period for f in bridge_series.get(normalized, [])}
+        source = select_mandatory_source_for_target_periods(candidates, periods_by_tag, target, bridge_periods)
+        if source is None:
             blockers.append(f"NO_SINGLE_TAG_COVERS_LATEST_11:{normalized}")
             coverage_diagnostics[normalized] = build_concept_coverage_diagnostics(
                 normalized, candidates, gaap,
@@ -415,27 +473,42 @@ def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict
                 target,
             )
         else:
-            selected[normalized] = tag
+            selected[normalized] = source
 
+    optional_alias_series: dict[str, list[FilingFact]] = {}
+    optional_alias_proofs: dict[str, dict[str, Any]] = {}
     for normalized in OPTIONAL_NORMALIZED:
         candidates = normalized_candidates[normalized]
-        periods_by_tag = {tag: {f.fiscal_period for f in normalized_for(normalized, tag)} for tag in candidates if tag in gaap}
+        facts_by_tag = {tag: [f for f in normalized_for(normalized, tag) if f.fiscal_period in target] for tag in candidates if tag in gaap}
+        periods_by_tag = {tag: {f.fiscal_period for f in rows} for tag, rows in facts_by_tag.items()}
         tag, regime_break = select_optional_tag_for_target_periods(candidates, periods_by_tag, target)
         if tag is not None:
             selected[normalized] = tag
         elif regime_break:
-            blockers.append(f"OPTIONAL_DISCLOSURE_REGIME_BREAK:{normalized}")
+            merged, proof, alias_break = merge_optional_alias_series(candidates, facts_by_tag)
+            if not alias_break and merged:
+                selected[normalized] = "__OPTIONAL_ALIAS__"
+                optional_alias_series[normalized] = merged
+                optional_alias_proofs[normalized] = proof
+            else:
+                blockers.append(f"OPTIONAL_DISCLOSURE_REGIME_BREAK:{normalized}")
+                optional_alias_proofs[normalized] = proof
 
     if blockers:
         return {
             "entity_id": entity, "cohort": cfg["cohort"], "qualification": "UNKNOWN",
             "selected_tags": selected, "blockers": sorted(set(blockers)), "target_periods": anchor_periods,
-            "coverage_diagnostics": coverage_diagnostics, "derived": {},
+            "coverage_diagnostics": coverage_diagnostics, "optional_alias_proofs": optional_alias_proofs, "derived": {},
         }
 
     normalized_facts: list[FilingFact] = []
     for normalized, tag in selected.items():
-        normalized_facts.extend(f for f in normalized_for(normalized, tag) if f.fiscal_period in target)
+        if tag == "__BRIDGE__":
+            normalized_facts.extend(f for f in bridge_series.get(normalized, []) if f.fiscal_period in target)
+        elif tag == "__OPTIONAL_ALIAS__":
+            normalized_facts.extend(optional_alias_series.get(normalized, []))
+        else:
+            normalized_facts.extend(f for f in normalized_for(normalized, tag) if f.fiscal_period in target)
 
     spec = {"entity_id": entity, **cfg}
     derived = reconstruct_entity_observations(normalized_facts, spec)
@@ -462,8 +535,59 @@ def analyze_entity(entity: str, cfg: dict[str, Any], normalized_candidates: dict
         "qualification": "QUALIFIED" if not all_blockers and all(x["qualified"] for x in summary.values()) else "UNKNOWN",
         "selected_tags": selected, "blockers": all_blockers, "target_periods": anchor_periods,
         "normalized_period_range": [anchor_periods[0], anchor_periods[-1]],
-        "normalized_fact_count": len(normalized_facts), "derived": summary,
+        "normalized_fact_count": len(normalized_facts), "optional_alias_proofs": optional_alias_proofs, "derived": summary,
     }
+
+
+def _read_or_fetch_bridge_filings(
+    entity: str, bridge_cfg: dict[str, Any], input_dir: Path | None,
+) -> dict[str, bytes]:
+    out: dict[str, bytes] = {}
+    for filing_id, spec in bridge_cfg.get("filings", {}).items():
+        local = input_dir / f"{entity}_{filing_id}.xml" if input_dir else None
+        if local is not None and local.exists():
+            raw = local.read_bytes()
+        else:
+            raw = _curl_bytes(str(spec["url"]))
+            if local is not None:
+                local.write_bytes(raw)
+        out[str(filing_id)] = raw
+    return out
+
+
+def _build_configured_bridge_series(
+    entity: str, cfg: dict[str, Any], companyfacts: dict[str, Any], submissions: dict[str, Any],
+    companyfacts_sha: str, bridge_cfg: dict[str, Any], raw_by_filing: dict[str, bytes],
+    raw_sha_by_filing: dict[str, str],
+) -> tuple[dict[str, list[FilingFact]], list[dict[str, str]], list[str]]:
+    gaap = companyfacts.get("facts", {}).get("us-gaap", {})
+    acceptance = _acceptance_map(submissions)
+    base_series: dict[str, list[FilingFact]] = {}
+    blockers: list[str] = []
+    for normalized, tags in bridge_cfg.get("base_series", {}).items():
+        rows: list[FilingFact] = []
+        for tag in tags:
+            if tag not in gaap:
+                continue
+            facts, _ = _normalize_tag(
+                entity, cfg["sec_cik"], str(normalized), str(tag), gaap[str(tag)],
+                acceptance, companyfacts_sha, cfg["accounting_regime"],
+            )
+            for fact in facts:
+                existing = next((x for x in rows if x.fiscal_period == fact.fiscal_period), None)
+                if existing is not None and existing.value != fact.value:
+                    blockers.append(f"BRIDGE_BASE_CONFLICT:{normalized}:{fact.fiscal_period}")
+                elif existing is None:
+                    rows.append(fact)
+        rows.sort(key=lambda f: _period_ordinal(f.fiscal_period))
+        base_series[str(normalized)] = rows
+    bridged, proofs, rule_blockers = apply_filing_bridge_rules(
+        entity_id=entity, accounting_regime=cfg["accounting_regime"], base_series=base_series,
+        rules=list(bridge_cfg.get("rules", [])), filings=dict(bridge_cfg.get("filings", {})),
+        raw_by_filing=raw_by_filing, raw_sha_by_filing=raw_sha_by_filing,
+        known_as_of_by_accession=acceptance,
+    )
+    return bridged, proofs, blockers + rule_blockers
 
 
 def _read_or_fetch(entity: str, cfg: dict[str, Any], input_dir: Path | None) -> tuple[bytes, bytes]:
@@ -483,6 +607,7 @@ def main() -> int:
     parser.add_argument("--no-s3", action="store_true")
     args=parser.parse_args()
     registry=_load_registry(); normalized=registry["normalized_concepts"]
+    bridge_registry=_load_bridge_registry()
     s3=None if args.no_s3 else _s3_client()
     if s3: s3.head_bucket(Bucket=BUCKET)
     entities=[]; archives=[]
@@ -492,16 +617,37 @@ def main() -> int:
         if s3:
             archives.extend([{**_archive(s3,entity,"companyfacts",cf_raw),"entity_id":entity},{**_archive(s3,entity,"submissions",sub_raw),"entity_id":entity}])
         companyfacts=json.loads(cf_raw); submissions=json.loads(sub_raw)
-        result=analyze_entity(entity,cfg,normalized,companyfacts,submissions,cf_sha)
+        bridge_cfg = bridge_registry.get("entities", {}).get(entity)
+        bridge_series: dict[str, list[FilingFact]] = {}
+        bridge_proofs: list[dict[str, str]] = []
+        bridge_blockers: list[str] = []
+        if bridge_cfg:
+            bridge_raws = _read_or_fetch_bridge_filings(entity, bridge_cfg, args.input_dir)
+            bridge_shas = {filing_id: _sha(raw) for filing_id, raw in bridge_raws.items()}
+            if s3:
+                for filing_id, raw in bridge_raws.items():
+                    filing_spec = bridge_cfg["filings"][filing_id]
+                    archived = _archive(
+                        s3, entity, "filing_xbrl", raw, extension="xml", content_type="application/xml",
+                        metadata={"accession": str(filing_spec["accession"]), "filing-id": filing_id},
+                    )
+                    archives.append({**archived, "entity_id": entity, "filing_id": filing_id, "accession": filing_spec["accession"]})
+            bridge_series, bridge_proofs, bridge_blockers = _build_configured_bridge_series(
+                entity, cfg, companyfacts, submissions, cf_sha, bridge_cfg, bridge_raws, bridge_shas,
+            )
+        result=analyze_entity(entity,cfg,normalized,companyfacts,submissions,cf_sha,bridge_series=bridge_series)
         result["raw_companyfacts_sha256"]=cf_sha; result["raw_submissions_sha256"]=sub_sha
+        result["filing_bridge_proofs"] = bridge_proofs
+        result["filing_bridge_blockers"] = bridge_blockers
         entities.append(result)
     qualified=[x["entity_id"] for x in entities if x["qualification"]=="QUALIFIED"]
     receipt={
         "program":"YCI0-RP1","gate":"G6_CAPITAL_EFFICIENCY_RAW_EVIDENCE",
         "status":"PASS","archive_mode":"LOCAL_AUDIT_ONLY" if args.no_s3 else "PRIVATE_S3_SHA_READBACK",
-        "source_role":"SEC_OFFICIAL_COMPANYFACTS_PLUS_SUBMISSIONS_STRUCTURED_SENSOR",
-        "semantic_boundary":"Current SEC aggregate XBRL reconstruction linked to original accessions; not a historical byte-for-byte snapshot of each filing at original acceptance time.",
+        "source_role":"SEC_OFFICIAL_COMPANYFACTS_PLUS_SUBMISSIONS_PLUS_FILED_XBRL_FALLBACK",
+        "semantic_boundary":"CompanyFacts is the primary structured sensor. Filed-XBRL fallback is allowed only by the versioned semantic-bridge contract with exact reconciliation proof; no convenient cross-regime stitching.",
         "qualified_entities":qualified,"g6_coverage_status":"FULL" if len(qualified)==4 else "PARTIAL",
+        "expected_raw_archive_count": 2 * len(registry["entities"]) + sum(len(x.get("filings", {})) for x in bridge_registry.get("entities", {}).values()),
         "entities":entities,"archives":archives,
         "authority":{"evidence_promotion_authorized":False,"research_authorized":False,"capital_authorized":False,"execution_authorized":False},
         "generated_at":datetime.now(timezone.utc).isoformat(),

@@ -6,8 +6,10 @@ on:
       - '.github/workflows/yci0-rp1-capital-efficiency-evidence.yml'
       - 'scripts/yci0_rp1_capital_efficiency_archive.py'
       - 'runtime/yci0_rp1/capital_efficiency_reconstruction.py'
+      - 'runtime/yci0_rp1/filing_xbrl_bridge.py'
       - 'config/yci0_rp1/capital_efficiency_entities.v0.1.json'
       - 'config/yci0_rp1/capital_efficiency_contract.v0.1.json'
+      - 'config/yci0_rp1/capital_efficiency_filing_bridges.v0.1.json'
       - 'docs/architecture/yci0_rp1/**'
   workflow_dispatch:
 
@@ -34,7 +36,7 @@ jobs:
           set -euo pipefail
           test -n "$YMQ4_SUPABASE_S3_ACCESS_KEY_ID"
           test -n "$YMQ4_SUPABASE_S3_SECRET_ACCESS_KEY"
-      - name: Archive SEC CompanyFacts and Submissions with SHA readback
+      - name: Archive SEC CompanyFacts, Submissions, and governed filed-XBRL fallbacks with SHA readback
         shell: bash
         run: |
           set -euo pipefail
@@ -55,14 +57,29 @@ jobs:
           if any(auth.values()):
               raise SystemExit(f'authority leakage: {auth}')
           rows = receipt.get('archives') or []
-          if len(rows) != 8:
-              raise SystemExit(f'expected 8 raw archives, got {len(rows)}')
+          expected = receipt.get('expected_raw_archive_count')
+          if expected != 11 or len(rows) != expected:
+              raise SystemExit(f'expected 11 governed raw archives, receipt expected={expected}, got={len(rows)}')
           for row in rows:
               if row.get('sha256') != row.get('storage_readback_sha256'):
                   raise SystemExit(f"SHA readback mismatch: {row.get('entity_id')}/{row.get('kind')}")
-          entity_ids = {row.get('entity_id') for row in receipt.get('entities') or []}
+          xml_rows = [row for row in rows if row.get('kind') == 'filing_xbrl']
+          if len(xml_rows) != 3 or {row.get('filing_id') for row in xml_rows} != {'FY2026_10K','FY2027_Q1_10Q','FY2027_Q2_10Q'}:
+              raise SystemExit(f'unexpected filed-XBRL archive surface: {xml_rows}')
+          entities = receipt.get('entities') or []
+          entity_ids = {row.get('entity_id') for row in entities}
           if entity_ids != {'MSFT', 'NVDA', 'ANET', 'ETN'}:
               raise SystemExit(f'entity coverage mismatch: {entity_ids}')
+          nvda = next((row for row in entities if row.get('entity_id') == 'NVDA'), None)
+          if not nvda or nvda.get('qualification') != 'QUALIFIED':
+              raise SystemExit(f"NVDA filing-XBRL bridge did not qualify: {None if nvda is None else nvda.get('blockers')}; bridge={None if nvda is None else nvda.get('filing_bridge_blockers')}")
+          proofs = nvda.get('filing_bridge_proofs') or []
+          if len(proofs) != 3 or any(proof.get('status') != 'PASS' for proof in proofs):
+              raise SystemExit(f'NVDA filing bridge proof failure: {proofs}')
+          if set(receipt.get('qualified_entities') or []) != {'MSFT','NVDA'}:
+              raise SystemExit(f"unexpected qualified entities after NVDA bridge: {receipt.get('qualified_entities')}")
+          if receipt.get('g6_coverage_status') != 'PARTIAL':
+              raise SystemExit(f"G6 must remain PARTIAL until ANET/ETN qualify: {receipt.get('g6_coverage_status')}")
           PY
       - name: Upload non-secret receipt
         if: ${{ always() }}
