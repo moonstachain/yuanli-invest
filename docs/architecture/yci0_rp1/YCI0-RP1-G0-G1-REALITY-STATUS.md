@@ -1,101 +1,91 @@
 # YCI0-RP1｜First Live Reality Admission Status
 
-**Status:** `RAW_EVIDENCE_PASS / PARTIAL_REALITY_4_OF_6 / HOLD_AT_EVIDENCE`
+**Status:** `RAW_EVIDENCE_PASS / PARTIAL_REALITY_5_OF_6 / HOLD_AT_EVIDENCE`
 **As of:** 2026-09-17
 **Question:** `YCI0-RP0-CQ-001`
 **Authority:** `RESEARCH_ONLY`
 
 ## What is physically proven
 
-Four independent AI-Infra Reality dimensions now have same-regime PIT series, raw evidence archive, PASS receipts, and existing Reality Compiler output.
+Five AI-Infra Reality dimensions now have PIT-qualified series, governed raw evidence lineage, PASS receipts, and existing Reality Compiler output.
 
-| Dimension | Canonical first-party series | Level | Δ | Δ² | State | Confidence |
-|---|---|---:|---:|---:|---|---|
+| Dimension | Canonical series / proxy | Level | Δ | Δ² | State | Confidence |
+|---|---|---|---|---|---|---|
 | Hyperscaler Capex | Microsoft total-company cash paid PP&E | 35.802 USD bn | +4.926 bn | +3.926 bn | ACCELERATING | HIGH |
 | Compute | NVIDIA quarterly Data Center revenue | 89.0 USD bn | +13.8 bn | +0.9 bn | ACCELERATING | HIGH |
 | Networking | Arista total quarterly revenue | 3.036 USD bn | +0.327 bn | +0.106 bn | ACCELERATING | HIGH |
 | Power/Grid | Eaton Electrical Americas rolling-12m organic order growth | 41% | -1 pct | -27 pct | DECELERATING | HIGH |
+| Financing Regime | DGS10 + DFII10 + broad trade-weighted USD proxy | multi-metric | mixed | mixed | MIXED | MEDIUM |
 
-`financing_regime` and `capital_efficiency` remain `UNKNOWN`.
+`capital_efficiency` remains `UNKNOWN`.
 
-Therefore the correct global state is `PARTIAL_REALITY_STATE_4_OF_6`, not overall `AI_INFRA = ACCELERATING`.
+Therefore the correct global state is `PARTIAL_REALITY_STATE_5_OF_6`, not a settled overall AI-Infra thesis.
 
 ## Evidence and provider boundaries
 
 ### Microsoft / Hyperscaler Capex
-
-FY26 Q1-Q4: `19.394 → 29.876 → 30.876 → 35.802` USD bn. Four Microsoft IR raw sources passed private S3 SHA readback. Wind returned adjacent `资本性支出`, but semantic equivalence to the canonical cash-paid PP&E series was not proven.
-
-Boundary: total-company PP&E proxy, not AI-only capex.
+FY26 Q1-Q4: `19.394 → 29.876 → 30.876 → 35.802` USD bn. Raw Microsoft IR sources passed private S3 SHA readback. Boundary: total-company PP&E proxy, not AI-only capex.
 
 ### NVIDIA / Compute
-
-Quarterly Data Center revenue: `51.2 → 62.3 → 75.2 → 89.0` USD bn. Four NVIDIA Newsroom raw sources passed private S3 SHA readback. Wind adjacency was not accepted as canonical identity.
+Quarterly Data Center revenue: `51.2 → 62.3 → 75.2 → 89.0` USD bn. Raw NVIDIA sources passed private S3 SHA readback.
 
 ### Eaton / Power-Grid
-
-Electrical Americas rolling-12-month organic order growth: `7% → 16% → 42% → 41%`.
-
-Eaton direct-host transport was unreliable, so the same company-filed EX-99 releases were archived from SEC EDGAR. Raw archive + S3 SHA readback passed for all four quarters. Wind exact metric was unavailable.
-
-`DECELERATING / HIGH` means marginal rollover at a high level; it does not mean demand collapse.
+Electrical Americas rolling-12-month organic order growth: `7% → 16% → 42% → 41%`. Company-filed SEC EX-99 raw sources passed private S3 SHA readback. `DECELERATING / HIGH` is marginal rollover at a high level, not demand collapse.
 
 ### Arista / Networking
+Total quarterly revenue: `2.308 → 2.488 → 2.709 → 3.036` USD bn. Company-filed SEC EX-99 raw sources passed private S3 SHA readback. Boundary: networking-vendor demand proxy, not AI-only networking revenue.
 
-Total quarterly revenue: `2.308 → 2.488 → 2.709 → 3.036` USD bn.
+### Financing Regime
+Sampling policy is frozen to the last valid market observation in each **complete month**, Apr-Jul 2026, avoiding partial-August versus month-end contamination.
 
-Arista IR direct pages were unreliable from the authorized remote computer, so the same company-authored earnings releases filed as SEC EX-99 exhibits were used. GitHub Actions run `35185238836` passed 4/4 raw archive + private S3 SHA readback with zero downstream authority.
+- DGS10 nominal 10Y: `4.40 → 4.45 → 4.44 → 4.75`; latest Δ `+0.31`, Δ² `+0.32`; `ACCELERATING`.
+- DFII10 real 10Y: `1.94 → 2.07 → 2.20 → 2.47`; latest Δ `+0.27`, Δ² `+0.14`; `ACCELERATING`.
+- Broad trade-weighted USD proxy: `118.6710 → 118.8783 → 120.9248 → 119.7034`; latest Δ `-1.2214`, Δ² `-3.2679`; `DECELERATING`.
 
-Boundary: networking-vendor demand proxy, not AI-only networking revenue.
+The existing compiler therefore produces `financing_regime = MIXED / MEDIUM`; metrics are compiled independently before aggregation.
+
+Financing evidence lineage:
+
+- DGS10 workflow run `35187024943` passed FRED raw CSV → private `ymq4-raw-evidence` → SHA-256 readback; raw SHA `c4bd527f...eecaaf6`.
+- DFII10 and DTWEXBGS reuse the governed YMQ4-DP1B raw archive, whose Reality receipt proves immutable raw-object capture, provenance snapshots, PIT reconstruction, database readback, and zero future leakage.
+- 12 YCI0 canonical observations and 12 `PASS / RESEARCH_ONLY` claim receipts were physically written and read back.
+- USD metric is the Federal Reserve broad trade-weighted USD index proxy, **not literal ICE DXY**.
+- Treasury yields are market-observation financing proxies, **not direct corporate funding spreads**.
 
 ## Production state
 
-Latest Reality compiler run: `cd85c293-0e90-4352-9356-2b6c36617077`
-Latest Reality state card: `ace0b0ca-4c50-4158-8e50-30eeb84f085f`
-State hash: `a71d66d2b0672d101590497fe1e2412e11a5a7311dcf16efa7019e9dc10a0733`
+Latest Reality compiler run: `43e010ed-d8d9-4867-914f-339879c992b0`
+Latest Reality state card: `ba6ab0a7-59dd-4799-abc7-1412a86c8d42`
+State hash: `db84f7a0ff505edffaeaee9b320d776d8f51fcf448fb586ff1bfdea0e7eee40b`
 Known-as-of ceiling: `2026-08-26T23:59:59Z`
-Evidence refs: `16 PASS receipts`
+Evidence refs: `28 PASS receipts`
 Notion flagship page: `3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-The Human Workbench must remain:
-
-- `Journey Stage = 02 EVIDENCE`
-- `Evidence Status = READY`
-- `Gate Status = OPEN`
-- overall `Delta = UNKNOWN`
-- overall `Delta2 = UNKNOWN`
-- `Transition Suggestion = HOLD`
-
-Local dimension Δ/Δ² are not projected into the overall Capital Question.
+The Human Workbench must remain `02 EVIDENCE / READY / OPEN / HOLD`; overall Delta and Delta2 stay `UNKNOWN`. Local dimension deltas are not projected into the overall Capital Question.
 
 ## What remains unknown
 
-Two load-bearing Reality dimensions are still missing:
+Only one load-bearing Reality dimension remains: `capital_efficiency`.
 
-- `financing_regime`
-- `capital_efficiency`
-
-Native1 event-driven Supabase → Notion delivery is also not proven by this controlled orchestration.
-
-No Narrative/Transmission Research Projection, Shadow Authority, Capital Authority, sizing, broker, or Execution authority is granted.
+Native1 event-driven Supabase → Notion delivery is also not proven by this controlled orchestration. No Narrative/Transmission Research Projection, Shadow Authority, Capital Authority, sizing, broker, or Execution authority is granted.
 
 ## Next execution order
 
-1. Admit Financing Regime using PIT-qualified official/structured macro evidence.
-2. Freeze a defensible Capital Efficiency accounting definition before selecting any proxy.
-3. Recompile Reality after each admission.
-4. Only after an explicit coverage gate may Human Review consider `02 EVIDENCE → 03 NARRATIVE`; no automatic transition is authorized.
+1. Freeze a defensible Capital Efficiency economic/accounting definition before selecting any proxy.
+2. Only then admit same-regime PIT evidence for that frozen definition.
+3. Recompile the 6/6 Reality card.
+4. Human Review may consider `02 EVIDENCE → 03 NARRATIVE` only after an explicit coverage gate; no automatic transition is authorized.
 
 ## Strategic laws
 
 `PROVIDER_AVAILABILITY != SEMANTIC_EQUIVALENCE`
 
-`NETWORKING VENDOR REVENUE != AI-ONLY NETWORKING REVENUE`
+`MULTI_METRIC DIMENSION != CROSS_METRIC TIME SERIES`
 
-`HIGH LEVEL + NEGATIVE Δ² != DEMAND COLLAPSE`
+`TREASURY YIELDS != DIRECT CORPORATE FUNDING SPREADS`
 
-`LOCAL Δ² != OVERALL Δ²`
+`BROAD USD PROXY != LITERAL ICE DXY`
 
-`4/6 QUALIFIED != OVERALL AI INFRA REALITY SETTLED`
+`5/6 QUALIFIED != OVERALL AI INFRA REALITY SETTLED`
 
 `REALITY STATE != RESEARCH PASS != CAPITAL PASS`

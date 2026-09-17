@@ -10,7 +10,7 @@ Base branch：`yci0-rp0-ai-infra-proof-20260916`
 Current program：`YCI0｜Yuanli Capital Intelligence Spine`
 Current flagship：`YCI0-RP1｜AI Infra First Live Reality Admission`
 
-> **恢复纪律：** 不重新设计总体架构；不重做 Microsoft / NVIDIA / Eaton / Arista 已通过的 Evidence；不提前进入 Narrative / Price / Shadow。直接从 `Financing Regime` 恢复，然后冻结 `Capital Efficiency` 定义。
+> **恢复纪律：** 不重新设计总体架构；不重做 Microsoft / NVIDIA / Eaton / Arista / Financing 已通过的 Evidence；不提前进入 Narrative / Price / Shadow。直接从 `Capital Efficiency Definition Freeze` 恢复。
 
 ---
 
@@ -28,14 +28,14 @@ Current flagship：`YCI0-RP1｜AI Infra First Live Reality Admission`
 2. `compute = ACCELERATING / HIGH` ✅
 3. `networking = ACCELERATING / HIGH` ✅
 4. `power_grid = DECELERATING / HIGH` ✅
-5. `financing_regime = UNKNOWN`
+5. `financing_regime = MIXED / MEDIUM` ✅
 6. `capital_efficiency = UNKNOWN`
 
 当前全局：
 
-# `PARTIAL_REALITY_STATE_4_OF_6 / OVERALL_REALITY_UNSETTLED / HOLD_AT_02_EVIDENCE`
+# `PARTIAL_REALITY_STATE_5_OF_6 / OVERALL_REALITY_UNSETTLED / HOLD_AT_02_EVIDENCE`
 
-不能把 4 个局部维度的状态升级成整体 AI Infra 结论。
+不能把 5 个局部维度的状态升级成整体 AI Infra 结论。
 
 ---
 
@@ -154,19 +154,19 @@ Boundary：Arista total revenue 是 networking-vendor demand proxy，不是 AI-o
 
 Latest production state card：
 
-`ace0b0ca-4c50-4158-8e50-30eeb84f085f`
+`ba6ab0a7-59dd-4799-abc7-1412a86c8d42`
 
 Runtime run：
 
-`cd85c293-0e90-4352-9356-2b6c36617077`
+`43e010ed-d8d9-4867-914f-339879c992b0`
 
 State hash：
 
-`a71d66d2b0672d101590497fe1e2412e11a5a7311dcf16efa7019e9dc10a0733`
+`db84f7a0ff505edffaeaee9b320d776d8f51fcf448fb586ff1bfdea0e7eee40b`
 
 Known-as-of ceiling：`2026-08-26T23:59:59Z`
 
-Evidence refs：`16 PASS claim receipts`
+Evidence refs：`28 PASS claim receipts`
 
 Result：
 
@@ -174,10 +174,10 @@ Result：
 - compute = `ACCELERATING / HIGH`
 - networking = `ACCELERATING / HIGH`
 - power_grid = `DECELERATING / HIGH`
-- financing_regime = `UNKNOWN`
+- financing_regime = `MIXED / MEDIUM`
 - capital_efficiency = `UNKNOWN`
 
-Scope：`PARTIAL_REALITY_STATE_4_OF_6`
+Scope：`PARTIAL_REALITY_STATE_5_OF_6`
 
 Authority：`RESEARCH`
 
@@ -199,8 +199,8 @@ Flagship Page ID：`3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 - Human Delta = UNKNOWN
 - Human Delta2 = UNKNOWN
 - Transition Suggestion = HOLD
-- Machine Source ID = `SUPABASE://runtime/ai_infra_state_cards/ace0b0ca-4c50-4158-8e50-30eeb84f085f`
-- Runtime Projection ID = `cd85c293-0e90-4352-9356-2b6c36617077`
+- Machine Source ID = `SUPABASE://runtime/ai_infra_state_cards/ba6ab0a7-59dd-4799-abc7-1412a86c8d42`
+- Runtime Projection ID = `43e010ed-d8d9-4867-914f-339879c992b0`
 
 Machine `PASS` 映射 Human `READY`；不要把 PASS 写进 Human Evidence Status enum。
 
@@ -208,30 +208,30 @@ Live Evidence → Notion 当前仍是 controlled orchestration，不能宣称 Na
 
 ---
 
-# 7｜当前真实断点：Financing Regime
+# 7｜Financing Regime ✅ PASS
 
-下一步不是继续找第五家公司，而是补齐宏观融资环境维度。
+Construction：`DGS10 nominal 10Y + DFII10 real 10Y + DTWEXBGS broad USD proxy`。
 
-RP0 registry 已冻结 Priority-A family：
+Sampling：只取 Apr-Jul 2026 四个完整月的月末最后有效市场观测，排除 partial August。
 
-- US 10Y nominal yield
-- US real yield / TIPS real yield
-- DXY / USD liquidity proxy
+Compiler result：
 
-执行要求：
+- DGS10 = `ACCELERATING`
+- DFII10 = `ACCELERATING`
+- broad USD proxy = `DECELERATING`
+- financing_regime = `MIXED / MEDIUM`
 
-1. 优先 official / structured PIT source；
-2. 每条 observation 必须有 release/vintage/known_as_of；
-3. 不允许把当前值冒充历史 PIT；
-4. 先冻结维度内 metric 组合规则，再编译；
-5. 多 metric 先各自算 Level/Δ/Δ²，再做 dimension aggregation，禁止 cross-metric contamination；
-6. 任一 required metric UNKNOWN/BLOCKED 时按既有 compiler fail-closed。
+DGS10 GitHub Actions run `35187024943` 完成 FRED raw CSV → private S3 → SHA readback。DFII10 / DTWEXBGS 复用 YMQ4-DP1B 已治理 raw archive。
 
-完成 Financing 后，scope 最多进入 `PARTIAL_REALITY_STATE_5_OF_6`，仍不能自动推进 Narrative。
+Production：12 canonical PIT observations + 12 PASS claims；正式 receipt：`docs/architecture/yci0_rp1/receipts/YCI0-RP1-G5-FINANCING-REALITY-PASS.md`。
+
+Boundary：DTWEXBGS 是 broad trade-weighted USD proxy，不是 literal ICE DXY；Treasury yields 不是 direct corporate funding spreads。
+
+完成后 production scope = `PARTIAL_REALITY_STATE_5_OF_6`。
 
 ---
 
-# 8｜随后战役：Capital Efficiency Definition Freeze
+# 8｜当前真实断点：Capital Efficiency Definition Freeze
 
 这是最后一维，也是最容易被“方便指标”污染的一维。
 
@@ -279,8 +279,8 @@ Supabase project ref：`tbmoimbdhsrltvospwpu`
 Raw bucket：`ymq4-raw-evidence`
 Notion flagship：`3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 
-Current state card：`ace0b0ca-4c50-4158-8e50-30eeb84f085f`
-Current runtime run：`cd85c293-0e90-4352-9356-2b6c36617077`
+Current state card：`ba6ab0a7-59dd-4799-abc7-1412a86c8d42`
+Current runtime run：`43e010ed-d8d9-4867-914f-339879c992b0`
 
 ---
 
@@ -290,12 +290,12 @@ Current runtime run：`cd85c293-0e90-4352-9356-2b6c36617077`
 
 1. 读取当前 branch 的 HANDOFF；
 2. 回读 PR #102 最新 head / base；
-3. 检查 production state card `ace0b0ca...` 与 runtime run `cd85c293...`；
-4. 不重做 Microsoft / NVIDIA / Eaton / Arista；
-5. 直接从 `Financing Regime` 开始；
-6. 用 official/structured PIT macro evidence；
-7. Financing PASS 后 recompile 5/6 state；
-8. 然后先冻结 Capital Efficiency 定义，再抓数据；
+3. 检查 production state card `ba6ab0a7...` 与 runtime run `43e010ed...`；
+4. 不重做 Microsoft / NVIDIA / Eaton / Arista / Financing；
+5. 直接从 `Capital Efficiency Definition Freeze` 开始；
+6. 先冻结 economic construct / numerator / denominator / entity scope / time aggregation / accounting regime / proxy rule；
+7. 定义冻结前禁止抓方便指标补齐 6/6；
+8. 定义冻结后再做 PIT evidence admission 与 6/6 recompile；
 9. 未有明确 Human Gate 前，Journey 保持 `02 EVIDENCE / HOLD`；
 10. 每一步 production mutation 后 physical readback；
 11. 禁止 Narrative / Price / Shadow / Capital / Execution 越权。
@@ -304,4 +304,4 @@ Current runtime run：`cd85c293-0e90-4352-9356-2b6c36617077`
 
 # 12｜一句话恢复点
 
-> **YCI0-RP1 已完成 Microsoft hyperscaler capex、NVIDIA compute、Eaton power/grid、Arista networking 四个 raw-backed/PIT/PASS Reality dimensions，production Reality 已到 `PARTIAL_REALITY_STATE_4_OF_6`；当前直接从 Financing Regime 恢复，随后冻结 Capital Efficiency 定义，仍保持 overall Reality unsettled、Notion HOLD @ 02 EVIDENCE、Capital/Execution LOCKED。**
+> **YCI0-RP1 已完成 Microsoft hyperscaler capex、NVIDIA compute、Eaton power/grid、Arista networking、Financing Regime 五个 raw-backed/PIT/PASS Reality dimensions，production Reality 已到 `PARTIAL_REALITY_STATE_5_OF_6`；当前唯一真实断点是 Capital Efficiency Definition Freeze，仍保持 overall Reality unsettled、Notion HOLD @ 02 EVIDENCE、Capital/Execution LOCKED。**
