@@ -117,45 +117,54 @@ Frozen cohorts / representatives：
 - `60dc19f` deterministic PIT reconstruction
 - `af09757` optional current-debt disclosure handling
 - `06b6122` four-cohort SEC raw archive / source proof
+- `84ef58b` cumulative-flow Q4 reconstruction hardening
+- `f4b28b0` semantic coverage diagnostics
+- `62a9761` sparse optional disclosure / alias guard alignment
+- `25c1160` governed filed-XBRL semantic bridge
+- `6a64155` admission gate support for governed filed-XBRL archives
 
-本地完整回归：`328 tests PASS`；repository-gates 同款 validators 全 PASS。
+最新本地完整回归：`345 tests PASS`；repository / leak / governance / manifest validators 全 PASS。
 
-# 7｜G6 Reality Proof：Raw PASS，但 Coverage PARTIAL
+# 7｜G6 Reality Proof：NVDA Bridge PASS，Coverage 6/12
 
 GitHub Actions：`YCI0 RP1 Capital Efficiency Evidence`
-Run：`35200548325`，SUCCESS
-Artifact：`10487991517 / yci0-rp1-g6-capital-efficiency-receipt`
+Latest run：`35210577631`（run #7，SUCCESS）
+Artifact：`10491722055 / yci0-rp1-g6-capital-efficiency-receipt`
+Head：`6a64155980ee95205584fa45fe6daf070a1c30f3`
 
-8 个 raw objects 已 private S3 + SHA readback：MSFT / NVDA / ANET / ETN 各 `companyfacts + submissions`。
+11 个 governed raw objects 已 private S3 + SHA readback：8 个 MSFT/NVDA/ANET/ETN `companyfacts + submissions`，外加 3 个 NVDA filed-XBRL fallback。
 
 Coverage：
 
-- MSFT / HYPERSCALER = QUALIFIED，3/3 mandatory identities；
-- NVDA / COMPUTE = UNKNOWN：CAPEX、current marketable securities 11-quarter continuity 不足；current-debt disclosure regime break；
-- ANET / NETWORKING = UNKNOWN：CAPEX 11-quarter continuity 不足；
-- ETN / POWER_ELECTRICAL = UNKNOWN：operating income 11-quarter continuity 不足；finance-lease-liability disclosure regime break。
+- MSFT / HYPERSCALER = QUALIFIED，3/3；
+- NVDA / COMPUTE = QUALIFIED，3/3；filed-XBRL disaggregation bridge 3/3 proofs PASS；
+- ANET / NETWORKING = UNKNOWN：`NO_SINGLE_TAG_COVERS_LATEST_11:CAPEX`；
+- ETN / POWER_ELECTRICAL = UNKNOWN：`NO_SINGLE_TAG_COVERS_LATEST_11:OPERATING_INCOME`。
 
 真实 admission decision：
 
-`BLOCKED_BY_COVERAGE / 3_OF_12_IDENTITIES / MUTATION_COUNT_0 / G6_UNKNOWN / PARTIAL_REALITY_STATE_5_OF_6 / HOLD_AT_02_EVIDENCE`
+`BLOCKED_BY_COVERAGE / 6_OF_12_IDENTITIES / MUTATION_COUNT_0 / G6_UNKNOWN / PARTIAL_REALITY_STATE_5_OF_6 / HOLD_AT_02_EVIDENCE`
 
 正式 receipt：`docs/architecture/yci0_rp1/receipts/YCI0-RP1-G6-CAPITAL-EFFICIENCY-EVIDENCE.md`
 
-# 8｜当前唯一真实断点：G6 Evidence Bridge
+NVDA 已证明的关键 bridge：
 
-现在不要再做 Definition Freeze，也不要再写 G6 核心 compiler。
+1. CAPEX：CompanyFacts aggregation gap，经同标准 filed accounting record + cumulative Q4 reconstruction 闭合；
+2. FY2026 current marketable anchor：`51.951B`；
+3. FY2027 Q1：Debt `39.065B` + Equity `12.886B` 在 comparative date 精确回勾 `51.951B` 后，才允许新期 debt+equity 合计；
+4. FY2027 Q2：独立重复同一 reconciliation；
+5. current debt optional aliases 只有在重叠期值一致时才允许合并。
 
-唯一研究问题是：**能否从 accession-specific first-party filing tables / filed exhibits 中证明 NVDA / ANET / ETN 的稳定语义桥，而不放宽冻结定义、不拼接不等价 XBRL tag。**
+# 8｜当前唯一真实断点：ANET × ETN Evidence Bridge
 
-下一战役顺序：
+不要再重做 NVDA bridge。当前只剩两个 load-bearing evidence gaps：
 
-1. NVDA：优先解决 CAPEX + current marketable securities + current-debt disclosure continuity。
-2. ANET：优先解决 CAPEX 11-quarter continuity。
-3. ETN：优先解决 operating income + finance-lease-liability continuity。
-4. 每个 bridge 独立做 semantic-equivalence proof + RED tests。
-5. bridge 未证明前，禁止任何 G6 production mutation。
-6. 只有 12/12 mandatory identities qualified，才允许 additive production write + physical readback。
-7. 即使未来 6/6 成立，仍保持 `02 EVIDENCE / HOLD`，直到独立 Human transition gate。
+1. **ANET CAPEX**：季度 `PaymentsToAcquirePropertyPlantAndEquipment` 与年度 `PaymentsToAcquireProductiveAssets` 语义并不等价。必须从 accession-specific first-party filing 找到 PP&E-only 年度金额，或精确拆出 software/intangible 部分；否则保持 UNKNOWN。
+2. **ETN OPERATING_INCOME**：最近窗口标准 `OperatingIncomeLoss` 不连续。必须证明 company-specific operating-profit concept 与冻结的 company-level operating income 语义等价；不得拿 segment profit 或 EBITDA 替代。
+3. 每个 bridge 独立 semantic-equivalence proof + RED tests + raw archive/readback。
+4. 未到 12/12 前，G6 production mutation 必须继续为 0。
+5. 只有 12/12 mandatory identities qualified，才允许 additive production write + physical readback。
+6. 即使未来 6/6 成立，仍保持 `02 EVIDENCE / HOLD`，直到独立 Human transition gate。
 
 禁止为了补齐 6/6 改用 generic ROIC、FCF margin、Revenue/Capex，或跨 accounting regime 拼接。
 
@@ -187,13 +196,13 @@ Notion flagship：`3dd8e1aa-ace4-81e7-9bb6-d28d8e0d18ab`
 3. 检查 production state card `ba6ab0a7...` 与 runtime run `43e010ed...`，确认仍为 5/6。
 4. 不重做 Microsoft / NVIDIA / Eaton / Arista / Financing 五维。
 5. 不重做 G6 definition、contract、compiler、reconstruction、raw archive。
-6. 先读 G6 receipt 和 cloud run `35200548325`。
-7. 当前唯一研究断点是 NVDA / ANET / ETN 的 first-party semantic bridge。
-8. bridge 未证明前，禁止 G6 production mutation。
+6. 先读 G6 receipt 和 latest cloud run `35210577631`。
+7. NVDA bridge 已 PASS，不重做；当前唯一研究断点是 ANET CAPEX + ETN OPERATING_INCOME。
+8. 12/12 未证明前，禁止 G6 production mutation。
 9. 未来 production mutation 后必须 physical readback。
 10. Journey 始终保持 `02 EVIDENCE / HOLD`，直到单独 Human transition gate。
 11. 禁止 Narrative / Price / Shadow / Capital / Execution 越权。
 
 # 12｜一句话恢复点
 
-> **YCI0-RP1 五个 Reality dimensions 仍为 production `PARTIAL_REALITY_STATE_5_OF_6`；G6 的定义、machine contract、compiler、PIT reconstruction 与 four-cohort SEC raw archive 已完成并通过 CI，但真实 coverage gate 只得到 MSFT 3/12 identities qualified，NVDA/ANET/ETN 因 11-quarter semantic continuity / disclosure-regime breaks fail-closed，因此 G6 仍 UNKNOWN、production mutation=0。当前唯一断点是证明三家公司 first-party semantic bridge，Notion 继续 HOLD @ 02 EVIDENCE，Capital/Execution 继续 LOCKED。**
+> **YCI0-RP1 五个 Reality dimensions 仍为 production `PARTIAL_REALITY_STATE_5_OF_6`；G6 当前已由 MSFT+NVDA 得到 6/12 identities qualified，NVDA governed filed-XBRL bridge 已 cloud PASS，但 ANET CAPEX 与 ETN OPERATING_INCOME 仍 fail-closed，因此 G6 继续 UNKNOWN、production mutation=0。当前唯一断点是这两个 first-party semantic bridge；Notion 继续 HOLD @ 02 EVIDENCE，Capital/Execution 继续 LOCKED。**
