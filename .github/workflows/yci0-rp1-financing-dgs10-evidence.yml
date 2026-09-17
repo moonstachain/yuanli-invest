@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install archive runtime dependency
-        run: python -m pip install 'boto3>=1.35,<2'
+        run: python -m pip install 'boto3>=1.35,<2' 'pytest>=8,<9'
       - name: Run pure parsing tests
         run: python -m pytest -q tests/test_yci0_rp1_financing_dgs10_archive.py
       - name: Fail closed on missing S3 secret bindings
