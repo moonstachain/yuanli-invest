@@ -2,9 +2,6 @@
 from __future__ import annotations
 import hashlib, json, os, re
 from datetime import datetime, timezone
-import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 PROJECT_REF="tbmoimbdhsrltvospwpu"
 REGION="us-east-2"
 BUCKET=os.getenv("YMQ4_RAW_BUCKET","ymq4-raw-evidence")
@@ -19,6 +16,9 @@ def require_env(name):
     if not value: raise RuntimeError(f"missing required secret binding: {name}")
     return value
 def http_session():
+    import requests
+    from requests.adapters import HTTPAdapter
+    from urllib3.util.retry import Retry
     s=requests.Session(); r=Retry(total=3,connect=3,read=3,backoff_factor=1.0,status_forcelist=(429,500,502,503,504),allowed_methods=frozenset(["GET"])); s.mount("https://",HTTPAdapter(max_retries=r)); s.headers.update({"User-Agent":"YuanliResearchEvidenceBot/1.0","Accept":"text/html,application/xhtml+xml","Accept-Language":"en-US,en;q=0.9"}); return s
 def visible_text(raw):
     h=raw.decode("utf-8",errors="ignore"); t=re.sub(r"<script\b[^>]*>.*?</script>"," ",h,flags=re.I|re.S); t=re.sub(r"<style\b[^>]*>.*?</style>"," ",t,flags=re.I|re.S); t=re.sub(r"<[^>]+>"," ",t); t=t.replace("&nbsp;"," ").replace("&#160;"," "); return re.sub(r"\s+"," ",t)
