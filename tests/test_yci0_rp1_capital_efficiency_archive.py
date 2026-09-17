@@ -6,6 +6,7 @@ from pathlib import Path
 from scripts.yci0_rp1_capital_efficiency_archive import (
     audit_tag_regime,
     build_concept_coverage_diagnostics,
+    _normalize_tag,
     latest_consecutive_window,
     manifest_entities,
     select_tag_for_target_periods,
@@ -69,6 +70,19 @@ class CapitalEfficiencyArchiveTests(unittest.TestCase):
         self.assertEqual(out[1]["raw_accessions"],["a2"])
         self.assertEqual(out[1]["raw_facts"][0]["accn"],"a2")
         self.assertEqual(out[1]["raw_facts"][0]["fp"],"FY")
+
+    def test_cumulative_flow_can_reconstruct_q4_from_q3_ytd_and_fy_without_q1(self):
+        tag_obj={"units":{"USD":[
+            {"form":"10-Q","fp":"Q3","fy":2024,"start":"2023-01-30","end":"2023-10-29","filed":"2023-11-21","accn":"q3","val":815},
+            {"form":"10-K","fp":"FY","fy":2024,"start":"2023-01-30","end":"2024-01-28","filed":"2024-02-21","accn":"fy","val":1069},
+        ]}}
+        facts, blockers=_normalize_tag(
+            "NVDA","0001045810","CAPEX","PaymentsToAcquireProductiveAssets",tag_obj,
+            {"q3":"2023-11-21T00:00:00Z","fy":"2024-02-21T00:00:00Z"},
+            "rawsha","US_GAAP_COMPANY_LEVEL",
+        )
+        self.assertEqual(blockers,[])
+        self.assertEqual([(f.fiscal_period, f.value) for f in facts],[("2024Q4",254)])
 
     def test_split_capex_taxonomy_cannot_be_silently_bridged(self):
         result = audit_tag_regime(

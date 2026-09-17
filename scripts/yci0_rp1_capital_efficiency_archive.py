@@ -297,16 +297,20 @@ def _normalize_tag(entity: str, cik: str, normalized: str, tag: str, tag_obj: di
                 else: blockers.append(f"MISSING_ACCEPTANCE:{normalized}:{fy}Q{q}")
             continue
         if normalized in CUMULATIVE_FLOWS:
+            values: dict[str, tuple[Decimal,list[dict[str,Any]]]] = {}
             if "Q1" in selected:
-                values={"Q1":(Decimal(str(selected["Q1"]["val"])),[selected["Q1"]])}
-                if "Q2" in selected: values["Q2"]=(Decimal(str(selected["Q2"]["val"]))-Decimal(str(selected["Q1"]["val"])),[selected["Q2"],selected["Q1"]])
-                if "Q3" in selected and "Q2" in selected: values["Q3"]=(Decimal(str(selected["Q3"]["val"]))-Decimal(str(selected["Q2"]["val"])),[selected["Q3"],selected["Q2"]])
-                if "FY" in selected and "Q3" in selected: values["Q4"]=(Decimal(str(selected["FY"]["val"]))-Decimal(str(selected["Q3"]["val"])),[selected["FY"],selected["Q3"]])
-                for fp,q in (("Q1",1),("Q2",2),("Q3",3),("Q4",4)):
-                    if fp not in values: continue
-                    value,sources=values[fp]; fact=_make_fact(entity,cik,normalized,tag,f"{fy}Q{q}",value,sources,acceptance,raw_sha,regime)
-                    if fact: output.append(fact)
-                    else: blockers.append(f"MISSING_ACCEPTANCE:{normalized}:{fy}Q{q}")
+                values["Q1"]=(Decimal(str(selected["Q1"]["val"])),[selected["Q1"]])
+            if "Q1" in selected and "Q2" in selected:
+                values["Q2"]=(Decimal(str(selected["Q2"]["val"]))-Decimal(str(selected["Q1"]["val"])),[selected["Q2"],selected["Q1"]])
+            if "Q2" in selected and "Q3" in selected:
+                values["Q3"]=(Decimal(str(selected["Q3"]["val"]))-Decimal(str(selected["Q2"]["val"])),[selected["Q3"],selected["Q2"]])
+            if "Q3" in selected and "FY" in selected:
+                values["Q4"]=(Decimal(str(selected["FY"]["val"]))-Decimal(str(selected["Q3"]["val"])),[selected["FY"],selected["Q3"]])
+            for fp,q in (("Q1",1),("Q2",2),("Q3",3),("Q4",4)):
+                if fp not in values: continue
+                value,sources=values[fp]; fact=_make_fact(entity,cik,normalized,tag,f"{fy}Q{q}",value,sources,acceptance,raw_sha,regime)
+                if fact: output.append(fact)
+                else: blockers.append(f"MISSING_ACCEPTANCE:{normalized}:{fy}Q{q}")
     dedup={(f.fiscal_period,f.concept):f for f in output}
     return [dedup[k] for k in sorted(dedup)], blockers
 
