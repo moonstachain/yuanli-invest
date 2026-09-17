@@ -231,21 +231,28 @@ Boundary：DTWEXBGS 是 broad trade-weighted USD proxy，不是 literal ICE DXY�
 
 ---
 
-# 8｜当前真实断点：Capital Efficiency Definition Freeze
+# 8｜当前真实断点：G6 Definition Spec Human Review
 
-这是最后一维，也是最容易被“方便指标”污染的一维。
+Capital Efficiency 的设计已完成，尚未进入数据抓取或机器 contract 实施。
 
-在抓数据前必须先冻结：
+正式 spec：
 
-- economic construct 到底是什么；
-- numerator / denominator；
-- entity scope；
-- time aggregation；
-- accounting regime；
-- 是否允许 proxy；
-- 如何处理 hyperscaler / semiconductor / networking / power equipment 的异质性。
+`docs/superpowers/specs/2026-09-17-yci0-rp1-g6-capital-efficiency-definition-freeze-design.md`
 
-禁止为了补齐 6/6 临时用 generic margin、ROIC、FCF margin 或 capex/revenue 代替。
+已冻结的核心设计：
+
+- construct = `Marginal Capital Productivity Stack`；
+- mandatory components = Incremental ROIC / Cash Conversion / Capital Intensity；
+- Incremental ROIC 使用 YoY TTM NOPAT 增量 ÷ YoY Operating Invested Capital 增量；
+- Operating Invested Capital 使用统一 operating-accounting 公式；
+- metric directionality 必须 machine-readable；
+- entity 必须进入 metric identity，防止当前 compiler 按 metric_id 聚合导致 cross-entity contamination；
+- 四个 frozen cohorts = HYPERSCALER / COMPUTE / NETWORKING / POWER_ELECTRICAL；
+- first proof 优先复用 MSFT / NVDA / ANET / ETN；
+- 四个连续 derived observations 至少需要八个季度 raw filing history；
+- 任何 mandatory component 不可重建 => G6 `UNKNOWN`。
+
+当前 Human Gate：审阅并接受 G6 spec。Human Review 通过前，不写 implementation plan、不抓 Capital Efficiency 数据、不改 5/6 production Reality。
 
 ---
 
@@ -292,10 +299,10 @@ Current runtime run：`43e010ed-d8d9-4867-914f-339879c992b0`
 2. 回读 PR #102 最新 head / base；
 3. 检查 production state card `ba6ab0a7...` 与 runtime run `43e010ed...`；
 4. 不重做 Microsoft / NVIDIA / Eaton / Arista / Financing；
-5. 直接从 `Capital Efficiency Definition Freeze` 开始；
-6. 先冻结 economic construct / numerator / denominator / entity scope / time aggregation / accounting regime / proxy rule；
-7. 定义冻结前禁止抓方便指标补齐 6/6；
-8. 定义冻结后再做 PIT evidence admission 与 6/6 recompile；
+5. 先读 G6 design spec，并确认 Human Review 状态；
+6. 未 ACCEPT spec 前，不写 implementation plan、不抓 Capital Efficiency 数据；
+7. ACCEPT spec 后进入 implementation plan → RED tests → machine contract；
+8. contract 通过后才做 PIT evidence admission 与 6/6 recompile；
 9. 未有明确 Human Gate 前，Journey 保持 `02 EVIDENCE / HOLD`；
 10. 每一步 production mutation 后 physical readback；
 11. 禁止 Narrative / Price / Shadow / Capital / Execution 越权。
@@ -304,4 +311,4 @@ Current runtime run：`43e010ed-d8d9-4867-914f-339879c992b0`
 
 # 12｜一句话恢复点
 
-> **YCI0-RP1 已完成 Microsoft hyperscaler capex、NVIDIA compute、Eaton power/grid、Arista networking、Financing Regime 五个 raw-backed/PIT/PASS Reality dimensions，production Reality 已到 `PARTIAL_REALITY_STATE_5_OF_6`；当前唯一真实断点是 Capital Efficiency Definition Freeze，仍保持 overall Reality unsettled、Notion HOLD @ 02 EVIDENCE、Capital/Execution LOCKED。**
+> **YCI0-RP1 已完成五个 raw-backed/PIT/PASS Reality dimensions，production Reality 为 `PARTIAL_REALITY_STATE_5_OF_6`；G6 Capital Efficiency 的 Marginal Capital Productivity Stack 设计 spec 已写成，当前唯一真实断点是 Human Review 该 spec。ACCEPT 前不实施、不抓数据，Notion 继续 HOLD @ 02 EVIDENCE，Capital/Execution 继续 LOCKED。**
