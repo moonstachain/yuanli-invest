@@ -102,8 +102,6 @@ def parse_wind_cli_response(stdout: str, *, expected_code: str) -> dict[str, Any
 def query_wind_metric(cli_path: Path, code: str, *, observation: str = "5") -> dict[str, Any]:
     request = {
         "question": f"提取指标代码 {code} 最近{observation}期数据，仅返回该指标",
-        # Wind MCP schema currently advertises integer, while the live backend
-        # requires string. Keep this compatibility fact explicit and tested.
         "observation": str(observation),
     }
     proc = subprocess.run(
@@ -199,6 +197,44 @@ def write_receipt(receipt: Mapping[str, Any], runtime_dir: Path) -> Path:
     return target
 
 
+def emit_learning_live(
+    receipt: Mapping[str, Any],
+    runtime_dir: Path,
+    *,
+    learning_cfg: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Run G7 only when its separate production integration gate is explicit."""
+    cfg: dict[str, Any] = {}
+    try:
+        try:
+            from scripts import ymq_gold2_learning_live as learning
+        except ImportError:
+            import ymq_gold2_learning_live as learning  # type: ignore
+        cfg = dict(learning_cfg or learning.load_contract())
+        learning.validate_contract(cfg)
+        if cfg["authority"].get("production_scheduler_integration_authorized") is not True:
+            return {
+                "program": cfg["program"],
+                "battle": cfg["battle"],
+                "status": "LEARNING_INTEGRATION_NOT_AUTHORIZED",
+                "as_of": receipt.get("as_of"),
+                "accepted_learning": False,
+                "authority": dict(cfg["authority"]),
+            }
+        learning.validate_live_receipt(receipt)
+        return learning.process_current_receipt(receipt, runtime_dir, cfg)
+    except Exception as exc:
+        return {
+            "program": cfg.get("program", "YMQ-GOLD2"),
+            "battle": cfg.get("battle", "G7-LEARNING-LIVE"),
+            "status": "LEARNING_FAIL_CLOSED",
+            "as_of": receipt.get("as_of"),
+            "error_type": type(exc).__name__,
+            "accepted_learning": False,
+            "authority": dict(cfg.get("authority", {})),
+        }
+
+
 def default_cli_path() -> Path:
     env = os.getenv("WIND_MCP_CLI")
     if env:
@@ -255,8 +291,14 @@ def main() -> int:
         print(json.dumps({"receipt": str(target), **receipt}, ensure_ascii=False, indent=2))
         return 2
 
-    target = write_receipt(receipt, default_runtime_dir())
-    print(json.dumps({"receipt": str(target), **receipt}, ensure_ascii=False, indent=2))
+    runtime_dir = default_runtime_dir()
+    target = write_receipt(receipt, runtime_dir)
+    learning_result = emit_learning_live(receipt, runtime_dir)
+    print(json.dumps({
+        "receipt": str(target),
+        "learning_status": learning_result.get("status"),
+        **receipt,
+    }, ensure_ascii=False, indent=2))
     return 0
 
 

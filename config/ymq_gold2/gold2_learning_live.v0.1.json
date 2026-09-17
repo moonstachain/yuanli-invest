@@ -1,0 +1,39 @@
+{
+  "program": "YMQ-GOLD2",
+  "battle": "G7-LEARNING-LIVE",
+  "version": "0.1.0",
+  "status": "HUMAN_AUTHORIZED_RESEARCH_LEARNING_ONLY",
+  "target": "GOLD",
+  "input_receipt_status": "LIVE_SHADOW_RECEIPT",
+  "attention_thresholds": {
+    "gold_price_pct_abs": 1.0,
+    "real_rate_bps_abs": 10.0,
+    "usd_pct_abs": 0.5
+  },
+  "settlement": {
+    "directional_scoring_requires_preregistered_claim": true,
+    "missing_claim_state": "NOT_SCORABLE",
+    "same_day_duplicate_state": "DUPLICATE_DAY_SKIPPED",
+    "known_as_of_regression": "FAIL_CLOSED",
+    "regime_detection_lag_without_preregistered_event": "PENDING",
+    "decision_regret_without_decision_object": "NOT_APPLICABLE"
+  },
+  "storage": {
+    "root_relative_to_shadow_runtime": "learning",
+    "git_persistence": false,
+    "raw_provider_body_persistence": false
+  },
+  "authority": {
+    "research_learning_authorized": true,
+    "production_scheduler_integration_authorized": false,
+    "accepted_learning_authorized": false,
+    "capital_authorized": false,
+    "sizing_authorized": false,
+    "execution_authorized": false,
+    "broker_action": false,
+    "veighna_authorized": false,
+    "asset_promotion_authorized": false,
+    "canon_promotion_authorized": false
+  },
+  "authorization_basis": "Explicit Human approval in ChatGPT on 2026-09-17 to implement Data Live to Learning Live as research-only; merge and production scheduler integration remain a separate Human Gate."
+}
