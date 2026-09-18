@@ -1,0 +1,21 @@
+name: Shared Spec Binding Genesis
+
+on:
+  pull_request:
+    paths:
+      - "governance/shared-spec/**"
+      - "governance/receipts/shared-spec-binding-genesis-invest.v0.1.yaml"
+      - "scripts/validate_shared_spec_binding.py"
+      - ".github/workflows/shared-spec-binding.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - run: python scripts/validate_shared_spec_binding.py
+      - run: git diff --check
