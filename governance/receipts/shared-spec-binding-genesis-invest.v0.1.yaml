@@ -1,0 +1,17 @@
+schema: yuanli.shared-spec-binding-receipt/v0.1
+project_id: YIP
+registry_version: v0.2
+registry_commit: a48675a22c6419973f2a0404fee01375fe83b9e8
+slots: [UniversalBootstrap, MissionBattle, TaskContract, HumanAuthorization, ProviderContract, EvolutionCandidate]
+canonical_refs_resolved: true
+local_profiles:
+  - governance/shared-spec/domain-profile.v0.1.yaml
+deviations_explicit: true
+human_gates_explicit: true
+ready_state: READY_WITH_LIMITS
+binding_effect:
+  shared_spec_copy_created: false
+  research_authority_changed: false
+  production_runtime_authorized: false
+  capital_action_authorized: false
+verdict: PASS_BINDING_GENESIS_INVESTMENT
