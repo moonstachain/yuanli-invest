@@ -1,0 +1,65 @@
+schema: yuanli.shared-spec-binding/v0.1
+project_id: YIP
+project_repo: moonstachain/yuanli-invest
+principal: RAY
+registry_ref:
+  repo: moonstachain/yuanli-strategy-soul
+  path: governance/mpe0/shared-spec-registry.v0.2.yaml
+  version: v0.2
+  verified_owner_commit: a48675a22c6419973f2a0404fee01375fe83b9e8
+bindings:
+  - spec_id: UniversalBootstrap
+    owner: DL0_NS1
+    canonical_ref: .yuanli/assistant-bootstrap.yaml
+    canonical_state: ACTIVE_EXISTING_OWNER
+    local_profile_ref: governance/shared-spec/domain-profile.v0.1.yaml
+    pin_policy: PIN_EXACT_COMMIT_FOR_REGULATED_OR_HIGH_EFFECT_RUNTIME
+    compatibility_state: COMPATIBLE_WITH_PROFILE
+  - spec_id: MissionBattle
+    owner: Capability_Strategy
+    canonical_ref: governance/capability/cross-plane-mission-contract.v0.1.yaml
+    canonical_state: ACTIVE_EXISTING_OWNER
+    local_profile_ref: governance/shared-spec/domain-profile.v0.1.yaml
+    pin_policy: PIN_EXACT_COMMIT_FOR_REGULATED_OR_HIGH_EFFECT_RUNTIME
+    compatibility_state: COMPATIBLE_WITH_PROFILE
+  - spec_id: TaskContract
+    owner: Brain_E2
+    canonical_ref: governance/information/brain-e2-task-contract.v0.1.yaml
+    canonical_state: ACTIVE_EXISTING_OWNER
+    local_profile_ref: governance/shared-spec/domain-profile.v0.1.yaml
+    pin_policy: PIN_EXACT_COMMIT_FOR_REGULATED_OR_HIGH_EFFECT_RUNTIME
+    compatibility_state: COMPATIBLE_WITH_PROFILE
+  - spec_id: HumanAuthorization
+    owner: RL1
+    canonical_ref: governance/reality-loop/rl1-shared-authorization-separation.v1.yaml
+    canonical_state: ACTIVE_SHARED_RULE
+    local_profile_ref: governance/shared-spec/domain-profile.v0.1.yaml
+    pin_policy: PIN_EXACT_COMMIT_FOR_REGULATED_OR_HIGH_EFFECT_RUNTIME
+    compatibility_state: COMPATIBLE_WITH_PROFILE
+  - spec_id: ProviderContract
+    owner: COM0
+    canonical_ref: docs/governance/YOS-COM0-PROVIDER-PROTOCOL-v0.2.md
+    canonical_state: ACTIVE_EXISTING_OWNER
+    local_profile_ref: governance/shared-spec/domain-profile.v0.1.yaml
+    pin_policy: PIN_EXACT_COMMIT_FOR_REGULATED_OR_HIGH_EFFECT_RUNTIME
+    compatibility_state: COMPATIBLE_WITH_PROFILE
+  - spec_id: EvolutionCandidate
+    owner: EVO0
+    canonical_ref: governance/semantic/evolution/yos-onto-evo0-program.v0.1.yaml
+    canonical_state: ACTIVE_EXISTING_OWNER
+    local_profile_ref: governance/shared-spec/domain-profile.v0.1.yaml
+    pin_policy: PIN_EXACT_COMMIT_FOR_REGULATED_OR_HIGH_EFFECT_RUNTIME
+    compatibility_state: COMPATIBLE_WITH_PROFILE
+local_profile_refs:
+  - governance/shared-spec/domain-profile.v0.1.yaml
+deviations:
+  - id: YIP-RESEARCH-TRADE-SEPARATION
+    scope: Research canon, provider evidence and runtime research do not confer trade or capital-action authority.
+  - id: YIP-RUNTIME-PINNING
+    scope: High-effect runtime integrations must use exact upstream Shared Spec commit pins.
+human_gates:
+  - production_runtime_enablement
+  - broker_or_capital_action
+  - research_capability_promotion
+last_verified_at: 2026-09-19T01:31:00+08:00
+ready_state: READY_WITH_LIMITS
