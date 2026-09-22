@@ -247,7 +247,7 @@ class MachineProjectionCandidateTests(unittest.TestCase):
         sh = MACHINE_WRAPPER.read_text()
         self.assertIn("security find-generic-password", sh)
         self.assertIn("OP_SERVICE_ACCOUNT_TOKEN", sh)
-        self.assertIn("op run", sh)
+        self.assertIn('"$OP_BIN" run', sh)
         self.assertIn("plaintext Supabase secret detected", sh)
 
     def test_env_template_is_reference_only(self):
@@ -255,6 +255,8 @@ class MachineProjectionCandidateTests(unittest.TestCase):
         self.assertIn("YMQ4_SUPABASE_SECRET_KEY=op://", env)
         self.assertNotIn("sb_secret_", env)
         self.assertIn("YIOS_TG1_PRODUCT_SINK_ENABLED=true", env)
+        self.assertIn("<MATERIALIZED_RUNTIME_ROOT>", env)
+        self.assertNotIn("/Users/", env)
 
     def test_current_launchd_installer_does_not_activate_machine_wrapper(self):
         installer = LAUNCHD_INSTALLER.read_text()
