@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 import unittest
 from datetime import date
@@ -7,6 +8,12 @@ from unittest import mock
 
 from scripts import ymq_gold2_live_shadow as shadow
 from scripts import ymq_gold2_learning_live as learning
+
+
+ROOT = Path(__file__).resolve().parents[1]
+MACHINE_WRAPPER = ROOT / "scripts/run_ymq_gold2_live_shadow_machine.sh"
+MACHINE_INSTALLER = ROOT / "scripts/install_ymq_gold2_live_shadow_machine_launchd.sh"
+LAUNCHD_INSTALLER = ROOT / "scripts/install_ymq_gold2_live_shadow_launchd.sh"
 
 
 class ActivationContractTests(unittest.TestCase):
@@ -169,6 +176,94 @@ class LearningIntegrationTests(unittest.TestCase):
             self.assertEqual(current, original)
             self.assertNotIn("error", result)
             self.assertIn("error_type", result)
+
+
+class ProductSinkHookTests(unittest.TestCase):
+    def test_product_sink_is_disabled_by_default(self):
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(
+            os.environ, {}, clear=True
+        ):
+            result = shadow.emit_product_sink(Path(td, "receipt.json"), Path(td))
+            self.assertEqual(result["status"], "PRODUCT_SINK_DISABLED")
+            self.assertEqual(result["authority"], "SHADOW_ONLY")
+
+    def test_enabled_sink_requires_client(self):
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(
+            os.environ, {"YIOS_TG1_PRODUCT_SINK_ENABLED": "true"}, clear=True
+        ):
+            result = shadow.emit_product_sink(Path(td, "receipt.json"), Path(td))
+            self.assertEqual(result["status"], "PRODUCT_SINK_CLIENT_MISSING")
+
+    def test_enabled_sink_requires_machine_projected_credentials(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            client = root / "sink.py"
+            client.write_text("print('unused')\n")
+            env = {
+                "YIOS_TG1_PRODUCT_SINK_ENABLED": "true",
+                "YIOS_TG1_SINK_CLIENT": str(client),
+            }
+            with mock.patch.dict(os.environ, env, clear=True):
+                result = shadow.emit_product_sink(root / "receipt.json", root)
+            self.assertEqual(
+                result["status"], "PRODUCT_SINK_CREDENTIALS_NOT_PROJECTED"
+            )
+
+    @mock.patch("scripts.ymq_gold2_live_shadow._source_commit", return_value="a" * 40)
+    @mock.patch("scripts.ymq_gold2_live_shadow.subprocess.run")
+    def test_enabled_sink_delegates_machine_token_via_environment_only(
+        self, run, _commit
+    ):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            receipt = root / "receipt.json"
+            receipt.write_text("{}\n")
+            client = root / "sink.py"
+            client.write_text("print('unused')\n")
+            run.return_value = mock.Mock(
+                returncode=0,
+                stdout=json.dumps({
+                    "status": "MACHINE_REALITY_SINK_PASS",
+                    "authority": "SHADOW_ONLY",
+                }),
+                stderr="",
+            )
+            env = {
+                "YIOS_TG1_PRODUCT_SINK_ENABLED": "true",
+                "YIOS_TG1_SINK_CLIENT": str(client),
+                "YIOS_TG1_MACHINE_INGEST_TOKEN": "MACHINE_TOKEN_TEST_ONLY",
+                "YIOS_TG1_INGEST_ENDPOINT": "https://example.invalid/ingest",
+                "YIOS_TG1_MACHINE_CLIENT_ID": "YIOS-TG1-G1R-M4",
+            }
+            with mock.patch.dict(os.environ, env, clear=True):
+                result = shadow.emit_product_sink(receipt, root)
+            self.assertEqual(result["status"], "MACHINE_REALITY_SINK_PASS")
+            argv = run.call_args.args[0]
+            self.assertIn(str(client), argv)
+            self.assertNotIn("MACHINE_TOKEN_TEST_ONLY", argv)
+
+
+class MachineProjectionCandidateTests(unittest.TestCase):
+    def test_wrapper_reads_scoped_ingest_token_from_keychain(self):
+        sh = MACHINE_WRAPPER.read_text()
+        self.assertIn("security find-generic-password", sh)
+        self.assertIn("YIOS_TG1_MACHINE_INGEST_TOKEN", sh)
+        self.assertIn("yuanli.yios-tg1.machine-ingest-token", sh)
+        self.assertNotIn("OP_SERVICE_ACCOUNT_TOKEN", sh)
+        self.assertNotIn("op run", sh)
+
+    def test_machine_installer_contains_only_nonsecret_projection_metadata(self):
+        installer = MACHINE_INSTALLER.read_text()
+        self.assertIn("run_ymq_gold2_live_shadow_machine.sh", installer)
+        self.assertIn("YIOS_TG1_INGEST_ENDPOINT", installer)
+        self.assertIn("YIOS_TG1_MACHINE_CLIENT_ID", installer)
+        self.assertIn("YIOS_TG1_MACHINE_TOKEN_KEYCHAIN_SERVICE", installer)
+        self.assertNotIn("sb_secret_", installer)
+        self.assertNotIn("YIOS_TG1_MACHINE_INGEST_TOKEN</key>", installer)
+
+    def test_legacy_installer_remains_separate(self):
+        installer = LAUNCHD_INSTALLER.read_text()
+        self.assertNotIn("run_ymq_gold2_live_shadow_machine.sh", installer)
 
 
 if __name__ == "__main__":
