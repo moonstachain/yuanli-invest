@@ -1,0 +1,14 @@
+{
+  "program": "YIP-MX0",
+  "status": "REALITY_PROOF_PASS_SEMANTIC_RECONCILIATION_OPEN",
+  "as_of": "2026-09-17",
+  "provider": "EASTMONEY_MIAOXIANG",
+  "authority": "EVIDENCE_ONLY",
+  "credential_proof": "PASS",
+  "mcp_tool_inventory_count": 11,
+  "golden_query": "PASS",
+  "gold_semantic_equivalence_with_wind": "NOT_PROVEN",
+  "usd_cross_source_alignment": "PASS",
+  "real_rate_cross_source_equivalence": "NOT_DIRECTLY_COMPARABLE",
+  "next_gate": "PROVIDER_SEMANTIC_RECONCILIATION"
+}
