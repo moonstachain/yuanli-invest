@@ -50,7 +50,7 @@ cat > "$PLIST" <<EOF
     <key>Hour</key><integer>8</integer>
     <key>Minute</key><integer>10</integer>
   </dict>
-  <key>RunAtLoad</key><true/>
+  <key>RunAtLoad</key><false/>
   <key>StandardOutPath</key><string>${RUNTIME_DIR}/logs/stdout.log</string>
   <key>StandardErrorPath</key><string>${RUNTIME_DIR}/logs/stderr.log</string>
 </dict></plist>
@@ -59,9 +59,8 @@ EOF
 plutil -lint "$PLIST" >/dev/null
 launchctl bootout "gui/$UID/$LABEL" >/dev/null 2>&1 || true
 launchctl bootstrap "gui/$UID" "$PLIST"
-launchctl kickstart -k "gui/$UID/$LABEL"
-
 echo "INSTALLED ${LABEL}"
 echo "MODE YIOS-TG1-G1R_MACHINE_GATEWAY"
 echo "AUTHORITY SHADOW_ONLY"
 echo "SECRET_IN_PLIST NO"
+echo "NEXT_RUN 08:10_LOCAL_SCHEDULE"
