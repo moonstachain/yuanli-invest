@@ -2,32 +2,29 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-OP_BIN="${OP_BIN:-$(command -v op)}"
 PYTHON_BIN="${PYTHON_BIN:-$(command -v python3)}"
-ENV_OP="${YIOS_TG1_MACHINE_ENV_OP:-$HOME/.config/yuanli/yios-tg1-g1r.env.op}"
-KEYCHAIN_SERVICE="${YIOS_TG1_OP_SERVICE_ACCOUNT_KEYCHAIN_SERVICE:-yuanli.yios-tg1.op-service-account}"
+KEYCHAIN_SERVICE="${YIOS_TG1_MACHINE_TOKEN_KEYCHAIN_SERVICE:-yuanli.yios-tg1.machine-ingest-token}"
+SINK_CLIENT="${YIOS_TG1_SINK_CLIENT:-}"
+INGEST_ENDPOINT="${YIOS_TG1_INGEST_ENDPOINT:-https://tbmoimbdhsrltvospwpu.supabase.co/functions/v1/yios-tg1-g1-ingest}"
+CLIENT_ID="${YIOS_TG1_MACHINE_CLIENT_ID:-YIOS-TG1-G1R-M4}"
 
-[[ -x "$OP_BIN" ]] || { echo "1Password CLI not found" >&2; exit 21; }
 [[ -x "$PYTHON_BIN" ]] || { echo "python3 not found" >&2; exit 21; }
-[[ -f "$ENV_OP" ]] || { echo "machine env.op missing: $ENV_OP" >&2; exit 22; }
-
-if grep -q 'sb_secret_' "$ENV_OP"; then
-  echo "plaintext Supabase secret detected in env.op; refusing" >&2
-  exit 23
-fi
-if ! grep -q 'op://' "$ENV_OP"; then
-  echo "env.op contains no 1Password Secret Reference" >&2
-  exit 23
-fi
+[[ -n "$SINK_CLIENT" && -f "$SINK_CLIENT" ]] || {
+  echo "machine sink client missing" >&2
+  exit 22
+}
 
 TOKEN="$(/usr/bin/security find-generic-password   -a "$USER"   -s "$KEYCHAIN_SERVICE"   -w 2>/dev/null || true)"
 
 if [[ -z "$TOKEN" ]]; then
-  echo "machine service-account token projection missing" >&2
+  echo "machine ingest token projection missing" >&2
   exit 24
 fi
 
-export OP_SERVICE_ACCOUNT_TOKEN="$TOKEN"
+export YIOS_TG1_PRODUCT_SINK_ENABLED=true
+export YIOS_TG1_MACHINE_INGEST_TOKEN="$TOKEN"
+export YIOS_TG1_INGEST_ENDPOINT="$INGEST_ENDPOINT"
+export YIOS_TG1_MACHINE_CLIENT_ID="$CLIENT_ID"
 unset TOKEN
 
-exec "$OP_BIN" run   --env-file "$ENV_OP"   -- "$PYTHON_BIN" "$REPO_ROOT/scripts/ymq_gold2_live_shadow.py"
+exec "$PYTHON_BIN" "$REPO_ROOT/scripts/ymq_gold2_live_shadow.py"
