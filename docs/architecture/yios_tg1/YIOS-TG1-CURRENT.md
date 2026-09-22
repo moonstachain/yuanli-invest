@@ -3,7 +3,8 @@
 **Program:** Yuanli Investment OS · Trade Guidance Product  
 **Status:** `G0_AUTHORIZED_TO_EXECUTE / SHADOW_ONLY`  
 **Known As Of:** 2026-09-22  
-**Master Issue:** https://github.com/moonstachain/yuanli-invest/issues/107
+**Master Issue:** https://github.com/moonstachain/yuanli-invest/issues/107  
+**Human Cockpit:** https://app.notion.com/p/3e38e1aaace4813eb8d2c4e4495a710e?pvs=204
 
 ## Purpose
 
@@ -76,8 +77,10 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 ## Cross-Repo Work
 
 - Program / domain law: https://github.com/moonstachain/yuanli-invest/issues/107
+- G0 Draft PR: https://github.com/moonstachain/yuanli-invest/pull/108
 - G1 runtime: https://github.com/moonstachain/yuanli-invest-runtime/issues/28
 - G2/G3 product: https://github.com/yuanli-life/yuanli-os/issues/34
+- Human Project Cockpit: https://app.notion.com/p/3e38e1aaace4813eb8d2c4e4495a710e?pvs=204
 
 ## Next Legal Action
 
@@ -106,4 +109,4 @@ New session / new AI should restore in this order:
 4. Runtime issue #28 and Product issue #34
 5. Only then query Supabase / M4 receipts for current Reality
 
-**GitHub Truth First → Notion Human Projection Second → Runtime Reality read on demand.**
+**GitHub Truth First → Runtime Reality on demand → Notion Human Projection.**
