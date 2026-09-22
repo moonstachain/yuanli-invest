@@ -1,4 +1,5 @@
 import json
+import os
 import tempfile
 import unittest
 from datetime import date
@@ -169,6 +170,70 @@ class LearningIntegrationTests(unittest.TestCase):
             self.assertEqual(current, original)
             self.assertNotIn("error", result)
             self.assertIn("error_type", result)
+
+
+class ProductSinkHookTests(unittest.TestCase):
+    def test_product_sink_is_disabled_by_default(self):
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(
+            os.environ, {}, clear=True
+        ):
+            result = shadow.emit_product_sink(Path(td, "receipt.json"), Path(td))
+            self.assertEqual(result["status"], "PRODUCT_SINK_DISABLED")
+            self.assertEqual(result["authority"], "SHADOW_ONLY")
+
+    def test_enabled_sink_requires_client(self):
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict(
+            os.environ, {"YIOS_TG1_PRODUCT_SINK_ENABLED": "true"}, clear=True
+        ):
+            result = shadow.emit_product_sink(Path(td, "receipt.json"), Path(td))
+            self.assertEqual(result["status"], "PRODUCT_SINK_CLIENT_MISSING")
+
+    def test_enabled_sink_requires_machine_projected_credentials(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            client = root / "sink.py"
+            client.write_text("print('unused')\n")
+            env = {
+                "YIOS_TG1_PRODUCT_SINK_ENABLED": "true",
+                "YIOS_TG1_SINK_CLIENT": str(client),
+            }
+            with mock.patch.dict(os.environ, env, clear=True):
+                result = shadow.emit_product_sink(root / "receipt.json", root)
+            self.assertEqual(
+                result["status"], "PRODUCT_SINK_CREDENTIALS_NOT_PROJECTED"
+            )
+
+    @mock.patch("scripts.ymq_gold2_live_shadow._source_commit", return_value="a" * 40)
+    @mock.patch("scripts.ymq_gold2_live_shadow.subprocess.run")
+    def test_enabled_sink_delegates_without_owning_secret(
+        self, run, _commit
+    ):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            receipt = root / "receipt.json"
+            receipt.write_text("{}\n")
+            client = root / "sink.py"
+            client.write_text("print('unused')\n")
+            run.return_value = mock.Mock(
+                returncode=0,
+                stdout=json.dumps({
+                    "status": "REALITY_SINK_PASS",
+                    "authority": "SHADOW_ONLY",
+                }),
+                stderr="",
+            )
+            env = {
+                "YIOS_TG1_PRODUCT_SINK_ENABLED": "true",
+                "YIOS_TG1_SINK_CLIENT": str(client),
+                "SUPABASE_URL": "https://example.invalid",
+                "YMQ4_SUPABASE_SECRET_KEY": "sb_secret_TEST_ONLY",
+            }
+            with mock.patch.dict(os.environ, env, clear=True):
+                result = shadow.emit_product_sink(receipt, root)
+            self.assertEqual(result["status"], "REALITY_SINK_PASS")
+            argv = run.call_args.args[0]
+            self.assertIn(str(client), argv)
+            self.assertNotIn("sb_secret_TEST_ONLY", argv)
 
 
 if __name__ == "__main__":
