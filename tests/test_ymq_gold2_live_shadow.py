@@ -10,6 +10,12 @@ from scripts import ymq_gold2_live_shadow as shadow
 from scripts import ymq_gold2_learning_live as learning
 
 
+ROOT = Path(__file__).resolve().parents[1]
+MACHINE_WRAPPER = ROOT / "scripts/run_ymq_gold2_live_shadow_machine.sh"
+MACHINE_ENV_EXAMPLE = ROOT / "config/yios_tg1/g1r_machine_runtime.env.op.example"
+LAUNCHD_INSTALLER = ROOT / "scripts/install_ymq_gold2_live_shadow_launchd.sh"
+
+
 class ActivationContractTests(unittest.TestCase):
     def test_activation_authorizes_scheduler_only(self):
         cfg = shadow.load_activation()
@@ -234,6 +240,26 @@ class ProductSinkHookTests(unittest.TestCase):
             argv = run.call_args.args[0]
             self.assertIn(str(client), argv)
             self.assertNotIn("sb_secret_TEST_ONLY", argv)
+
+
+class MachineProjectionCandidateTests(unittest.TestCase):
+    def test_wrapper_reads_machine_token_from_keychain(self):
+        sh = MACHINE_WRAPPER.read_text()
+        self.assertIn("security find-generic-password", sh)
+        self.assertIn("OP_SERVICE_ACCOUNT_TOKEN", sh)
+        self.assertIn("op run", sh)
+        self.assertIn("plaintext Supabase secret detected", sh)
+
+    def test_env_template_is_reference_only(self):
+        env = MACHINE_ENV_EXAMPLE.read_text()
+        self.assertIn("YMQ4_SUPABASE_SECRET_KEY=op://", env)
+        self.assertNotIn("sb_secret_", env)
+        self.assertIn("YIOS_TG1_PRODUCT_SINK_ENABLED=true", env)
+
+    def test_current_launchd_installer_does_not_activate_machine_wrapper(self):
+        installer = LAUNCHD_INSTALLER.read_text()
+        self.assertNotIn("run_ymq_gold2_live_shadow_machine.sh", installer)
+        self.assertNotIn("YIOS_TG1_PRODUCT_SINK_ENABLED", installer)
 
 
 if __name__ == "__main__":
