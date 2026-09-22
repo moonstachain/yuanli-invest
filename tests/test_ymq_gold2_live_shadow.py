@@ -260,6 +260,8 @@ class MachineProjectionCandidateTests(unittest.TestCase):
         self.assertIn("YIOS_TG1_MACHINE_TOKEN_KEYCHAIN_SERVICE", installer)
         self.assertNotIn("sb_secret_", installer)
         self.assertNotIn("YIOS_TG1_MACHINE_INGEST_TOKEN</key>", installer)
+        self.assertIn("<key>RunAtLoad</key><false/>", installer)
+        self.assertNotIn("launchctl kickstart", installer)
 
     def test_legacy_installer_remains_separate(self):
         installer = LAUNCHD_INSTALLER.read_text()
