@@ -1,7 +1,7 @@
 # YIOS-TG1｜CURRENT
 
 **Program:** Yuanli Investment OS · Trade Guidance Product  
-**Status:** `G1_CORE_PASS / G1R_MACHINE_GATEWAY_ACTIVATED / SHADOW_ONLY / SECOND_DAY_DELTA_PENDING`  
+**Status:** `G1_CORE_PASS / G1R_MACHINE_GATEWAY_ACTIVATED / G2A0_ENGINEERING_READY / SHADOW_ONLY / SECOND_DAY_DELTA_PENDING`  
 **Known As Of:** 2026-09-22  
 **Master Issue:** https://github.com/moonstachain/yuanli-invest/issues/107  
 **Human Cockpit:** https://app.notion.com/p/3e38e1aaace4813eb8d2c4e4495a710e?pvs=204
@@ -66,7 +66,7 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 - exact `released_at / available_at / vintage_id` 尚无 provider authority，继续保持 NULL；当前 temporal grade = `DATE_LEVEL_ONLY__RELEASE_TIME_UNKNOWN`。
 - central-bank demand + stress proxy 尚未成为 P0 live evidence slots。
 - `TradeDecisionCandidate` 尚未成为 runtime object。
-- Invest Domain Gateway / Gold Decision Cockpit 尚未形成。
+- G2A0 Invest Domain Gateway 工程候选已双 CI PASS，但尚未激活真实 Runtime RPC、生产 Secret 或部署；Gold Decision Cockpit 仍未形成。
 - Shadow Settlement → LearningDelta → Pre-Action Recall 尚未形成产品闭环。
 
 ## Gates
@@ -76,7 +76,7 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 | G0 | Product Constitution × Architecture Freeze | HUMAN AUTHORIZED / READY TO MERGE |
 | G1 | Live Reality Plane × Supabase Sink × Freshness Contract | CORE PROOF PASS |
 | G1R | Machine Gateway × Auto-Sink | ACTIVATED / SAME-DAY SMOKE PASS / SECOND-DAY DELTA PENDING |
-| G2 | Invest Domain Gateway | NOT_STARTED |
+| G2 | Invest Domain Gateway | A0 ENGINEERING READY / ACTIVATION BLOCKED ON G1R FORWARD SETTLEMENT |
 | G3 | Gold Decision Cockpit | NOT_STARTED |
 | G4 | Trade Decision Compiler | NOT_STARTED |
 | G5 | Shadow Runtime | NOT_STARTED |
@@ -96,6 +96,10 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 - Executable-bit closure: https://github.com/moonstachain/yuanli-invest/pull/111
 - State-idempotency closure: https://github.com/moonstachain/yuanli-invest-runtime/pull/31
 - G2/G3 product: https://github.com/yuanli-life/yuanli-os/issues/34
+- G2A0 Runtime Snapshot Draft PR: https://github.com/moonstachain/yuanli-invest-runtime/pull/32
+- G2A0 Runtime issue: https://github.com/moonstachain/yuanli-invest-runtime/issues/33
+- G2A0 Yuanli OS Gateway Draft PR: https://github.com/yuanli-life/yuanli-os/pull/40
+- G2A1 Activation issue: https://github.com/yuanli-life/yuanli-os/issues/41
 - Human Project Cockpit: https://app.notion.com/p/3e38e1aaace4813eb8d2c4e4495a710e?pvs=204
 
 ## Next Legal Action
@@ -110,9 +114,11 @@ Acceptance requires the **next natural 08:10 scheduler run**, not a same-day man
 4. Supabase writes exactly one new governed ingest set;
 5. freshness / known_as_of / values / state transition are compared with 2026-09-22;
 6. no duplicate sample, no authority escalation;
-7. settle G1R and then enter G2 Invest Domain Gateway.
+7. settle G1R and then activate the already-prepared G2A0 read path through `YIOS-TG1-G2A1`.
 
-Until this independent forward event exists, G1R is `ACTIVATED` but not `FULLY_SETTLED`.
+Parallel preflight already completed: G2A0 Runtime Snapshot PR #32 and Yuanli OS Gateway PR #40 are both engineering-ready with CI PASS. They remain Draft and unactivated until this forward event exists.
+
+Until this independent forward event exists, G1R is `ACTIVATED` but not `FULLY_SETTLED` and G2 remains `PREPARED_NOT_ACTIVATED`.
 
 ## Retrieval Contract
 
