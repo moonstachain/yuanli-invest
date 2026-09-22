@@ -1,7 +1,7 @@
 # YIOS-TG1｜CURRENT
 
 **Program:** Yuanli Investment OS · Trade Guidance Product  
-**Status:** `G1_CORE_REALITY_SINK_PROOF_PASS / G1R_CODE_READY_CI_PASS / SHADOW_ONLY / SECURITY_HUMAN_GATE`  
+**Status:** `G1_CORE_PASS / G1R_MACHINE_GATEWAY_ACTIVATED / SHADOW_ONLY / SECOND_DAY_DELTA_PENDING`  
 **Known As Of:** 2026-09-22  
 **Master Issue:** https://github.com/moonstachain/yuanli-invest/issues/107  
 **Human Cockpit:** https://app.notion.com/p/3e38e1aaace4813eb8d2c4e4495a710e?pvs=204
@@ -41,18 +41,28 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 
 ### Proven
 
-- GOLD2 G6 Live Shadow 在 M4 每日 08:10 运行。
+- GOLD2 G6/G7 继续由 M4 每日 08:10 调度。
 - 2026-09-22 G6 = `LIVE_SHADOW_RECEIPT`；G7 = `LEARNING_CANDIDATE_ONLY`。
-- Real 2026-09-22 receipt 已完成：M4 → Supabase ingest → 3 PIT observations → Data Health → GOLD Research State → Product State readback。
-- Idempotency PASS：重复写同一 receipt 不产生第二组事实。
-- Failure path PASS：真实 `PROVIDER_FAIL_CLOSED` → `DEGRADED`、0 observation、0 new state。
-- Authority firewall PASS：`capital_authorized=true` 被数据库拒绝。
-- RPC ACL：anon/authenticated 无读写权；service_role only。
-- Runtime PR #29 CI = PASS。
+- G1 Core Reality Sink 已实证：M4 persisted receipt → Supabase ingest → 3 PIT observations → Data Health → GOLD Research State → Product State readback。
+- Provider failure 已实证：`PROVIDER_FAIL_CLOSED → DEGRADED / 0 observation / 0 new state`。
+- Authority firewall 已实证：资本法权升级被 DB 拒绝。
+- Machine auth 已收窄为单用途 scope：`YIOS_TG1_G1_GOLD2_INGEST_ONLY`；M4 不持有 Supabase service-role。
+- 1Password dedicated machine vault 已建立；Machine Ingest Token Canon 已生成。
+- macOS Keychain runtime projection 与 1Password Canon fingerprint 一致。
+- Supabase Edge Gateway `yios-tg1-g1-ingest` 已部署；缺/错 token 均返回 401 `MACHINE_AUTH_DENIED`。
+- 完整 `Keychain → wrapper → machine client → Edge → G1 RPC → Product State` activation smoke = `MACHINE_REALITY_SINK_PASS`。
+- Machine launchd 已切换：`RunAtLoad=false`，仅下一自然 08:10 触发；plist 不含 secret。
+- Activation smoke 暴露并修复 State identity 幂等缺陷；同一 ingest 的 canonical state 已收敛为唯一：
+  `STATE-GOLD-LIVE-b7d615240fe1d80634b0`。
+- Runtime PR #29 merged：`4d77257fb583dfe89a0a115d093ac81bc88fb5a2`。
+- GOLD2 machine hook PR #109 merged：`e6e0c2475fe835c2c98edc509f32f615a464d67f`。
+- Scheduled-only activation PR #110 merged：`caf5926042eb4c7489232205fbdf14a814984edd`。
+- Executable-bit PR #111 merged：`705dbedf8866453f12d42dde58dbd95dbc032ee7`。
+- State-idempotency PR #31 merged：`7a8d3fdad2fe669b3ad9c117d8a09e0dfe1678a7`。
 
 ### Open Gaps
 
-- G1R code path 已就绪并双 CI PASS；但 M4 实测 Keychain machine token = MISSING、machine env.op = MISSING，因此 auto-sink 尚未激活。
+- **Second-Day Delta Pending**：必须等待下一独立自然日 08:10 自动运行，不能用同日重跑冒充 forward evidence。
 - exact `released_at / available_at / vintage_id` 尚无 provider authority，继续保持 NULL；当前 temporal grade = `DATE_LEVEL_ONLY__RELEASE_TIME_UNKNOWN`。
 - central-bank demand + stress proxy 尚未成为 P0 live evidence slots。
 - `TradeDecisionCandidate` 尚未成为 runtime object。
@@ -63,8 +73,9 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 
 | Gate | Battle | Current |
 |---|---|---|
-| G0 | Product Constitution × Architecture Freeze | DRAFT PR #108 |
-| G1 | Live Reality Plane × Supabase Sink × Freshness Contract | CORE PROOF PASS / G1R CODE READY / SECURITY HUMAN GATE |
+| G0 | Product Constitution × Architecture Freeze | HUMAN AUTHORIZED / READY TO MERGE |
+| G1 | Live Reality Plane × Supabase Sink × Freshness Contract | CORE PROOF PASS |
+| G1R | Machine Gateway × Auto-Sink | ACTIVATED / SAME-DAY SMOKE PASS / SECOND-DAY DELTA PENDING |
 | G2 | Invest Domain Gateway | NOT_STARTED |
 | G3 | Gold Decision Cockpit | NOT_STARTED |
 | G4 | Trade Decision Compiler | NOT_STARTED |
@@ -76,39 +87,39 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 ## Cross-Repo Work
 
 - Program / domain law: https://github.com/moonstachain/yuanli-invest/issues/107
-- G0 Draft PR: https://github.com/moonstachain/yuanli-invest/pull/108
+- G0 Constitution/CURRENT: https://github.com/moonstachain/yuanli-invest/pull/108
 - G1 Runtime issue: https://github.com/moonstachain/yuanli-invest-runtime/issues/28
-- G1 Runtime Draft PR: https://github.com/moonstachain/yuanli-invest-runtime/pull/29
+- G1 Runtime merged PR: https://github.com/moonstachain/yuanli-invest-runtime/pull/29
 - G1R machine runtime: https://github.com/moonstachain/yuanli-invest-runtime/issues/30
-- G1R GOLD2 hook Draft PR: https://github.com/moonstachain/yuanli-invest/pull/109
+- G1R GOLD2 hook merged PR: https://github.com/moonstachain/yuanli-invest/pull/109
+- Scheduled-only activation: https://github.com/moonstachain/yuanli-invest/pull/110
+- Executable-bit closure: https://github.com/moonstachain/yuanli-invest/pull/111
+- State-idempotency closure: https://github.com/moonstachain/yuanli-invest-runtime/pull/31
 - G2/G3 product: https://github.com/yuanli-life/yuanli-os/issues/34
 - Human Project Cockpit: https://app.notion.com/p/3e38e1aaace4813eb8d2c4e4495a710e?pvs=204
 
 ## Next Legal Action
 
-**Security Human Gate**
+`YIOS-TG1-G1R｜Second Independent Natural-Day Auto-Sink × Delta Settlement`
 
-建议授权语句：
+Acceptance requires the **next natural 08:10 scheduler run**, not a same-day manual rerun:
 
-`AUTHORIZE_YIOS_TG1_G1R_MACHINE_IDENTITY × KEYCHAIN_RUNTIME_PROJECTION`
+1. launchd invokes the Keychain-native machine wrapper;
+2. G6/G7 produces a new independent daily receipt;
+3. machine client automatically reaches Edge Gateway;
+4. Supabase writes exactly one new governed ingest set;
+5. freshness / known_as_of / values / state transition are compared with 2026-09-22;
+6. no duplicate sample, no authority escalation;
+7. settle G1R and then enter G2 Invest Domain Gateway.
 
-该授权仅允许：
-
-1. 创建/绑定一个 scoped 1Password Service Account；
-2. 仅访问专用 non-Personal machine vault，权限上限 `read_items`；
-3. 将 Service Account token 作为本机 runtime projection 存入 macOS Keychain，不写 Git / Notion / plist / logs；
-4. 创建 value-free machine `.env.op`，只包含 `op://` references；
-5. 切换 launchd 到已 CI-PASS 的 machine wrapper；
-6. 用下一独立日 receipt 验证自动入库与 second-day delta。
-
-**不授权** capital / sizing / execution / Broker / VeighNa / Canon promotion。
+Until this independent forward event exists, G1R is `ACTIVATED` but not `FULLY_SETTLED`.
 
 ## Retrieval Contract
 
 1. 本 `YIOS-TG1-CURRENT.md`
 2. Master Issue #107
 3. Notion Project Cockpit
-4. Runtime #28 / PR #29 / Product #34
+4. Runtime #28 / #30 and Product #34
 5. 需要实时状态时再查 Supabase / M4 receipts
 
 **GitHub Truth First → Runtime Reality on demand → Notion Human Projection.**
