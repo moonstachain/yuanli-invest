@@ -12,7 +12,7 @@ from scripts import ymq_gold2_learning_live as learning
 
 ROOT = Path(__file__).resolve().parents[1]
 MACHINE_WRAPPER = ROOT / "scripts/run_ymq_gold2_live_shadow_machine.sh"
-MACHINE_ENV_EXAMPLE = ROOT / "config/yios_tg1/g1r_machine_runtime.env.op.example"
+MACHINE_INSTALLER = ROOT / "scripts/install_ymq_gold2_live_shadow_machine_launchd.sh"
 LAUNCHD_INSTALLER = ROOT / "scripts/install_ymq_gold2_live_shadow_launchd.sh"
 
 
@@ -211,7 +211,7 @@ class ProductSinkHookTests(unittest.TestCase):
 
     @mock.patch("scripts.ymq_gold2_live_shadow._source_commit", return_value="a" * 40)
     @mock.patch("scripts.ymq_gold2_live_shadow.subprocess.run")
-    def test_enabled_sink_delegates_without_owning_secret(
+    def test_enabled_sink_delegates_machine_token_via_environment_only(
         self, run, _commit
     ):
         with tempfile.TemporaryDirectory() as td:
@@ -223,7 +223,7 @@ class ProductSinkHookTests(unittest.TestCase):
             run.return_value = mock.Mock(
                 returncode=0,
                 stdout=json.dumps({
-                    "status": "REALITY_SINK_PASS",
+                    "status": "MACHINE_REALITY_SINK_PASS",
                     "authority": "SHADOW_ONLY",
                 }),
                 stderr="",
@@ -231,37 +231,39 @@ class ProductSinkHookTests(unittest.TestCase):
             env = {
                 "YIOS_TG1_PRODUCT_SINK_ENABLED": "true",
                 "YIOS_TG1_SINK_CLIENT": str(client),
-                "SUPABASE_URL": "https://example.invalid",
-                "YMQ4_SUPABASE_SECRET_KEY": "sb_secret_TEST_ONLY",
+                "YIOS_TG1_MACHINE_INGEST_TOKEN": "MACHINE_TOKEN_TEST_ONLY",
+                "YIOS_TG1_INGEST_ENDPOINT": "https://example.invalid/ingest",
+                "YIOS_TG1_MACHINE_CLIENT_ID": "YIOS-TG1-G1R-M4",
             }
             with mock.patch.dict(os.environ, env, clear=True):
                 result = shadow.emit_product_sink(receipt, root)
-            self.assertEqual(result["status"], "REALITY_SINK_PASS")
+            self.assertEqual(result["status"], "MACHINE_REALITY_SINK_PASS")
             argv = run.call_args.args[0]
             self.assertIn(str(client), argv)
-            self.assertNotIn("sb_secret_TEST_ONLY", argv)
+            self.assertNotIn("MACHINE_TOKEN_TEST_ONLY", argv)
 
 
 class MachineProjectionCandidateTests(unittest.TestCase):
-    def test_wrapper_reads_machine_token_from_keychain(self):
+    def test_wrapper_reads_scoped_ingest_token_from_keychain(self):
         sh = MACHINE_WRAPPER.read_text()
         self.assertIn("security find-generic-password", sh)
-        self.assertIn("OP_SERVICE_ACCOUNT_TOKEN", sh)
-        self.assertIn('"$OP_BIN" run', sh)
-        self.assertIn("plaintext Supabase secret detected", sh)
+        self.assertIn("YIOS_TG1_MACHINE_INGEST_TOKEN", sh)
+        self.assertIn("yuanli.yios-tg1.machine-ingest-token", sh)
+        self.assertNotIn("OP_SERVICE_ACCOUNT_TOKEN", sh)
+        self.assertNotIn("op run", sh)
 
-    def test_env_template_is_reference_only(self):
-        env = MACHINE_ENV_EXAMPLE.read_text()
-        self.assertIn("YMQ4_SUPABASE_SECRET_KEY=op://", env)
-        self.assertNotIn("sb_secret_", env)
-        self.assertIn("YIOS_TG1_PRODUCT_SINK_ENABLED=true", env)
-        self.assertIn("<MATERIALIZED_RUNTIME_ROOT>", env)
-        self.assertNotIn("/Users/", env)
+    def test_machine_installer_contains_only_nonsecret_projection_metadata(self):
+        installer = MACHINE_INSTALLER.read_text()
+        self.assertIn("run_ymq_gold2_live_shadow_machine.sh", installer)
+        self.assertIn("YIOS_TG1_INGEST_ENDPOINT", installer)
+        self.assertIn("YIOS_TG1_MACHINE_CLIENT_ID", installer)
+        self.assertIn("YIOS_TG1_MACHINE_TOKEN_KEYCHAIN_SERVICE", installer)
+        self.assertNotIn("sb_secret_", installer)
+        self.assertNotIn("YIOS_TG1_MACHINE_INGEST_TOKEN</key>", installer)
 
-    def test_current_launchd_installer_does_not_activate_machine_wrapper(self):
+    def test_legacy_installer_remains_separate(self):
         installer = LAUNCHD_INSTALLER.read_text()
         self.assertNotIn("run_ymq_gold2_live_shadow_machine.sh", installer)
-        self.assertNotIn("YIOS_TG1_PRODUCT_SINK_ENABLED", installer)
 
 
 if __name__ == "__main__":
