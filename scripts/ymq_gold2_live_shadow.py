@@ -285,9 +285,19 @@ def emit_product_sink(receipt_path: Path, runtime_dir: Path) -> dict[str, Any]:
             "authority": "SHADOW_ONLY",
         }
 
-    if not os.getenv("SUPABASE_URL", "").strip() or not os.getenv(
-        "YMQ4_SUPABASE_SECRET_KEY", ""
-    ).strip():
+    machine_ready = all(
+        os.getenv(name, "").strip()
+        for name in (
+            "YIOS_TG1_MACHINE_INGEST_TOKEN",
+            "YIOS_TG1_INGEST_ENDPOINT",
+            "YIOS_TG1_MACHINE_CLIENT_ID",
+        )
+    )
+    direct_ready = bool(
+        os.getenv("SUPABASE_URL", "").strip()
+        and os.getenv("YMQ4_SUPABASE_SECRET_KEY", "").strip()
+    )
+    if not (machine_ready or direct_ready):
         return {
             "status": "PRODUCT_SINK_CREDENTIALS_NOT_PROJECTED",
             "authority": "SHADOW_ONLY",
