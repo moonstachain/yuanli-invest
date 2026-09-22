@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 import subprocess
+import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
@@ -235,6 +236,105 @@ def emit_learning_live(
         }
 
 
+def product_sink_enabled() -> bool:
+    return os.getenv("YIOS_TG1_PRODUCT_SINK_ENABLED", "").strip().lower() in {
+        "1", "true", "yes", "on"
+    }
+
+
+def _source_commit() -> str:
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(ROOT), "rev-parse", "HEAD"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        value = proc.stdout.strip()
+        if proc.returncode == 0 and len(value) == 40:
+            return value
+    except Exception:
+        pass
+    return "LOCAL"
+
+
+def emit_product_sink(receipt_path: Path, runtime_dir: Path) -> dict[str, Any]:
+    """Optionally project a persisted G6 receipt into the governed TG1 Reality Sink.
+
+    The hook is disabled by default. It never owns credentials and never writes
+    them to disk. An unattended machine runtime must receive credentials through
+    an independently authorized machine/runtime secret projection.
+    """
+    if not product_sink_enabled():
+        return {
+            "status": "PRODUCT_SINK_DISABLED",
+            "authority": "SHADOW_ONLY",
+        }
+
+    client_raw = os.getenv("YIOS_TG1_SINK_CLIENT", "").strip()
+    if not client_raw:
+        return {
+            "status": "PRODUCT_SINK_CLIENT_MISSING",
+            "authority": "SHADOW_ONLY",
+        }
+    client = Path(client_raw).expanduser()
+    if not client.is_file():
+        return {
+            "status": "PRODUCT_SINK_CLIENT_MISSING",
+            "authority": "SHADOW_ONLY",
+        }
+
+    if not os.getenv("SUPABASE_URL", "").strip() or not os.getenv(
+        "YMQ4_SUPABASE_SECRET_KEY", ""
+    ).strip():
+        return {
+            "status": "PRODUCT_SINK_CREDENTIALS_NOT_PROJECTED",
+            "authority": "SHADOW_ONLY",
+        }
+
+    argv = [
+        sys.executable,
+        str(client),
+        "--receipt",
+        str(receipt_path),
+        "--runner-commit",
+        _source_commit(),
+        "--config-version",
+        "gold2_live_shadow.activation.v0.1",
+    ]
+    learning_path = runtime_dir / "learning" / "latest-learning.json"
+    if learning_path.is_file():
+        argv.extend(["--learning", str(learning_path)])
+
+    try:
+        proc = subprocess.run(
+            argv,
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=90,
+        )
+        if proc.returncode != 0:
+            return {
+                "status": "PRODUCT_SINK_FAIL_CLOSED",
+                "exit_code": proc.returncode,
+                "authority": "SHADOW_ONLY",
+            }
+        payload = json.loads(proc.stdout)
+        if not isinstance(payload, dict):
+            raise ValueError("sink client returned non-object JSON")
+        if payload.get("authority") != "SHADOW_ONLY":
+            raise ValueError("sink authority mismatch")
+        return payload
+    except Exception as exc:
+        return {
+            "status": "PRODUCT_SINK_FAIL_CLOSED",
+            "error_type": type(exc).__name__,
+            "authority": "SHADOW_ONLY",
+        }
+
+
 def default_cli_path() -> Path:
     env = os.getenv("WIND_MCP_CLI")
     if env:
@@ -287,19 +387,32 @@ def main() -> int:
             "authority": dict(cfg["authority"]),
             "generated_at": datetime.now(timezone.utc).isoformat(),
         }
-        target = write_receipt(receipt, default_runtime_dir())
-        print(json.dumps({"receipt": str(target), **receipt}, ensure_ascii=False, indent=2))
+        runtime_dir = default_runtime_dir()
+        target = write_receipt(receipt, runtime_dir)
+        sink_result = emit_product_sink(target, runtime_dir)
+        print(json.dumps({
+            "receipt": str(target),
+            "product_sink_status": sink_result.get("status"),
+            **receipt,
+        }, ensure_ascii=False, indent=2))
         return 2
 
     runtime_dir = default_runtime_dir()
     target = write_receipt(receipt, runtime_dir)
     learning_result = emit_learning_live(receipt, runtime_dir)
+    sink_result = emit_product_sink(target, runtime_dir)
     print(json.dumps({
         "receipt": str(target),
         "learning_status": learning_result.get("status"),
+        "product_sink_status": sink_result.get("status"),
         **receipt,
     }, ensure_ascii=False, indent=2))
-    return 0
+    sink_failed = sink_result.get("status") in {
+        "PRODUCT_SINK_CLIENT_MISSING",
+        "PRODUCT_SINK_CREDENTIALS_NOT_PROJECTED",
+        "PRODUCT_SINK_FAIL_CLOSED",
+    }
+    return 3 if sink_failed else 0
 
 
 if __name__ == "__main__":
