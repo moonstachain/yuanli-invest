@@ -79,6 +79,8 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 - G0 Draft PR: https://github.com/moonstachain/yuanli-invest/pull/108
 - G1 Runtime issue: https://github.com/moonstachain/yuanli-invest-runtime/issues/28
 - G1 Runtime Draft PR: https://github.com/moonstachain/yuanli-invest-runtime/pull/29
+- G1R machine runtime: https://github.com/moonstachain/yuanli-invest-runtime/issues/30
+- G1R GOLD2 hook Draft PR: https://github.com/moonstachain/yuanli-invest/pull/109
 - G2/G3 product: https://github.com/yuanli-life/yuanli-os/issues/34
 - Human Project Cockpit: https://app.notion.com/p/3e38e1aaace4813eb8d2c4e4495a710e?pvs=204
 
