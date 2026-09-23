@@ -1,0 +1,116 @@
+{
+  "registry_id": "YCI0-RP0-WIND-METRICS-v0.1",
+  "schema_version": "0.1",
+  "question_id": "YCI0-RP0-CQ-001",
+  "authority": "RESEARCH",
+  "metrics": [
+    {
+      "metric_id": "AIINFRA.RATES.US10Y_NOMINAL",
+      "family": "US_10Y_NOMINAL_YIELD",
+      "source_type": "OFFICIAL_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_RELEASE_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit PASS only with traceable series, vintage/revision treatment, and PIT-qualified timestamps.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.RATES.US10Y_REAL",
+      "family": "US_10Y_REAL_YIELD",
+      "source_type": "OFFICIAL_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_RELEASE_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit PASS only with traceable 10Y TIPS real-yield series and PIT-qualified timestamps.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.FX.DXY_USD",
+      "family": "DXY_USD_PROXY",
+      "source_type": "STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_OBSERVED_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit the declared DXY or USD proxy only with source locator, observation time, and retrieval receipt.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.CAPEX.HYPERSCALER_QUARTERLY",
+      "family": "HYPERSCALER_CAPEX",
+      "source_type": "FIRST_PARTY_FILING_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit MSFT, META, AMZN, or GOOGL quarterly capex only when period, release, provenance, and revision treatment are explicit.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.CAPEX.HYPERSCALER_GUIDANCE",
+      "family": "HYPERSCALER_GUIDANCE",
+      "source_type": "FIRST_PARTY_GUIDANCE_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_RELEASE_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit capex or AI-infrastructure guidance only when linked to the underlying first-party release; authored synthesis alone is not PASS evidence.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.COMPUTE.NVDA_DATA_CENTER_REVENUE",
+      "family": "NVDA_DATA_CENTER_REVENUE",
+      "source_type": "FIRST_PARTY_FILING_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit NVIDIA data-center revenue only with fiscal period, first-party lineage, release time, and PIT-qualified known_as_of.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.COMPUTE.SUPPLY_NORMALIZATION",
+      "family": "COMPUTE_SUPPLY_NORMALIZATION_PROXY",
+      "source_type": "FIRST_PARTY_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_PROXY_DEFINITION_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit only a frozen inventory or supply-chain proxy with explicit construction, provenance, and release/vintage treatment.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.NETWORKING.REVENUE_BACKLOG",
+      "family": "NETWORKING_PROXY",
+      "source_type": "FIRST_PARTY_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit the declared AVGO, ANET, or optics revenue/backlog proxy only with entity, period, and source lineage.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.POWER.EQUIPMENT_ORDERS_BACKLOG",
+      "family": "POWER_EQUIPMENT_PROXY",
+      "source_type": "FIRST_PARTY_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_RELEASE_VINTAGE_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit the declared ETN, VRT, PWR, or relevant orders/backlog proxy only with entity, period, and source lineage.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.POWER.AVAILABILITY",
+      "family": "POWER_AVAILABILITY_PROXY",
+      "source_type": "OFFICIAL_OR_STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_PROXY_DEFINITION_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit a US or regional data-center power or grid-load proxy only with geography, construction, release semantics, and provenance.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.MARKET.PRICE",
+      "family": "MARKET_PRICE",
+      "source_type": "STRUCTURED_SENSOR",
+      "pit_policy": "REQUIRE_OBSERVED_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit selected-basket price or total-return observations only with instrument identity, observation time, source locator, and receipt.",
+      "fallback": "UNKNOWN"
+    },
+    {
+      "metric_id": "AIINFRA.MARKET.VALUATION",
+      "family": "VALUATION",
+      "source_type": "STRUCTURED_SENSOR_OR_CONSENSUS",
+      "pit_policy": "REQUIRE_ESTIMATE_VINTAGE_AND_KNOWN_AS_OF",
+      "required_timestamps": ["observed_at", "released_at", "known_as_of", "retrieved_at", "revised_at"],
+      "admission_rule": "Admit a forward multiple or consensus metric only with estimate vintage, basket definition, source lineage, and PIT-qualified known_as_of.",
+      "fallback": "UNKNOWN"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1",
+  "question_id": "YCI0-RP0-CQ-001",
+  "title": "AI Infra 是否已经进入 Narrative 超前 Reality、但瓶颈与利润池仍在迁移的阶段？",
+  "theme": "AI_INFRA",
+  "owner": "HUMAN_PRINCIPAL",
+  "created_at": "2026-09-16T00:00:00+08:00",
+  "known_as_of": "2026-09-16T00:00:00+08:00",
+  "prior_belief": "AI infrastructure Reality may still be expanding while the binding bottleneck and profit pool migrate beyond GPU, but market Narrative and valuation may already discount part of that expansion.",
+  "defeat_condition": "The thesis is defeated if PIT-qualified evidence shows broad hyperscaler capex deceleration without offsetting networking or power constraint migration, or if price and valuation remove right-tail payoff under the stated survival constraints.",
+  "journey_stage": "01 DISCOVER",
+  "gate_status": "OPEN",
+  "block_reason": null,
+  "time_horizon": ["T+30", "T+90", "T+180"],
+  "book_mapping": {
+    "S": "RESEARCH_ONLY",
+    "C": "RESEARCH_ONLY",
+    "R": "RESEARCH_ONLY",
+    "X": "RESEARCH_ONLY"
+  },
+  "next_action": "Collect and admit the frozen Priority A Reality metrics under PIT and provenance rules.",
+  "next_review_at": "2026-10-16T00:00:00+08:00",
+  "authority": "RESEARCH",
+  "capital_authorized": false,
+  "execution_authorized": false
+}
