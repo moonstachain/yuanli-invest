@@ -1,8 +1,8 @@
 # YIOS-TG1｜CURRENT
 
 **Program:** Yuanli Investment OS · Trade Guidance Product  
-**Status:** `G1_CORE_PASS / G1R_MACHINE_GATEWAY_ACTIVATED / G2A0_ENGINEERING_READY / SHADOW_ONLY / SECOND_DAY_DELTA_PENDING`  
-**Known As Of:** 2026-09-22  
+**Status:** `G1_CORE_PASS / G1R_FORWARD_G6_SINK_PASS / G7_NOT_PROVIDED / LAUNCHD_ORIGIN_UNVERIFIED / G2A0_ENGINEERING_READY / SHADOW_ONLY`  
+**Known As Of:** 2026-09-23  
 **Master Issue:** https://github.com/moonstachain/yuanli-invest/issues/107  
 **Human Cockpit:** https://app.notion.com/p/3e38e1aaace4813eb8d2c4e4495a710e?pvs=204
 
@@ -41,8 +41,13 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 
 ### Proven
 
-- GOLD2 G6/G7 继续由 M4 每日 08:10 调度。
+- GOLD2 G6/G7 由 M4 每日 08:10 调度。
 - 2026-09-22 G6 = `LIVE_SHADOW_RECEIPT`；G7 = `LEARNING_CANDIDATE_ONLY`。
+- 2026-09-23 Runtime 收到新的 G6 `LIVE_SHADOW_RECEIPT`：generated_at = `08:10:09 Asia/Taipei`，known_as_of 从 `2026-09-21` 前进到 `2026-09-22`。
+- 2026-09-23 Supabase 只出现 `1 ingest / 3 PIT observations / 1 health / 1 research state`，无第二个独立样本；Health=`OK`，freshness=`1`。
+- 2026-09-23 新 canonical state：`STATE-GOLD-LIVE-d5e865812ca47895ff8b`；Research State 仍为 `WATCH`。
+- 2026-09-22 → 2026-09-23：Gold `4324.25 → 4329.55`（+0.1226%）；DXY `100.4242 → 100.5409`（+0.1162%）；US long real yield `3.00% → 3.02%`（+2 bp）。
+- Authority 未升级：capital / sizing / execution / Broker / VeighNa / Canon promotion 均为 false。
 - G1 Core Reality Sink 已实证：M4 persisted receipt → Supabase ingest → 3 PIT observations → Data Health → GOLD Research State → Product State readback。
 - Provider failure 已实证：`PROVIDER_FAIL_CLOSED → DEGRADED / 0 observation / 0 new state`。
 - Authority firewall 已实证：资本法权升级被 DB 拒绝。
@@ -51,9 +56,8 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 - macOS Keychain runtime projection 与 1Password Canon fingerprint 一致。
 - Supabase Edge Gateway `yios-tg1-g1-ingest` 已部署；缺/错 token 均返回 401 `MACHINE_AUTH_DENIED`。
 - 完整 `Keychain → wrapper → machine client → Edge → G1 RPC → Product State` activation smoke = `MACHINE_REALITY_SINK_PASS`。
-- Machine launchd 已切换：`RunAtLoad=false`，仅下一自然 08:10 触发；plist 不含 secret。
-- Activation smoke 暴露并修复 State identity 幂等缺陷；同一 ingest 的 canonical state 已收敛为唯一：
-  `STATE-GOLD-LIVE-b7d615240fe1d80634b0`。
+- Machine launchd 已切换：`RunAtLoad=false`，08:10 调度；plist 不含 secret。
+- Activation smoke 暴露并修复 State identity 幂等缺陷；2026-09-22 canonical state = `STATE-GOLD-LIVE-b7d615240fe1d80634b0`。
 - Runtime PR #29 merged：`4d77257fb583dfe89a0a115d093ac81bc88fb5a2`。
 - GOLD2 machine hook PR #109 merged：`e6e0c2475fe835c2c98edc509f32f615a464d67f`。
 - Scheduled-only activation PR #110 merged：`caf5926042eb4c7489232205fbdf14a814984edd`。
@@ -62,7 +66,9 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 
 ### Open Gaps
 
-- **Second-Day Delta Pending**：必须等待下一独立自然日 08:10 自动运行，不能用同日重跑冒充 forward evidence。
+- **G1R 尚未 Fully Settled**：2026-09-23 的 G6 forward Reality Sink 已通过，但对应 ingest 的 `learning = null`、Data Health `learning_status = NOT_PROVIDED`，且没有新的 runtime learning delta；G7 forward evidence 不成立。
+- **Natural launchd origin 未独立验真**：Runtime 生成时间与 08:10 调度吻合，但本轮未能读取本机 launchd/stdout 证据，因此不能证明不存在 manual kickstart。
+- 不能用 2026-09-23 同日手工 replay 冒充 forward evidence；必须等待未来独立自然日恢复 G7 + launchd-origin proof。
 - exact `released_at / available_at / vintage_id` 尚无 provider authority，继续保持 NULL；当前 temporal grade = `DATE_LEVEL_ONLY__RELEASE_TIME_UNKNOWN`。
 - central-bank demand + stress proxy 尚未成为 P0 live evidence slots。
 - `TradeDecisionCandidate` 尚未成为 runtime object。
@@ -75,8 +81,8 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 |---|---|---|
 | G0 | Product Constitution × Architecture Freeze | HUMAN AUTHORIZED / READY TO MERGE |
 | G1 | Live Reality Plane × Supabase Sink × Freshness Contract | CORE PROOF PASS |
-| G1R | Machine Gateway × Auto-Sink | ACTIVATED / SAME-DAY SMOKE PASS / SECOND-DAY DELTA PENDING |
-| G2 | Invest Domain Gateway | A0 ENGINEERING READY / ACTIVATION BLOCKED ON G1R FORWARD SETTLEMENT |
+| G1R | Machine Gateway × Auto-Sink | FORWARD G6 SINK PASS / G7 NOT PROVIDED / LAUNCHD ORIGIN UNVERIFIED / NOT FULLY SETTLED |
+| G2 | Invest Domain Gateway | A0 ENGINEERING READY / ACTIVATION BLOCKED ON G1R FULL SETTLEMENT |
 | G3 | Gold Decision Cockpit | NOT_STARTED |
 | G4 | Trade Decision Compiler | NOT_STARTED |
 | G5 | Shadow Runtime | NOT_STARTED |
@@ -91,6 +97,7 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 - G1 Runtime issue: https://github.com/moonstachain/yuanli-invest-runtime/issues/28
 - G1 Runtime merged PR: https://github.com/moonstachain/yuanli-invest-runtime/pull/29
 - G1R machine runtime: https://github.com/moonstachain/yuanli-invest-runtime/issues/30
+- G1R 2026-09-23 evidence: https://github.com/moonstachain/yuanli-invest-runtime/blob/main/evidence/yios-tg1-g1r/g1r_forward_verification.2026-09-23.json
 - G1R GOLD2 hook merged PR: https://github.com/moonstachain/yuanli-invest/pull/109
 - Scheduled-only activation: https://github.com/moonstachain/yuanli-invest/pull/110
 - Executable-bit closure: https://github.com/moonstachain/yuanli-invest/pull/111
@@ -104,21 +111,23 @@ TG1 不授权 Broker / VeighNa / Live Execution / Real Capital。
 
 ## Next Legal Action
 
-`YIOS-TG1-G1R｜Second Independent Natural-Day Auto-Sink × Delta Settlement`
+`YIOS-TG1-G1R｜Recover G7 Forward Evidence × Natural Launchd Origin Proof`
 
-Acceptance requires the **next natural 08:10 scheduler run**, not a same-day manual rerun:
+2026-09-23 已证明第二自然日 G6 Reality 本身前进并且幂等落库，但尚不足以 settlement G1R。
 
-1. launchd invokes the Keychain-native machine wrapper;
-2. G6/G7 produces a new independent daily receipt;
-3. machine client automatically reaches Edge Gateway;
-4. Supabase writes exactly one new governed ingest set;
-5. freshness / known_as_of / values / state transition are compared with 2026-09-22;
-6. no duplicate sample, no authority escalation;
-7. settle G1R and then activate the already-prepared G2A0 read path through `YIOS-TG1-G2A1`.
+下一次合法验收必须来自**未来独立自然日**，不能用 2026-09-23 同日 replay 替代：
 
-Parallel preflight already completed: G2A0 Runtime Snapshot PR #32 and Yuanli OS Gateway PR #40 are both engineering-ready with CI PASS. They remain Draft and unactivated until this forward event exists.
+1. 读取 launchd/stdout 原始证据，证明 08:10 是自然 scheduler event、无 manual kickstart；
+2. G6 生成新的独立 `LIVE_SHADOW_RECEIPT`；
+3. G7 必须生成并随同 sink 携带新的 `LEARNING_CANDIDATE_ONLY`；
+4. machine client 自动通过 scoped Edge Gateway；
+5. Supabase 只写一个 governed ingest set；
+6. 新 ingest 的 Data Health `learning_status` 不再是 `NOT_PROVIDED`；
+7. freshness / known_as_of / values / state identity 对上一自然日形成可解释 delta；
+8. 无 duplicate sample、无法权升级；
+9. 全部满足后才 `G1R = FULLY_SETTLED`，随后进入已准备好的 `YIOS-TG1-G2A1`。
 
-Until this independent forward event exists, G1R is `ACTIVATED` but not `FULLY_SETTLED` and G2 remains `PREPARED_NOT_ACTIVATED`.
+G2A0 Runtime Snapshot PR #32 与 Yuanli OS Gateway PR #40 继续保持 `ENGINEERING_READY / DRAFT / NOT_ACTIVATED`。
 
 ## Retrieval Contract
 
