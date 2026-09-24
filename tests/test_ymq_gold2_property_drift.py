@@ -42,6 +42,43 @@ class Gold2PropertyDriftTests(unittest.TestCase):
         })
         self.assertNotIn("alpha", result["property_drift_state"].lower())
 
+    def test_stable_diagnostics_are_evidence_not_missing_evidence(self):
+        fixed = {"alpha": 0.0, "beta_usd": -1.0, "beta_inflation": 0.5, "beta_real_rate": -0.5}
+        states = []
+        for month, residual in ((1, -0.1), (2, 0.1)):
+            row = {
+                "decision_date": f"2020-{month:02d}-28",
+                "gold_return": -0.1 + residual,
+                "usd_return": 0.2,
+                "inflation_change": 0.1,
+                "real_rate_change": -0.1,
+            }
+            states.append({"decision_date": row["decision_date"], "row": row, "coefficients": fixed})
+
+        result = drift.block_summary(states, fixed, date(2020, 1, 1), date(2020, 12, 31))
+        self.assertEqual(result["property_drift_state"], "STABLE_PROPERTY")
+        self.assertEqual(result["independent_evidence_count"], 3)
+        self.assertFalse(any(result["diagnostics"].values()))
+
+    def test_one_abnormal_diagnostic_can_use_other_available_diagnostics(self):
+        fixed = {"alpha": 0.0, "beta_usd": -1.0, "beta_inflation": 0.5, "beta_real_rate": -0.5}
+        dynamic = {key: value * 1.8 for key, value in fixed.items()}
+        states = []
+        for month, residual in ((1, -0.1), (2, 0.1)):
+            row = {
+                "decision_date": f"2020-{month:02d}-28",
+                "gold_return": -0.1 + residual,
+                "usd_return": 0.2,
+                "inflation_change": 0.1,
+                "real_rate_change": -0.1,
+            }
+            states.append({"decision_date": row["decision_date"], "row": row, "coefficients": dynamic})
+
+        result = drift.block_summary(states, fixed, date(2020, 1, 1), date(2020, 12, 31))
+        self.assertEqual(result["property_drift_state"], "DRIFT_CANDIDATE")
+        self.assertEqual(sum(result["diagnostics"].values()), 1)
+        self.assertEqual(result["independent_evidence_count"], 3)
+
     def test_rmse_requires_nonempty_vector(self):
         with self.assertRaises(ValueError):
             drift.rmse([])

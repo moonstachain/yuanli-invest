@@ -20,6 +20,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from bisect import bisect_right
 from datetime import date, datetime, timezone
 from typing import Any, Iterable
 from zoneinfo import ZoneInfo
@@ -88,6 +89,23 @@ def latest_on_or_before(rows: Iterable[dict[str, Any]], decision_date: date) -> 
     if not eligible:
         return None
     return max(eligible, key=lambda row: _as_date(row["observation_date"]))
+
+
+class _ObservationIndex:
+    """Parse and sort a market series once for repeated as-of lookups."""
+
+    def __init__(self, rows: Iterable[dict[str, Any]]) -> None:
+        by_date: dict[date, dict[str, Any]] = {}
+        for row in rows:
+            if row.get("value") is not None and row.get("observation_date"):
+                # max() in the original scan keeps the first equal-date row.
+                by_date.setdefault(_as_date(row["observation_date"]), row)
+        self.dates = sorted(by_date)
+        self.rows = [by_date[day] for day in self.dates]
+
+    def latest_on_or_before(self, decision_date: date) -> dict[str, Any] | None:
+        index = bisect_right(self.dates, decision_date) - 1
+        return self.rows[index] if index >= 0 else None
 
 
 def _add_months(d: date, months: int) -> date:
@@ -530,13 +548,20 @@ def build_panel(
 ) -> list[dict[str, Any]]:
     panel: list[dict[str, Any]] = []
     gold_by_month = {row["observation_date"][:7]: row for row in gold_rows}
+    market_indexes: dict[str, _ObservationIndex] = {}
+
+    def market_value(series_id: str, decision: date) -> dict[str, Any] | None:
+        if series_id not in market_indexes:
+            market_indexes[series_id] = _ObservationIndex(market[series_id])
+        return market_indexes[series_id].latest_on_or_before(decision)
+
     for decision in decisions:
         regime = measurement_regime(decision)
         dstr = decision.isoformat()
         gold = gold_by_month.get(dstr[:7])
-        usd = latest_on_or_before(market[regime["usd_series"]], decision)
+        usd = market_value(regime["usd_series"], decision)
         cpi = cpi_asof.get(dstr)
-        rate = latest_on_or_before(market["DTB3" if regime["real_rate_method"].startswith("DTB3") else "DFII10"], decision)
+        rate = market_value("DTB3" if regime["real_rate_method"].startswith("DTB3") else "DFII10", decision)
         if gold:
             panel.append({
                 "decision_date": dstr,
