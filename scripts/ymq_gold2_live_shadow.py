@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import subprocess
 import sys
@@ -140,6 +141,9 @@ def build_receipt(metrics: Mapping[str, Mapping[str, Any]], cfg: Mapping[str, An
     known_dates: list[str] = []
     for name in sorted(metrics):
         metric = metrics[name]
+        value = metric.get("latest_value")
+        if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):
+            raise ValueError(f"non-finite or non-numeric provider value: {name}")
         known = _iso_from_wind_day(str(metric["latest_date"]))
         if known > as_of.isoformat():
             raise ValueError("future-dated provider evidence")

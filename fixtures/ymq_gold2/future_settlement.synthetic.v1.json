@@ -1,0 +1,63 @@
+{
+  "claim": {
+    "schema_version": "gold-future-settlement.v1",
+    "claim_id": "SYNTHETIC-GOLD-FIXTURE",
+    "capability_version": "offline-fixture-v1",
+    "target": "GOLD",
+    "series_id": "SYNTHETIC_GOLD_USD_OZ",
+    "unit": "USD_PER_TROY_OUNCE",
+    "currency": "USD",
+    "data_mode": "SYNTHETIC_ENGINEERING_ONLY",
+    "t0": "2026-09-01T16:00:00Z",
+    "horizon_end": "2026-09-08T16:00:00Z",
+    "evidence_known_as_of": "2026-09-01T15:00:00Z",
+    "model_direction": 1,
+    "baseline_direction": 0,
+    "baseline_id": "FROZEN_NO_CHANGE",
+    "neutral_band_pct": 0.1
+  },
+  "preregistration": {
+    "claim_sha256": "dd06d799c7776f105aa14fb544c08d084106767ceeffeee467c7edebb8e48a24",
+    "recorded_at": "2026-09-01T15:30:00Z",
+    "registry_id": "SYNTHETIC_TEST_REGISTRY",
+    "record_id": "SYNTHETIC_TEST_RECORD",
+    "data_mode": "SYNTHETIC_ENGINEERING_ONLY",
+    "verification": "EXTERNAL_READBACK_REQUIRED",
+    "registry_kind": "SYNTHETIC_FIXTURE"
+  },
+  "observations": [
+    {
+      "target": "GOLD",
+      "series_id": "SYNTHETIC_GOLD_USD_OZ",
+      "unit": "USD_PER_TROY_OUNCE",
+      "currency": "USD",
+      "data_mode": "SYNTHETIC_ENGINEERING_ONLY",
+      "observation_id": "SYNTHETIC-01",
+      "source_ref": "SYNTHETIC_ENGINEERING_FIXTURE",
+      "raw_sha256": "0101010101010101010101010101010101010101010101010101010101010101",
+      "source_kind": "SYNTHETIC_FIXTURE",
+      "observed_at": "2026-09-01T16:00:00Z",
+      "available_at": "2026-09-01T16:05:00Z",
+      "captured_at": "2026-09-01T16:10:00Z",
+      "vintage_kind": "FIRST_RELEASE",
+      "value": 100.0
+    },
+    {
+      "target": "GOLD",
+      "series_id": "SYNTHETIC_GOLD_USD_OZ",
+      "unit": "USD_PER_TROY_OUNCE",
+      "currency": "USD",
+      "data_mode": "SYNTHETIC_ENGINEERING_ONLY",
+      "observation_id": "SYNTHETIC-08",
+      "source_ref": "SYNTHETIC_ENGINEERING_FIXTURE",
+      "raw_sha256": "0808080808080808080808080808080808080808080808080808080808080808",
+      "source_kind": "SYNTHETIC_FIXTURE",
+      "observed_at": "2026-09-08T16:00:00Z",
+      "available_at": "2026-09-08T16:05:00Z",
+      "captured_at": "2026-09-08T16:10:00Z",
+      "vintage_kind": "FIRST_RELEASE",
+      "value": 102.0
+    }
+  ],
+  "as_of": "2026-09-08T17:00:00Z"
+}

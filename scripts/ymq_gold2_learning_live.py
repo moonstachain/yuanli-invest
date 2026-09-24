@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -96,8 +97,8 @@ def _metric_value(receipt: Mapping[str, Any], name: str) -> float:
     if not isinstance(providers, Mapping) or name not in providers:
         raise ValueError(f"missing provider receipt: {name}")
     raw = providers[name].get("latest_value") if isinstance(providers[name], Mapping) else None
-    if not isinstance(raw, (int, float)) or isinstance(raw, bool):
-        raise ValueError(f"non-numeric provider value: {name}")
+    if not isinstance(raw, (int, float)) or isinstance(raw, bool) or not math.isfinite(raw):
+        raise ValueError(f"non-finite or non-numeric provider value: {name}")
     return float(raw)
 
 
@@ -109,6 +110,9 @@ def validate_live_receipt(receipt: Mapping[str, Any]) -> tuple[date, date]:
         raise ValueError("future-dated evidence")
     for metric in ("gold_price", "real_rate", "usd"):
         _metric_value(receipt, metric)
+        metric_day = _as_day(receipt["provider_receipts"][metric].get("latest_date"), f"{metric}.latest_date")
+        if metric_day > as_of or metric_day > known:
+            raise ValueError(f"provider evidence exceeds receipt as_of or known_as_of_max: {metric}")
     return as_of, known
 
 
