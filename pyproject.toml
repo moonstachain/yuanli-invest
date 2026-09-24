@@ -6,7 +6,12 @@ requires-python = ">=3.12"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["jsonschema==4.25.1"]
+dev = [
+    "jsonschema==4.25.1",
+    "numpy==2.3.2",
+    "rfc3339-validator==0.1.4",
+    "rfc3986-validator==0.1.1",
+]
 
 [tool.yuanli-invest]
 portfolio = "A9"

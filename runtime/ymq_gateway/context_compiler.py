@@ -33,9 +33,9 @@ def compile_context(
         if known_as_of > as_of or status not in ADMITTED_STATUSES or authority == "NONE":
             denied.append(ref)
             continue
-        admitted.append(row)
+        if len(admitted) < max_items:
+            admitted.append(row)
 
-    admitted = admitted[:max_items]
     return CompiledContext(
         as_of=as_of,
         evidence_refs=tuple(str(row["evidence_ref"]) for row in admitted),

@@ -10,9 +10,15 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping
+
+if __package__:
+    from .receipt_store import write_receipt
+else:
+    from receipt_store import write_receipt
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -67,7 +73,7 @@ def validate_contract(cfg: Mapping[str, Any]) -> None:
     thresholds = cfg.get("attention_thresholds", {})
     for key in ("gold_price_pct_abs", "real_rate_bps_abs", "usd_pct_abs"):
         value = thresholds.get(key)
-        if not isinstance(value, (int, float)) or isinstance(value, bool) or value <= 0:
+        if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value) or value <= 0:
             raise ValueError(f"invalid attention threshold: {key}")
 
 
@@ -82,13 +88,8 @@ def receipt_sha256(receipt: Mapping[str, Any]) -> str:
 def _as_day(value: Any, field: str) -> date:
     try:
         return date.fromisoformat(str(value))
-    except Exception as exc:
+    except ValueError as exc:
         raise ValueError(f"invalid {field}") from exc
-
-
-def _require_live(receipt: Mapping[str, Any]) -> None:
-    if receipt.get("status") != "LIVE_SHADOW_RECEIPT":
-        raise ValueError("Learning Live requires LIVE_SHADOW_RECEIPT")
 
 
 def _metric_value(receipt: Mapping[str, Any], name: str) -> float:
@@ -96,19 +97,28 @@ def _metric_value(receipt: Mapping[str, Any], name: str) -> float:
     if not isinstance(providers, Mapping) or name not in providers:
         raise ValueError(f"missing provider receipt: {name}")
     raw = providers[name].get("latest_value") if isinstance(providers[name], Mapping) else None
-    if not isinstance(raw, (int, float)) or isinstance(raw, bool):
-        raise ValueError(f"non-numeric provider value: {name}")
+    if not isinstance(raw, (int, float)) or isinstance(raw, bool) or not math.isfinite(raw):
+        raise ValueError(f"non-finite or non-numeric provider value: {name}")
     return float(raw)
 
 
 def validate_live_receipt(receipt: Mapping[str, Any]) -> tuple[date, date]:
-    _require_live(receipt)
+    if receipt.get("status") != "LIVE_SHADOW_RECEIPT":
+        raise ValueError("Learning Live requires LIVE_SHADOW_RECEIPT")
     as_of = _as_day(receipt.get("as_of"), "as_of")
     known = _as_day(receipt.get("known_as_of_max"), "known_as_of_max")
     if known > as_of:
         raise ValueError("future-dated evidence")
+    metric_days = []
     for metric in ("gold_price", "real_rate", "usd"):
         _metric_value(receipt, metric)
+        metric_days.append(_as_day(receipt["provider_receipts"][metric].get("latest_date"), f"{metric}.latest_date"))
+    if max(metric_days) > as_of:
+        raise ValueError("future-dated provider evidence")
+    if max(metric_days) != known or (
+        "known_as_of_min" in receipt and _as_day(receipt["known_as_of_min"], "known_as_of_min") != min(metric_days)
+    ):
+        raise ValueError("provider dates disagree with known_as_of summary")
     return as_of, known
 
 
@@ -134,7 +144,12 @@ def build_state_delta(
     prior: Mapping[str, Any], current: Mapping[str, Any], cfg: Mapping[str, Any]
 ) -> dict[str, Any]:
     validate_contract(cfg)
-    prior_day, current_day, prior_known, current_known = _validate_pit(prior, current)
+    return _state_delta(prior, current, cfg, _validate_pit(prior, current))
+
+
+def _state_delta(prior, current, cfg, dates) -> dict[str, Any]:
+    """Compute a delta from receipts already checked at the public interface."""
+    prior_day, current_day, prior_known, current_known = dates
     if current_day <= prior_day:
         raise ValueError("daily delta requires a later as_of")
 
@@ -150,6 +165,8 @@ def build_state_delta(
     gold_pct = (current_gold / prior_gold - 1.0) * 100.0
     real_bps = (current_real - prior_real) * 100.0
     usd_pct = (current_usd / prior_usd - 1.0) * 100.0
+    if not all(math.isfinite(value) for value in (gold_pct, real_bps, usd_pct)):
+        raise ValueError("non-finite state delta")
     thresholds = cfg["attention_thresholds"]
     attention: list[str] = []
     if abs(gold_pct) >= float(thresholds["gold_price_pct_abs"]):
@@ -185,6 +202,10 @@ def build_settlement(
 ) -> dict[str, Any]:
     validate_contract(cfg)
     _validate_pit(prior, current)
+    return _settlement(prior, delta, cfg)
+
+
+def _settlement(prior, delta, cfg) -> dict[str, Any]:
     claim = prior.get("preregistered_directional_claim")
     directional_score = "PENDING_FUTURE_HORIZON" if claim else cfg["settlement"]["missing_claim_state"]
     return {
@@ -203,8 +224,8 @@ def build_learning_candidate(
     prior: Mapping[str, Any], current: Mapping[str, Any], cfg: Mapping[str, Any]
 ) -> dict[str, Any]:
     validate_contract(cfg)
-    prior_day, _ = validate_live_receipt(prior)
-    current_day, _ = validate_live_receipt(current)
+    dates = _validate_pit(prior, current)
+    prior_day, current_day, _, _ = dates
     if current_day == prior_day:
         return {
             "program": cfg["program"],
@@ -217,8 +238,8 @@ def build_learning_candidate(
     if current_day < prior_day:
         raise ValueError("current receipt predates prior receipt")
 
-    delta = build_state_delta(prior, current, cfg)
-    settlement = build_settlement(prior, current, delta, cfg)
+    delta = _state_delta(prior, current, cfg, dates)
+    settlement = _settlement(prior, delta, cfg)
     prior_unknowns = set(map(str, prior.get("unknowns") or []))
     current_unknowns = set(map(str, current.get("unknowns") or []))
     denominator = max(1, len(prior_unknowns | current_unknowns))
@@ -244,7 +265,10 @@ def find_previous_daily_receipt(
     current: Mapping[str, Any], candidates: Iterable[Mapping[str, Any]]
 ) -> Mapping[str, Any] | None:
     current_day, _ = validate_live_receipt(current)
-    eligible: list[tuple[date, str, Mapping[str, Any]]] = []
+    # Select by actual receipt time; a content hash is only a deterministic tie
+    # breaker for legacy receipts without timestamps. Keep one receipt in memory.
+    best = None
+    best_key = None
     for candidate in candidates:
         if candidate.get("status") != "LIVE_SHADOW_RECEIPT":
             continue
@@ -254,45 +278,44 @@ def find_previous_daily_receipt(
             continue
         if candidate_day >= current_day:
             continue
-        eligible.append((candidate_day, receipt_sha256(candidate), candidate))
-    if not eligible:
-        return None
-    eligible.sort(key=lambda row: (row[0], row[1]))
-    return eligible[-1][2]
+        try:
+            generated = datetime.fromisoformat(str(candidate.get("generated_at", "")))
+            generated = generated.replace(tzinfo=generated.tzinfo or timezone.utc).astimezone(timezone.utc)
+        except ValueError:
+            generated = datetime.min.replace(tzinfo=timezone.utc)
+        key = (candidate_day, generated)
+        if best_key is None or key > best_key or (
+            key == best_key and receipt_sha256(candidate) > receipt_sha256(best)
+        ):
+            best, best_key = candidate, key
+    return best
 
 
 def write_learning_candidate(candidate: Mapping[str, Any], runtime_root: Path) -> Path:
-    learning_root = runtime_root / "learning"
-    day = str(candidate.get("as_of") or date.today().isoformat())
-    daily = learning_root / day
-    daily.mkdir(parents=True, exist_ok=True)
-    stamp = datetime.now(timezone.utc).strftime("%H%M%S")
-    target = daily / f"learning-{stamp}.json"
-    text = json.dumps(candidate, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
-    target.write_text(text, encoding="utf-8")
-    (learning_root / "latest-learning.json").write_text(text, encoding="utf-8")
-    return target
+    return write_receipt(candidate, runtime_root / "learning", prefix="learning", latest_name="latest-learning.json")
 
 
 def load_runtime_receipts(runtime_root: Path) -> list[dict[str, Any]]:
-    receipts: list[dict[str, Any]] = []
+    """Compatibility interface for callers that need the complete history."""
+    return list(iter_runtime_receipts(runtime_root))
+
+
+def iter_runtime_receipts(runtime_root: Path) -> Iterable[dict[str, Any]]:
     for path in sorted(runtime_root.glob("????-??-??/receipt-*.json")):
         try:
             value = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
         if isinstance(value, dict):
-            receipts.append(value)
-    return receipts
+            yield value
 
 
 def process_current_receipt(
     current: Mapping[str, Any], runtime_root: Path, cfg: Mapping[str, Any] | None = None
 ) -> dict[str, Any]:
-    config = dict(cfg or load_contract())
+    config = load_contract() if cfg is None else cfg
     validate_contract(config)
-    validate_live_receipt(current)
-    prior = find_previous_daily_receipt(current, load_runtime_receipts(runtime_root))
+    prior = find_previous_daily_receipt(current, iter_runtime_receipts(runtime_root))
     if prior is None:
         return {
             "program": config["program"],

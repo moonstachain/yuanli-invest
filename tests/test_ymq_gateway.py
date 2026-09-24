@@ -1,4 +1,5 @@
 import unittest
+import weakref
 from datetime import datetime, timezone
 
 from runtime.ymq_gateway.context_compiler import compile_context
@@ -26,6 +27,39 @@ class YMQGatewayTests(unittest.TestCase):
         context = compile_context(as_of=as_of, evidence_rows=rows, max_items=2)
         self.assertEqual(context.evidence_refs, ("e0", "e1"))
         self.assertEqual(len(context.items), 2)
+
+    def test_stream_retains_only_limit_but_still_reports_later_denials(self):
+        class Evidence(dict):
+            pass
+
+        references = []
+
+        def rows():
+            for index in range(100):
+                if index > 2:
+                    self.assertIsNone(references[index - 2]())
+                row = Evidence(
+                    evidence_ref=f"e{index}",
+                    known_as_of="2026-01-01T00:00:00+00:00",
+                    status="PASS",
+                    authority="RESEARCH",
+                )
+                references.append(weakref.ref(row))
+                yield row
+            yield Evidence(
+                evidence_ref="late-denial",
+                known_as_of="2026-01-01T00:00:00+00:00",
+                status="UNKNOWN",
+                authority="RESEARCH",
+            )
+
+        context = compile_context(
+            as_of=datetime(2026, 1, 15, tzinfo=timezone.utc),
+            evidence_rows=rows(),
+            max_items=1,
+        )
+        self.assertEqual(context.evidence_refs, ("e0",))
+        self.assertEqual(context.denied_refs, ("late-denial",))
 
     def test_router_denies_capital_and_execution(self):
         for intent in ("position_sizing", "broker_order", "real_capital_move"):
