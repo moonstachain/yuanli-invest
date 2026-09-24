@@ -112,7 +112,6 @@ def main() -> int:
         "tests.test_ymq4_b2_contract",
         "B2_BASELINE_MATERIALIZED_PASS",
         "ymq4-b2-reality-receipt",
-        "github.event_name == 'workflow_dispatch' && inputs.mode == 'full'",
     ):
         require(token in workflow, f"workflow missing contract: {token}")
     require("YMQ4-B2-FULL" not in workflow, "B2 durable workflow must not retain one-shot PR marker")

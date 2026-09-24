@@ -18,6 +18,7 @@ and on releases and manual audits. Both protected check names always run on PRs.
 | Current root README must contain R0/R1 mission strings | Redirected | R0/R1 audits read the README at the accepted R1 merge `bfd1576e08dc836869b359773b09b3a169d09512`, never the current product README. |
 | Bootstrap counts, stage admissions, accepted SHAs and frozen examples | Historical assertions | Verify the specific past artifact; do not require new research to remain at a past bootstrap stage. |
 | Historical SQL contains `service_role`, RLS or specific function words | Historical assertions | Retained only as archive checks. Runtime's executable PostgreSQL role/transaction tests validate the new database behavior. |
+| B2 / DP1-B exact spelling/order of the manual job condition | Replaced | Current parsed CI tests require manual dispatch on trusted main for every secret-bearing job. Both archive validators run in the historical scope; dedicated operational workflows are manual-only. |
 | Live diagnostics and database credentials in PR workflows | Removed from PR execution | Operator diagnostics require manual dispatch on `main`. No repository marker can authorize a PR job to use production credentials. |
 
 Run locally:

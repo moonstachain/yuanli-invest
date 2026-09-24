@@ -136,6 +136,12 @@
     [
       "scripts/build_canon_status.py",
       "--check"
+    ],
+    [
+      "scripts/validate_ymq4_b2.py"
+    ],
+    [
+      "scripts/validate_ymq4_dp1b.py"
     ]
   ]
 }

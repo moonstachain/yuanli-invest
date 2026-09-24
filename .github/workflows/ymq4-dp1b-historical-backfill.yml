@@ -1,18 +1,6 @@
 name: YMQ4 DP1-B Historical PIT Backfill
 
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/ymq4-dp1b-historical-backfill.yml'
-      - 'config/ymq4/gold_dp1b_backfill.v0.1.json'
-      - 'docs/architecture/ymq4/**DP1-B**'
-      - 'docs/superpowers/specs/*dp1b*'
-      - 'docs/superpowers/plans/*dp1b*'
-      - 'scripts/ymq4_dp1b_backfill.py'
-      - 'scripts/validate_ymq4_dp1b.py'
-      - 'supabase/migrations/**dp1b**'
-      - 'tests/test_ymq4_dp1b.py'
-      - 'tests/test_ymq4_dp1b_contract.py'
   workflow_dispatch:
     inputs:
       mode:
