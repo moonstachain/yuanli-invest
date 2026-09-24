@@ -34,6 +34,7 @@ class GitArtifactTests(unittest.TestCase):
                 "empty.txt": b"",
                 "space name.bin": b"\x00\xff\nabc blob 10\n",
                 "nested/换行\n及制表\t.txt": b"exact bytes\x00",
+                "large.bin": bytes(range(256)) * 1024,
             }
             for relative, payload in payloads.items():
                 path = root / relative

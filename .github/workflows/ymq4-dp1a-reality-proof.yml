@@ -35,10 +35,11 @@ jobs:
       - name: Validate DP1-A contract
         run: python scripts/validate_ymq4_dp1a.py
       - name: Install proof runtime dependency
-        run: python -m pip install 'boto3>=1.35,<2'
+        run: python -m pip install -e '.[dev]' 'boto3>=1.35,<2'
       - name: Unit tests
         run: python -m unittest tests.test_ymq4_dp1a -v
       - name: External runtime reachability proof
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -64,7 +65,7 @@ jobs:
           PY
 
   full-reality-proof:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'full' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.mode == 'full' }}
     needs: preflight
     runs-on: ubuntu-latest
     env:
@@ -84,7 +85,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install proof runtime dependency
-        run: python -m pip install 'boto3>=1.35,<2'
+        run: python -m pip install -e '.[dev]' 'boto3>=1.35,<2'
       - name: Fail closed on missing secrets
         shell: bash
         run: |

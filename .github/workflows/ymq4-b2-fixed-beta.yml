@@ -38,17 +38,18 @@ jobs:
           python-version: '3.12'
           cache: pip
       - name: Install B2 dependencies
-        run: python -m pip install -r requirements-dev.txt
+        run: python -m pip install -e '.[dev]'
       - name: Validate B2 contract
         run: python scripts/validate_ymq4_b2.py
       - name: B2 unit and database contract tests
         run: python -m unittest tests.test_ymq4_b2 tests.test_ymq4_b2_contract -v
 
   full-baseline:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'full' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.mode == 'full' }}
     needs: preflight
     runs-on: ubuntu-latest
     env:
+      YMQ4_B2_INPUT_SNAPSHOT_ID: ${{ vars.YMQ4_B2_INPUT_SNAPSHOT_ID }}
       SUPABASE_URL: 'https://tbmoimbdhsrltvospwpu.supabase.co'
       YMQ4_SUPABASE_SECRET_KEY: ${{ secrets.YMQ4_SUPABASE_SECRET_KEY }}
     steps:
@@ -58,7 +59,7 @@ jobs:
           python-version: '3.12'
           cache: pip
       - name: Install B2 dependencies
-        run: python -m pip install -r requirements-dev.txt
+        run: python -m pip install -e '.[dev]'
       - name: Fail closed on missing secret
         shell: bash
         run: |

@@ -14,6 +14,7 @@ import math
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable, Mapping
+from yuanli_invest.receipts import canonical_bytes
 
 if __package__:
     from .receipt_store import write_receipt
@@ -78,7 +79,7 @@ def validate_contract(cfg: Mapping[str, Any]) -> None:
 
 
 def _canonical_json(value: Mapping[str, Any]) -> str:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return canonical_bytes(value).decode("utf-8")
 
 
 def receipt_sha256(receipt: Mapping[str, Any]) -> str:

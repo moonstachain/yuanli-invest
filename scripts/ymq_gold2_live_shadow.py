@@ -313,11 +313,7 @@ def emit_product_sink(
             "YIOS_TG1_MACHINE_CLIENT_ID",
         )
     )
-    direct_ready = bool(
-        os.getenv("SUPABASE_URL", "").strip()
-        and os.getenv("YMQ4_SUPABASE_SECRET_KEY", "").strip()
-    )
-    if not (machine_ready or direct_ready):
+    if not machine_ready:
         return {
             "status": "PRODUCT_SINK_CREDENTIALS_NOT_PROJECTED",
             "authority": "SHADOW_ONLY",

@@ -7,6 +7,7 @@ import hashlib
 from io import BytesIO
 import json
 import subprocess
+import tempfile
 from pathlib import Path
 
 
@@ -38,10 +39,15 @@ def artifact_at(source_commit: str, root: Path = ROOT):
             raise ValueError(f"unsupported artifact entry: {relative} ({kind.decode()})")
         entries.append((relative, object_id))
     entries.sort()
-    result = subprocess.run(
-        ["git", "cat-file", "--batch"], cwd=root, check=True, capture_output=True,
-        input=b"".join(object_id + b"\n" for _, object_id in entries),
-    )
+    # A file input avoids backpressure between Git's blob output and object-ID
+    # input on platforms with small pipes. Still exactly one batch Git process.
+    with tempfile.TemporaryFile() as requests:
+        requests.write(b"".join(object_id + b"\n" for _, object_id in entries))
+        requests.seek(0)
+        result = subprocess.run(
+            ["git", "cat-file", "--batch"], cwd=root, check=True, capture_output=True,
+            stdin=requests,
+        )
     stream = BytesIO(result.stdout)
     rows = []
     for relative, object_id in entries:

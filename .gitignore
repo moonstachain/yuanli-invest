@@ -5,9 +5,11 @@
 .venv/
 node_modules/
 dist/
+build/
 .cache/
 __pycache__/
 *.py[cod]
+*.egg-info/
 *.parquet
 *.duckdb
 *.duckdb.*

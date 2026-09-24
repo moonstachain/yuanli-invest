@@ -1,6 +1,8 @@
 import io
 import json
 import os
+import plistlib
+import sys
 import tempfile
 import unittest
 from concurrent.futures import ThreadPoolExecutor
@@ -407,15 +409,31 @@ class MachineProjectionCandidateTests(unittest.TestCase):
         self.assertNotIn("op run", sh)
 
     def test_machine_installer_contains_only_nonsecret_projection_metadata(self):
-        installer = MACHINE_INSTALLER.read_text()
-        self.assertIn("run_ymq_gold2_live_shadow_machine.sh", installer)
-        self.assertIn("YIOS_TG1_INGEST_ENDPOINT", installer)
-        self.assertIn("YIOS_TG1_MACHINE_CLIENT_ID", installer)
-        self.assertIn("YIOS_TG1_MACHINE_TOKEN_KEYCHAIN_SERVICE", installer)
-        self.assertNotIn("sb_secret_", installer)
-        self.assertNotIn("YIOS_TG1_MACHINE_INGEST_TOKEN</key>", installer)
-        self.assertIn("<key>RunAtLoad</key><false/>", installer)
-        self.assertNotIn("launchctl kickstart", installer)
+        from scripts import install_research_schedule as installer
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source.json"
+            source.write_text(json.dumps({"source_id": "synthetic-test", "series_id": "S0031645", "source_timezone": "Europe/London", "unit": "USD/OZ", "currency": "USD", "target": "GOLD"}))
+            cli = root / "cli.mjs"; cli.touch()
+            output = root / "review.plist"
+            env = {
+                "YUANLI_RESEARCH_SOURCE_CONFIG": str(source), "NODE_BIN": sys.executable,
+                "WIND_MCP_CLI": str(cli), "YMQ_GOLD2_SHADOW_DIR": str(root / "runtime"),
+                "YUANLI_RESEARCH_MACHINE_URL": "https://example.invalid/functions/v1/research-machine",
+                "YIOS_TG1_MACHINE_CLIENT_ID": "machine-test", "YUANLI_WORKSPACE_ID": "workspace-test",
+                "YIOS_TG1_MACHINE_INGEST_TOKEN": "DO_NOT_INCLUDE", "SUPABASE_SERVICE_ROLE_KEY": "DO_NOT_INCLUDE",
+            }
+            with mock.patch.dict(os.environ, env, clear=True), mock.patch("sys.argv", ["installer", "--output", str(output)]), mock.patch.object(installer, "host_timezone", return_value="Asia/Shanghai"), mock.patch.object(installer.subprocess, "run") as run, mock.patch("builtins.print"):
+                self.assertEqual(installer.main(), 0)
+            run.assert_not_called()
+            configuration = plistlib.loads(output.read_bytes())
+            self.assertEqual(configuration["Label"], "com.yuanli.ymq-gold2-live-shadow")
+            self.assertEqual(configuration["ProgramArguments"], [str(MACHINE_WRAPPER)])
+            self.assertEqual(configuration["StartCalendarInterval"], {"Hour": 8, "Minute": 10})
+            self.assertFalse(configuration["RunAtLoad"])
+            self.assertNotIn("DO_NOT_INCLUDE", output.read_text())
+            self.assertNotIn("YIOS_TG1_MACHINE_INGEST_TOKEN", configuration["EnvironmentVariables"])
+            self.assertEqual(configuration["EnvironmentVariables"]["YUANLI_RESEARCH_SOURCE_CONFIG"], str(source.resolve()))
 
     def test_legacy_installer_remains_separate(self):
         installer = LAUNCHD_INSTALLER.read_text()

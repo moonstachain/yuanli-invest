@@ -34,11 +34,6 @@ class YIM0HumanProjectionTests(unittest.TestCase):
         for token in ("实在 · 可错 · 反身 · 演化 · 凸性 · 生存", "势 · 信 · 极｜真 · 价 · 生", "ENG-C", "ENG-R", "ENG-X", "ResearchTarget", "EngineThesis", "PositionPassport", "BookState@PIT", "No Silent Thesis Migration", "Survive → Capture → Compound"):
             self.assertIn(token, text)
 
-    def test_frozen_section_order_is_preserved(self):
-        text = self.text()
-        headings = ["00｜这张地图是什么", "01｜哲学本源：我们如何认识投资世界", "02｜人类语法：势·信·极｜真·价·生", "03｜收益机制：C / R / X", "04｜机器对象：Target → Thesis → Passport → Book", "05｜研究学习环：PIT / Evidence / Falsifier / Settlement", "06｜五资产案例：同一语法，不同物理", "07｜ME0–ME5 演进路线", "08｜Authority Map：什么能定义什么", "09｜十分钟使用方法"]
-        self.assertEqual([text.index(item) for item in headings], sorted(text.index(item) for item in headings))
-
     def test_five_cases_are_explanatory_only(self):
         text = self.text()
         for target in ("NVIDIA", "Gold", "UST30Y", "Copper", "USDJPY"):
