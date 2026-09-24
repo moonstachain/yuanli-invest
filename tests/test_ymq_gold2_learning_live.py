@@ -34,6 +34,37 @@ def receipt(day, gold, real_rate, usd, known=None, *, status="LIVE_SHADOW_RECEIP
 
 
 class LearningLiveTests(unittest.TestCase):
+    def test_each_metric_rejects_nonfinite_values(self):
+        for metric in ("gold_price", "real_rate", "usd"):
+            for value in (float("nan"), float("inf"), -float("inf")):
+                with self.subTest(metric=metric, value=value):
+                    current = receipt("2026-09-17", 4328.2, 3.06, 100.3, known="2026-09-16")
+                    current["provider_receipts"][metric]["latest_value"] = value
+                    with self.assertRaisesRegex(ValueError, "non-finite"):
+                        learning.validate_live_receipt(current)
+
+    def test_aggregate_cannot_hide_future_or_undeclared_metric_date(self):
+        for metric in ("gold_price", "real_rate", "usd"):
+            for metric_day in ("2026-09-17", "2026-09-18"):
+                with self.subTest(metric=metric, metric_day=metric_day):
+                    current = receipt("2026-09-17", 4328.2, 3.06, 100.3, known="2026-09-16")
+                    current["provider_receipts"][metric]["latest_date"] = metric_day
+                    with self.assertRaisesRegex(ValueError, "exceeds receipt"):
+                        learning.validate_live_receipt(current)
+
+    def test_metric_requires_valid_individual_date(self):
+        for metric_day in (None, "", "2026-02-30"):
+            with self.subTest(metric_day=metric_day):
+                current = receipt("2026-09-17", 4328.2, 3.06, 100.3, known="2026-09-16")
+                current["provider_receipts"]["gold_price"]["latest_date"] = metric_day
+                with self.assertRaisesRegex(ValueError, "latest_date"):
+                    learning.validate_live_receipt(current)
+
+    def test_older_individual_metric_is_allowed_without_new_freshness_policy(self):
+        current = receipt("2026-09-17", 4328.2, 3.06, 100.3, known="2026-09-16")
+        current["provider_receipts"]["real_rate"]["latest_date"] = "2026-09-15"
+        learning.validate_live_receipt(current)
+
     def test_contract_keeps_learning_non_authoritative(self):
         cfg = learning.load_contract(CONTRACT)
         learning.validate_contract(cfg)

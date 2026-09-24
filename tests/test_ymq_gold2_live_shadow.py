@@ -98,6 +98,23 @@ class WindAdapterTests(unittest.TestCase):
 
 
 class ReceiptTests(unittest.TestCase):
+    def test_nonfinite_or_nonnumeric_values_cannot_form_success_receipt(self):
+        cfg = shadow.load_activation()
+        for metric in ("gold_price", "real_rate", "usd"):
+            for value in (float("nan"), float("inf"), -float("inf"), True, None, "100"):
+                with self.subTest(metric=metric, value=value):
+                    metrics = {name: {"latest_date": "20260915", "latest_value": 100.0} for name in ("gold_price", "real_rate", "usd")}
+                    metrics[metric]["latest_value"] = value
+                    with self.assertRaisesRegex(ValueError, "non-finite or non-numeric"):
+                        shadow.build_receipt(metrics, cfg, as_of=date(2026, 9, 16))
+
+    def test_future_metric_cannot_form_success_receipt(self):
+        cfg = shadow.load_activation()
+        metrics = {name: {"latest_date": "20260915", "latest_value": 100.0} for name in ("gold_price", "real_rate", "usd")}
+        metrics["gold_price"]["latest_date"] = "20260917"
+        with self.assertRaisesRegex(ValueError, "future-dated"):
+            shadow.build_receipt(metrics, cfg, as_of=date(2026, 9, 16))
+
     def test_build_receipt_is_research_only_and_fail_closed(self):
         cfg = shadow.load_activation()
         metrics = {
