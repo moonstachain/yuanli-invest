@@ -89,11 +89,13 @@ def wind_payload(cli_path: Path, series_id: str) -> bytes:
     return process.stdout
 
 
-def capture_payload(raw: bytes, source: dict, day: str, captured_at: str) -> dict | None:
-    """Keep raw bytes while parsing a single exact measurement date as Decimal."""
-    requested = trade_day(day)
+def capture_payloads(raw: bytes, source: dict, captured_at: str, day: str | None = None) -> list[dict]:
+    """Bind exact dates to raw bytes; daily runs retain every completed source day."""
+    captured = instant(captured_at)
     zone = ZoneInfo(source["source_timezone"])
-    if instant(captured_at).astimezone(zone).date() < requested:
+    source_today = captured.astimezone(zone).date()
+    requested = trade_day(day) if day is not None else None
+    if requested is not None and source_today < requested:
         raise ValueError("cannot capture a future trade date")
     outer = json.loads(raw, parse_float=Decimal)
     if not isinstance(outer, dict) or outer.get("isError") is True or outer.get("ok") is False:
@@ -108,26 +110,37 @@ def capture_payload(raw: bytes, source: dict, day: str, captured_at: str) -> dic
     dates, values = metrics[0].get("date"), metrics[0].get("value")
     if not isinstance(dates, list) or not isinstance(values, list) or len(dates) != len(values):
         raise ValueError("Wind observations are not aligned")
-    expected = requested.strftime("%Y%m%d")
-    matches = [value for stamp, value in zip(dates, values) if stamp == expected]
-    if not matches:
-        return None
-    if len(matches) != 1:
-        raise ValueError("duplicate exact-date Wind observations")
-    value = matches[0]
-    if type(value) not in {int, Decimal}:
-        raise ValueError("Wind price must be a JSON number")
-    value = Decimal(value)
-    if not value.is_finite() or abs(value.adjusted()) > 90:
-        raise ValueError("Wind price is not a finite supported decimal")
-    value_string = format(value, "f")
-    decimal_value(value_string, "Wind price", positive=True)
-    return {
+    selected = {}
+    for stamp, value in zip(dates, values):
+        if requested is not None and stamp != requested.strftime("%Y%m%d"):
+            continue
+        if not isinstance(stamp, str) or len(stamp) != 8 or not stamp.isascii() or not stamp.isdigit():
+            raise ValueError("Wind observation date must be YYYYMMDD")
+        observed = trade_day(f"{stamp[:4]}-{stamp[4:6]}-{stamp[6:]}")
+        if requested is None and observed >= source_today:
+            continue
+        if observed in selected:
+            raise ValueError("duplicate exact-date Wind observations")
+        if type(value) not in {int, Decimal}:
+            raise ValueError("Wind price must be a JSON number")
+        value = Decimal(value)
+        if not value.is_finite() or abs(value.adjusted()) > 90:
+            raise ValueError("Wind price is not a finite supported decimal")
+        value_string = format(value, "f")
+        decimal_value(value_string, "Wind price", positive=True)
+        selected[observed] = value_string
+    common = {
         "source_id": source["source_id"], "source_timezone": source["source_timezone"],
-        "trade_date": day, "value_decimal": value_string,
         "payload_base64": base64.b64encode(raw).decode("ascii"),
-        "payload_sha256": hashlib.sha256(raw).hexdigest(), "captured_at": instant(captured_at).isoformat(),
+        "payload_sha256": hashlib.sha256(raw).hexdigest(), "captured_at": captured.isoformat(),
     }
+    return [{**common, "trade_date": observed.isoformat(), "value_decimal": selected[observed]} for observed in sorted(selected)]
+
+
+def capture_payload(raw: bytes, source: dict, day: str, captured_at: str) -> dict | None:
+    """Compatibility adapter for one explicitly requested exact day."""
+    captures = capture_payloads(raw, source, captured_at, day)
+    return captures[0] if captures else None
 
 
 def due_claims(gateway):
@@ -147,15 +160,23 @@ def due_claims(gateway):
         seen.add(cursor)
 
 
-def run_once(*, fetch, gateway, source: dict, day: str, clock) -> dict:
+def run_once(*, fetch, gateway, source: dict, clock, day: str | None = None) -> dict:
     result = {"status": "COMPLETE", "capture": {}, "settlements": [], "errors": []}
     try:
         raw = fetch()
-        capture = capture_payload(raw, source, day, instant(clock()).isoformat())
-        if capture is None:
-            result["capture"] = {"status": "INDETERMINATE_EVIDENCE", "reason": "MISSING_EXACT_TRADE_DATE"}
+        captures = capture_payloads(raw, source, instant(clock()).isoformat(), day)
+        if not captures:
+            result["capture"] = {"status": "INDETERMINATE_EVIDENCE", "reason": "MISSING_EXACT_TRADE_DATE" if day is not None else "NO_COMPLETED_TRADE_DATE"}
         else:
-            result["capture"] = {"status": "CAPTURED", "record": gateway("capture_first_price", capture)}
+            records = []
+            for capture in captures:
+                try:
+                    records.append(gateway("capture_first_price", capture))
+                except (ValueError, TypeError, KeyError, OSError, RuntimeError) as exc:
+                    result["errors"].append({"operation": "capture_first_price", "trade_date": capture["trade_date"], "error_type": type(exc).__name__})
+            result["capture"] = {"status": "SYSTEM_ERROR" if result["errors"] else "CAPTURED", "records": records}
+            if day is not None and records:
+                result["capture"]["record"] = records[0]
     except (ValueError, TypeError, KeyError, OSError, RuntimeError, subprocess.SubprocessError) as exc:
         result["capture"] = {"status": "SYSTEM_ERROR", "error_type": type(exc).__name__}
         result["errors"].append({"operation": "capture_first_price", "error_type": type(exc).__name__})

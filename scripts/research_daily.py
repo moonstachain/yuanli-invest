@@ -2,7 +2,7 @@
 """One daily machine run: collect once, ingest once, capture and settle claims."""
 
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 import fcntl
 import json
 import os
@@ -30,7 +30,7 @@ def run_daily(*, cfg, source, cli_path, runtime_dir, gateway, fetch=wind_payload
     state = shadow.pilot_state(day, cfg)
     if state != "ACTIVE":
         return {"status": f"PILOT_{state}"}
-    source_zone = ZoneInfo(source["source_timezone"])
+    ZoneInfo(source["source_timezone"])
     metrics = cfg["provider"]["metrics"]
     if source["series_id"] != metrics["gold_price"]["code"]:
         raise ValueError("reviewed Gold source does not match the collector series")
@@ -67,8 +67,7 @@ def run_daily(*, cfg, source, cli_path, runtime_dir, gateway, fetch=wind_payload
         if "gold_price" not in raw:
             raise RuntimeError("Gold source capture unavailable")
         return raw["gold_price"]
-    trade_date = (instant(clock()).astimezone(source_zone).date() - timedelta(days=1)).isoformat()
-    worker = run_once(fetch=captured_gold, gateway=gateway, source=source, day=trade_date, clock=clock)
+    worker = run_once(fetch=captured_gold, gateway=gateway, source=source, clock=clock)
     return {
         "status": "SYSTEM_ERROR" if errors or worker["status"] == "SYSTEM_ERROR" or receipt["status"] == "PROVIDER_FAIL_CLOSED" else "COMPLETE",
         "receipt_path": str(target), "snapshot_status": receipt["status"], "worker": worker, "errors": errors,

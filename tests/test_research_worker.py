@@ -24,6 +24,18 @@ def raw_wind(value="102.000000000000000001", day="20260909"):
 
 
 class CaptureAdapterTests(unittest.TestCase):
+    def test_daily_capture_retains_exact_completed_dates_and_shared_raw_bytes(self):
+        source = daily_bundle()["trusted_source"]
+        inner = {"metrics": [{"meta": {"code": source["series_id"]}, "date": ["20260911", "20260909", "20260910", "20260908"], "value": [104, 102, 103, 100]}]}
+        raw = json.dumps({"content": [{"type": "text", "text": json.dumps(inner)}]}).encode()
+        captures = worker.capture_payloads(raw, source, "2026-09-09T23:30:00Z")
+        # Source-local date is already September 10 even though UTC is still 9.
+        self.assertEqual([item["trade_date"] for item in captures], ["2026-09-08", "2026-09-09"])
+        self.assertEqual([item["value_decimal"] for item in captures], ["100", "102"])
+        for item in captures:
+            self.assertEqual(base64.b64decode(item["payload_base64"]), raw)
+            self.assertEqual(item["payload_sha256"], hashlib.sha256(raw).hexdigest())
+
     def test_decimal_capture_binds_original_raw_bytes(self):
         raw = raw_wind()
         record = worker.capture_payload(raw, daily_bundle()["trusted_source"], "2026-09-09", "2026-09-09T18:00:00Z")
@@ -43,6 +55,21 @@ class CaptureAdapterTests(unittest.TestCase):
 
 
 class WorkerTests(unittest.TestCase):
+    def test_one_capture_failure_does_not_skip_other_dates_or_due_queue(self):
+        source = daily_bundle()["trusted_source"]
+        inner = {"metrics": [{"meta": {"code": source["series_id"]}, "date": ["20260908", "20260909"], "value": [100, 102]}]}
+        raw = json.dumps({"content": [{"type": "text", "text": json.dumps(inner)}]}).encode()
+        calls = []
+        def gateway(operation, payload):
+            calls.append((operation, payload))
+            if operation == "capture_first_price" and payload["trade_date"] == "2026-09-08":
+                raise OSError("offline")
+            return {"items": []} if operation == "list_due_claims" else {}
+        result = worker.run_once(fetch=lambda: raw, gateway=gateway, source=source, clock=lambda: datetime(2026, 9, 10, 18, tzinfo=timezone.utc))
+        self.assertEqual(result["status"], "SYSTEM_ERROR")
+        self.assertEqual([operation for operation, _ in calls], ["capture_first_price", "capture_first_price", "list_due_claims"])
+        self.assertEqual(result["errors"][0]["trade_date"], "2026-09-08")
+
     def test_interrupted_learning_recovers_original_settlement_without_recompute(self):
         bundle = daily_bundle()
         committed = receipt_envelope(settle_daily_first_capture(bundle))
