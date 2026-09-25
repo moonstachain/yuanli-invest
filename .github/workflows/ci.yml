@@ -4,6 +4,9 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -14,45 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
           cache: pip
-      - run: python -m pip install -r requirements-dev.txt
-      - run: python scripts/validate_repository.py
-      - run: python scripts/validate_gold_reconstruction.py
-      - run: python scripts/validate_q0_architecture.py
-      - run: python scripts/validate_m1_theory.py
-      - run: python scripts/validate_r0_reframe.py
-      - run: python scripts/validate_r1_registry.py
-      - run: python scripts/validate_r2_gold_pack.py
-      - run: python scripts/validate_r2_1_status.py
-      - run: python scripts/build_canon_status.py --check
-      - run: python scripts/validate_r2_2_refoundation.py
-      - run: python scripts/validate_r2_3_runtime_blockers.py
-      - run: python scripts/validate_r2_3a_architecture.py
-      - run: python scripts/validate_r2_3a_cross_asset_stress.py
-      - run: python scripts/validate_r2_3b0_contract_architecture.py
-      - run: python scripts/validate_r2_3b1_p0_specs.py
-      - run: python scripts/validate_qxm1_candidate_pack.py
-      - run: python scripts/validate_qxm2_evidence_hardening.py
-      - run: python scripts/validate_qxm2_post_merge_closure.py
-      - run: python scripts/validate_yip0_philosophy.py
-      - run: python scripts/validate_me0_multi_engine_ontology.py
-      - run: python scripts/validate_me1_state_object_model.py
-      - run: python scripts/validate_yex0_capital_execution_constitution.py
-      - run: python scripts/validate_yvn1_a0_shadow_execution.py
-      - run: python scripts/validate_yim0_methodology_projection.py
-      - run: python scripts/validate_yios0_canonical_definition.py
-      - run: python scripts/validate_yios_g1_gold_reality_trial.py
-      - run: python scripts/validate_yios_g1_gold_shadow_action.py
-      - run: python scripts/validate_yios_g1_gold_shadow_runtime.py
-      - run: python scripts/validate_yios_g1_gold_genesis_benchmark_registry.py
-      - run: python scripts/validate_yks0_r0_research_estate.py
-      - run: python scripts/validate_ymq_os0_g1.py
-      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m scripts.run_checks --scope current
 
   governance:
     name: governance
@@ -63,8 +33,20 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -e '.[dev]'
       - run: python scripts/leak_guard.py
-      - run: python scripts/check_governance.py
-      - run: python scripts/verify_bootstrap_receipt.py
       - run: python scripts/build_manifest.py --check
+      - name: Audit historical assets when touched; always audit releases and manual runs
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == "pull_request" || "$EVENT_NAME" == "push" ]] && [[ -n "$BASE_SHA" && ! "$BASE_SHA" =~ ^0+$ ]]; then
+            python -m scripts.run_checks --scope historical --changed-since "$BASE_SHA"
+          else
+            python -m scripts.run_checks --scope historical
+          fi

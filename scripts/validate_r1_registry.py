@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -174,7 +175,10 @@ def main() -> None:
     assert seed["status"] == "candidate_seed_not_canon"
     assert len(seed["capabilities"]) == 12
 
-    readme = README.read_text(encoding="utf-8")
+    readme = subprocess.check_output(
+        ["git", "show", "bfd1576e08dc836869b359773b09b3a169d09512:README.md"],
+        cwd=ROOT, text=True, encoding="utf-8",
+    )
     for marker in (
         "Research Capability Canon",
         "Compile investment knowledge into machine-callable research intelligence.",

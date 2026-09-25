@@ -1,11 +1,18 @@
+import io
 import json
 import os
+import plistlib
+import sys
 import tempfile
 import unittest
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import redirect_stdout
 from datetime import date
 from pathlib import Path
+from threading import Barrier
 from unittest import mock
 
+from scripts import receipt_store
 from scripts import ymq_gold2_live_shadow as shadow
 from scripts import ymq_gold2_learning_live as learning
 
@@ -48,6 +55,26 @@ class ActivationContractTests(unittest.TestCase):
 
 
 class WindAdapterTests(unittest.TestCase):
+    @staticmethod
+    def _response(dates, values):
+        return json.dumps({"content": [{"type": "text", "text": json.dumps({
+            "metrics": [{"meta": {"code": "TEST"}, "date": dates, "value": values}]
+        })}]})
+
+    def test_parser_rejects_invalid_observation_at_provider_seam(self):
+        cases = [
+            (["20260915"], [value])
+            for value in (None, True, "3.05", float("nan"), float("inf"))
+        ] + [
+            (["20260230"], [3.05]),
+            (["2026-09-15"], [3.05]),
+            ("20260915", "12345678"),
+            (["20260915"], []),
+        ]
+        for dates, values in cases:
+            with self.subTest(dates=dates, values=values), self.assertRaises(ValueError):
+                shadow.parse_wind_cli_response(self._response(dates, values), expected_code="TEST")
+
     def test_parse_wind_cli_response_requires_exact_metric_code(self):
         payload = {
             "content": [{"type": "text", "text": json.dumps({
@@ -96,6 +123,28 @@ class WindAdapterTests(unittest.TestCase):
         request_json = json.loads(argv[-1])
         self.assertEqual(request_json["observation"], "5")
 
+    def test_metric_queries_overlap_and_preserve_names(self):
+        started = Barrier(3)
+
+        def query(cli, code):
+            started.wait(timeout=5)
+            return {"code": code}
+
+        metric_cfg = shadow.load_activation()["provider"]["metrics"]
+        with mock.patch.object(shadow, "query_wind_metric", side_effect=query):
+            result = shadow.query_wind_metrics(Path("/tmp/cli.mjs"), metric_cfg)
+        self.assertEqual(result, {name: {"code": spec["code"]} for name, spec in metric_cfg.items()})
+
+    def test_metric_query_failure_does_not_return_partial_batch(self):
+        def query(cli, code):
+            if code == "BAD":
+                raise ValueError("provider unavailable")
+            return {"code": code}
+
+        with mock.patch.object(shadow, "query_wind_metric", side_effect=query):
+            with self.assertRaisesRegex(ValueError, "provider unavailable"):
+                shadow.query_wind_metrics(Path("/tmp/cli.mjs"), {"first": {"code": "OK"}, "second": {"code": "BAD"}})
+
 
 class ReceiptTests(unittest.TestCase):
     def test_build_receipt_is_research_only_and_fail_closed(self):
@@ -118,6 +167,43 @@ class ReceiptTests(unittest.TestCase):
             target = shadow.write_receipt({"status": "OK", "as_of": "2026-09-16"}, Path(td))
             self.assertTrue(target.exists())
             self.assertTrue(str(target).startswith(td))
+
+    def test_concurrent_runs_preserve_every_receipt_and_complete_latest(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            receipts = [{"as_of": "2026-09-16", "run": run} for run in range(20)]
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                paths = list(executor.map(lambda value: shadow.write_receipt(value, root), receipts))
+            self.assertEqual(len(set(paths)), len(receipts))
+            self.assertEqual([json.loads(path.read_text()) for path in paths], receipts)
+            self.assertIn(json.loads((root / "latest.json").read_text()), receipts)
+            self.assertEqual(list(root.rglob(".receipt-*")), [])
+
+    def test_failed_latest_replacement_keeps_previous_snapshot(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            original = {"as_of": "2026-09-16", "run": 1}
+            shadow.write_receipt(original, root)
+            replace = os.replace
+
+            def fail_latest(source, target):
+                if target.name == "latest.json":
+                    raise OSError("disk unavailable")
+                replace(source, target)
+
+            with mock.patch.object(receipt_store.os, "replace", side_effect=fail_latest):
+                with self.assertRaisesRegex(OSError, "disk unavailable"):
+                    shadow.write_receipt({**original, "run": 2}, root)
+            self.assertEqual(json.loads((root / "latest.json").read_text()), original)
+            self.assertEqual(len(list(root.glob("*/receipt-*.json"))), 2)
+            self.assertEqual(list(root.rglob(".receipt-*")), [])
+
+    def test_invalid_receipt_does_not_create_runtime_files(self):
+        for receipt in ({"as_of": "../escape"}, {"as_of": "2026-09-16", "value": float("nan")}):
+            with self.subTest(receipt=receipt), tempfile.TemporaryDirectory() as td:
+                with self.assertRaises(ValueError):
+                    shadow.write_receipt(receipt, Path(td))
+                self.assertEqual(list(Path(td).iterdir()), [])
 
 
 class LearningIntegrationTests(unittest.TestCase):
@@ -220,6 +306,9 @@ class ProductSinkHookTests(unittest.TestCase):
             receipt.write_text("{}\n")
             client = root / "sink.py"
             client.write_text("print('unused')\n")
+            stale_learning = root / "learning" / "latest-learning.json"
+            stale_learning.parent.mkdir()
+            stale_learning.write_text('{"as_of": "2026-09-01"}')
             run.return_value = mock.Mock(
                 returncode=0,
                 stdout=json.dumps({
@@ -241,6 +330,73 @@ class ProductSinkHookTests(unittest.TestCase):
             argv = run.call_args.args[0]
             self.assertIn(str(client), argv)
             self.assertNotIn("MACHINE_TOKEN_TEST_ONLY", argv)
+            self.assertNotIn("--learning", argv)
+
+            current_learning = root / "learning" / "current.json"
+            current_learning.write_text('{"as_of": "2026-09-16"}')
+            with mock.patch.dict(os.environ, env, clear=True):
+                shadow.emit_product_sink(receipt, root, learning_path=current_learning)
+            argv = run.call_args.args[0]
+            self.assertEqual(argv[argv.index("--learning") + 1], str(current_learning))
+
+
+class RunnerTests(unittest.TestCase):
+    def test_learning_failure_keeps_receipt_and_sink_but_fails_scheduler_run(self):
+        cfg = shadow.load_activation()
+        metrics = {
+            name: {"meta": {"code": spec["code"]}, "latest_date": "20260923", "latest_value": 1.25}
+            for name, spec in cfg["provider"]["metrics"].items()
+        }
+        learning_cfg = learning.load_contract()
+        learning_cfg["authority"]["production_scheduler_integration_authorized"] = True
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            cli = root / "cli.mjs"
+            cli.touch()
+            output = io.StringIO()
+            with mock.patch.multiple(
+                shadow,
+                default_cli_path=mock.Mock(return_value=cli),
+                default_runtime_dir=mock.Mock(return_value=root),
+                query_wind_metrics=mock.Mock(return_value=metrics),
+                emit_product_sink=mock.Mock(return_value={"status": "MACHINE_REALITY_SINK_PASS"}),
+            ), mock.patch.multiple(
+                learning,
+                load_contract=mock.Mock(return_value=learning_cfg),
+                process_current_receipt=mock.Mock(side_effect=OSError("learning storage unavailable")),
+            ), mock.patch.object(shadow, "date", wraps=date) as clock, redirect_stdout(output):
+                clock.today.return_value = date(2026, 9, 24)
+                code = shadow.main()
+                target = Path(json.loads(output.getvalue())["receipt"])
+                shadow.emit_product_sink.assert_called_once_with(target, root, learning_path=None)
+            result = json.loads(output.getvalue())
+            self.assertEqual(code, 3)
+            self.assertEqual(result["status"], "LIVE_SHADOW_RECEIPT")
+            self.assertEqual(result["learning_status"], "LEARNING_FAIL_CLOSED")
+            self.assertEqual(result["product_sink_status"], "MACHINE_REALITY_SINK_PASS")
+            self.assertEqual(json.loads(target.read_text())["status"], "LIVE_SHADOW_RECEIPT")
+            self.assertEqual(json.loads((root / "latest.json").read_text()), json.loads(target.read_text()))
+
+    def test_missing_provider_cli_emits_persisted_failure_receipt(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            output = io.StringIO()
+            with mock.patch.multiple(
+                shadow,
+                default_cli_path=mock.Mock(return_value=root / "missing.mjs"),
+                default_runtime_dir=mock.Mock(return_value=root),
+                emit_product_sink=mock.Mock(return_value={"status": "PRODUCT_SINK_DISABLED"}),
+                emit_learning_live=mock.Mock(),
+            ), mock.patch.object(shadow, "date", wraps=date) as clock, redirect_stdout(output):
+                clock.today.return_value = date(2026, 9, 24)
+                code = shadow.main()
+                shadow.emit_learning_live.assert_not_called()
+                self.assertIsNone(shadow.emit_product_sink.call_args.kwargs["learning_path"])
+            result = json.loads(output.getvalue())
+            self.assertEqual(code, 2)
+            self.assertEqual(result["status"], "PROVIDER_FAIL_CLOSED")
+            self.assertEqual(result["error_type"], "FileNotFoundError")
+            self.assertEqual(json.loads((root / "latest.json").read_text())["status"], "PROVIDER_FAIL_CLOSED")
 
 
 class MachineProjectionCandidateTests(unittest.TestCase):
@@ -253,15 +409,31 @@ class MachineProjectionCandidateTests(unittest.TestCase):
         self.assertNotIn("op run", sh)
 
     def test_machine_installer_contains_only_nonsecret_projection_metadata(self):
-        installer = MACHINE_INSTALLER.read_text()
-        self.assertIn("run_ymq_gold2_live_shadow_machine.sh", installer)
-        self.assertIn("YIOS_TG1_INGEST_ENDPOINT", installer)
-        self.assertIn("YIOS_TG1_MACHINE_CLIENT_ID", installer)
-        self.assertIn("YIOS_TG1_MACHINE_TOKEN_KEYCHAIN_SERVICE", installer)
-        self.assertNotIn("sb_secret_", installer)
-        self.assertNotIn("YIOS_TG1_MACHINE_INGEST_TOKEN</key>", installer)
-        self.assertIn("<key>RunAtLoad</key><false/>", installer)
-        self.assertNotIn("launchctl kickstart", installer)
+        from scripts import install_research_schedule as installer
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source.json"
+            source.write_text(json.dumps({"source_id": "synthetic-test", "series_id": "S0031645", "source_timezone": "Europe/London", "unit": "USD/OZ", "currency": "USD", "target": "GOLD"}))
+            cli = root / "cli.mjs"; cli.touch()
+            output = root / "review.plist"
+            env = {
+                "YUANLI_RESEARCH_SOURCE_CONFIG": str(source), "NODE_BIN": sys.executable,
+                "WIND_MCP_CLI": str(cli), "YMQ_GOLD2_SHADOW_DIR": str(root / "runtime"),
+                "YUANLI_RESEARCH_MACHINE_URL": "https://example.invalid/functions/v1/research-machine",
+                "YIOS_TG1_MACHINE_CLIENT_ID": "machine-test", "YUANLI_WORKSPACE_ID": "workspace-test",
+                "YIOS_TG1_MACHINE_INGEST_TOKEN": "DO_NOT_INCLUDE", "SUPABASE_SERVICE_ROLE_KEY": "DO_NOT_INCLUDE",
+            }
+            with mock.patch.dict(os.environ, env, clear=True), mock.patch("sys.argv", ["installer", "--output", str(output)]), mock.patch.object(installer, "host_timezone", return_value="Asia/Shanghai"), mock.patch.object(installer.subprocess, "run") as run, mock.patch("builtins.print"):
+                self.assertEqual(installer.main(), 0)
+            run.assert_not_called()
+            configuration = plistlib.loads(output.read_bytes())
+            self.assertEqual(configuration["Label"], "com.yuanli.ymq-gold2-live-shadow")
+            self.assertEqual(configuration["ProgramArguments"], [str(MACHINE_WRAPPER)])
+            self.assertEqual(configuration["StartCalendarInterval"], {"Hour": 8, "Minute": 10})
+            self.assertFalse(configuration["RunAtLoad"])
+            self.assertNotIn("DO_NOT_INCLUDE", output.read_text())
+            self.assertNotIn("YIOS_TG1_MACHINE_INGEST_TOKEN", configuration["EnvironmentVariables"])
+            self.assertEqual(configuration["EnvironmentVariables"]["YUANLI_RESEARCH_SOURCE_CONFIG"], str(source.resolve()))
 
     def test_legacy_installer_remains_separate(self):
         installer = LAUNCHD_INSTALLER.read_text()

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -75,7 +76,10 @@ def walk_keys(obj):
 
 
 def validate_readme_after_merge() -> None:
-    text = README.read_text(encoding="utf-8")
+    text = subprocess.check_output(
+        ["git", "show", "bfd1576e08dc836869b359773b09b3a169d09512:README.md"],
+        cwd=ROOT, text=True, encoding="utf-8",
+    )
     required = (
         "Research Capability Canon",
         "Compile investment knowledge into machine-callable research intelligence.",

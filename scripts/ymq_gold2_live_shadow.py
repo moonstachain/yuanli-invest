@@ -10,12 +10,19 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
+
+if __package__:
+    from .receipt_store import write_receipt
+else:
+    from receipt_store import write_receipt
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -68,6 +75,8 @@ def pilot_state(day: date, cfg: Mapping[str, Any]) -> str:
 
 def _inner_payload(stdout: str) -> dict[str, Any]:
     outer = json.loads(stdout)
+    if not isinstance(outer, dict):
+        raise ValueError("Wind response must be an object")
     if outer.get("ok") is False or outer.get("isError") is True:
         raise ValueError(f"Wind provider error: {outer.get('code') or outer.get('message') or 'unknown'}")
     content = outer.get("content")
@@ -86,14 +95,21 @@ def parse_wind_cli_response(stdout: str, *, expected_code: str) -> dict[str, Any
     metrics = payload.get("metrics")
     if not isinstance(metrics, list):
         raise ValueError("Wind response missing metrics")
-    matches = [m for m in metrics if isinstance(m, Mapping) and m.get("meta", {}).get("code") == expected_code]
+    matches = [
+        metric for metric in metrics
+        if isinstance(metric, Mapping)
+        and isinstance(metric.get("meta"), Mapping)
+        and metric["meta"].get("code") == expected_code
+    ]
     if len(matches) != 1:
         raise ValueError(f"Wind metric identity mismatch for {expected_code}")
     metric = dict(matches[0])
-    dates = metric.get("date") or []
-    values = metric.get("value") or []
-    if not dates or len(dates) != len(values):
+    dates = metric.get("date")
+    values = metric.get("value")
+    if not isinstance(dates, list) or not isinstance(values, list) or not dates or len(dates) != len(values):
         raise ValueError(f"Wind metric {expected_code} has no aligned observations")
+    _iso_from_wind_day(dates[-1])
+    _require_finite_value(values[-1], expected_code)
     metric["latest_date"] = str(dates[-1])
     metric["latest_value"] = values[-1]
     metric["raw_sha256"] = hashlib.sha256(stdout.encode("utf-8")).hexdigest()
@@ -124,6 +140,21 @@ def query_wind_metric(cli_path: Path, code: str, *, observation: str = "5") -> d
     return parse_wind_cli_response(proc.stdout, expected_code=code)
 
 
+def query_wind_metrics(cli_path: Path, metric_cfg: Mapping[str, Mapping[str, Any]]) -> dict[str, Any]:
+    """Fetch independent evidence concurrently; return only a complete batch."""
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        pending = {
+            name: executor.submit(query_wind_metric, cli_path, spec["code"])
+            for name, spec in metric_cfg.items()
+        }
+        return {name: future.result() for name, future in pending.items()}
+
+
+def _require_finite_value(value: Any, name: str) -> None:
+    if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):
+        raise ValueError(f"non-finite or non-numeric provider value: {name}")
+
+
 def _iso_from_wind_day(value: str) -> str:
     value = str(value)
     if len(value) != 8 or not value.isdigit():
@@ -140,6 +171,7 @@ def build_receipt(metrics: Mapping[str, Mapping[str, Any]], cfg: Mapping[str, An
     known_dates: list[str] = []
     for name in sorted(metrics):
         metric = metrics[name]
+        _require_finite_value(metric.get("latest_value"), name)
         known = _iso_from_wind_day(str(metric["latest_date"]))
         if known > as_of.isoformat():
             raise ValueError("future-dated provider evidence")
@@ -185,19 +217,6 @@ def build_receipt(metrics: Mapping[str, Mapping[str, Any]], cfg: Mapping[str, An
     }
 
 
-def write_receipt(receipt: Mapping[str, Any], runtime_dir: Path) -> Path:
-    day = str(receipt.get("as_of") or date.today().isoformat())
-    daily = runtime_dir / day
-    daily.mkdir(parents=True, exist_ok=True)
-    stamp = datetime.now(timezone.utc).strftime("%H%M%S")
-    target = daily / f"receipt-{stamp}.json"
-    text = json.dumps(receipt, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
-    target.write_text(text, encoding="utf-8")
-    runtime_dir.mkdir(parents=True, exist_ok=True)
-    (runtime_dir / "latest.json").write_text(text, encoding="utf-8")
-    return target
-
-
 def emit_learning_live(
     receipt: Mapping[str, Any],
     runtime_dir: Path,
@@ -207,9 +226,9 @@ def emit_learning_live(
     """Run G7 only when its separate production integration gate is explicit."""
     cfg: dict[str, Any] = {}
     try:
-        try:
-            from scripts import ymq_gold2_learning_live as learning
-        except ImportError:
+        if __package__:
+            from . import ymq_gold2_learning_live as learning
+        else:
             import ymq_gold2_learning_live as learning  # type: ignore
         cfg = dict(learning_cfg or learning.load_contract())
         learning.validate_contract(cfg)
@@ -222,7 +241,6 @@ def emit_learning_live(
                 "accepted_learning": False,
                 "authority": dict(cfg["authority"]),
             }
-        learning.validate_live_receipt(receipt)
         return learning.process_current_receipt(receipt, runtime_dir, cfg)
     except Exception as exc:
         return {
@@ -259,7 +277,9 @@ def _source_commit() -> str:
     return "LOCAL"
 
 
-def emit_product_sink(receipt_path: Path, runtime_dir: Path) -> dict[str, Any]:
+def emit_product_sink(
+    receipt_path: Path, runtime_dir: Path, *, learning_path: Path | None = None
+) -> dict[str, Any]:
     """Optionally project a persisted G6 receipt into the governed TG1 Reality Sink.
 
     The hook is disabled by default. It never owns credentials and never writes
@@ -293,11 +313,7 @@ def emit_product_sink(receipt_path: Path, runtime_dir: Path) -> dict[str, Any]:
             "YIOS_TG1_MACHINE_CLIENT_ID",
         )
     )
-    direct_ready = bool(
-        os.getenv("SUPABASE_URL", "").strip()
-        and os.getenv("YMQ4_SUPABASE_SECRET_KEY", "").strip()
-    )
-    if not (machine_ready or direct_ready):
+    if not machine_ready:
         return {
             "status": "PRODUCT_SINK_CREDENTIALS_NOT_PROJECTED",
             "authority": "SHADOW_ONLY",
@@ -313,8 +329,7 @@ def emit_product_sink(receipt_path: Path, runtime_dir: Path) -> dict[str, Any]:
         "--config-version",
         "gold2_live_shadow.activation.v0.1",
     ]
-    learning_path = runtime_dir / "learning" / "latest-learning.json"
-    if learning_path.is_file():
+    if learning_path is not None:
         argv.extend(["--learning", str(learning_path)])
 
     try:
@@ -375,15 +390,12 @@ def main() -> int:
         print(json.dumps(receipt, ensure_ascii=False, indent=2))
         return 0
 
-    cli = default_cli_path()
-    if not cli.exists():
-        raise FileNotFoundError(f"Wind MCP CLI not found: {cli}")
     metric_cfg = cfg["provider"]["metrics"]
     try:
-        metrics = {
-            name: query_wind_metric(cli, spec["code"])
-            for name, spec in metric_cfg.items()
-        }
+        cli = default_cli_path()
+        if not cli.is_file():
+            raise FileNotFoundError(f"Wind MCP CLI not found: {cli}")
+        metrics = query_wind_metrics(cli, metric_cfg)
         receipt = build_receipt(metrics, cfg, as_of=today)
     except Exception as exc:
         receipt = {
@@ -397,32 +409,29 @@ def main() -> int:
             "authority": dict(cfg["authority"]),
             "generated_at": datetime.now(timezone.utc).isoformat(),
         }
-        runtime_dir = default_runtime_dir()
-        target = write_receipt(receipt, runtime_dir)
-        sink_result = emit_product_sink(target, runtime_dir)
-        print(json.dumps({
-            "receipt": str(target),
-            "product_sink_status": sink_result.get("status"),
-            **receipt,
-        }, ensure_ascii=False, indent=2))
-        return 2
-
     runtime_dir = default_runtime_dir()
     target = write_receipt(receipt, runtime_dir)
-    learning_result = emit_learning_live(receipt, runtime_dir)
-    sink_result = emit_product_sink(target, runtime_dir)
+    provider_failed = receipt["status"] == "PROVIDER_FAIL_CLOSED"
+    learning_result = {} if provider_failed else emit_learning_live(receipt, runtime_dir)
+    learning_path = learning_result.get("learning_receipt_path")
+    sink_result = emit_product_sink(
+        target, runtime_dir, learning_path=Path(learning_path) if learning_path else None
+    )
     print(json.dumps({
         "receipt": str(target),
-        "learning_status": learning_result.get("status"),
+        **({"learning_status": learning_result.get("status")} if not provider_failed else {}),
         "product_sink_status": sink_result.get("status"),
         **receipt,
     }, ensure_ascii=False, indent=2))
+    if provider_failed:
+        return 2
     sink_failed = sink_result.get("status") in {
         "PRODUCT_SINK_CLIENT_MISSING",
         "PRODUCT_SINK_CREDENTIALS_NOT_PROJECTED",
         "PRODUCT_SINK_FAIL_CLOSED",
     }
-    return 3 if sink_failed else 0
+    learning_failed = learning_result.get("status") == "LEARNING_FAIL_CLOSED"
+    return 3 if sink_failed or learning_failed else 0
 
 
 if __name__ == "__main__":

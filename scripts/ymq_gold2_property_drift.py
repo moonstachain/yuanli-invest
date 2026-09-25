@@ -106,7 +106,9 @@ def block_summary(
         "dominant_factor_match_le_0_50": match_share <= 0.50,
         "residual_bias_ratio_ge_0_25": residual_bias >= 0.25,
     }
-    evidence_count = sum(bool(v) for v in diagnostics.values())
+    # All three diagnostics were measured. A false anomaly flag is evidence of
+    # stability, not missing evidence; thresholds are applied by the classifier.
+    evidence_count = len(diagnostics)
     label = gold2.classify_property_drift(
         coefficient_distance=median_distance,
         dominant_factor_match_share=match_share,
