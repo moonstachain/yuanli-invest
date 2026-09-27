@@ -15,6 +15,8 @@ import urllib.request
 from datetime import date, datetime, timezone
 from typing import Any, Iterable
 
+from yuanli_invest.receipts import read_envelope
+
 import numpy as np
 
 BATTLE = "YMQ4-B2"
@@ -231,16 +233,31 @@ def rpc(sb_url: str, secret_key: str, fn: str, payload: dict[str, Any]) -> Any:
     )
 
 
+def frozen_panel(snapshot: dict[str, Any]) -> list[dict[str, Any]]:
+    """Load exact stored bytes; never bind a historical experiment to a live panel."""
+    if not isinstance(snapshot, dict) or not snapshot.get("snapshot_id"):
+        raise ValueError("B2 requires an explicit immutable input snapshot")
+    payload = read_envelope({"receipt_json": snapshot.get("payload_json"), "receipt_sha256": snapshot.get("sha256")})
+    if payload.get("panel_id") != PANEL_ID or payload.get("schema_version") != "b2-input.v1":
+        raise ValueError("B2 input snapshot contract mismatch")
+    rows = payload.get("rows")
+    if not isinstance(rows, list):
+        raise ValueError("B2 frozen input rows are required")
+    validate_panel(rows)
+    return rows
+
+
 def main() -> int:
     started = datetime.now(timezone.utc)
     sb_url = require_env("SUPABASE_URL")
     sb_key = require_env("YMQ4_SUPABASE_SECRET_KEY")
     git_sha = os.getenv("GITHUB_SHA", "LOCAL")
 
-    rows = rpc(sb_url, sb_key, "ymq4_b2_read_panel", {"p_panel_id": PANEL_ID})
-    if not isinstance(rows, list):
-        raise RuntimeError("B2 panel RPC returned unexpected shape")
-    validate_panel(rows)
+    snapshot_id = require_env("YMQ4_B2_INPUT_SNAPSHOT_ID")
+    snapshot = rpc(sb_url, sb_key, "gold_experiment_input", {"p_snapshot_id": snapshot_id})
+    if not isinstance(snapshot, dict) or snapshot.get("snapshot_id") != snapshot_id:
+        raise RuntimeError("B2 snapshot RPC returned a different identity")
+    rows = frozen_panel(snapshot)
     transformed = build_transformed_rows(rows)
     train, oos = split_rows(transformed)
 
@@ -269,7 +286,8 @@ def main() -> int:
         "status": "B2_BASELINE_MATERIALIZED_PASS",
         "git_sha": git_sha,
         "panel_id": PANEL_ID,
-        "input": {"months": EXPECTED_MONTHS, "panel_rows": EXPECTED_PANEL_ROWS, "future_leakage": 0},
+        "input": {"months": EXPECTED_MONTHS, "panel_rows": EXPECTED_PANEL_ROWS, "future_leakage": 0,
+                  "snapshot_id": snapshot_id, "sha256": snapshot["sha256"], "provenance": snapshot.get("provenance")},
         "transform": {"rows": len(transformed), "semantics": "contemporaneous_coefficient_temporal_generalization_not_forecast"},
         "train": {"start": TRAIN_START.isoformat(), "end": TRAIN_END.isoformat(), "rows": len(train), "metrics": train_metrics},
         "oos": {"start": OOS_START.isoformat(), "end": OOS_END.isoformat(), "rows": len(oos), "fixed_beta": oos_fixed, "null": oos_null, "relative": relative},

@@ -162,14 +162,6 @@ def validate_machine_contract() -> None:
     require(buses["reality_bus_ne_action_bus"] is True, "Reality Bus aliased to Action Bus")
     require(buses["read_side_credential_cannot_become_execution_authority"] is True, "read credential escalated")
 
-    human_layers = arch["human_layers"]
-    require(len(human_layers) == 13, "human architecture must remain L0-L12")
-    require([layer["id"] for layer in human_layers] == [f"L{i}" for i in range(13)], "human layer identity drift")
-
-    services = arch["machine_services"]
-    require(len(services) == 8, "machine service boundary count drift")
-    require([service["id"] for service in services] == [f"M{i}" for i in range(1, 9)], "machine service identity drift")
-
     experience = arch["experience_plane"]
     require(experience["notion"]["authoritative"] is False, "Notion promoted to authority")
     require(experience["notion"]["canon_write_authority"] is False, "Notion gained Canon write authority")

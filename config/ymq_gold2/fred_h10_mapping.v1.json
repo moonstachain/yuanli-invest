@@ -1,0 +1,17 @@
+{
+  "schema_version": "gold-h10-source-mapping.v1",
+  "status": "EXPLICIT_RETROSPECTIVE_ALIAS_ONLY",
+  "source_provider_id": "fred_graph_csv",
+  "source_series": "FRED:DTWEXBGS",
+  "source_measurement_regime": "FRED_DTWEXBGS_DISTRIBUTED_H10_BROAD_DOLLAR_DATE_LABEL_NY",
+  "strategy_series": "FED:H10:DTWEXBGS",
+  "strategy_measurement_regime": "FED_H10_BROAD_DOLLAR_DAILY_DATE_LABEL_NY",
+  "unit": "INDEX",
+  "underlying_release": "FEDERAL_RESERVE_H10",
+  "identity_basis": "FRED distributes the Federal Reserve H.10 DTWEXBGS daily broad-dollar series",
+  "allowed_use": "RETROSPECTIVE_EXPLORATORY_RESEARCH_ONLY",
+  "historical_release_time_verified": false,
+  "pit_grade": "UNKNOWN",
+  "vintage_kind": "UNKNOWN",
+  "action_authority": "none"
+}

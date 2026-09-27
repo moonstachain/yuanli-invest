@@ -1,0 +1,5 @@
+# GOLD2 Edge entry is a signed service-to-service endpoint, never a browser API.
+# The platform JWT check is disabled only because the handler verifies a
+# timestamped HMAC before parsing a command or invoking the private RPC.
+[functions.gold2-paper-control]
+verify_jwt = false

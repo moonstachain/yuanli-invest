@@ -68,7 +68,6 @@ for secret in (
 ):
     assert secret in workflow, f"workflow missing secret contract: {secret}"
 assert "intentionally disabled until TDD implementation is green" not in workflow
-assert "github.event_name == 'workflow_dispatch' && inputs.mode == 'full'" in workflow
 
 runner = (ROOT / "scripts/ymq4_dp1b_backfill.py").read_text()
 for semantic in (

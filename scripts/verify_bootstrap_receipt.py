@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import hashlib
+from io import BytesIO
 import json
 import subprocess
+import tempfile
 from pathlib import Path
 
 
@@ -13,21 +15,49 @@ ROOT = Path(__file__).resolve().parents[1]
 RECEIPT = ROOT / "receipts" / "generated" / "bootstrap-exact-sha.json"
 
 
-def git(*args: str, binary: bool = False):
+def git(*args: str, binary: bool = False, root: Path = ROOT):
     result = subprocess.run(
-        ["git", *args], cwd=ROOT, check=True, capture_output=True,
+        ["git", *args], cwd=root, check=True, capture_output=True,
         text=not binary,
     )
     return result.stdout
 
 
-def artifact_at(source_commit: str):
-    paths = git("-c", "core.quotePath=false", "ls-tree", "-r", "--name-only", source_commit).splitlines()
-    rows = []
-    for relative in sorted(paths):
+def artifact_at(source_commit: str, root: Path = ROOT):
+    """Hash exact Git blob bytes with one tree read and one batch object read."""
+    entries = []
+    tree = git("ls-tree", "-rz", "--full-tree", source_commit, binary=True, root=root)
+    for entry in tree.split(b"\0"):
+        if not entry:
+            continue
+        metadata, path = entry.split(b"\t", 1)
+        _, kind, object_id = metadata.split()
+        relative = path.decode("utf-8")
         if relative.startswith("receipts/generated/"):
             continue
-        payload = git("show", f"{source_commit}:{relative}", binary=True)
+        if kind != b"blob":
+            raise ValueError(f"unsupported artifact entry: {relative} ({kind.decode()})")
+        entries.append((relative, object_id))
+    entries.sort()
+    # A file input avoids backpressure between Git's blob output and object-ID
+    # input on platforms with small pipes. Still exactly one batch Git process.
+    with tempfile.TemporaryFile() as requests:
+        requests.write(b"".join(object_id + b"\n" for _, object_id in entries))
+        requests.seek(0)
+        result = subprocess.run(
+            ["git", "cat-file", "--batch"], cwd=root, check=True, capture_output=True,
+            stdin=requests,
+        )
+    stream = BytesIO(result.stdout)
+    rows = []
+    for relative, object_id in entries:
+        header = stream.readline().split()
+        if len(header) != 3 or header[:2] != [object_id, b"blob"]:
+            raise ValueError(f"cannot read artifact blob {relative}: {header!r}")
+        size = int(header[2])
+        payload = stream.read(size)
+        if len(payload) != size or stream.read(1) != b"\n":
+            raise ValueError(f"incomplete artifact blob: {relative}")
         rows.append({"path": relative, "sha256": hashlib.sha256(payload).hexdigest(), "bytes": len(payload)})
     canonical = json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
     return rows, hashlib.sha256(canonical).hexdigest()

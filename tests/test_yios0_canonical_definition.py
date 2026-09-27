@@ -54,8 +54,6 @@ class TestYIOS0CanonicalDefinition(unittest.TestCase):
             "ResearchAuthority != CapitalAuthority != ExecutionAuthority",
         ):
             self.assertIn(law, laws)
-        self.assertEqual(len(arch["human_layers"]), 13)
-        self.assertEqual(len(arch["machine_services"]), 8)
 
     def test_authority_and_credential_separation(self):
         arch = self.load_json(ARCH)

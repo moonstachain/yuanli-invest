@@ -1,0 +1,13 @@
+{
+  "schema_version": "gold-au-operations-status-config.v1",
+  "runtime_dir": "",
+  "calendar_receipt_path": "",
+  "receipt_sources": {
+    "research": {"path": "", "sha256": null, "max_age_seconds": 86400},
+    "connection": {"path": "", "sha256": null, "max_age_seconds": 300},
+    "execution_control": {"path": "", "sha256": null, "max_age_seconds": 300},
+    "account_coordinator": {"path": "", "sha256": null, "max_age_seconds": 60},
+    "reconciliation": {"path": "", "sha256": null, "max_age_seconds": 60},
+    "support_ticket": {"path": "", "sha256": null, "max_age_seconds": 86400}
+  }
+}
