@@ -13,6 +13,8 @@ from scripts.gold_au_shfe_archive_worker import (
     ArchiveDenied, CONFIG_SCHEMA, PRIOR_SESSIONS, ROLLING_SCHEMA, prepare_archive, run_once,
 )
 from scripts.gold_au_shfe_daily_capture import normalize_daily
+from tests.schedule_timezone_fixture import host_timezone_link
+
 from scripts.install_gold_au_shfe_archive_schedule import render
 
 SHANGHAI = ZoneInfo("Asia/Shanghai")
@@ -248,11 +250,20 @@ class RollingSHFEArchiveTests(unittest.TestCase):
         with TemporaryDirectory() as directory:
             root = Path(directory).resolve()
             root.chmod(0o700)
-            job = render(root)
+            with host_timezone_link():
+                job = render(root)
             self.assertFalse(job["RunAtLoad"])
             self.assertEqual([row["Weekday"] for row in job["StartCalendarInterval"]], [1, 2, 3, 4, 5])
             self.assertTrue(all(row["Hour"] == 8 and row["Minute"] == 5 for row in job["StartCalendarInterval"]))
             self.assertTrue(job["ProgramArguments"][1].endswith("gold_au_shfe_archive_worker.py"))
+
+    def test_schedule_rejects_utc_host_without_mutation(self):
+        with TemporaryDirectory() as temporary, host_timezone_link("Etc/UTC"):
+            root = Path(temporary)
+            root.chmod(0o700)
+            with self.assertRaisesRegex(ValueError, "host timezone must be Asia/Shanghai"):
+                render(root)
+            self.assertEqual(list(root.iterdir()), [])
 
 
 if __name__ == "__main__":

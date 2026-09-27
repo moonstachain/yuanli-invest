@@ -6,12 +6,14 @@ from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import Mock
 
+from tests.schedule_timezone_fixture import host_timezone_link
+
 from scripts.install_gold_au_daily_request_schedule import install, render
 
 
 class DailyRequestScheduleTests(unittest.TestCase):
     def test_render_runs_weekdays_0825_without_load_trigger(self):
-        with TemporaryDirectory() as temporary:
+        with TemporaryDirectory() as temporary, host_timezone_link():
             root = Path(temporary)
             root.chmod(0o700)
             job = render(root)
@@ -22,7 +24,7 @@ class DailyRequestScheduleTests(unittest.TestCase):
             self.assertTrue(all(row["Hour"] == 8 and row["Minute"] == 25 for row in job["StartCalendarInterval"]))
 
     def test_default_install_only_renders_private_candidate(self):
-        with TemporaryDirectory() as temporary:
+        with TemporaryDirectory() as temporary, host_timezone_link():
             root = Path(temporary)
             root.chmod(0o700)
             runner = Mock()
@@ -35,7 +37,7 @@ class DailyRequestScheduleTests(unittest.TestCase):
             self.assertFalse(result["broker_action_authorized"])
 
     def test_symlink_or_insecure_runtime_never_mutates_schedule(self):
-        with TemporaryDirectory() as temporary:
+        with TemporaryDirectory() as temporary, host_timezone_link():
             root = Path(temporary)
             root.chmod(0o700)
             (root / "launchd").symlink_to(root, target_is_directory=True)
@@ -44,6 +46,14 @@ class DailyRequestScheduleTests(unittest.TestCase):
             root.chmod(0o755)
             with self.assertRaisesRegex(ValueError, "INSECURE_RUNTIME_DIRECTORY"):
                 render(root)
+
+    def test_schedule_rejects_utc_host_without_mutation(self):
+        with TemporaryDirectory() as temporary, host_timezone_link("Etc/UTC"):
+            root = Path(temporary)
+            root.chmod(0o700)
+            with self.assertRaisesRegex(ValueError, "host timezone must be Asia/Shanghai"):
+                render(root)
+            self.assertEqual(list(root.iterdir()), [])
 
 
 if __name__ == "__main__":

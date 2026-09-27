@@ -8,6 +8,8 @@ import unittest
 from zoneinfo import ZoneInfo
 
 from scripts.gold_au_decision_worker import run_once
+from tests.schedule_timezone_fixture import host_timezone_link
+
 from scripts.install_gold_au_decision_schedule import render
 from yuanli_invest.gold_au_decision_log import DecisionLogDenied, LocalDecisionLog
 
@@ -54,13 +56,22 @@ class DecisionWorkerTests(unittest.TestCase):
         with TemporaryDirectory() as temporary:
             root = Path(temporary)
             root.chmod(0o700)
-            job = render(root)
+            with host_timezone_link():
+                job = render(root)
             self.assertEqual([item["Weekday"] for item in job["StartCalendarInterval"]],
                              [1, 2, 3, 4, 5])
             self.assertTrue(all(item["Hour"] == 8 and item["Minute"] == 30
                                 for item in job["StartCalendarInterval"]))
             self.assertFalse(job["RunAtLoad"])
             self.assertTrue(job["ProgramArguments"][1].endswith("gold_au_decision_worker.py"))
+
+    def test_schedule_rejects_utc_host_without_mutation(self):
+        with TemporaryDirectory() as temporary, host_timezone_link("Etc/UTC"):
+            root = Path(temporary)
+            root.chmod(0o700)
+            with self.assertRaisesRegex(ValueError, "host timezone must be Asia/Shanghai"):
+                render(root)
+            self.assertEqual(list(root.iterdir()), [])
 
 
 if __name__ == "__main__":

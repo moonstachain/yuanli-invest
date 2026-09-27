@@ -20,6 +20,8 @@ class CIBoundaryTests(unittest.TestCase):
             job = workflow["jobs"][name]
             self.assertEqual(job["name"], name)
             self.assertNotIn("if", job)
+            self.assertTrue(any(".[dev,paper-control]" in step.get("run", "")
+                                for step in job["steps"]), "CI must install crypto verifier test dependencies")
         contracts = workflow["jobs"]["contracts"]
         self.assertTrue(any("--scope current" in step.get("run", "") for step in contracts["steps"]))
 
