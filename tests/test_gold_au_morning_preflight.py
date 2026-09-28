@@ -35,28 +35,34 @@ class MorningPreflightTests(unittest.TestCase):
         (self.runtime/'daily_request_sources.json').write_text(json.dumps({'execution_mode':'RESEARCH_ONLY','calendar_receipt_path':str(self.calendar),'h10_mapping_receipt_path':'mapping.json'}))
         (self.runtime/'shfe_archive_sources.json').write_text(json.dumps({'calendar_receipt_path':str(self.calendar),'seed_manifest_paths':['seed.json']}))
         self.automation=self.base/'automation.toml'
-        self.prompt='--accept-day 2026-09-28 2026-09-28北京时间09:15–09:20 09:18:20 不把09:15成本回填08:30 保持正式交易权限DENY 外部90秒watchdog 禁止下单、撤单 失败不得清除标记或重试 未变化保持安静 '+self.probe_sha[7:]
+        self.set_prompt_day('2026-09-28')
         self.save_automation()
         self.loaded=True
         self.prepare_calls=[]
+        self.missing_reports=[]
 
     def tearDown(self):self.tmp.cleanup()
 
-    def save_automation(self,updated=0):
-        self.automation.write_text('id="gold2-au-simnow"\nstatus="ACTIVE"\nkind="heartbeat"\nname="fixture"\nrrule="FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=9;BYMINUTE=15"\nupdated_at='+str(updated)+'\nprompt='+json.dumps(self.prompt,ensure_ascii=False)+'\n')
+    def set_prompt_day(self, day):
+        self.prompt=(f'--accept-day {day} {day}北京时间09:15–09:20 09:18:20 '
+                     '不把09:15成本回填08:30 保持正式交易权限DENY 外部90秒watchdog '
+                     '禁止下单、撤单 失败不得清除标记或重试 未变化保持安静 '+self.probe_sha[7:])
 
-    def collect(self):
+    def save_automation(self,updated=0,status='ACTIVE'):
+        self.automation.write_text('id="gold2-au-simnow"\nstatus='+json.dumps(status)+'\nkind="heartbeat"\nname="fixture"\nrrule="FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=9;BYMINUTE=15"\nupdated_at='+str(updated)+'\nprompt='+json.dumps(self.prompt,ensure_ascii=False)+'\n')
+
+    def collect(self, decision_day='2026-09-28'):
         def proposal(**kwargs):
             self.prepare_calls.append(kwargs)
-            return {'retained_reports':273,'requested_days':273,'missing_official_sessions':[],
+            return {'retained_reports':273-len(self.missing_reports),'requested_days':273,'missing_official_sessions':self.missing_reports,
                     'interval':['2025-08-13','2026-09-24'],'source_manifests':[]}
         natural={'status':'PENDING','checked_at':NOW.isoformat(),'inputs':{k:{'status':'MISSING_OR_INVALID'} for k in ('shfe_archive','macro_capture','account_cost_margin','assembled_request')}}
         with patch.object(p,'load_calendar_receipt',return_value={'raw_sha256':'a'*64}),\
-             patch.object(p,'session_window',return_value={'decision_date':'2026-09-28','prior_session':'2026-09-24','prior_sessions':[]}),\
+             patch.object(p,'session_window',return_value={'decision_date':decision_day,'prior_session':'2026-09-24','prior_sessions':[]}),\
              patch.object(p,'prepare_archive',side_effect=proposal),\
              patch.object(p,'_mapping',return_value=({'witnessed_at':NOW.isoformat()},'b'*64)),\
              patch.object(p,'accept_natural_morning',return_value=natural):
-            return p.collect_preflight(self.runtime,decision_day='2026-09-28',as_of=NOW,launch_dir=self.launch,
+            return p.collect_preflight(self.runtime,decision_day=decision_day,as_of=NOW,launch_dir=self.launch,
                 automation_path=self.automation,repo=self.repo,
                 task_observer=lambda _: {'installation':'LOADED' if self.loaded else 'UNKNOWN','runs':0},
                 version_reader=lambda _: {'status':'VERIFIED_LOCAL_PYTHON312'},
@@ -64,6 +70,10 @@ class MorningPreflightTests(unittest.TestCase):
 
     def test_future_static_readiness_never_promotes_natural_acceptance(self):
         r=self.collect()
+        self.assertEqual(r['schema_version'],'gold-au-natural-morning-preflight.v2')
+        self.assertEqual(r['status_scope'],'RESEARCH_STATIC_ONLY')
+        self.assertEqual(r['research_static_status'],r['status'])
+        self.assertEqual(r['simnow_observer_status'],'CONFIGURED_NOT_EXECUTED')
         self.assertTrue(r['static_prerequisites_verified']);self.assertEqual(r['natural_acceptance']['status'],'PENDING')
         self.assertFalse(r['broker_action_authorized']);self.assertEqual(r['actual_acceptance_pass_count'],0)
         self.assertFalse(r['scheduled_workers_started']);self.assertEqual(r['network_requests'],0)
@@ -71,6 +81,47 @@ class MorningPreflightTests(unittest.TestCase):
         self.assertEqual(r['natural_acceptance']['inputs']['account_cost_margin']['dependency_role'],'EXECUTION_ONLY_NOT_RESEARCH_INPUT')
         self.assertFalse(self.prepare_calls[0]['execute']);self.assertFalse(self.prepare_calls[0]['fetch_missing'])
         self.assertEqual(self.prepare_calls[0]['observed_at'],NOW)
+
+    def test_paused_observer_and_stale_day_do_not_change_research_status(self):
+        self.save_automation(status='PAUSED')
+        r=self.collect(decision_day='2026-09-29')
+        self.assertEqual(r['research_static_status'],'STATIC_PREREQUISITES_VERIFIED_ACCEPTANCE_PENDING')
+        self.assertEqual(r['simnow_observer_status'],'PAUSED_CONFIG_MISMATCH')
+        self.assertFalse(r['simnow_observer_configuration_ready'])
+        self.assertFalse(r['automation']['rules']['explicit_natural_accept_day'])
+        self.assertFalse(r['automation']['rules']['single_attempt_window'])
+        self.assertEqual(r['natural_acceptance']['status'],'PENDING')
+
+    def test_paused_observer_with_correct_day_remains_separate(self):
+        self.set_prompt_day('2026-09-29');self.save_automation(status='PAUSED')
+        r=self.collect(decision_day='2026-09-29')
+        self.assertTrue(r['research_static_prerequisites_verified'])
+        self.assertEqual(r['simnow_observer_status'],'PAUSED_CONFIGURED')
+        self.assertFalse(r['simnow_observer_configuration_ready'])
+
+    def test_next_day_active_observer_requires_exact_day_in_both_fields(self):
+        self.set_prompt_day('2026-09-29');self.save_automation()
+        r=self.collect(decision_day='2026-09-29')
+        self.assertEqual(r['simnow_observer_status'],'CONFIGURED_NOT_EXECUTED')
+        self.assertTrue(r['simnow_observer_configuration_ready'])
+        self.assertTrue(r['automation']['rules']['explicit_natural_accept_day'])
+        self.assertTrue(r['automation']['rules']['single_attempt_window'])
+        self.prompt=self.prompt.replace('--accept-day 2026-09-29','--accept-day 2026-09-290')
+        self.save_automation()
+        self.assertEqual(self.collect(decision_day='2026-09-29')['simnow_observer_status'],'CONFIG_MISMATCH')
+        self.set_prompt_day('2026-09-29')
+        self.prompt+=' --accept-day 2026-09-28 2026-09-28北京时间09:15–09:20'
+        self.save_automation()
+        self.assertEqual(self.collect(decision_day='2026-09-29')['simnow_observer_status'],'CONFIG_MISMATCH')
+
+    def test_missing_prior_shfe_report_blocks_research_even_with_valid_observer(self):
+        self.set_prompt_day('2026-09-29');self.save_automation()
+        self.missing_reports=['2026-09-28']
+        r=self.collect(decision_day='2026-09-29')
+        self.assertEqual(r['research_static_status'],'STATIC_PREREQUISITES_INCOMPLETE')
+        self.assertEqual(r['simnow_observer_status'],'CONFIGURED_NOT_EXECUTED')
+        self.assertFalse(r['research_static_prerequisites_verified'])
+        self.assertEqual(r['shfe_seed']['missing_official_sessions'],['2026-09-28'])
 
     def test_unknown_launchd_or_wrong_repository_cannot_be_ready(self):
         self.loaded=False;self.assertFalse(self.collect()['static_prerequisites_verified'])
@@ -82,9 +133,9 @@ class MorningPreflightTests(unittest.TestCase):
 
     def test_future_updated_automation_or_wrong_probe_hash_rejected(self):
         self.save_automation(int(NOW.timestamp()*1000)+1)
-        self.assertEqual(p.inspect_automation(self.automation,as_of=NOW,probe_sha256=self.probe_sha)['status'],'UNKNOWN')
+        self.assertEqual(p.inspect_automation(self.automation,as_of=NOW,decision_day='2026-09-28',probe_sha256=self.probe_sha)['status'],'UNKNOWN')
         self.save_automation()
-        self.assertEqual(p.inspect_automation(self.automation,as_of=NOW,probe_sha256='sha256:'+'c'*64)['status'],'CONFIG_MISMATCH')
+        self.assertEqual(p.inspect_automation(self.automation,as_of=NOW,decision_day='2026-09-28',probe_sha256='sha256:'+'c'*64)['status'],'CONFIG_MISMATCH')
 
     def test_python_probe_isolated_and_bad_output_is_unknown(self):
         calls=[]
@@ -110,6 +161,6 @@ class MorningPreflightTests(unittest.TestCase):
             self.assertEqual((out/name).stat().st_mode&0o777,0o600)
         self.assertEqual(out.stat().st_mode&0o777,0o700)
         with self.assertRaises(ValueError):p.write_report(out,r)
-        self.assertIn('07:55–09:20',(out/'周一晨间就绪清单.md').read_text())
+        self.assertIn('07:55–09:20',(out/'2026-09-28-晨间就绪清单.md').read_text())
 
 if __name__=='__main__':unittest.main()

@@ -76,7 +76,7 @@ def inspect_power(runner=subprocess.run) -> dict:
     return result
 
 
-def inspect_automation(path: Path, *, as_of: datetime, probe_sha256: str) -> dict:
+def inspect_automation(path: Path, *, as_of: datetime, decision_day: str, probe_sha256: str) -> dict:
     result = {"status": "UNKNOWN", "source_sha256": None, "changed": False,
               "schedule_is_future_acceptance": True, "broker_action_authorized": False}
     try:
@@ -86,13 +86,16 @@ def inspect_automation(path: Path, *, as_of: datetime, probe_sha256: str) -> dic
         prompt = value.get("prompt", "")
         if not isinstance(prompt, str):
             raise ValueError
+        lifecycle = value.get("status")
+        accept_days = re.findall(r"(?<!\S)--accept-day[ \t]+(\d{4}-\d{2}-\d{2})(?!\d)", prompt)
+        observer_windows = re.findall(r"\d{4}-\d{2}-\d{2}北京时间09:15–09:20", prompt)
         rules = {
             "correct_id": value.get("id") == "gold2-au-simnow",
-            "active": value.get("status") == "ACTIVE",
+            "active": lifecycle == "ACTIVE",
             "heartbeat": value.get("kind") == "heartbeat",
             "weekday_0915_schedule": value.get("rrule") == "FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=9;BYMINUTE=15",
-            "explicit_natural_accept_day": "--accept-day 2026-09-28" in prompt,
-            "single_attempt_window": "2026-09-28北京时间09:15–09:20" in prompt and "09:18:20" in prompt,
+            "explicit_natural_accept_day": accept_days == [decision_day],
+            "single_attempt_window": observer_windows == [f"{decision_day}北京时间09:15–09:20"] and "09:18:20" in prompt,
             "correct_readonly_probe_hash": probe_sha256.removeprefix("sha256:") in prompt,
             "no_backfill": "不把09:15成本回填08:30" in prompt,
             "formal_permission_deny": "保持正式交易权限DENY" in prompt,
@@ -104,7 +107,15 @@ def inspect_automation(path: Path, *, as_of: datetime, probe_sha256: str) -> dic
         updated = value.get("updated_at")
         if type(updated) is not int or updated > int(as_of.timestamp() * 1000):
             raise ValueError
-        result.update({"status": "CONFIGURED_NOT_EXECUTED" if all(rules.values()) else "CONFIG_MISMATCH",
+        other_rules_match = all(value for name, value in rules.items() if name != "active")
+        if other_rules_match and lifecycle == "ACTIVE":
+            status = "CONFIGURED_NOT_EXECUTED"
+        elif lifecycle == "PAUSED":
+            status = "PAUSED_CONFIGURED" if other_rules_match else "PAUSED_CONFIG_MISMATCH"
+        else:
+            status = "CONFIG_MISMATCH"
+        result.update({"status": status, "lifecycle_status": lifecycle,
+                       "requested_decision_day": decision_day,
                        "source_sha256": "sha256:" + hashlib.sha256(raw).hexdigest(), "rules": rules,
                        "name": value.get("name"), "updated_at": datetime.fromtimestamp(updated/1000, timezone.utc).isoformat(),
                        "notification_policy_from_prompt": "MEANINGFUL_EVENT_ONLY"})
@@ -159,19 +170,24 @@ def collect_preflight(runtime: Path, *, decision_day: str, as_of: datetime, laun
         if row["status"] == "MISSING_OR_INVALID" and date.fromisoformat(decision_day) > now.astimezone(SHANGHAI).date():
             row["preflight_interpretation"] = "EXPECTED_NOT_RUN_BEFORE_TARGET_DAY"
     probe_sha = _sha(repo / "scripts/youquant_gold_simnow_readonly_cost_probe.py")
-    automation = inspect_automation(automation_path, as_of=now, probe_sha256=probe_sha)
+    automation = inspect_automation(automation_path, as_of=now, decision_day=decision_day, probe_sha256=probe_sha)
     version = version_reader(repo / ".venv/bin/python")
     power = power_reader()
-    static_ok = (all(i["installation"] == "LOADED" and i["config_status"] == "MATCHES_FROZEN_WEEKDAY_SCHEDULE"
+    research_static_ok = (all(i["installation"] == "LOADED" and i["config_status"] == "MATCHES_FROZEN_WEEKDAY_SCHEDULE"
                      and i["exact_repo_arguments_match"] for i in tasks)
                  and version["status"] == "VERIFIED_LOCAL_PYTHON312"
                  and sources.get("execution_mode") == "RESEARCH_ONLY"
-                 and proposal["retained_reports"] == 273 and proposal["missing_official_sessions"] == []
-                 and automation["status"] == "CONFIGURED_NOT_EXECUTED")
-    return {"schema_version": "gold-au-natural-morning-preflight.v1", "kind": "CURRENT_READONLY_PREFLIGHT",
+                 and proposal["retained_reports"] == 273 and proposal["missing_official_sessions"] == [])
+    research_static_status = ("STATIC_PREREQUISITES_VERIFIED_ACCEPTANCE_PENDING" if research_static_ok
+                              else "STATIC_PREREQUISITES_INCOMPLETE")
+    return {"schema_version": "gold-au-natural-morning-preflight.v2", "kind": "CURRENT_READONLY_PREFLIGHT",
             "observed_at": now.isoformat(), "observed_shanghai": now.astimezone(SHANGHAI).isoformat(),
-            "decision_date": decision_day, "status": "STATIC_PREREQUISITES_VERIFIED_ACCEPTANCE_PENDING" if static_ok else "STATIC_PREREQUISITES_INCOMPLETE",
-            "natural_acceptance": natural, "static_prerequisites_verified": static_ok,
+            "decision_date": decision_day, "status": research_static_status, "status_scope": "RESEARCH_STATIC_ONLY",
+            "research_static_status": research_static_status,
+            "research_static_prerequisites_verified": research_static_ok,
+            "simnow_observer_status": automation["status"],
+            "simnow_observer_configuration_ready": automation["status"] == "CONFIGURED_NOT_EXECUTED",
+            "natural_acceptance": natural, "static_prerequisites_verified": research_static_ok,
             "actual_acceptance_pass_count": 0, "formal_observation_started": False,
             "scheduled_workers_started": False, "broker_action_authorized": False,
             "network_requests": 0, "original_runtime_modified": False, "power_settings_changed": False,
@@ -187,11 +203,12 @@ def collect_preflight(runtime: Path, *, decision_day: str, as_of: datetime, laun
             "producer_sequence": [{"time_shanghai": "08:05", "job": "SHFE_ARCHIVE", "deadline": "08:10", "network": "ZERO_IF_VERIFIED_SEED_COMPLETE"},
                                   {"time_shanghai": "08:10", "job": "FRED_CAPTURE", "start_deadline": "08:20", "network": "TWO_PUBLIC_BOUNDED_GETS"},
                                   {"time_shanghai": "08:25", "job": "LOCAL_REQUEST_ASSEMBLY", "deadline": "08:30", "network": "NONE"},
-                                  {"time_shanghai": "08:30", "job": "LOCAL_RESEARCH_FREEZE", "network": "NONE"},
-                                  {"time_shanghai": "09:15", "job": "READONLY_ACCEPTANCE_HEARTBEAT", "not_before": decision_day+"T09:15:00+08:00"}],
+                                  {"time_shanghai": "08:30", "job": "LOCAL_RESEARCH_FREEZE", "network": "NONE"}],
+            "simnow_observer_schedule": {"time_shanghai": "09:15", "job": "READONLY_ACCEPTANCE_HEARTBEAT",
+                                         "not_before": decision_day+"T09:15:00+08:00", "status": automation["status"]},
             "unresolved_runtime_requirements": ["MAC_AWAKE_AND_USER_SESSION_PRESENT_0805_0835", "PUBLIC_NETWORK_AND_FRED_CURRENT_BYTES_AT_0810",
                                                 "REAL_NATURAL_0830_TRIGGER_AND_FROZEN_LOG", "INDEPENDENT_TIME_ANCHOR_NOT_ESTABLISHED_BY_LOCAL_LOG"],
-            "interpretation": "Future missing daily inputs, zero runs and installed schedules cannot become an accepted natural decision. 09:15 costs cannot backfill 08:30."}
+            "interpretation": "Research readiness excludes the independent 09:15 SimNow observer. Future missing daily inputs, zero runs and installed schedules cannot become an accepted natural decision. 09:15 costs cannot backfill 08:30."}
 
 
 def write_report(directory: Path, report: dict) -> None:
@@ -201,12 +218,13 @@ def write_report(directory: Path, report: dict) -> None:
     raw = (json.dumps(report, ensure_ascii=False, sort_keys=True, indent=2)+"\n").encode()
     loaded = sum(i["installation"] == "LOADED" for i in report["tasks"])
     verified = sum(i["exact_repo_arguments_match"] for i in report["tasks"])
-    texts = {"preflight.json": raw, "周一晨间就绪清单.md": (
-        "# 周一自然晨间就绪清单\n\n"
-        +f"真实检查时点：{report['observed_shanghai']}。状态：{report['status']}。自然验收仍为 {report['natural_acceptance']['status']}。\n\n"
-        +f"晨间任务加载 {loaded}/4；精确仓库参数一致 {verified}/4；本地解释器：{report['python']['status']}。各任务真实运行计数：{[i['runs'] for i in report['tasks']]}，不代表已通过自然验收。上期所 {report['shfe_seed']['retained_reports']} 个已完成交易日原始字节与官方日历一致；周一 08:05 仍需自然生成当日归档回执。08:10 两列 FRED 数据、08:25 请求和 08:30 冻结结果只能等待真实自然时点取得，不提前制造。\n\n"
-        +f"研究配置：{report['source_catalogs']['execution_mode']}。RESEARCH_ONLY 的晨间研究不要求 09:15 账户成本输入；成本与保证金仍是执行必需条件，不能事后回填 08:30。09:15 heartbeat 配置状态：{report['automation']['status']}；配置不等于已执行。\n\n"
-        +f"当前防闲置睡眠断言：{report['host_power']['current_prevent_idle_sleep_assertion']}；其周一存续未知。系统空闲睡眠设置需留意，人工睡眠、关机和断网仍不保证任务执行。请在周一 07:55–09:20 插电保持 Mac 唤醒且登录用户会话。没有修改能耗、系统时间或账户设置，也未改变现有防睡眠进程。\n\n"
+    day = report["decision_date"]
+    texts = {"preflight.json": raw, f"{day}-晨间就绪清单.md": (
+        f"# {day} 自然晨间就绪清单\n\n"
+        +f"真实检查时点：{report['observed_shanghai']}。研究静态状态：{report['research_static_status']}；SimNow 只读观察者状态：{report['simnow_observer_status']}。自然验收仍为 {report['natural_acceptance']['status']}。\n\n"
+        +f"晨间任务加载 {loaded}/4；精确仓库参数一致 {verified}/4；本地解释器：{report['python']['status']}。各任务真实运行计数：{[i['runs'] for i in report['tasks']]}，不代表已通过自然验收。上期所已验证历史报告 {report['shfe_seed']['retained_reports']} 个；缺失的先前交易日：{report['shfe_seed']['missing_official_sessions']}。目标日 08:05 仍需自然生成当日归档回执。08:10 两列 FRED 数据、08:25 请求和 08:30 冻结结果只能等待真实自然时点取得，不提前制造。\n\n"
+        +f"研究配置：{report['source_catalogs']['execution_mode']}。RESEARCH_ONLY 的晨间研究不要求 09:15 账户成本输入；成本与保证金仍是执行必需条件，不能事后回填 08:30。09:15 heartbeat 配置状态：{report['simnow_observer_status']}；它独立于研究静态预检，且配置不等于已执行。\n\n"
+        +f"当前防闲置睡眠断言：{report['host_power']['current_prevent_idle_sleep_assertion']}；其目标日存续未知。系统空闲睡眠设置需留意，人工睡眠、关机和断网仍不保证任务执行。请在目标日 07:55–09:20 插电保持 Mac 唤醒且登录用户会话。没有修改能耗、系统时间或账户设置，也未改变现有防睡眠进程。\n\n"
         +"自然决定本地账本不等于独立时间证明。验收须保留真实开始时间、输入取得时间、冻结哈希与独立收讫；缺失或超时记明确失败/跳过，不重放补造。本次未触发日任务，未读取凭据、连接 broker 或调用浏览器，未开始正式观察。\n").encode()}
     for name, payload in texts.items():
         fd = os.open(directory/name, os.O_WRONLY|os.O_CREAT|os.O_EXCL, 0o600)
@@ -229,7 +247,9 @@ def main() -> int:
                                  launch_dir=Path.home()/"Library/LaunchAgents",
                                  automation_path=Path.home()/".codex/automations/gold2-au-simnow/automation.toml")
         write_report(args.output_dir,report)
-        print(json.dumps({"status":report["status"],"natural_acceptance":report["natural_acceptance"]["status"],
+        print(json.dumps({"status":report["status"],"research_static_status":report["research_static_status"],
+                          "simnow_observer_status":report["simnow_observer_status"],
+                          "natural_acceptance":report["natural_acceptance"]["status"],
                           "output_dir":str(args.output_dir),"broker_action_authorized":False}))
         return 0
     except (OSError,ValueError,KeyError,TypeError):
