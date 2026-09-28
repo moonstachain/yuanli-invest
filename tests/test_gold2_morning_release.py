@@ -51,12 +51,18 @@ class MorningReleaseTests(unittest.TestCase):
             (home / ".yuanli").mkdir(parents=True, mode=0o700)
             runtime = home / ".yuanli/runtime/gold_au_decision"
             runtime.mkdir(parents=True, mode=0o700)
+            source = home / "fixture-source"
+            python = source / ".venv/bin/python"
+            python.parent.mkdir(parents=True)
+            python.write_bytes(b"synthetic executable for release-failure test")
+            python.chmod(0o700)
             agents = home / "Library/LaunchAgents"
             agents.mkdir(parents=True)
             existing = agents / "com.yuanli.gold2-au-0830-research-decision.plist"
             existing.write_bytes(b"unchanged-loaded-job")
             base = home / ".yuanli/releases/gold2-au"
             with patch.object(release.Path, "home", return_value=home), \
+                    patch.object(release, "ROOT", source), \
                     patch.object(release, "_code_inventory", return_value=("a" * 40, [("scripts/x.py", b"safe")], "b" * 64)), \
                     patch.object(release, "_safe_venv_files", return_value=[]), \
                     patch.object(release, "_venv_hash", return_value="c" * 64), \
@@ -97,15 +103,21 @@ class MorningReleaseTests(unittest.TestCase):
 
     def test_venv_rejects_private_file_and_desktop_link(self):
         with TemporaryDirectory() as temporary:
-            venv = Path(temporary)
+            home = Path(temporary).resolve() / "home"
+            venv = home / "fixture-venv"
+            venv.mkdir(parents=True)
             (venv / ".env").write_text("never copy")
             with self.assertRaisesRegex(release.ReleaseDenied, "SENSITIVE_FILE_IN_VENV"):
                 release._safe_venv_files(venv)
             (venv / ".env").unlink()
             link = venv / "desktop-code"
-            link.symlink_to(release.ROOT / "scripts/gold_au_decision_worker.py")
-            with self.assertRaisesRegex(release.ReleaseDenied, "DESKTOP_SYMLINK_IN_VENV"):
-                release._safe_venv_files(venv)
+            desktop_file = home / "Desktop/source/worker.py"
+            desktop_file.parent.mkdir(parents=True)
+            desktop_file.write_text("fixture")
+            link.symlink_to(desktop_file)
+            with patch.object(release.Path, "home", return_value=home):
+                with self.assertRaisesRegex(release.ReleaseDenied, "DESKTOP_SYMLINK_IN_VENV"):
+                    release._safe_venv_files(venv)
             link.unlink()
             with TemporaryDirectory() as other:
                 private = Path(other) / "external-private-fixture"
