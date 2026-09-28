@@ -11,7 +11,9 @@ import unittest
 
 from scripts import youquant_gold_simnow_readonly_cost_probe as probe
 from scripts import gold_au_ctp_cost_evidence_import as importer
-from yuanli_invest.gold_au_ctp_cost_evidence import ProbeBlocked, load_candidate, validate_candidate
+from yuanli_invest.gold_au_ctp_cost_evidence import (
+    FROZEN_WINDOWS, ProbeBlocked, load_candidate, validate_candidate,
+)
 
 NOW = datetime(2026, 9, 28, 1, 15, 5, tzinfo=timezone.utc)
 ACCOUNT = "PRIVATE_ACCOUNT_472913"
@@ -85,6 +87,25 @@ def host(exchange=None):
         return values.get(key)
     return {"exchange": exchange or Exchange(), "_G": kv, "Sleep": lambda ms: None,
             "GOLD2_PROBE_IDENTITY_SALT": SALT}
+
+
+def shifted_to_reviewed_29th(original):
+    """A synthetic receipt tests the importer contract, never a live readback."""
+    result = deepcopy(original)
+    one_day = timedelta(days=1)
+    for key in ("observed_at", "available_at", "quote_observed_at"):
+        result[key] = (datetime.fromisoformat(result[key]) + one_day).isoformat()
+    for query in result["native_queries"].values():
+        if "observed_at" in query:
+            query["observed_at"] = (datetime.fromisoformat(query["observed_at"]) + one_day).isoformat()
+    result["quote"]["time_ms"] += 86400000
+    result["window_start"], result["window_end"], result["calendar_source"] = FROZEN_WINDOWS["2026-09-29"]
+    result["native_queries"][probe.METHODS[3]]["decoded_redacted_response"][0][0]["Value"]["TradingDay"] = "20260929"
+    depth = result["native_queries"][probe.METHODS[3]]
+    depth["response_sha256"] = probe.digest(depth["decoded_redacted_response"])
+    result.pop("receipt_sha256")
+    result["receipt_sha256"] = probe.digest(result)
+    return result
 
 
 class EvidenceTests(unittest.TestCase):
@@ -251,6 +272,53 @@ class EvidenceTests(unittest.TestCase):
             self.assertEqual(set(p.name for p in target.iterdir()), {"candidate.json", "content-validation.json"})
             self.assertEqual(target.stat().st_mode & 0o777, 0o700)
             self.assertTrue(all(p.stat().st_mode & 0o777 == 0o600 for p in target.iterdir()))
+
+    def test_second_frozen_window_requires_explicit_selection_and_exact_source(self):
+        next_day = shifted_to_reviewed_29th(probe.inspect_host(host(), now=NOW))
+        next_as_of = NOW + timedelta(days=1)
+        with self.assertRaisesRegex(ProbeBlocked, "OBSERVATION_SOURCE_INVALID"):
+            validate_candidate(next_day, as_of=next_as_of)
+        result = validate_candidate(next_day, as_of=next_as_of,
+                                    expected_window="2026-09-29")
+        self.assertTrue(result["content_consistent"])
+        self.assertEqual(result["expected_window"], "2026-09-29")
+        self.assertFalse(result["external_authenticity_verified"])
+        old = probe.inspect_host(host(), now=NOW)
+        self.assertEqual(validate_candidate(old, as_of=NOW)["expected_window"], "2026-09-28")
+        with self.assertRaises(ProbeBlocked):
+            validate_candidate(old, as_of=NOW, expected_window="2026-09-29")
+        with self.assertRaisesRegex(ProbeBlocked, "FROZEN_WINDOW_UNSUPPORTED"):
+            validate_candidate(next_day, as_of=next_as_of, expected_window="2026-09-30")
+        for key, value in (("calendar_source", FROZEN_WINDOWS["2026-09-28"][2]),
+                           ("window_start", "2026-09-29T09:14:59+08:00"),
+                           ("window_end", "2026-09-29T09:20:01+08:00")):
+            bad = deepcopy(next_day)
+            bad[key] = value
+            bad.pop("receipt_sha256")
+            bad["receipt_sha256"] = probe.digest(bad)
+            with self.assertRaises(ProbeBlocked):
+                validate_candidate(bad, as_of=next_as_of,
+                                   expected_window="2026-09-29")
+
+    def test_importer_requires_explicit_second_window_without_writing_on_reject(self):
+        next_day = shifted_to_reviewed_29th(probe.inspect_host(host(), now=NOW))
+        next_as_of = (NOW + timedelta(days=1)).isoformat()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp).resolve()
+            receipt = root / "synthetic-next-day.json"
+            receipt.write_text(json.dumps(next_day))
+            output = root / "accepted"
+            args = [str(receipt), "--as-of", next_as_of, "--output-dir", str(output)]
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(importer.main(args + ["--execute"]), 2)
+            self.assertFalse(output.exists())
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(importer.main(args + ["--expected-window", "2026-09-29", "--execute"]), 0)
+            self.assertEqual(set(p.name for p in output.iterdir()),
+                             {"candidate.json", "content-validation.json"})
+            validation = json.loads((output / "content-validation.json").read_text())
+            self.assertEqual(validation["expected_window"], "2026-09-29")
+            self.assertFalse(validation["external_authenticity_verified"])
 
     def test_even_rehashed_assessment_cannot_claim_exact_order_cost_or_authority(self):
         result = probe.inspect_host(host(), now=NOW)

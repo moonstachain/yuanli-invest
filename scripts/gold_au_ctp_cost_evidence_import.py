@@ -8,7 +8,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from yuanli_invest.gold_au_ctp_cost_evidence import ProbeBlocked, canonical, load_candidate
+from yuanli_invest.gold_au_ctp_cost_evidence import (
+    FROZEN_WINDOWS, ProbeBlocked, canonical, load_candidate,
+)
 
 
 def main(argv=None):
@@ -16,13 +18,16 @@ def main(argv=None):
     parser.add_argument("receipt")
     parser.add_argument("--as-of", default=None)
     parser.add_argument("--expected-investor-token", default=None)
+    parser.add_argument("--expected-window", choices=tuple(FROZEN_WINDOWS),
+                        default="2026-09-28")
     parser.add_argument("--output-dir")
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args(argv)
     try:
         receipt, validation = load_candidate(args.receipt,
             as_of=args.as_of or datetime.now(timezone.utc),
-            expected_investor_token=args.expected_investor_token)
+            expected_investor_token=args.expected_investor_token,
+            expected_window=args.expected_window)
         if args.execute:
             if not args.output_dir:
                 raise ProbeBlocked("NEW_PRIVATE_OUTPUT_DIR_REQUIRED")

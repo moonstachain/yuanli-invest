@@ -12,7 +12,24 @@ import hashlib
 import json
 from pathlib import Path
 import re
+from types import MappingProxyType
 SCHEMA = "gold2-au-ctp-readonly-cost-candidate.v1"
+
+# A caller must select the reviewed observation window explicitly.  The
+# default remains the original 9/28 contract for old receipts/callers.
+# Do not infer a window from untrusted receipt timestamps or URL fields.
+FROZEN_WINDOWS = MappingProxyType({
+    "2026-09-28": (
+        "2026-09-28T09:15:00+08:00",
+        "2026-09-28T09:20:00+08:00",
+        "https://www.shfe.com.cn/publicnotice/notice/202512/t20251217_829805.html",
+    ),
+    "2026-09-29": (
+        "2026-09-29T09:15:00+08:00",
+        "2026-09-29T09:20:00+08:00",
+        "https://www.shfe.com.cn/publicnotice/notice/202609/t20260921_833503.html",
+    ),
+})
 
 METHODS = ("ReqQryInstrumentMarginRate", "ReqQryInstrumentCommissionRate",
            "ReqQryBrokerTradingParams", "ReqQryDepthMarketData")
@@ -142,8 +159,12 @@ def _timestamp(value):
     return parsed
 
 
-def validate_candidate(receipt, *, as_of, expected_investor_token=None):
+def validate_candidate(receipt, *, as_of, expected_investor_token=None,
+                       expected_window="2026-09-28"):
     """Validate consistency and timing; explicitly retain external-attestation gaps."""
+    if type(expected_window) is not str or expected_window not in FROZEN_WINDOWS:
+        raise ProbeBlocked("FROZEN_WINDOW_UNSUPPORTED")
+    window_start, window_end, calendar_source = FROZEN_WINDOWS[expected_window]
     if not isinstance(receipt, dict) or receipt.get("schema_version") != SCHEMA:
         raise ProbeBlocked("CANDIDATE_SCHEMA_INVALID")
     expected_fields = {"schema_version", "status", "reason_code", "observed_at", "available_at",
@@ -162,7 +183,7 @@ def validate_candidate(receipt, *, as_of, expected_investor_token=None):
             raise ProbeBlocked("AUTHORITY_OR_ATTESTATION_FORBIDDEN")
     if type(receipt.get("order_api_calls")) is not int or receipt["order_api_calls"] != 0:
         raise ProbeBlocked("ORDER_API_CALLS_FORBIDDEN")
-    if (receipt.get("calendar_source") != "https://www.shfe.com.cn/publicnotice/notice/202512/t20251217_829805.html"
+    if (receipt.get("calendar_source") != calendar_source
             or receipt.get("quote_clock") != "PROVIDER_TICKER_TIME"):
         raise ProbeBlocked("OBSERVATION_SOURCE_INVALID")
     checks, wait_ms = receipt.get("connection_checks"), receipt.get("connection_wait_ms")
@@ -179,7 +200,7 @@ def validate_candidate(receipt, *, as_of, expected_investor_token=None):
         raise ProbeBlocked("AS_OF_INVALID")
     observed, available = _timestamp(receipt.get("observed_at")), _timestamp(receipt.get("available_at"))
     start, end = _timestamp(receipt.get("window_start")), _timestamp(receipt.get("window_end"))
-    if (start.isoformat() != "2026-09-28T09:15:00+08:00" or end.isoformat() != "2026-09-28T09:20:00+08:00"
+    if (start.isoformat() != window_start or end.isoformat() != window_end
             or not start <= observed < end or not observed <= available <= end or available > cutoff):
         raise ProbeBlocked("CANDIDATE_TIME_NOT_AVAILABLE")
     contract = receipt.get("contract")
@@ -294,11 +315,13 @@ def validate_candidate(receipt, *, as_of, expected_investor_token=None):
     return {"schema_version": "gold2-au-ctp-cost-content-validation.v1",
             "receipt_sha256": reported_hash, "content_consistent": True,
             "external_authenticity_verified": False, "paper_authority_enabled": False,
+            "expected_window": expected_window,
             "available_at": available.isoformat(), "account_token": investor,
             "cost_assessment": recomputed}
 
 
-def load_candidate(path, *, as_of, expected_investor_token=None):
+def load_candidate(path, *, as_of, expected_investor_token=None,
+                   expected_window="2026-09-28"):
     path = Path(path).absolute()
     for part in (path, *path.parents):
         if part.is_symlink():
@@ -320,4 +343,6 @@ def load_candidate(path, *, as_of, expected_investor_token=None):
         receipt = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs, parse_constant=invalid_constant)
     except (UnicodeDecodeError, json.JSONDecodeError):
         raise ProbeBlocked("CANDIDATE_JSON_INVALID")
-    return receipt, validate_candidate(receipt, as_of=as_of, expected_investor_token=expected_investor_token)
+    return receipt, validate_candidate(receipt, as_of=as_of,
+        expected_investor_token=expected_investor_token,
+        expected_window=expected_window)
