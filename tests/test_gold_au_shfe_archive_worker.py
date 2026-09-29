@@ -7,6 +7,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
+from urllib.error import URLError
 from zoneinfo import ZoneInfo
 
 from scripts.gold_au_shfe_archive_worker import (
@@ -225,8 +226,29 @@ class RollingSHFEArchiveTests(unittest.TestCase):
                                      execute=True, fetch_missing=True,
                                      fetch=lambda day: report_bytes("2026-09-23"), clock=lambda: AT_MONDAY)
             self.assertEqual(result["status"], "PARTIAL_FAILURE")
-            self.assertEqual(result["errors"], [{"date": missing, "reason": "SHFE_RAW_REPORT_DATE_MISMATCH"}])
+            self.assertEqual(result["errors"], [{"date": missing, "reason": "SHFE_RAW_REPORT_DATE_MISMATCH",
+                                                 "failure_stage": "NORMALIZE"}])
             self.assertEqual(len(result["reports"]), 272)
+
+    def test_public_fetch_failure_keeps_prior_reports_and_safe_stage_only(self):
+        with TemporaryDirectory() as directory:
+            root, calendar, source, manifest = seed_fixture(Path(directory))
+            missing = manifest["reports"].pop()["date"]
+            source.write_text(json.dumps(manifest))
+            output = root / "shfe_archives" / MONDAY.isoformat()
+
+            def failed_fetch(day):
+                raise URLError("private network detail must not be copied")
+
+            result = prepare_archive(calendar_receipt=calendar, seed_manifest_paths=[source],
+                                     decision_day=MONDAY, observed_at=AT_MONDAY,
+                                     output_dir=output, execute=True, fetch_missing=True,
+                                     fetch=failed_fetch, clock=lambda: AT_MONDAY)
+            self.assertEqual(result["status"], "PARTIAL_FAILURE")
+            self.assertEqual(result["errors"], [{"date": missing, "reason": "SHFE_FETCH_FAILED_URLError",
+                                                 "failure_stage": "FETCH"}])
+            self.assertEqual(len(result["reports"]), 272)
+            self.assertNotIn("private network detail", (output / "manifest.json").read_text())
 
     def test_daily_execution_outside_window_and_late_fetch_fail_closed(self):
         with TemporaryDirectory() as directory:
@@ -244,6 +266,7 @@ class RollingSHFEArchiveTests(unittest.TestCase):
                                      clock=lambda: next(times), capture_deadline=AT_MONDAY.replace(minute=10))
             self.assertEqual(result["status"], "PARTIAL_FAILURE")
             self.assertEqual(result["errors"][0]["reason"], "SHFE_CAPTURE_DEADLINE_REACHED")
+            self.assertEqual(result["errors"][0]["failure_stage"], "TIME_CHECK")
             self.assertEqual(result["new_requests"], 1)
 
     def test_schedule_is_0805_weekdays_without_run_at_load(self):

@@ -233,14 +233,18 @@ def prepare_archive(*, calendar_receipt: dict, seed_manifest_paths: list[Path],
     for index, day in enumerate(missing):
         if index:
             pause(0.5)
+        failure_stage = "PRECHECK"
         try:
             if capture_deadline is not None:
                 before = clock()
                 if before.tzinfo is None or before.utcoffset() is None or before >= capture_deadline:
                     raise ArchiveDenied("SHFE_CAPTURE_DEADLINE_REACHED")
             summary["new_requests"] += 1
+            failure_stage = "FETCH"
             raw = fetch(day)
+            failure_stage = "NORMALIZE"
             row = _normal(raw, day)
+            failure_stage = "TIME_CHECK"
             captured = clock()
             if captured.tzinfo is None or captured.utcoffset() is None or captured < observed:
                 raise ArchiveDenied("INVALID_NEW_SHFE_CAPTURE_CLOCK")
@@ -253,7 +257,8 @@ def prepare_archive(*, calendar_receipt: dict, seed_manifest_paths: list[Path],
                               "source_manifest_sha256": None}
         except (OSError, ValueError, ArithmeticError) as exc:
             summary["errors"].append({"date": day, "reason": exc.code if isinstance(exc, ArchiveDenied)
-                                      else "SHFE_FETCH_FAILED_" + type(exc).__name__})
+                                      else "SHFE_FETCH_FAILED_" + type(exc).__name__,
+                                      "failure_stage": failure_stage})
     for day in required:
         entry = selected.get(day)
         if entry is None:

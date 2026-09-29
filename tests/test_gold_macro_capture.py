@@ -1,5 +1,6 @@
 import hashlib
 import json
+import subprocess
 from datetime import date, datetime, timezone
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -121,6 +122,24 @@ class GoldMacroCaptureTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             run(start=date(2026, 9, 17), end_inclusive=date(2026, 9, 18),
                 output_dir=worktree / "private", execute=False)
+
+    def test_failed_public_capture_records_safe_stage_without_raw_or_error_text(self):
+        def failed_fetch(spec):
+            if spec.provider_series == "DFII10":
+                raise subprocess.TimeoutExpired(["curl", "private network detail must not be copied"], 35)
+            return b"observation_date,DXY\n2026-09-17,119.0\n"
+
+        with TemporaryDirectory() as directory, patch("scripts.gold_macro_capture.time.sleep"):
+            target = Path(directory) / "capture"
+            result = run(start=date(2026, 9, 17), end_inclusive=date(2026, 9, 18),
+                         output_dir=target, execute=True, fetch=failed_fetch, now=lambda: CAPTURE)
+            self.assertEqual(result["status"], "PARTIAL_FAILURE")
+            self.assertEqual([row["failure_stage"] for row in result["captures"]],
+                             ["FETCH", "NORMALIZE"])
+            self.assertEqual([row["status"] for row in result["captures"]], ["FAILED", "FAILED"])
+            self.assertEqual(result["captures"][0]["error_type"], "TimeoutExpired")
+            self.assertEqual(list((target / "raw").iterdir()), [])
+            self.assertNotIn("private network detail", (target / "manifest.json").read_text())
 
 
 if __name__ == "__main__":

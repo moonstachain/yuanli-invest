@@ -14,6 +14,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import subprocess
 import sys
 import time
 
@@ -70,11 +71,14 @@ def run(*, start: date, end_inclusive: date, output_dir: Path, execute: bool,
         if index:
             time.sleep(pause_seconds)
         capture_at = now()
+        failure_stage = "FETCH"
         try:
             raw = fetch(spec)
+            failure_stage = "NORMALIZE"
             normalized = normalize_raw(raw, spec, captured_at=capture_at)
             if not normalized["observations"]:
                 raise ValueError("macro capture returned no numeric observations")
+            failure_stage = "PERSIST"
             digest = hashlib.sha256(raw).hexdigest()
             raw_path = raw_dir / f"{spec.provider_series.lower()}-{digest}.csv"
             if raw_path.exists():
@@ -85,12 +89,13 @@ def run(*, start: date, end_inclusive: date, output_dir: Path, execute: bool,
             normalized["raw_file"] = str(raw_path)
             normalized["status"] = "CAPTURED"
             manifest["captures"].append(normalized)
-        except (OSError, ValueError, TimeoutError) as exc:
+        except (OSError, ValueError, TimeoutError, subprocess.TimeoutExpired) as exc:
             manifest["captures"].append({
                 "provider_series": spec.provider_series,
                 "source_url": spec.url(),
                 "status": "FAILED",
                 "error_type": type(exc).__name__,
+                "failure_stage": failure_stage,
             })
     captured_at = now()
     if captured_at.tzinfo is None or captured_at.utcoffset() is None:
