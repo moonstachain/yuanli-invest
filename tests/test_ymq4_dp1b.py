@@ -1,7 +1,9 @@
 import importlib.util
 import pathlib
+import random
 import unittest
-from datetime import date
+from datetime import date, timedelta
+from unittest.mock import patch
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("dp1b", ROOT / "scripts/ymq4_dp1b_backfill.py")
@@ -34,6 +36,49 @@ class TestDP1B(unittest.TestCase):
         got = m.latest_on_or_before(rows, date(2020, 1, 31))
         self.assertEqual(got["value"], 101.0)
         self.assertLessEqual(date.fromisoformat(got["observation_date"]), date(2020, 1, 31))
+
+    def test_index_matches_scan_for_unsorted_missing_and_duplicate_rows(self):
+        m = self.require_mod()
+        start = date(2020, 1, 1)
+        rows = [
+            {"observation_date": (start + timedelta(days=day)).isoformat(), "value": day}
+            for day in range(0, 100, 3)
+        ]
+        rows.extend([
+            {"observation_date": "2020-01-01", "value": 999},
+            {"observation_date": "2020-01-02", "value": None},
+            {"value": 10},
+        ])
+        random.Random(42).shuffle(rows)
+        index = m._ObservationIndex(rows)
+        for offset in range(-1, 102):
+            decision = start + timedelta(days=offset)
+            self.assertIs(index.latest_on_or_before(decision), m.latest_on_or_before(rows, decision))
+        self.assertIsNone(m._ObservationIndex([]).latest_on_or_before(start))
+
+    def test_indexed_panel_matches_original_scan_across_regime_changes(self):
+        m = self.require_mod()
+        decisions = [date(2002, 12, 31), date(2003, 1, 31), date(2005, 12, 31), date(2006, 1, 31)]
+        gold = [{"observation_date": d.isoformat(), "value": 1000.0} for d in decisions]
+        market = {
+            series: [{"observation_date": d.isoformat(), "value": float(i + 1)} for i, d in enumerate(decisions)]
+            for series in ("DTWEXM", "DTWEXBGS", "DTB3", "DFII10")
+        }
+        cpi = {d.isoformat(): {"value": 2.0, "latest_observation_date": d.isoformat()} for d in decisions}
+        snapshots = {series: series for series in (*market, "worldbank_pinksheet_gold", "CPI_ASOF_BUNDLE")}
+        indexed = m.build_panel(decisions, gold, market, cpi, snapshots)
+
+        class OriginalScan:
+            def __init__(self, rows):
+                self.rows = rows
+
+            def latest_on_or_before(self, decision):
+                return m.latest_on_or_before(self.rows, decision)
+
+        with patch.object(m, "_ObservationIndex", OriginalScan):
+            original = m.build_panel(decisions, gold, market, cpi, snapshots)
+        self.assertEqual(indexed, original)
+        self.assertEqual(len(indexed), len(decisions) * 4)
 
     def test_cpi_yoy_uses_same_vintage_levels(self):
         m = self.require_mod()

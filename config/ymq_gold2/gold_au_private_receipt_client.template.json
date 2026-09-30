@@ -1,0 +1,10 @@
+{
+  "endpoint": "https://tbmoimbdhsrltvospwpu.supabase.co/functions/v1/gold2-paper-control",
+  "enabled": false,
+  "role": "runtime",
+  "key_file": "/ABSOLUTE/PRIVATE/0600/runtime-hmac-key",
+  "account_id": "REPLACE_WITH_ATTESTED_SIMNOW_ACCOUNT",
+  "robot_id": 0,
+  "source_sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "timeout_seconds": 10
+}

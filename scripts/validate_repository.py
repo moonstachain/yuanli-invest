@@ -43,10 +43,10 @@ def load_json(path: Path):
         return json.load(handle)
 
 
-def schema_registry():
+def schema_registry(schema_dir: Path = SCHEMA_DIR):
     schemas: dict[str, dict] = {}
     registry = Registry()
-    for path in sorted(SCHEMA_DIR.glob("*.schema.json")):
+    for path in sorted(schema_dir.glob("*.schema.json")):
         schema = load_json(path)
         Draft202012Validator.check_schema(schema)
         schema_id = schema.get("$id", "")
@@ -59,29 +59,33 @@ def schema_registry():
     return schemas, registry
 
 
-def iter_object_files():
-    for base in (ROOT / "canon", ROOT / "events"):
-        if not base.exists():
-            continue
+def iter_object_files(root: Path = ROOT):
+    for base in (root / "canon", root / "events"):
         yield from sorted(path for path in base.rglob("*.json") if path.is_file())
 
 
-def main() -> int:
-    schemas, registry = schema_registry()
+def validate_repository(root: Path = ROOT) -> dict[str, int]:
+    """Validate stored objects and references without changing the repository."""
+    schemas, registry = schema_registry(root / "packages" / "contracts" / "schemas")
+    checker = FormatChecker()
+    validators = {
+        object_type: Draft202012Validator(
+            schemas[f"urn:yuanli-invest:schema:{schema_name}:1.0.0"],
+            registry=registry,
+            format_checker=checker,
+        )
+        for object_type, schema_name in OBJECT_SCHEMAS.items()
+    }
     seen: set[tuple[str, str]] = set()
     objects: list[tuple[Path, dict]] = []
     object_by_id: dict[str, dict] = {}
     validated = 0
-    for path in iter_object_files():
+    for path in iter_object_files(root):
         instance = load_json(path)
         object_type = instance.get("object_type")
-        schema_name = OBJECT_SCHEMAS.get(object_type)
-        if not schema_name:
+        validator = validators.get(object_type)
+        if validator is None:
             raise ValueError(f"{path}: unknown object_type {object_type!r}")
-        schema_id = f"urn:yuanli-invest:schema:{schema_name}:1.0.0"
-        validator = Draft202012Validator(
-            schemas[schema_id], registry=registry, format_checker=FormatChecker()
-        )
         errors = sorted(validator.iter_errors(instance), key=lambda error: list(error.path))
         if errors:
             detail = "; ".join(error.message for error in errors[:10])
@@ -136,7 +140,12 @@ def main() -> int:
             if identity in tickers:
                 raise ValueError(f"duplicate company identity: {identity}")
             tickers.add(identity)
-    print(f"schemas={len(schemas)} objects={validated} status=valid")
+    return {"schemas": len(schemas), "objects": validated}
+
+
+def main() -> int:
+    result = validate_repository()
+    print(f"schemas={result['schemas']} objects={result['objects']} status=valid")
     return 0
 
 

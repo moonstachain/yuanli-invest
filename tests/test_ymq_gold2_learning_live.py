@@ -129,6 +129,58 @@ class LearningLiveTests(unittest.TestCase):
             self.assertTrue(Path(td, "learning", "latest-learning.json").exists())
             self.assertIn("learning", target.parts)
 
+    def test_nonfinite_inputs_cannot_silently_suppress_attention(self):
+        cfg = learning.load_contract(CONTRACT)
+        prior = receipt("2026-09-16", 1000, 3, 100)
+        for value in (float("nan"), float("inf"), float("-inf"), True):
+            with self.subTest(value=value):
+                current = receipt("2026-09-17", value, 3, 100)
+                with self.assertRaises(ValueError):
+                    learning.build_learning_candidate(prior, current, cfg)
+                bad_cfg = learning.load_contract(CONTRACT)
+                bad_cfg["attention_thresholds"]["gold_price_pct_abs"] = value
+                with self.assertRaises(ValueError):
+                    learning.validate_contract(bad_cfg)
+
+    def test_provider_date_cannot_hide_behind_valid_summary(self):
+        prior = receipt("2026-09-16", 1000, 3, 100)
+        cfg = learning.load_contract(CONTRACT)
+        for metric_day in ("2026-09-18", "2026-09-15"):
+            current = receipt("2026-09-17", 1010, 3, 100)
+            current["provider_receipts"]["gold_price"]["latest_date"] = metric_day
+            with self.subTest(metric_day=metric_day), self.assertRaises(ValueError):
+                learning.build_learning_candidate(prior, current, cfg)
+
+    def test_selects_latest_actual_run_within_prior_day(self):
+        current = receipt("2026-09-17", 1010, 3, 100)
+        early = receipt("2026-09-16", 1000, 3, 100)
+        late = receipt("2026-09-16", 1005, 3, 100)
+        early["generated_at"] = "2026-09-16T09:00:00+08:00"
+        late["generated_at"] = "2026-09-16T02:00:00Z"
+        for candidates in ([early, late], [late, early]):
+            self.assertEqual(learning.find_previous_daily_receipt(current, iter(candidates)), late)
+
+    def test_legacy_tie_break_remains_deterministic(self):
+        current = receipt("2026-09-17", 1010, 3, 100)
+        a = receipt("2026-09-16", 1000, 3, 100)
+        b = receipt("2026-09-16", 1005, 3, 100)
+        expected = max([a, b], key=learning.receipt_sha256)
+        self.assertEqual(learning.find_previous_daily_receipt(current, [a, b]), expected)
+        self.assertEqual(learning.find_previous_daily_receipt(current, [b, a]), expected)
+
+    def test_process_reads_history_and_writes_linked_candidate(self):
+        prior = receipt("2026-09-16", 1000, 3, 100)
+        current = receipt("2026-09-17", 1010, 3.1, 101)
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            learning.write_receipt(prior, root)
+            learning.write_receipt(current, root)
+            (root / "2026-09-16" / "receipt-truncated.json").write_text("{")
+            candidate = learning.process_current_receipt(current, root)
+            self.assertEqual(candidate["delta"]["prior_as_of"], prior["as_of"])
+            self.assertEqual(candidate["source_receipts"]["current_sha256"], learning.receipt_sha256(current))
+            self.assertTrue(Path(candidate["learning_receipt_path"]).exists())
+
 
 if __name__ == "__main__":
     unittest.main()

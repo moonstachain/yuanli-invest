@@ -1,0 +1,37 @@
+{
+  "audit_id": "GOLD2-SOURCE-REVIEW-20260926-V3-R1",
+  "deployment_verified": false,
+  "modules": {
+    "scripts.gold_au_runtime_bootstrap": {
+      "path": "scripts/gold_au_runtime_bootstrap.py",
+      "sha256": "c824cadf99385a008efe9fac045da42a1014f5b5e2587970838509e1f0acf269"
+    },
+    "scripts.youquant_gold_simnow_strategy": {
+      "path": "scripts/youquant_gold_simnow_strategy.py",
+      "sha256": "8cc69bc5c884e49201e284ebf634d38c089bbc76d3608596ff5a6a91bcb02213"
+    },
+    "yuanli_invest.gold_au_account_coordinator": {
+      "path": "src/yuanli_invest/gold_au_account_coordinator.py",
+      "sha256": "a8c502ce08e49f49dea99fd10399642d910c23b9c6bf944d941381c78613a3db"
+    },
+    "yuanli_invest.gold_au_broker_facts": {
+      "path": "src/yuanli_invest/gold_au_broker_facts.py",
+      "sha256": "f39bed1ecfce63258f1e03fba6493d7f357f2ff15c919f692646e6ad034dc675"
+    },
+    "yuanli_invest.gold_au_receipt_client": {
+      "path": "src/yuanli_invest/gold_au_receipt_client.py",
+      "sha256": "d627ecf8c9e285b91da83b50f3d6bd7b9a100167f9f8499d791f9439154106f3"
+    },
+    "yuanli_invest.gold_au_strategy_accounting": {
+      "path": "src/yuanli_invest/gold_au_strategy_accounting.py",
+      "sha256": "1c268f4054327600153da26841218f41dedffa9f2496e8c63f6ecadb9873f8ad"
+    },
+    "yuanli_invest.gold_paper": {
+      "path": "src/yuanli_invest/gold_paper.py",
+      "sha256": "c3d903d0e1eda8da8b7bea73be57d45af4be4848522d303d4f8d826117cb9289"
+    }
+  },
+  "runtime_configured": false,
+  "schema_version": "gold-au-integrated-source-audit.v1",
+  "status": "AUDIT_APPROVED"
+}
