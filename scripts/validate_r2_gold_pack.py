@@ -72,6 +72,17 @@ def property_keys(value):
             yield from property_keys(child)
 
 
+def assert_registry_contains_r2_baseline(observed_counts):
+    """R2 freezes its own pack, not the future total size of the Registry."""
+    assert set(observed_counts) == set(EXPECTED_COUNTS), (set(observed_counts), set(EXPECTED_COUNTS))
+    regressions = {
+        name: {"observed": observed_counts[name], "r2_baseline": baseline}
+        for name, baseline in EXPECTED_COUNTS.items()
+        if observed_counts[name] < baseline
+    }
+    assert not regressions, f"Registry dropped below immutable R2 baseline: {regressions}"
+
+
 def validate_pack(name: str, schema_name: str, object_type: str, expected_count: int):
     path = REGISTRY / name / "r2-pnxs-gold-v0.1.json"
     assert path.exists(), f"missing R2 pack: {path.relative_to(ROOT)}"
@@ -120,16 +131,16 @@ def main() -> None:
 
     idx = load_json(REGISTRY_INDEX)
     observed_counts = {item["name"]: item["entry_count"] for item in idx["registries"]}
-    assert observed_counts == EXPECTED_COUNTS, (observed_counts, EXPECTED_COUNTS)
-    assert idx["entry_count_total"] == 99 == sum(EXPECTED_COUNTS.values())
+    assert_registry_contains_r2_baseline(observed_counts)
+    assert idx["entry_count_total"] == sum(observed_counts.values())
     assert idx["silent_promotion_prohibited"] is True
     assert idx["r0_gold_seed_pack_promoted"] is False
     assert idx["r0_gold_seed_pack_compiled_to_specified"] is True
     assert idx["canon_entry_count"] == 0
     assert idx["provider_adapter_count"] == 0
-    for name, expected in EXPECTED_COUNTS.items():
+    for name in EXPECTED_COUNTS:
         subindex = load_json(REGISTRY / name / "_index.json")
-        assert subindex["entry_count"] == expected, f"subindex count drift: {name}"
+        assert subindex["entry_count"] == observed_counts[name], f"subindex/global count drift: {name}"
 
     seed = load_json(R0_SEED)
     seed_ids = {item["capability_id"] for item in seed["capabilities"]}

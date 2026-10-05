@@ -1,10 +1,10 @@
 {
-  "schema_version":"0.2.0",
-  "status":"r2_gold_pack_specified_candidate",
-  "entry_count_total":99,
+  "schema_version":"0.3.0",
+  "status":"qxm_f_g1_selective_registry_admission_applied",
+  "entry_count_total":122,
   "registries":[
-    {"name":"theories","object_type":"TheoryObject","path":"registry/theories","entry_count":19},
-    {"name":"hypotheses","object_type":"HypothesisObject","path":"registry/hypotheses","entry_count":12},
+    {"name":"theories","object_type":"TheoryObject","path":"registry/theories","entry_count":31},
+    {"name":"hypotheses","object_type":"HypothesisObject","path":"registry/hypotheses","entry_count":23},
     {"name":"factors","object_type":"FactorObject","path":"registry/factors","entry_count":6},
     {"name":"algorithms","object_type":"AlgorithmObject","path":"registry/algorithms","entry_count":6},
     {"name":"benchmarks","object_type":"BenchmarkObject","path":"registry/benchmarks","entry_count":7},
@@ -16,6 +16,10 @@
   "silent_promotion_prohibited":true,
   "r0_gold_seed_pack_promoted":false,
   "r0_gold_seed_pack_compiled_to_specified":true,
+  "qxm_f_g1_theory_admissions":12,
+  "qxm_f_g1_hypothesis_admissions":11,
+  "qxm_f_g1_hypothesis_status":"proposed_only",
+  "qxm_f_g1_benchmark_objects_created":0,
   "canon_entry_count":0,
   "provider_adapter_count":0
 }

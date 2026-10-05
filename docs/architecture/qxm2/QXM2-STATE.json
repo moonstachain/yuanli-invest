@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.6.0",
+  "schema_version": "0.7.0",
   "stage": "QXM2_PRIMARY_THEORY_EMPIRICAL_EVIDENCE_HARDENING",
   "status": "accepted_merged",
   "upstream_dependency": {
@@ -21,7 +21,10 @@
   "evidence_compilation": {
     "status": "complete",
     "evidence_matrix": "docs/architecture/qxm2/QXM2-EMPIRICAL-EVIDENCE-MATRIX-v0.1.json",
-    "relation_count": 22,
+    "relation_count": 27,
+    "source_document_declared_relation_count": 22,
+    "count_reconciled": true,
+    "count_reconciliation_receipt": "docs/architecture/qxm2/QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json",
     "support_and_boundary_coverage_required": true,
     "replication_status_required": true
   },
@@ -95,6 +98,14 @@
     "governance": "success",
     "qxm2_evidence_hardening": "success",
     "unit_tests": "success"
+  },
+  "metadata_reconciliation": {
+    "type": "evidence_relation_count_metadata_drift",
+    "receipt": "docs/architecture/qxm2/QXM2-EVIDENCE-COUNT-RECONCILIATION-v0.1.json",
+    "stale_declared_count": 22,
+    "actual_relation_count": 27,
+    "semantic_evidence_changed": false,
+    "original_merge_receipt_rewritten": false
   },
   "post_acceptance_ci_required": true,
   "post_acceptance_ci_satisfied": true,
