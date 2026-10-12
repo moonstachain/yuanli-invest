@@ -1,0 +1,639 @@
+{
+  "schema_version": "0.1.0",
+  "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+  "status": "candidate",
+  "required_blocks": [
+    "identity",
+    "scope_routing",
+    "theory_causal_mechanism",
+    "evidence",
+    "input",
+    "inference",
+    "output",
+    "falsification_failure",
+    "benchmark_qualification",
+    "settlement_learning",
+    "runtime_receipt_governance"
+  ],
+  "upstream_contract": "docs/architecture/r2_3b0/R2-3B0-CONTRACT-SCHEMA-v0.1.json",
+  "mother_capability_contract": "docs/architecture/r2_3b1/CAP-V-01-SPEC-v0.1.json",
+  "source_map": "sources/huayuan-source-map.json",
+  "authority_boundary": "Local candidate profile only; does not replace or promote the global CAP-V-01 contract.",
+  "identity": {
+    "capability_id": "CAP-V-01",
+    "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+    "name": "Equity Narrative Comparison Profile",
+    "contract_version": "0.1.0",
+    "stable_question": "What future state or operating assumptions are already embedded in current price?",
+    "profile_question": "Which joint operating, reinvestment and discount assumptions reconcile an equity price, and which independently evidenced changes may alter those assumptions?",
+    "semantic_parent": "V",
+    "maturity_state": "candidate_profile_with_finite_reference_implementation",
+    "owner_scope": "Research OS; local profile of CAP-V-01",
+    "mother_capability_promotion": false
+  },
+  "scope_routing": {
+    "asset_forms": [
+      "equity"
+    ],
+    "pricing_archetypes": [
+      "growth",
+      "compounder",
+      "cyclical",
+      "duration",
+      "event_optionality"
+    ],
+    "authority_levels": [
+      "L3",
+      "L4"
+    ],
+    "router_dependencies": [
+      "A0_asset_form",
+      "A1_pricing_archetype",
+      "EngineThesis.primary_engine"
+    ],
+    "upstream_context": [
+      "P.capital",
+      "P.asset",
+      "N",
+      "E",
+      "S"
+    ],
+    "consumed_contracts": [
+      "CAP-P-003-FUNDAMENTAL-DRIVER-DECOMPOSITION",
+      "CAP-P-004-THREE-STATEMENT-INTEGRITY-CASH-CONVERSION"
+    ],
+    "shared_semantics": {
+      "P": "reality_structural_state_family; retain P.capital and P.asset",
+      "N": "belief_expectation_state_family; not a truth label or raw sentiment",
+      "V": "routed_price_interpretation_service_family",
+      "E": "horizontal_evidence_authority_plane; Claim Authority <= Evidence Authority",
+      "S": "horizontal_survival_constraint; Issuer Durability != Portfolio Survival"
+    },
+    "engine_routes": {
+      "ENG-C": "long-horizon implied operating assumptions and return mechanism; cannot require re-rating as its primary source of return",
+      "ENG-R": "finite-horizon implied expectation changes and propagation evidence; price is a sensor and participant, not independent operating proof",
+      "ENG-X": "equity operating state is context only; route premium, implied volatility, skew and payoff geometry to an appropriate instrument model"
+    },
+    "exclusions": [
+      "unsupported financial-sector cashflow models",
+      "unmodeled depletion or liquidation",
+      "automatic PE inversion for nonpositive representative earnings",
+      "universal P/N/X serial gate",
+      "CAP-R-01 aliasing to ENG-R",
+      "new return engine"
+    ],
+    "no_silent_thesis_migration": true
+  },
+  "theory_causal_mechanism": {
+    "theory_ids": [
+      "PRESENT_VALUE"
+    ],
+    "hypothesis_ids": [
+      "EN-HYP-1",
+      "EN-HYP-2",
+      "EN-HYP-3"
+    ],
+    "hypothesis_reference_scope": "profile_local_unadmitted",
+    "causal_mechanism": "Independent operating evidence constrains cashflow pathways; a declared pricing model maps those pathways and discount assumptions to parameter regions compatible with observed price. Narrative diffusion, durable value capture and repricing remain separate testable mechanisms.",
+    "assumptions": [
+      "Cashflow and discounting conventions match: FCFF/WACC or FCFE/equity required return.",
+      "Operating, balance-sheet, share-count and price inputs retain point-in-time vintages.",
+      "A market price can be compatible with multiple joint parameter combinations.",
+      "Scenario dependencies constrain joint demand, share, margin, reinvestment, funding and duration assumptions.",
+      "The illustrative Huayuan PE derivation assumes positive representative earnings, earnings approximately equal equity cashflow, uniform growth to m times current earnings in n years and constant earnings thereafter.",
+      "Growth duration n remains in the formula; limited sensitivity in an illustrative interval is not a universal theorem.",
+      "Growth, discount rates and risk premia may change together.",
+      "A conservative scenario is conditional, not a hard loss floor."
+    ],
+    "competing_mechanisms": [
+      "discount_rate_change",
+      "risk_premium_change",
+      "technical_flow",
+      "generic_momentum",
+      "accounting_or_consolidation_change",
+      "financing_or_dilution",
+      "new_independent_narrative",
+      "model_misspecification"
+    ],
+    "claim_boundary": "Conditional algebra does not prove a market mechanism. Practitioner cases seed hypotheses, not primary theory or independent out-of-sample evidence. A compatible implied parameter region is neither a forecast nor unique observed market consensus.",
+    "reasoning_classes": {
+      "conditional_model_derivation": "Check definitions, algebra and assumptions; do not treat identity consistency as empirical validation.",
+      "mechanism_hypothesis": "Require independent evidence for each material causal edge and competing explanations.",
+      "empirical_unvalidated": "Freeze universe, event rule, baseline, endpoints, horizons and failure rules before evaluation."
+    },
+    "local_hypotheses": [
+      {
+        "hypothesis_id": "EN-HYP-1",
+        "primary_engine": "ENG-C",
+        "source_claim_refs": [
+          "HY-CLAIM-002"
+        ],
+        "status": "not_tested",
+        "statement": "Given comparable demand expansion and initial business conditions, independently evidenced widening competitive advantage and reproducible reinvestment are associated with more durable incremental capital returns and cash conversion than demand growth alone.",
+        "primary_observables": [
+          "incremental_capital_return_proxy",
+          "operating_cash_conversion",
+          "competitive_advantage_observations"
+        ],
+        "prefreeze_required": [
+          "point_in_time_universe",
+          "independent_advantage_rule",
+          "cashflow_and_capital_definitions",
+          "matched_or_control_baseline",
+          "minimum_useful_effect",
+          "test_power_or_precision",
+          "primary_horizon"
+        ],
+        "confirmation": "The predeclared operating endpoint supports the minimum useful out-of-sample increment; early filings are interim observations, not proof of a terminal outcome.",
+        "falsifiers": [
+          "independent advantage evidence reverses",
+          "apparent cash improvement is only financing or working-capital deferral",
+          "adequately informative out-of-sample evidence excludes the predeclared minimum useful increment"
+        ],
+        "missingness": "Insufficient vintages or inconclusive statistical precision remain unresolved; do not relabel as confirmed.",
+        "limits": "ROIC is an observable proxy, not project lifetime IRR. Price appreciation alone does not settle this C thesis."
+      },
+      {
+        "hypothesis_id": "EN-HYP-2",
+        "primary_engine": "ENG-R",
+        "source_claim_refs": [
+          "HY-CLAIM-003"
+        ],
+        "status": "not_tested",
+        "statement": "For comparable independently encoded favorable events, prices requiring more demanding joint operating conditions across admissible models have less subsequent repricing and expectation revision than prices compatible with less demanding conditions.",
+        "primary_observables": [
+          "predeclared_risk_adjusted_market_response",
+          "observable_expectation_revision"
+        ],
+        "prefreeze_required": [
+          "original_event_time",
+          "event_strength_rule",
+          "parameter_bounds_and_model_set",
+          "demanding_condition_classification",
+          "same_price_information_for_baselines",
+          "primary_market_window",
+          "multiple_testing_policy",
+          "minimum_useful_effect",
+          "test_power_or_precision"
+        ],
+        "confirmation": "Predeclared market and expectation outcomes support the conditional direction and useful increment; they are settled separately.",
+        "falsifiers": [
+          "out-of-sample direction reverses",
+          "adequately informative results exclude the minimum useful increment",
+          "apparent increment is entirely duplicated price or generic momentum information"
+        ],
+        "missingness": "Ambiguous or disconnected solutions remain underidentified and are not forced into a ranking.",
+        "limits": "Predictive support is not causal identification and does not establish a trading rule."
+      },
+      {
+        "hypothesis_id": "EN-HYP-3",
+        "primary_engine": "ENG-C",
+        "alternative_engine_requires_separate_thesis": "ENG-R",
+        "source_claim_refs": [
+          "HY-CLAIM-001",
+          "HY-CLAIM-002"
+        ],
+        "status": "not_tested",
+        "statement": "With equal information timing, price information and research budget, independently supported terminal operating and reinvestment revisions add useful prediction of subsequent observable operating states beyond short-term earnings growth and simple valuation.",
+        "primary_observables": [
+          "predeclared_future_operating_state",
+          "cashflow_bridge_forecast_error",
+          "research_time_cost"
+        ],
+        "prefreeze_required": [
+          "same_information_cutoff",
+          "simple_baseline",
+          "observable_realized_label",
+          "fixed_operating_proxy",
+          "loss_function",
+          "minimum_useful_improvement",
+          "cost_budget",
+          "out_of_sample_split",
+          "primary_horizon"
+        ],
+        "confirmation": "The predeclared realized operating endpoint and loss function show stable, useful incremental information at the allowed research cost.",
+        "falsifiers": [
+          "no useful out-of-sample improvement at adequate precision",
+          "improvement depends on future data",
+          "predictions merely repeat price-derived labels",
+          "complexity exceeds predeclared cost without sufficient increment"
+        ],
+        "missingness": "Missing future operating disclosure is unresolved, not zero or automatic success.",
+        "limits": "The model's own terminal forecast is not a realized label. Price outcomes require a separately registered ENG-R thesis."
+      }
+    ]
+  },
+  "evidence": {
+    "evidence_policy": "Reuse the existing Evidence/Observation lineage; all material claims are evidence-bounded and point-in-time.",
+    "minimum_evidence_authority": "Timestamped observable price plus auditable filings, operating inputs and explicitly sourced assumptions; practitioner material alone cannot establish a live operating fact.",
+    "claim_types": [
+      "event_fact",
+      "mechanism_hypothesis",
+      "expectation_interpretation",
+      "asset_attribution"
+    ],
+    "source_requirements": [
+      "published_at",
+      "event_time",
+      "ingested_at",
+      "as_of",
+      "evidence_cutoff",
+      "page_or_table_locator",
+      "original_vintage",
+      "revision_lineage",
+      "independent_group",
+      "source_interest_position",
+      "assumption_lineage"
+    ],
+    "as_of_required": true,
+    "point_in_time_required": true,
+    "evidence_cutoff_required": true,
+    "falsifier_required": true,
+    "law": "Claim Authority <= Evidence Authority",
+    "private_source_policy": "Store bibliography, PDF byte hash, page locators and original short summaries only; do not commit source PDFs or extensive extracts.",
+    "source_assertion_types_are_local_metadata": true,
+    "duplicate_sources_do_not_add_independence": true
+  },
+  "input": {
+    "canonical_input_fields": [
+      "market_price_or_curve",
+      "discounting_state",
+      "cashflow_or_payoff_state",
+      "risk_premium_assumptions",
+      "asset_specific_state_variables",
+      "joint_operating_scenarios",
+      "engine_thesis_ref",
+      "evidence_refs"
+    ],
+    "economic_definitions": "Provider-independent operating and accounting definitions are maintained separately from provider mappings.",
+    "units": "Explicit entity and period scope; currency, nominal/real basis, currency/year flows, currency stocks, physical units, ratios and years.",
+    "frequency": "Event and price snapshots with explicitly lagged quarterly/annual operating observations.",
+    "publication_lag": "All nonprice inputs preserve first-publication time; publication at or before evidence_cutoff is mandatory for replay.",
+    "revision_semantics": "Preserve original and corrected vintages; no latest-vintage backfill into prior as_of.",
+    "missingness_policy": "Missing is uncertainty; retain underidentified, insufficient_evidence, stale or unsupported rather than zero-fill.",
+    "allowed_transformations": [
+      "auditable_operating_decomposition",
+      "cashflow_bridge",
+      "discounting",
+      "joint_scenario_inversion",
+      "sensitivity_analysis",
+      "point_in_time_comparison"
+    ],
+    "parameter_groups": {
+      "demand": [
+        "eligible_paid_demand",
+        "serviceable_market_boundary",
+        "adoption",
+        "penetration",
+        "product_customer_geography_scope"
+      ],
+      "value_capture": [
+        "market_share",
+        "product_mix",
+        "net_realized_price",
+        "unit_cost",
+        "substitutes",
+        "customer_concentration",
+        "certification_and_bargaining_evidence"
+      ],
+      "operating_profit": [
+        "revenue",
+        "cost_of_sales",
+        "opex",
+        "depreciation_amortization",
+        "operating_cash_tax",
+        "one_off_adjustments"
+      ],
+      "reinvestment": [
+        "maintenance_capex",
+        "growth_capex",
+        "capitalized_research",
+        "change_in_operating_working_capital",
+        "capacity_cycle",
+        "incremental_capital_return_proxy",
+        "reinvestment_duration"
+      ],
+      "equity_bridge": [
+        "cash",
+        "debt",
+        "net_financing",
+        "minority_interests",
+        "preferred_claims",
+        "nonoperating_assets",
+        "diluted_shares",
+        "economic_cost_of_share_based_pay"
+      ],
+      "terminal_path": [
+        "growth_duration_n",
+        "period_operating_path",
+        "terminal_competition_state",
+        "finite_life_or_decline",
+        "continuing_operation_assumptions",
+        "residual_value_method"
+      ],
+      "discount": [
+        "cashflow_discount_pair",
+        "currency",
+        "nominal_real_basis",
+        "term_structure",
+        "required_return_range",
+        "risk_premium_basis"
+      ]
+    },
+    "metric_record_required": [
+      "metric_id",
+      "value_or_range",
+      "unit",
+      "entity_scope",
+      "period",
+      "currency_and_price_basis",
+      "event_time",
+      "published_at",
+      "ingested_at",
+      "evidence_refs",
+      "independent_group",
+      "derivation_or_assumption_ref",
+      "revision_lineage"
+    ],
+    "operating_identities": {
+      "revenue": "sum(segment_volume * segment_net_realized_price)",
+      "fcff": "EBIT - operating_cash_tax + depreciation_amortization - capex - change_in_operating_working_capital, with separately auditable adjustments",
+      "fcfe": "net_income + applicable_noncash_adjustments - capex - change_in_operating_working_capital + net_borrowing, subject to the declared accounting bridge",
+      "accounting_guard": "Do not double-count depreciation, distributions, financing, dilution or consolidation effects."
+    }
+  },
+  "inference": {
+    "algorithm_families": [
+      "reverse_dcf",
+      "implied_operating_assumptions"
+    ],
+    "identification_assumptions": [
+      "declared_joint_parameter_constraints",
+      "price_and_inputs_share_as_of_semantics",
+      "discounting_and_cashflows_can_be_observationally_confounded",
+      "inverse_solution_may_be_nonunique",
+      "tolerance_has_declared_units_and_reason"
+    ],
+    "state_transition_logic": "Compare current and prior point-in-time implied regions, holding and varying operating assumptions and discount assumptions separately. Record price, input and assumption revisions without treating repeated source information as independent evidence.",
+    "uncertainty_representation": [
+      "identification_status",
+      "parameter_region",
+      "disconnected_solution_components",
+      "sensitivity_map",
+      "model_disagreement",
+      "assumption_dependence",
+      "unresolved_inputs"
+    ],
+    "simpler_baselines": [
+      "short_term_earnings_growth_plus_simple_valuation",
+      "historical_multiple",
+      "same_price_information_baseline",
+      "simple_attention_or_momentum_when_testing_R"
+    ],
+    "known_failure_modes": [
+      "cashflow_earnings_confusion",
+      "nonpositive_earnings_PE",
+      "discounting_mismatch",
+      "nonstationary_terminal_state",
+      "stale_fundamentals",
+      "unmodeled_dilution",
+      "inverse_underidentification",
+      "posthoc_parameter_bounds",
+      "lookahead",
+      "circular_price_validation"
+    ],
+    "price_constraint": "Theta_price = {theta in declared joint assumptions: abs(EquityPV(theta) - observed equity value) <= declared tolerance}.",
+    "inversion_output_boundary": "Internal valuation is a solver operation. Output compatible operating parameter regions, not scenario target prices or upside percentages.",
+    "scenario_names": [
+      "conservative",
+      "base",
+      "optimistic"
+    ],
+    "joint_scenario_required": [
+      "scenario_id",
+      "joint_operating_assumptions",
+      "discount_assumptions",
+      "dependencies",
+      "required_conditions",
+      "confirming_evidence_refs",
+      "contradicting_evidence_refs",
+      "falsifiers",
+      "next_observation_at",
+      "expiry_at"
+    ],
+    "scenario_rules": [
+      "Use economically coherent joint assumptions, not independent best/worst values.",
+      "No implicit equal scenario probabilities.",
+      "Without a calibrated probability model, scenario membership or grid sample fraction is not market probability.",
+      "The conservative scenario is not a loss floor or survival clearance.",
+      "Preserve disconnected solution components instead of recombining marginal bounds into infeasible cases."
+    ],
+    "conditional_model_checks": [
+      "For the illustrative PE model only: current earnings > 0; earnings approximates FCFE; uniform growth to m in n years; flat terminal earnings; fixed r > 0.",
+      "n remains an explicit parameter; inspect sensitivity rather than declaring time irrelevant.",
+      "A nonzero perpetual growth assumption must include consistent reinvestment and incremental return assumptions.",
+      "At competitive incremental return equal to cost of capital, reinvestment-driven growth does not by itself create incremental present value under the model.",
+      "Unchanged-forecast required-return derivations include distributions and fixed discounting; do not equate them with a guaranteed realized return or arbitrary index-relative alpha."
+    ]
+  },
+  "output": {
+    "canonical_root": "ResearchState",
+    "state_type": "PriceImpliedExpectationState",
+    "state_dimensions": [
+      "model_family",
+      "implied_parameters",
+      "scenario_mapping",
+      "identification_status",
+      "identification_caveats",
+      "sensitivity_map",
+      "model_disagreement",
+      "assumption_dependence"
+    ],
+    "uncertainty_semantics": "Identified joint regions are preferred over false point precision; calibrated probabilities require separate evidence.",
+    "evidence_refs": "required",
+    "as_of": "required",
+    "degrade_state": [
+      "valid",
+      "underidentified",
+      "insufficient_evidence",
+      "research_only",
+      "stale",
+      "unsupported"
+    ],
+    "downstream_dependencies": [
+      "N",
+      "Xa",
+      "Xp",
+      "S"
+    ],
+    "attachments": [
+      "operating_bridge_refs",
+      "engine_thesis_ref",
+      "local_hypothesis_refs",
+      "next_evidence_date",
+      "research_receipt"
+    ],
+    "prohibited_outputs": [
+      "target_price",
+      "canonical_upside_percentage",
+      "recommended_portfolio_weight",
+      "recommended_weight",
+      "position_size",
+      "buy_sell_hold",
+      "live_execution_instruction",
+      "weighted_PNXEVSR_composite_score",
+      "scalar_engine_master_score"
+    ],
+    "research_pass_implies_capital_pass": false
+  },
+  "falsification_failure": {
+    "falsification_rules": [
+      "pricing_identity_does_not_reconcile_under_declared_assumptions",
+      "input_was_unavailable_at_as_of",
+      "unidentified_region_hidden_by_point_estimate",
+      "cashflow_bridge_does_not_reconcile",
+      "joint_scenario_conditions_contradicted",
+      "predeclared_thesis_falsifier_triggered",
+      "expired_without_required_confirmation"
+    ],
+    "revision_triggers": [
+      "new_original_operating_evidence",
+      "material_price_or_discount_change",
+      "accounting_revision",
+      "financing_or_dilution_change",
+      "competitive_structure_change",
+      "narrative_episode_change",
+      "model_family_disagreement"
+    ],
+    "known_failure_regimes": [
+      "market_dislocation",
+      "insufficient_trading_liquidity",
+      "unstable_accounting_or_share_count",
+      "structural_break",
+      "business_model_transition",
+      "sparse_instrument_surface_for_X"
+    ],
+    "degrade_behavior": "Retain original thesis and evidence; widen supported regions, mark underidentified or fail closed. Missing evidence is not confirmation or automatic causal falsification.",
+    "fail_closed_states": [
+      "underidentified",
+      "insufficient_evidence",
+      "research_only",
+      "stale",
+      "unsupported"
+    ],
+    "expiry_rule": "Review and expiry are predeclared; a revision preserves the expired version and explicit rationale rather than silently extending it.",
+    "no_silent_thesis_migration": true
+  },
+  "benchmark_qualification": {
+    "simpler_baselines": [
+      "short_term_earnings_growth_plus_simple_valuation",
+      "same_price_information_baseline",
+      "simple_attention_or_momentum",
+      "fixed_joint_operating_scenario_baseline"
+    ],
+    "point_in_time_split_policy": "Freeze publication cutoff, original event T0, full historical universe and original vintages.",
+    "oos_policy": "Predeclared holdout or walk-forward; keep related events/themes from leaking across splits.",
+    "regime_holdout": "required",
+    "false_alarm_accounting": "Record false positives, missed opportunities, missing disclosures and excluded underidentified cases.",
+    "calibration_requirement": "Required before probability, distribution or success-rate claims; no default equal scenario probabilities.",
+    "multiple_testing_policy": "Freeze primary endpoint/window, minimum useful increment and selection policy before evaluation.",
+    "complexity_penalty": "Demote added complexity if stable out-of-sample information or acceptable research-cost improvement is absent.",
+    "failure_receipts": "required",
+    "benchmark_status": "initial_retrospective_pilot_executed_not_qualified",
+    "performance_claim_authority": "none",
+    "preregistration_required": [
+      "sample_and_event_rules",
+      "baseline",
+      "primary_endpoint",
+      "primary_horizon",
+      "minimum_useful_effect",
+      "precision_or_power_rule",
+      "cost_budget",
+      "failure_and_missingness_rule"
+    ],
+    "comparison_boundaries": [
+      "synthetic consistency is not empirical validation",
+      "research prediction is not net executable return",
+      "causal attribution is distinct from predictive increment",
+      "portfolio evaluation requires separately frozen expression, risk and cost assumptions"
+    ],
+    "pilot_protocol_ref": "benchmark/protocol.json",
+    "pilot_result_ref": "benchmark/results.json",
+    "qualification_gap": "Historical reconstruction only; no independent narrative forecast or strict-vintage out-of-sample qualification."
+  },
+  "settlement_learning": {
+    "settlement_horizon": [
+      "predeclared_20_60_120_250_trading_day_market_windows",
+      "subsequent_two_reporting_periods_as_operating_checkpoints",
+      "longer_capital_cycle_horizon_when_prefrozen",
+      "instrument_expiry_for_X"
+    ],
+    "settlement_observables": [
+      "realized_operating_state",
+      "cash_conversion",
+      "incremental_capital_return_proxy",
+      "observable_expectation_revision",
+      "model_parameter_change",
+      "market_total_return_with_distributions",
+      "risk_adjusted_common_component",
+      "payoff_geometry_and_cost_for_X",
+      "research_time"
+    ],
+    "settlement_rule": "Settle extraction quality, future operating evidence and market outcomes separately against the original mechanism thesis. Do not score target-price accuracy or infer correctness solely from positive P&L.",
+    "replay_policy": "Point-in-time only with original price, input vintages, event boundaries, assumption versions and failed/delisted companies.",
+    "revision_rule": "Preserve confirmation, contradiction, expiry and unresolved-data outcomes; revise a successor thesis explicitly without overwriting the original.",
+    "capital_authority_from_settlement": false,
+    "template_refs": [
+      "templates/research-card.md",
+      "templates/engine-checklist.md"
+    ]
+  },
+  "runtime_receipt_governance": {
+    "invocation_envelope_required": true,
+    "invocation_envelope_fields": [
+      "canon_revision",
+      "canon_hash",
+      "capability_id",
+      "capability_contract_version",
+      "research_target",
+      "A0_asset_form",
+      "A1_pricing_archetype",
+      "as_of",
+      "evidence_cutoff",
+      "provider_runtime"
+    ],
+    "profile_envelope_fields": [
+      "profile_id",
+      "profile_version",
+      "engine_thesis_id",
+      "primary_engine",
+      "model_version",
+      "assumption_set_id",
+      "price_snapshot_id"
+    ],
+    "research_receipt_required": true,
+    "research_receipt_fields": [
+      "invocation_envelope",
+      "algorithm_family",
+      "evidence_refs",
+      "output_state_version",
+      "degrade_state"
+    ],
+    "profile_receipt_fields": [
+      "input_snapshot_hash",
+      "assumption_version",
+      "identification_status",
+      "parameter_region_ref",
+      "next_evidence_date",
+      "original_thesis_settlement_status"
+    ],
+    "research_pass_implies_capital_pass": false,
+    "capability_acceptance_implies_promotion": false,
+    "promotion_implies_evidence_admission": false,
+    "mother_contract_mutation_authority": "none",
+    "registry_admission_authority": "none",
+    "execution_authority": "none",
+    "runtime_configuration_owner": "separate package execution configuration; this profile does not invent numerical production thresholds",
+    "no_source_pdf_commit": true
+  }
+}

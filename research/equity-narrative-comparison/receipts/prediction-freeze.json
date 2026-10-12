@@ -1,0 +1,8 @@
+{
+  "prepared_at": "2026-10-12T09:44:11.889497+00:00",
+  "predictions_sha256": "4323c4238f8f5fb2c84262ab294f8397aa7fdbb8ff2ff06a3204f67c9c40d0c0",
+  "generated_objects_sha256": "79a99faee26f075915603417d536d2f043c781bf449cadf4cac21d01765472c3",
+  "prepare_reads_outcome_packets": false,
+  "metadata_note": "Sources catalog contains provenance metadata for both phases, never outcome numerical facts.",
+  "historical_researcher_blindness": false
+}

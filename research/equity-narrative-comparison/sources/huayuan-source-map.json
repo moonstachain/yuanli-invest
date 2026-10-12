@@ -1,0 +1,205 @@
+{
+  "schema_version": "0.1.0",
+  "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+  "status": "candidate_source_map",
+  "evidence_authority": "practitioner_research_source; mechanism seeds and conditional derivations, not independent empirical validation",
+  "source_policy": "Bibliography, original PDF SHA-256, page locators and original summaries only. Source PDF bytes and extensive extracts are not included.",
+  "page_number_convention": "1-based PDF page numbers",
+  "sources": [
+    {
+      "source_id": "H1",
+      "title": "叙事经济学——寻找 A 股投资解析解",
+      "author": "邹佩轩",
+      "publisher": "华源证券",
+      "cover_date": "2025-06",
+      "page_count": 46,
+      "sha256": "0b0978420f7f5b002783a06d6b335e59640e43aaa218697cf5b59a7f36cc33aa",
+      "cover_locator": {
+        "pdf_page": 1
+      },
+      "duplicate_policy": "The additionally supplied same-title file is byte-identical and is not a second independent source.",
+      "authority_note": "Author methodology and selected retrospective cases; not current market fact or out-of-sample strategy evidence."
+    },
+    {
+      "source_id": "H2",
+      "title": "叙事经济学 2",
+      "author": "邹佩轩",
+      "publisher": "华源证券",
+      "cover_date": "2026-06",
+      "page_count": 95,
+      "sha256": "9784f3e967f0e88ba3f33b4a1bcaa90422da1fdce7894bfecc9a95e928ebce0e",
+      "cover_locator": {
+        "pdf_page": 1
+      },
+      "limitation_locator": {
+        "pdf_page": 93
+      },
+      "authority_note": "Author explicitly notes historical-sample representativeness and data/statistical-method limitations."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "HY-CLAIM-001",
+      "title": "条件 DCF 将现价与终局经营假设联系起来",
+      "assertion_type": "conditional_model_derivation",
+      "canonical_claim_type": "expectation_interpretation",
+      "source_locators": [
+        {
+          "source_id": "H1",
+          "pdf_pages": [
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "source_id": "H2",
+          "pdf_pages": [
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        }
+      ],
+      "original_summary": "在正利润、利润近似权益现金流、匀速到达终局并永久稳定的简化情景中，动态 PE 是终局利润倍数、增长年限及折现率的函数；它可帮助把价格改写为对未来经营条件的要求。有限参数区间内的年限敏感度较低，不意味着年限从公式消失。",
+      "assumptions": [
+        "positive representative current earnings",
+        "earnings approximately equals equity cashflow",
+        "uniform growth to a declared terminal level",
+        "flat perpetual terminal earnings",
+        "cashflow/discount conventions match",
+        "discount rate fixed for the illustrative derivation",
+        "next-year earnings used for forward PE"
+      ],
+      "falsifiers_and_model_checks": [
+        "Observed cash conversion or reinvestment materially violates the earnings-equals-cashflow approximation.",
+        "The declared formula fails to reconcile its own cashflow schedule.",
+        "Nonpositive earnings, finite asset life or structural decline makes the simplified PE model inapplicable.",
+        "A point estimate hides multiple compatible cashflow and discount combinations."
+      ],
+      "counterevidence_to_empirical_extension": "If independently supported terminal information does not improve predeclared out-of-sample observable-state prediction over an equal-information simple baseline, the claimed empirical increment is unsupported.",
+      "linked_local_hypotheses": [
+        "EN-HYP-3"
+      ],
+      "empirical_status": "not_tested_in_this_package",
+      "claim_limits": [
+        "Formula consistency does not validate market efficiency.",
+        "Unchanged-forecast necessary-return derivations require distributions and fixed discounting.",
+        "No universal target price, growth irrelevance or return guarantee follows."
+      ]
+    },
+    {
+      "claim_id": "HY-CLAIM-002",
+      "title": "行业空间需要持续价值捕获与有效再投资",
+      "assertion_type": "mechanism_hypothesis",
+      "canonical_claim_type": "mechanism_hypothesis",
+      "source_locators": [
+        {
+          "source_id": "H1",
+          "pdf_pages": [
+            18
+          ]
+        },
+        {
+          "source_id": "H2",
+          "pdf_pages": [
+            13,
+            14,
+            15,
+            18,
+            27,
+            28,
+            29,
+            43,
+            75,
+            86
+          ]
+        }
+      ],
+      "original_summary": "行业需求扩大能否转为长期股东价值，取决于企业能否保留竞争优势并以超过资金成本的回报继续投资。共同技术扩散和产能扩张也可能压低优势；财务周转和现金转化可提供检验线索，不能单凭叙事或营收增速确认。",
+      "assumptions": [
+        "advantage indicators are fixed before the outcome",
+        "economic cashflow and reinvestment are auditable",
+        "peer and demand-shock comparisons are economically comparable",
+        "capital-return proxies preserve accounting limitations",
+        "advantage is durable and reproducible rather than only a temporary industry windfall"
+      ],
+      "falsifiers_and_model_checks": [
+        "Relative cost, share or bargaining advantage reverses despite the stated mechanism.",
+        "Incremental investment returns persistently fail the declared cost-of-capital comparison.",
+        "Apparent cash improvement arises only from payment deferral, financing, asset sales or accounting shifts.",
+        "Adequately informative out-of-sample comparisons exclude the predeclared useful incremental operating effect."
+      ],
+      "counterevidence_to_empirical_extension": "Demand-only or simple quality controls explain the outcome equally well after equal-information and capital-cycle matching.",
+      "linked_local_hypotheses": [
+        "EN-HYP-1",
+        "EN-HYP-3"
+      ],
+      "empirical_status": "not_tested_in_this_package",
+      "claim_limits": [
+        "ROIC does not automatically equal lifetime project IRR.",
+        "Accounting anomalies are not proof of fraud.",
+        "Nonlinear business growth or network effects alone do not establish ENG-X payoff convexity."
+      ]
+    },
+    {
+      "claim_id": "HY-CLAIM-003",
+      "title": "传播反馈与计价饱和可能改变利好的边际影响",
+      "assertion_type": "empirical_mechanism_hypothesis",
+      "canonical_claim_type": "mechanism_hypothesis",
+      "source_locators": [
+        {
+          "source_id": "H1",
+          "pdf_pages": [
+            27,
+            28,
+            46
+          ]
+        },
+        {
+          "source_id": "H2",
+          "pdf_pages": [
+            35,
+            36,
+            41,
+            47,
+            51,
+            56
+          ]
+        }
+      ],
+      "original_summary": "作者提出，关注、乐观预期与价格可能相互强化；当价格已要求较苛刻的终局条件，新增利好可能只维持旧预期，后续重估空间因而收窄。这是需要按市场制度、时点与竞争机制检验的假说，不是固定生命周期或安全追涨规律。",
+      "assumptions": [
+        "original event and narrative boundary precede return inspection",
+        "event strength is independently encoded",
+        "joint operating and discount assumptions are disclosed",
+        "market regime, liquidity and short-sale conditions are recorded",
+        "ambiguous inverse solutions remain underidentified",
+        "new narrative episodes are not merged into old tests"
+      ],
+      "falsifiers_and_model_checks": [
+        "Out-of-sample response is systematically opposite to the predeclared conditional direction.",
+        "Apparent feedback is only repeated reporting of an existing price move.",
+        "Momentum, common risk premium or technical flow fully accounts for the claimed useful increment.",
+        "Event relabeling or posthoc parameter limits are necessary to obtain the claimed result."
+      ],
+      "counterevidence_to_empirical_extension": "At adequate precision, the predeclared minimum useful repricing increment is excluded; weak or missing evidence remains inconclusive.",
+      "linked_local_hypotheses": [
+        "EN-HYP-2"
+      ],
+      "empirical_status": "not_tested_in_this_package",
+      "claim_limits": [
+        "Propagation is not intrinsic value.",
+        "Price co-movement is not causal proof.",
+        "A conservative/base/optimistic scenario set is not a hard capital-loss boundary.",
+        "The author explicitly allows counterexamples to relative-price heuristic claims."
+      ]
+    }
+  ],
+  "synthesis_boundary": "Profile fields, local hypotheses, benchmarks and templates are original implementation synthesis. They are not quoted source algorithms or an already validated strategy."
+}

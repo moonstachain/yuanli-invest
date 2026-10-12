@@ -1,0 +1,220 @@
+{
+  "verified_at": "2026-10-12T09:46:20.425879+00:00",
+  "base_revision": "705dbedf8866453f12d42dde58dbd95dbc032ee7",
+  "local_python": "3.12.14",
+  "dependencies": {
+    "jsonschema": "4.25.1",
+    "numpy": "2.3.2"
+  },
+  "repository_gate_commands": [
+    {
+      "command": "python scripts/validate_repository.py",
+      "exit_code": 0,
+      "seconds": 0.408
+    },
+    {
+      "command": "python scripts/validate_gold_reconstruction.py",
+      "exit_code": 0,
+      "seconds": 0.027
+    },
+    {
+      "command": "python scripts/validate_q0_architecture.py",
+      "exit_code": 0,
+      "seconds": 0.021
+    },
+    {
+      "command": "python scripts/validate_m1_theory.py",
+      "exit_code": 0,
+      "seconds": 0.023
+    },
+    {
+      "command": "python scripts/validate_r0_reframe.py",
+      "exit_code": 0,
+      "seconds": 0.113
+    },
+    {
+      "command": "python scripts/validate_r1_registry.py",
+      "exit_code": 0,
+      "seconds": 0.129
+    },
+    {
+      "command": "python scripts/validate_r2_gold_pack.py",
+      "exit_code": 0,
+      "seconds": 0.142
+    },
+    {
+      "command": "python scripts/validate_r2_1_status.py",
+      "exit_code": 0,
+      "seconds": 0.021
+    },
+    {
+      "command": "python scripts/build_canon_status.py --check",
+      "exit_code": 0,
+      "seconds": 0.03
+    },
+    {
+      "command": "python scripts/validate_r2_2_refoundation.py",
+      "exit_code": 0,
+      "seconds": 0.022
+    },
+    {
+      "command": "python scripts/validate_r2_3_runtime_blockers.py",
+      "exit_code": 0,
+      "seconds": 0.102
+    },
+    {
+      "command": "python scripts/validate_r2_3a_architecture.py",
+      "exit_code": 0,
+      "seconds": 0.029
+    },
+    {
+      "command": "python scripts/validate_r2_3a_cross_asset_stress.py",
+      "exit_code": 0,
+      "seconds": 0.021
+    },
+    {
+      "command": "python scripts/validate_r2_3b0_contract_architecture.py",
+      "exit_code": 0,
+      "seconds": 0.026
+    },
+    {
+      "command": "python scripts/validate_r2_3b1_p0_specs.py",
+      "exit_code": 0,
+      "seconds": 0.022
+    },
+    {
+      "command": "python scripts/validate_qxm1_candidate_pack.py",
+      "exit_code": 0,
+      "seconds": 0.029
+    },
+    {
+      "command": "python scripts/validate_qxm2_evidence_hardening.py",
+      "exit_code": 0,
+      "seconds": 0.1
+    },
+    {
+      "command": "python scripts/validate_qxm2_post_merge_closure.py",
+      "exit_code": 0,
+      "seconds": 0.022
+    },
+    {
+      "command": "python scripts/validate_yip0_philosophy.py",
+      "exit_code": 0,
+      "seconds": 0.022
+    },
+    {
+      "command": "python scripts/validate_me0_multi_engine_ontology.py",
+      "exit_code": 0,
+      "seconds": 0.024
+    },
+    {
+      "command": "python scripts/validate_me1_state_object_model.py",
+      "exit_code": 0,
+      "seconds": 0.151
+    },
+    {
+      "command": "python scripts/validate_yex0_capital_execution_constitution.py",
+      "exit_code": 0,
+      "seconds": 0.123
+    },
+    {
+      "command": "python scripts/validate_yvn1_a0_shadow_execution.py",
+      "exit_code": 0,
+      "seconds": 0.11
+    },
+    {
+      "command": "python scripts/validate_yim0_methodology_projection.py",
+      "exit_code": 0,
+      "seconds": 0.03
+    },
+    {
+      "command": "python scripts/validate_yios0_canonical_definition.py",
+      "exit_code": 0,
+      "seconds": 0.029
+    },
+    {
+      "command": "python scripts/validate_yios_g1_gold_reality_trial.py",
+      "exit_code": 0,
+      "seconds": 0.025
+    },
+    {
+      "command": "python scripts/validate_yios_g1_gold_shadow_action.py",
+      "exit_code": 0,
+      "seconds": 0.126
+    },
+    {
+      "command": "python scripts/validate_yios_g1_gold_shadow_runtime.py",
+      "exit_code": 0,
+      "seconds": 0.025
+    },
+    {
+      "command": "python scripts/validate_yios_g1_gold_genesis_benchmark_registry.py",
+      "exit_code": 0,
+      "seconds": 0.125
+    },
+    {
+      "command": "python scripts/validate_yks0_r0_research_estate.py",
+      "exit_code": 0,
+      "seconds": 0.029
+    },
+    {
+      "command": "python scripts/validate_ymq_os0_g1.py",
+      "exit_code": 0,
+      "seconds": 0.026
+    },
+    {
+      "command": "python scripts/leak_guard.py",
+      "exit_code": 0,
+      "seconds": 0.198
+    },
+    {
+      "command": "python scripts/check_governance.py",
+      "exit_code": 0,
+      "seconds": 0.028
+    },
+    {
+      "command": "python scripts/verify_bootstrap_receipt.py",
+      "exit_code": 0,
+      "seconds": 0.887
+    },
+    {
+      "command": "python scripts/build_manifest.py --check",
+      "exit_code": 0,
+      "seconds": 0.2
+    }
+  ],
+  "repository_gate_count": 35,
+  "repository_gate_passed": 35,
+  "full_unittest_count": 306,
+  "full_unittest_exit_code": 0,
+  "new_test_methods": 23,
+  "full_unittest_log_sha256": "be3c8c3074f191c69284407188a2408ce81605b41b8095c79c3f701bee9f51ef",
+  "checked_files_sha256": {
+    "research/equity-narrative-comparison/validator.py": "005858b13ed5e713db869b06b97338857704fbcdcdd3443569ecaa40df82ed49",
+    "research/equity-narrative-comparison/model.py": "22d3b04a0374e0d719fd34248eae9bec0f0366b039366640cbf0c501946744fd",
+    "research/equity-narrative-comparison/runner.py": "25fc9523b3f94b679892cf90f3d8a4f88af906c84b378f9beb9739ad0f2bcf8a",
+    "research/equity-narrative-comparison/profile.json": "f1827365c7bb973f8e0b7b7ebe42bcfb4946270faacf02ed08e2c2234fd87678",
+    "research/equity-narrative-comparison/settings.json": "ea0fb9caf4ab57b50022480bc3c410fb4f850347ad27f9b7f997afe3a2d65558",
+    "research/equity-narrative-comparison/benchmark/protocol.json": "10d70ddcbc5479e075c19e1e752788c9336003a3e4f73950526e717c9e7a6f70",
+    "tests/test_equity_narrative_comparison.py": "c8159eeee49b6f956c1b81983e93f521022438f07851c311758ac1bb544cf40c"
+  },
+  "semantic_checks": [
+    "conditional_cashflow_identity_and_duration",
+    "negative_cashflow_not_forced_positive",
+    "consistent_share_unit_rescaling",
+    "provisional_reconstructed_vintages",
+    "prepare_without_outcome_files",
+    "frozen_prediction_integrity",
+    "GAAP_nonGAAP_common_sample",
+    "late_financial_release_excluded_from_earlier_market_window",
+    "one_sided_momentum_coverage",
+    "existing_schemas_and_object_referential_integrity",
+    "no_authority_promotion"
+  ],
+  "independent_review": {
+    "architecture_and_numerical_boundaries": "completed_fixes_applied",
+    "issuer_data_accounting_and_time": "completed",
+    "source_profile_and_documentation": "completed"
+  },
+  "validation_scope": "implementation_and_reproducibility_not_investment_performance_qualification"
+}

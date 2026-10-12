@@ -1,0 +1,367 @@
+{
+  "protocol_id": "EN-COMPARE-20261012-v0.1",
+  "as_of": "2024-02-23T21:00:00Z",
+  "study_type": "retrospective_mechanism_replay",
+  "performance_claim_authority": "none",
+  "financial_metrics": {
+    "A": {
+      "revenue_mape_percent": 16.303021386337605,
+      "revenue_sample_n": 3,
+      "gaap_gross_margin_mae_pp_common_sample": 3.5500000000000034,
+      "gaap_margin_common_sample": [
+        "NVDA",
+        "INTC"
+      ],
+      "gaap_margin_available_n": 3
+    },
+    "B": {
+      "revenue_mape_percent": 16.303021386337605,
+      "revenue_sample_n": 3,
+      "gaap_gross_margin_mae_pp_common_sample": 3.5500000000000034,
+      "gaap_margin_common_sample": [
+        "NVDA",
+        "INTC"
+      ],
+      "gaap_margin_available_n": 3
+    },
+    "C": {
+      "revenue_mape_percent": 3.1235657669186603,
+      "revenue_sample_n": 3,
+      "gaap_gross_margin_mae_pp_common_sample": 1.200000000000001,
+      "gaap_margin_common_sample": [
+        "NVDA",
+        "INTC"
+      ],
+      "gaap_margin_available_n": 2
+    },
+    "D": {
+      "revenue_mape_percent": 3.1235657669186603,
+      "revenue_sample_n": 3,
+      "gaap_gross_margin_mae_pp_common_sample": 1.200000000000001,
+      "gaap_margin_common_sample": [
+        "NVDA",
+        "INTC"
+      ],
+      "gaap_margin_available_n": 2
+    }
+  },
+  "issuer_guidance_only_control": {
+    "revenue_mape_percent": 3.1235657669186603,
+    "revenue_sample_n": 3,
+    "gaap_gross_margin_mae_pp_common_sample": 1.200000000000001,
+    "gaap_margin_common_sample": [
+      "NVDA",
+      "INTC"
+    ],
+    "gaap_margin_available_n": 2
+  },
+  "incremental_numeric_operating_gain_over_issuer_guidance": 0.0,
+  "guidance_interval_hits": 2,
+  "guidance_interval_n": 3,
+  "operating_rows": [
+    {
+      "ticker": "NVDA",
+      "target_period_label": "FY2025_Q1",
+      "actual_revenue_usd_million": 26044,
+      "actual_gaap_gross_margin_ratio": 0.784,
+      "outcome_published_date": "2024-05-22",
+      "version_errors": {
+        "A": {
+          "revenue_ape_percent": 15.132084165258794,
+          "gaap_margin_error_pp": 2.400000000000002
+        },
+        "B": {
+          "revenue_ape_percent": 15.132084165258794,
+          "gaap_margin_error_pp": 2.400000000000002
+        },
+        "C": {
+          "revenue_ape_percent": 7.848256796191061,
+          "gaap_margin_error_pp": 2.100000000000002
+        },
+        "D": {
+          "revenue_ape_percent": 7.848256796191061,
+          "gaap_margin_error_pp": 2.100000000000002
+        }
+      },
+      "guidance_interval_hit": false,
+      "margin_common_sample": true,
+      "outcome_source_id": "nvda_t1"
+    },
+    {
+      "ticker": "AMD",
+      "target_period_label": "FY2024_Q1",
+      "actual_revenue_usd_million": 5473,
+      "actual_gaap_gross_margin_ratio": 0.47,
+      "outcome_published_date": "2024-04-30",
+      "version_errors": {
+        "A": {
+          "revenue_ape_percent": 12.69870272245569,
+          "gaap_margin_error_pp": 0.0
+        },
+        "B": {
+          "revenue_ape_percent": 12.69870272245569,
+          "gaap_margin_error_pp": 0.0
+        },
+        "C": {
+          "revenue_ape_percent": 1.3338205737255617,
+          "gaap_margin_error_pp": null
+        },
+        "D": {
+          "revenue_ape_percent": 1.3338205737255617,
+          "gaap_margin_error_pp": null
+        }
+      },
+      "guidance_interval_hit": true,
+      "margin_common_sample": false,
+      "outcome_source_id": "amd_t1"
+    },
+    {
+      "ticker": "INTC",
+      "target_period_label": "FY2024_Q1",
+      "actual_revenue_usd_million": 12724,
+      "actual_gaap_gross_margin_ratio": 0.41,
+      "outcome_published_date": "2024-04-25",
+      "version_errors": {
+        "A": {
+          "revenue_ape_percent": 21.078277271298333,
+          "gaap_margin_error_pp": 4.700000000000005
+        },
+        "B": {
+          "revenue_ape_percent": 21.078277271298333,
+          "gaap_margin_error_pp": 4.700000000000005
+        },
+        "C": {
+          "revenue_ape_percent": 0.1886199308393587,
+          "gaap_margin_error_pp": 0.30000000000000027
+        },
+        "D": {
+          "revenue_ape_percent": 0.1886199308393587,
+          "gaap_margin_error_pp": 0.30000000000000027
+        }
+      },
+      "guidance_interval_hit": true,
+      "margin_common_sample": true,
+      "outcome_source_id": "intc_t1"
+    }
+  ],
+  "market_rows": [
+    {
+      "ticker": "NVDA",
+      "sessions": 20,
+      "settled_date": "2024-03-22",
+      "price_return_percent": 19.63028262745359,
+      "benchmark_price_return_percent": 2.6307011339126385,
+      "excess_price_return_pp": 16.99958149354095,
+      "momentum_forecast": "positive_excess",
+      "momentum_direction_hit": true,
+      "issuer_outcome_available_by_market_settlement": false,
+      "availability_rule": "day_precision_same_day_is_not_assumed_available_at_close",
+      "return_basis": "split_adjusted_close_price_return_excludes_dividends_and_costs"
+    },
+    {
+      "ticker": "NVDA",
+      "sessions": 60,
+      "settled_date": "2024-05-20",
+      "price_return_percent": 20.25324126085526,
+      "benchmark_price_return_percent": 4.373336849099307,
+      "excess_price_return_pp": 15.879904411755952,
+      "momentum_forecast": "positive_excess",
+      "momentum_direction_hit": true,
+      "issuer_outcome_available_by_market_settlement": false,
+      "availability_rule": "day_precision_same_day_is_not_assumed_available_at_close",
+      "return_basis": "split_adjusted_close_price_return_excludes_dividends_and_costs"
+    },
+    {
+      "ticker": "AMD",
+      "sessions": 20,
+      "settled_date": "2024-03-22",
+      "price_return_percent": 1.773164258024984,
+      "benchmark_price_return_percent": 2.6307011339126385,
+      "excess_price_return_pp": -0.8575368758876545,
+      "momentum_forecast": "abstain",
+      "momentum_direction_hit": null,
+      "issuer_outcome_available_by_market_settlement": false,
+      "availability_rule": "day_precision_same_day_is_not_assumed_available_at_close",
+      "return_basis": "split_adjusted_close_price_return_excludes_dividends_and_costs"
+    },
+    {
+      "ticker": "AMD",
+      "sessions": 60,
+      "settled_date": "2024-05-20",
+      "price_return_percent": -5.7727182159353685,
+      "benchmark_price_return_percent": 4.373336849099307,
+      "excess_price_return_pp": -10.146055065034677,
+      "momentum_forecast": "abstain",
+      "momentum_direction_hit": null,
+      "issuer_outcome_available_by_market_settlement": true,
+      "availability_rule": "day_precision_same_day_is_not_assumed_available_at_close",
+      "return_basis": "split_adjusted_close_price_return_excludes_dividends_and_costs"
+    },
+    {
+      "ticker": "INTC",
+      "sessions": 20,
+      "settled_date": "2024-03-22",
+      "price_return_percent": -0.9769759647461296,
+      "benchmark_price_return_percent": 2.6307011339126385,
+      "excess_price_return_pp": -3.607677098658768,
+      "momentum_forecast": "abstain",
+      "momentum_direction_hit": null,
+      "issuer_outcome_available_by_market_settlement": false,
+      "availability_rule": "day_precision_same_day_is_not_assumed_available_at_close",
+      "return_basis": "split_adjusted_close_price_return_excludes_dividends_and_costs"
+    },
+    {
+      "ticker": "INTC",
+      "sessions": 60,
+      "settled_date": "2024-05-20",
+      "price_return_percent": -25.331478900128502,
+      "benchmark_price_return_percent": 4.373336849099307,
+      "excess_price_return_pp": -29.70481574922781,
+      "momentum_forecast": "abstain",
+      "momentum_direction_hit": null,
+      "issuer_outcome_available_by_market_settlement": true,
+      "availability_rule": "day_precision_same_day_is_not_assumed_available_at_close",
+      "return_basis": "split_adjusted_close_price_return_excludes_dividends_and_costs"
+    }
+  ],
+  "momentum_signal_summary": {
+    "20": {
+      "issued_n": 1,
+      "eligible_universe_n": 3,
+      "hits": 1,
+      "interpretation": "descriptive_single_positive_signal_not_an_accuracy_estimate"
+    },
+    "60": {
+      "issued_n": 1,
+      "eligible_universe_n": 3,
+      "hits": 1,
+      "interpretation": "descriptive_single_positive_signal_not_an_accuracy_estimate"
+    }
+  },
+  "engine_settlements": [
+    {
+      "ticker": "NVDA",
+      "primary_engine": "ENG-C",
+      "status": "not_settled_long_horizon_and_evidence_gaps",
+      "missing": [
+        "multi_period_ROIC_and_reinvestment",
+        "durable_value_capture"
+      ],
+      "positive_cashflow_proxy": true,
+      "quarterly_revenue_outcome_is_long_term_confirmation": false
+    },
+    {
+      "ticker": "NVDA",
+      "primary_engine": "ENG-R",
+      "status": "not_qualified_missing_independent_expectation_and_diffusion_evidence",
+      "missing": [
+        "dated_expectation_change",
+        "independent_diffusion_or_positioning"
+      ],
+      "expiry_date": "2024-05-20",
+      "expiry_receipt": "required_confirmation_not_completed",
+      "issuer_outcome_available_by_expiry": false,
+      "issuer_realization_by_expiry": null,
+      "positive_excess_price_observed": true,
+      "price_alone_confirms_engine": false
+    },
+    {
+      "ticker": "NVDA",
+      "primary_engine": "ENG-X",
+      "status": "unsupported_missing_instrument_and_payoff_inputs",
+      "missing": [
+        "instrument_identity",
+        "payoff_geometry",
+        "premium_and_expiry",
+        "tail_condition"
+      ]
+    },
+    {
+      "ticker": "AMD",
+      "primary_engine": "ENG-C",
+      "status": "not_settled_long_horizon_and_evidence_gaps",
+      "missing": [
+        "multi_period_ROIC_and_reinvestment",
+        "durable_value_capture"
+      ],
+      "positive_cashflow_proxy": true,
+      "quarterly_revenue_outcome_is_long_term_confirmation": false
+    },
+    {
+      "ticker": "AMD",
+      "primary_engine": "ENG-R",
+      "status": "not_qualified_missing_independent_expectation_and_diffusion_evidence",
+      "missing": [
+        "dated_expectation_change",
+        "independent_diffusion_or_positioning"
+      ],
+      "expiry_date": "2024-05-20",
+      "expiry_receipt": "required_confirmation_not_completed",
+      "issuer_outcome_available_by_expiry": true,
+      "issuer_realization_by_expiry": 5473,
+      "positive_excess_price_observed": false,
+      "price_alone_confirms_engine": false
+    },
+    {
+      "ticker": "AMD",
+      "primary_engine": "ENG-X",
+      "status": "unsupported_missing_instrument_and_payoff_inputs",
+      "missing": [
+        "instrument_identity",
+        "payoff_geometry",
+        "premium_and_expiry",
+        "tail_condition"
+      ]
+    },
+    {
+      "ticker": "INTC",
+      "primary_engine": "ENG-C",
+      "status": "not_settled_long_horizon_and_evidence_gaps",
+      "missing": [
+        "multi_period_ROIC_and_reinvestment",
+        "durable_value_capture"
+      ],
+      "positive_cashflow_proxy": false,
+      "quarterly_revenue_outcome_is_long_term_confirmation": false
+    },
+    {
+      "ticker": "INTC",
+      "primary_engine": "ENG-R",
+      "status": "not_qualified_missing_independent_expectation_and_diffusion_evidence",
+      "missing": [
+        "dated_expectation_change",
+        "independent_diffusion_or_positioning"
+      ],
+      "expiry_date": "2024-05-20",
+      "expiry_receipt": "required_confirmation_not_completed",
+      "issuer_outcome_available_by_expiry": true,
+      "issuer_realization_by_expiry": 12724,
+      "positive_excess_price_observed": false,
+      "price_alone_confirms_engine": false
+    },
+    {
+      "ticker": "INTC",
+      "primary_engine": "ENG-X",
+      "status": "unsupported_missing_instrument_and_payoff_inputs",
+      "missing": [
+        "instrument_identity",
+        "payoff_geometry",
+        "premium_and_expiry",
+        "tail_condition"
+      ]
+    }
+  ],
+  "local_hypothesis_status": {
+    "EN-HYP-1": "not_empirically_qualified_synthetic_identity_only",
+    "EN-HYP-2": "not_tested_no_multi_period_incremental_capital_return",
+    "EN-HYP-3": "not_tested_no_independent_diffusion_series"
+  },
+  "interpretation": [
+    "A/B and C/D have identical operating forecasts within their pair.",
+    "The observed operating improvement is already achieved by issuer guidance alone.",
+    "The valuation grid describes assumption sensitivity, not predictive increment.",
+    "D adds auditable evidence gaps and expiry receipts, not a better fitted forecast.",
+    "No out-of-sample, causal, statistical significance, total-return or executable strategy claim."
+  ],
+  "predictions_sha256": "4323c4238f8f5fb2c84262ab294f8397aa7fdbb8ff2ff06a3204f67c9c40d0c0"
+}

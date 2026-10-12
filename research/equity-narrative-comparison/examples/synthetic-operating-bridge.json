@@ -1,0 +1,329 @@
+{
+  "status": "synthetic_only",
+  "scenarios": [
+    {
+      "scenario_id": "SYNTHETIC-conservative",
+      "invented_data": true,
+      "joint_assumptions": {
+        "annual_revenue_growth": 0.03,
+        "operating_margin": 0.15,
+        "cash_tax_rate_on_positive_post_interest_profit": 0.25,
+        "depreciation_to_revenue": 0.03,
+        "capex_to_revenue": 0.05,
+        "incremental_working_capital_to_revenue_change": 0.1
+      },
+      "years": [
+        {
+          "year": 1,
+          "inputs": {
+            "revenue": 1030.0,
+            "operating_margin": 0.15,
+            "cash_interest": 10.0,
+            "cash_taxes": 36.125,
+            "depreciation_amortization": 30.9,
+            "capex": 51.5,
+            "delta_working_capital": 3.0,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 154.5,
+            "equity_cash_flow": 84.775,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 2,
+          "inputs": {
+            "revenue": 1060.9,
+            "operating_margin": 0.15,
+            "cash_interest": 10.0,
+            "cash_taxes": 37.283750000000005,
+            "depreciation_amortization": 31.827,
+            "capex": 53.04500000000001,
+            "delta_working_capital": 3.090000000000009,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 159.13500000000002,
+            "equity_cash_flow": 87.54325,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 3,
+          "inputs": {
+            "revenue": 1092.727,
+            "operating_margin": 0.15,
+            "cash_interest": 10.0,
+            "cash_taxes": 38.4772625,
+            "depreciation_amortization": 32.78181,
+            "capex": 54.63635000000001,
+            "delta_working_capital": 3.1827,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 163.90905,
+            "equity_cash_flow": 90.3945475,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 4,
+          "inputs": {
+            "revenue": 1125.50881,
+            "operating_margin": 0.15,
+            "cash_interest": 10.0,
+            "cash_taxes": 39.706580375,
+            "depreciation_amortization": 33.7652643,
+            "capex": 56.2754405,
+            "delta_working_capital": 3.278180999999995,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 168.8263215,
+            "equity_cash_flow": 93.33138392500001,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 5,
+          "inputs": {
+            "revenue": 1159.2740743000002,
+            "operating_margin": 0.15,
+            "cash_interest": 10.0,
+            "cash_taxes": 40.972777786250006,
+            "depreciation_amortization": 34.778222229,
+            "capex": 57.96370371500001,
+            "delta_working_capital": 3.3765264300000126,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 173.89111114500002,
+            "equity_cash_flow": 96.35632544275,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        }
+      ],
+      "discount_rate": 0.1,
+      "terminal_growth": 0.0,
+      "internal_pv_identity_in_synthetic_money_units": 939.2059955621198,
+      "evidence_status": "synthetic_arithmetic_check_not_empirical_validation"
+    },
+    {
+      "scenario_id": "SYNTHETIC-base",
+      "invented_data": true,
+      "joint_assumptions": {
+        "annual_revenue_growth": 0.08,
+        "operating_margin": 0.2,
+        "cash_tax_rate_on_positive_post_interest_profit": 0.25,
+        "depreciation_to_revenue": 0.03,
+        "capex_to_revenue": 0.05,
+        "incremental_working_capital_to_revenue_change": 0.1
+      },
+      "years": [
+        {
+          "year": 1,
+          "inputs": {
+            "revenue": 1080.0,
+            "operating_margin": 0.2,
+            "cash_interest": 10.0,
+            "cash_taxes": 51.5,
+            "depreciation_amortization": 32.4,
+            "capex": 54.0,
+            "delta_working_capital": 8.0,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 216.0,
+            "equity_cash_flow": 124.9,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 2,
+          "inputs": {
+            "revenue": 1166.4,
+            "operating_margin": 0.2,
+            "cash_interest": 10.0,
+            "cash_taxes": 55.82000000000001,
+            "depreciation_amortization": 34.992000000000004,
+            "capex": 58.32000000000001,
+            "delta_working_capital": 8.64000000000001,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 233.28000000000003,
+            "equity_cash_flow": 135.49200000000002,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 3,
+          "inputs": {
+            "revenue": 1259.7120000000002,
+            "operating_margin": 0.2,
+            "cash_interest": 10.0,
+            "cash_taxes": 60.48560000000001,
+            "depreciation_amortization": 37.791360000000005,
+            "capex": 62.98560000000001,
+            "delta_working_capital": 9.331200000000013,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 251.94240000000005,
+            "equity_cash_flow": 146.93136,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 4,
+          "inputs": {
+            "revenue": 1360.4889600000004,
+            "operating_margin": 0.2,
+            "cash_interest": 10.0,
+            "cash_taxes": 65.52444800000002,
+            "depreciation_amortization": 40.81466880000001,
+            "capex": 68.02444800000002,
+            "delta_working_capital": 10.077696000000016,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 272.0977920000001,
+            "equity_cash_flow": 159.28586880000003,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 5,
+          "inputs": {
+            "revenue": 1469.3280768000004,
+            "operating_margin": 0.2,
+            "cash_interest": 10.0,
+            "cash_taxes": 70.96640384000003,
+            "depreciation_amortization": 44.07984230400001,
+            "capex": 73.46640384000003,
+            "delta_working_capital": 10.883911680000006,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 293.8656153600001,
+            "equity_cash_flow": 172.62873830400005,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        }
+      ],
+      "discount_rate": 0.1,
+      "terminal_growth": 0.0,
+      "internal_pv_identity_in_synthetic_money_units": 1623.7859216173756,
+      "evidence_status": "synthetic_arithmetic_check_not_empirical_validation"
+    },
+    {
+      "scenario_id": "SYNTHETIC-optimistic",
+      "invented_data": true,
+      "joint_assumptions": {
+        "annual_revenue_growth": 0.13,
+        "operating_margin": 0.25,
+        "cash_tax_rate_on_positive_post_interest_profit": 0.25,
+        "depreciation_to_revenue": 0.03,
+        "capex_to_revenue": 0.05,
+        "incremental_working_capital_to_revenue_change": 0.1
+      },
+      "years": [
+        {
+          "year": 1,
+          "inputs": {
+            "revenue": 1130.0,
+            "operating_margin": 0.25,
+            "cash_interest": 10.0,
+            "cash_taxes": 68.125,
+            "depreciation_amortization": 33.9,
+            "capex": 56.5,
+            "delta_working_capital": 13.0,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 282.5,
+            "equity_cash_flow": 168.775,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 2,
+          "inputs": {
+            "revenue": 1276.8999999999999,
+            "operating_margin": 0.25,
+            "cash_interest": 10.0,
+            "cash_taxes": 77.30624999999999,
+            "depreciation_amortization": 38.306999999999995,
+            "capex": 63.845,
+            "delta_working_capital": 14.689999999999987,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 319.22499999999997,
+            "equity_cash_flow": 191.69074999999998,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 3,
+          "inputs": {
+            "revenue": 1442.8969999999997,
+            "operating_margin": 0.25,
+            "cash_interest": 10.0,
+            "cash_taxes": 87.68106249999998,
+            "depreciation_amortization": 43.28690999999999,
+            "capex": 72.14484999999999,
+            "delta_working_capital": 16.599699999999984,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 360.7242499999999,
+            "equity_cash_flow": 217.58554749999996,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 4,
+          "inputs": {
+            "revenue": 1630.4736099999996,
+            "operating_margin": 0.25,
+            "cash_interest": 10.0,
+            "cash_taxes": 99.40460062499997,
+            "depreciation_amortization": 48.914208299999984,
+            "capex": 81.52368049999998,
+            "delta_working_capital": 18.757660999999985,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 407.6184024999999,
+            "equity_cash_flow": 246.84666867499993,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        },
+        {
+          "year": 5,
+          "inputs": {
+            "revenue": 1842.4351792999994,
+            "operating_margin": 0.25,
+            "cash_interest": 10.0,
+            "cash_taxes": 112.65219870624996,
+            "depreciation_amortization": 55.27305537899998,
+            "capex": 92.12175896499997,
+            "delta_working_capital": 21.196156929999987,
+            "net_borrowing": 0.0
+          },
+          "output": {
+            "operating_profit": 460.60879482499985,
+            "equity_cash_flow": 279.9117356027499,
+            "definition": "explicit_cash_tax_levered_cashflow_bridge"
+          }
+        }
+      ],
+      "discount_rate": 0.1,
+      "terminal_growth": 0.0,
+      "internal_pv_identity_in_synthetic_money_units": 2555.7635813486086,
+      "evidence_status": "synthetic_arithmetic_check_not_empirical_validation"
+    }
+  ]
+}

@@ -1,0 +1,592 @@
+{
+  "protocol_id": "EN-COMPARE-20261012-v0.1",
+  "as_of": "2024-02-23T21:00:00Z",
+  "thesis_declared_at": "2026-10-12T09:17:11Z",
+  "study_type": "retrospective_mechanism_replay",
+  "historically_preregistered": false,
+  "historical_outcomes_already_public": true,
+  "source_vintage": "current_archive_reconstruction",
+  "classification_rule": "positive_prior_excess_only; otherwise abstain",
+  "classification_note": "The frozen one-sided momentum rule does not authorize a negative-return forecast.",
+  "financial_prediction_origin": "lagged_actual_or_issuer_guidance_no_narrative_fitted_coefficient",
+  "performance_claim_authority": "none",
+  "rows": [
+    {
+      "ticker": "NVDA",
+      "target_id": "RT-EN-NVDA",
+      "target_period_label": "FY2025_Q1",
+      "source_refs": [
+        "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+      ],
+      "valuation_baseline": {
+        "reported_unit_price": 788.1700134277344,
+        "reported_annual_diluted_eps": 11.93,
+        "trailing_reported_pe": 66.06622073996097,
+        "annual_cashflow_proxy_per_annual_diluted_share": 10.834402566158781,
+        "price_to_cashflow_proxy": 72.74697507452609,
+        "ratio_authority": "descriptive_proxy_not_current_share_count_normalized_valuation"
+      },
+      "versions": {
+        "A": {
+          "revenue_usd_million": 22103,
+          "gaap_gross_margin_ratio": 0.76,
+          "basis": "prior_reported_quarter_unchanged"
+        },
+        "B": {
+          "revenue_usd_million": 22103,
+          "gaap_gross_margin_ratio": 0.76,
+          "basis": "prior_reported_quarter_unchanged"
+        },
+        "C": {
+          "revenue_usd_million": 24000,
+          "gaap_gross_margin_ratio": 0.763,
+          "basis": "issuer_guidance_GAAP_only",
+          "missing_margin_reason": null
+        },
+        "D": {
+          "revenue_usd_million": 24000,
+          "gaap_gross_margin_ratio": 0.763,
+          "basis": "issuer_guidance_GAAP_only",
+          "missing_margin_reason": null
+        }
+      },
+      "issuer_guidance_only_control": {
+        "revenue_usd_million": 24000,
+        "gaap_gross_margin_ratio": 0.763,
+        "basis": "issuer_guidance_GAAP_only",
+        "missing_margin_reason": null
+      },
+      "guidance_interval_usd_million": [
+        23520,
+        24480
+      ],
+      "momentum": {
+        "lookback_sessions": 20,
+        "price_return": 0.2791437525533931,
+        "benchmark_price_return": 0.04061227255249533,
+        "excess_price_return": 0.23853148000089774,
+        "forecast": "positive_excess"
+      },
+      "valuation_state_ref": "RESULT-EN-V-NVDA",
+      "valuation_identification_status": "underidentified",
+      "conditional_cashflow_growth_range": [
+        0.1379737156140547,
+        0.7126017260025208
+      ],
+      "operating_scenarios": [
+        {
+          "scenario_id": "NVDA-conservative",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 23520,
+            "gaap_gross_margin_ratio": 0.758,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        },
+        {
+          "scenario_id": "NVDA-base",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 24000,
+            "gaap_gross_margin_ratio": 0.763,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        },
+        {
+          "scenario_id": "NVDA-optimistic",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 24480,
+            "gaap_gross_margin_ratio": 0.768,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        }
+      ],
+      "engine_candidates": {
+        "C": {
+          "status": "draft",
+          "positive_cashflow_proxy": true,
+          "missing": [
+            "multi_period_ROIC_and_reinvestment",
+            "durable_value_capture"
+          ],
+          "single_quarter_can_qualify": false
+        },
+        "R": {
+          "status": "draft",
+          "missing": [
+            "dated_expectation_change",
+            "independent_diffusion_or_positioning"
+          ],
+          "price_alone_can_qualify": false
+        },
+        "X": {
+          "status": "draft",
+          "missing": [
+            "instrument_identity",
+            "payoff_geometry",
+            "premium_and_expiry",
+            "tail_condition"
+          ],
+          "ordinary_equity_upside_can_qualify": false
+        }
+      },
+      "t0_risks_and_gaps": [
+        "Issuer demand outlook is a forward-looking statement, not an external estimate of attention or terminal market share.",
+        "Release EPS and weighted-average shares use the original release units; any price-based exercise must use matching units and distinguish annual weighted-average shares from current shares outstanding.",
+        "Fixed next-quarter guidance does not identify terminal revenue, sustainable margin, reinvestment or discount rate."
+      ]
+    },
+    {
+      "ticker": "AMD",
+      "target_id": "RT-EN-AMD",
+      "target_period_label": "FY2024_Q1",
+      "source_refs": [
+        "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+      ],
+      "valuation_baseline": {
+        "reported_unit_price": 176.52000427246094,
+        "reported_annual_diluted_eps": 0.53,
+        "trailing_reported_pe": 333.0566118348319,
+        "annual_cashflow_proxy_per_annual_diluted_share": 0.6898461538461539,
+        "price_to_cashflow_proxy": 255.8831462468769,
+        "ratio_authority": "descriptive_proxy_not_current_share_count_normalized_valuation"
+      },
+      "versions": {
+        "A": {
+          "revenue_usd_million": 6168,
+          "gaap_gross_margin_ratio": 0.47,
+          "basis": "prior_reported_quarter_unchanged"
+        },
+        "B": {
+          "revenue_usd_million": 6168,
+          "gaap_gross_margin_ratio": 0.47,
+          "basis": "prior_reported_quarter_unchanged"
+        },
+        "C": {
+          "revenue_usd_million": 5400,
+          "gaap_gross_margin_ratio": null,
+          "basis": "issuer_guidance_GAAP_only",
+          "missing_margin_reason": "issuer_only_provided_nonGAAP_guidance"
+        },
+        "D": {
+          "revenue_usd_million": 5400,
+          "gaap_gross_margin_ratio": null,
+          "basis": "issuer_guidance_GAAP_only",
+          "missing_margin_reason": "issuer_only_provided_nonGAAP_guidance"
+        }
+      },
+      "issuer_guidance_only_control": {
+        "revenue_usd_million": 5400,
+        "gaap_gross_margin_ratio": null,
+        "basis": "issuer_guidance_GAAP_only",
+        "missing_margin_reason": "issuer_only_provided_nonGAAP_guidance"
+      },
+      "guidance_interval_usd_million": [
+        5100,
+        5700
+      ],
+      "momentum": {
+        "lookback_sessions": 20,
+        "price_return": -0.021127918371360188,
+        "benchmark_price_return": 0.04061227255249533,
+        "excess_price_return": -0.06174019092385552,
+        "forecast": "abstain"
+      },
+      "valuation_state_ref": "RESULT-EN-V-AMD",
+      "valuation_identification_status": "underidentified",
+      "conditional_cashflow_growth_range": [
+        0.25102571394358597,
+        1.2274584719248138
+      ],
+      "operating_scenarios": [
+        {
+          "scenario_id": "AMD-conservative",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 5100,
+            "gaap_gross_margin_ratio": null,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        },
+        {
+          "scenario_id": "AMD-base",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 5400,
+            "gaap_gross_margin_ratio": null,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        },
+        {
+          "scenario_id": "AMD-optimistic",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 5700,
+            "gaap_gross_margin_ratio": null,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        }
+      ],
+      "engine_candidates": {
+        "C": {
+          "status": "draft",
+          "positive_cashflow_proxy": true,
+          "missing": [
+            "multi_period_ROIC_and_reinvestment",
+            "durable_value_capture"
+          ],
+          "single_quarter_can_qualify": false
+        },
+        "R": {
+          "status": "draft",
+          "missing": [
+            "dated_expectation_change",
+            "independent_diffusion_or_positioning"
+          ],
+          "price_alone_can_qualify": false
+        },
+        "X": {
+          "status": "draft",
+          "missing": [
+            "instrument_identity",
+            "payoff_geometry",
+            "premium_and_expiry",
+            "tail_condition"
+          ],
+          "ordinary_equity_upside_can_qualify": false
+        }
+      },
+      "t0_risks_and_gaps": [
+        "GAAP gross-margin guidance is unavailable: retain null. The approximately 52% outlook is non-GAAP and cannot be used as a GAAP forecast.",
+        "Issuer expects Data Center flat sequentially despite GPU ramp, while Client, Embedded and Gaming revenue decline sequentially.",
+        "Company-wide revenue is not a pure measure of AI GPU revenue."
+      ]
+    },
+    {
+      "ticker": "INTC",
+      "target_id": "RT-EN-INTC",
+      "target_period_label": "FY2024_Q1",
+      "source_refs": [
+        "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+      ],
+      "valuation_baseline": {
+        "reported_unit_price": 42.9900016784668,
+        "reported_annual_diluted_eps": 0.4,
+        "trailing_reported_pe": 107.47500419616699,
+        "annual_cashflow_proxy_per_annual_diluted_share": -3.390075973409307,
+        "price_to_cashflow_proxy": null,
+        "ratio_authority": "descriptive_proxy_not_current_share_count_normalized_valuation"
+      },
+      "versions": {
+        "A": {
+          "revenue_usd_million": 15406,
+          "gaap_gross_margin_ratio": 0.457,
+          "basis": "prior_reported_quarter_unchanged"
+        },
+        "B": {
+          "revenue_usd_million": 15406,
+          "gaap_gross_margin_ratio": 0.457,
+          "basis": "prior_reported_quarter_unchanged"
+        },
+        "C": {
+          "revenue_usd_million": 12700,
+          "gaap_gross_margin_ratio": 0.407,
+          "basis": "issuer_guidance_GAAP_only",
+          "missing_margin_reason": null
+        },
+        "D": {
+          "revenue_usd_million": 12700,
+          "gaap_gross_margin_ratio": 0.407,
+          "basis": "issuer_guidance_GAAP_only",
+          "missing_margin_reason": null
+        }
+      },
+      "issuer_guidance_only_control": {
+        "revenue_usd_million": 12700,
+        "gaap_gross_margin_ratio": 0.407,
+        "basis": "issuer_guidance_GAAP_only",
+        "missing_margin_reason": null
+      },
+      "guidance_interval_usd_million": [
+        12200,
+        13200
+      ],
+      "momentum": {
+        "lookback_sessions": 20,
+        "price_return": -0.13239147648033156,
+        "benchmark_price_return": 0.04061227255249533,
+        "excess_price_return": -0.1730037490328269,
+        "forecast": "abstain"
+      },
+      "valuation_state_ref": "RESULT-EN-V-INTC",
+      "valuation_identification_status": "unsupported",
+      "conditional_cashflow_growth_range": null,
+      "operating_scenarios": [
+        {
+          "scenario_id": "INTC-conservative",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 12200,
+            "gaap_gross_margin_ratio": null,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        },
+        {
+          "scenario_id": "INTC-base",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 12700,
+            "gaap_gross_margin_ratio": 0.407,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        },
+        {
+          "scenario_id": "INTC-optimistic",
+          "joint_operating_assumptions": {
+            "quarterly_revenue_usd_million": 13200,
+            "gaap_gross_margin_ratio": null,
+            "operating_margin": null,
+            "reinvestment": null,
+            "equity_cashflow": null
+          },
+          "discount_assumptions": "separate_declared_sensitivity_grid_not_a_joint_forecast",
+          "dependencies": [
+            "issuer_guidance_context",
+            "consistent_GAAP_basis",
+            "full_cashflow_bridge_missing"
+          ],
+          "required_conditions": [
+            "must_complete_operating_and_financing_bridge_before_full_DCF"
+          ],
+          "confirming_evidence_refs": [
+            "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+          ],
+          "contradicting_evidence_refs": [],
+          "falsifiers": [
+            "joint_assumptions_fail_to_reconcile_with_subsequent_original_disclosure"
+          ],
+          "next_observation_at": "2024-05-31T23:59:59Z",
+          "expiry_at": "2024-05-31T23:59:59Z",
+          "status": "incomplete_scenario_card",
+          "semantics": "guidance_endpoint_sensitivity_not_issuer_joint_probability_or_loss_floor"
+        }
+      ],
+      "engine_candidates": {
+        "C": {
+          "status": "draft",
+          "positive_cashflow_proxy": false,
+          "missing": [
+            "multi_period_ROIC_and_reinvestment",
+            "durable_value_capture"
+          ],
+          "single_quarter_can_qualify": false
+        },
+        "R": {
+          "status": "draft",
+          "missing": [
+            "dated_expectation_change",
+            "independent_diffusion_or_positioning"
+          ],
+          "price_alone_can_qualify": false
+        },
+        "X": {
+          "status": "draft",
+          "missing": [
+            "instrument_identity",
+            "payoff_geometry",
+            "premium_and_expiry",
+            "tail_condition"
+          ],
+          "ordinary_equity_upside_can_qualify": false
+        }
+      },
+      "t0_risks_and_gaps": [
+        "FY2023 cash additions to PPE exceed operating cash flow; net income cannot be substituted for distributable equity cash flow.",
+        "Adjusted FCF uses net capex and other adjustments; do not treat it as the same definition as NVDA or AMD FCF.",
+        "Intel is an integrated manufacturer with substantial foundry investment, unlike fabless peers.",
+        "No post-T0 restated segment history is imported.",
+        "The release discloses a January 2023 change in estimated production-equipment useful life from five to eight years; management estimates FY2023 depreciation fell by USD4,200 million and gross profit increased by USD2,500 million relative to the previous life estimate. Reported gross margin is affected by this accounting estimate, not solely economic improvement."
+      ]
+    }
+  ],
+  "preparation_files": {
+    "benchmark/financial-inputs.json": "a3fe9edf6a8eace1c6cb388e670cb9f2bd1e32c6a896351486f12e9d53d6c487",
+    "benchmark/market-inputs.json": "185ffab9bb92f4635773fe053f7af7868eb26363d28ce432bb844331ac109ba2",
+    "benchmark/protocol.json": "10d70ddcbc5479e075c19e1e752788c9336003a3e4f73950526e717c9e7a6f70",
+    "benchmark/sources.json": "56324819d7e12f858de6366a3003d7f892c1d14adce176155fbf53148fcb2101",
+    "settings.json": "ea0fb9caf4ab57b50022480bc3c410fb4f850347ad27f9b7f997afe3a2d65558",
+    "profile.json": "f1827365c7bb973f8e0b7b7ebe42bcfb4946270faacf02ed08e2c2234fd87678",
+    "model.py": "22d3b04a0374e0d719fd34248eae9bec0f0366b039366640cbf0c501946744fd",
+    "runner.py": "25fc9523b3f94b679892cf90f3d8a4f88af906c84b378f9beb9739ad0f2bcf8a",
+    "validator.py": "005858b13ed5e713db869b06b97338857704fbcdcdd3443569ecaa40df82ed49"
+  }
+}

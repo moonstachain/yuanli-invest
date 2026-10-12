@@ -1,0 +1,245 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "NARRATIVE-PILOT-2024Q1-3CO",
+  "created_at": "2026-10-12T09:18:55.894709+00:00",
+  "t0": "2024-02-23T21:00:00Z",
+  "units": {
+    "money": "USD_MILLION",
+    "margin": "RATIO_0_TO_1",
+    "eps": "USD_PER_SHARE_AS_REPORTED_AT_RELEASE",
+    "shares": "MILLION_SHARES_AS_REPORTED_AT_RELEASE"
+  },
+  "study_class": "RETROSPECTIVE_DIAGNOSTIC_REPLAY_NOT_PROSPECTIVE_ALPHA",
+  "sample_selection": "Researcher-selected NVDA, AMD and INTC as mechanism contrasts after outcomes were historically known; not a representative or survivorship-safe universe.",
+  "inputs_constructed_after_outcomes_were_public": true,
+  "live_trade_authority": false,
+  "records": [
+    {
+      "ticker": "NVDA",
+      "input_source_id": "nvda_t0",
+      "source_sha256": "00c198e3f22b5f1ea20b4adbb93d0d5aad05163b1e66c3b740606f40720145ab",
+      "source_published_date": "2024-02-21",
+      "known_available_at": "2024-02-21T16:22:09-05:00",
+      "latest_quarter": {
+        "period_label": "FY2024_Q4",
+        "period_end": "2024-01-28",
+        "revenue_usd_million": 22103,
+        "gaap_gross_margin_ratio": 0.76,
+        "non_gaap_gross_margin_ratio": 0.767,
+        "gaap_net_income_attributable_usd_million": 12285,
+        "margin_precision_ratio": 0.001
+      },
+      "fiscal_year": {
+        "period_label": "FY2024",
+        "period_end": "2024-01-28",
+        "revenue_usd_million": 60922,
+        "gaap_net_income_attributable_usd_million": 29760,
+        "gaap_diluted_eps_usd": 11.93,
+        "ocf_usd_million": 28090,
+        "cash_purchases_ppe_and_intangibles_usd_million": 1069,
+        "principal_ppe_and_intangibles_payments_usd_million": 74,
+        "issuer_fcf_usd_million": 26947,
+        "issuer_fcf_label": "Free cash flow (non-GAAP)",
+        "issuer_fcf_definition": "GAAP operating cash flow minus purchases related to property/equipment/intangible assets and principal payments on those assets.",
+        "equity_free_cash_flow_identity_asserted": false,
+        "diluted_weighted_average_shares_million": 2494,
+        "shares_basis": "ANNUAL_DILUTED_WEIGHTED_AVERAGE_NOT_T0_SHARES_OUTSTANDING",
+        "share_unit_note": "As reported in the historical release; no subsequent split normalization applied.",
+        "cash_capital_purchase_component_key": "cash_purchases_ppe_and_intangibles_usd_million",
+        "ocf_minus_cash_capital_purchases_proxy_usd_million": 27021,
+        "ocf_minus_cash_capital_purchases_proxy_usd_per_annual_diluted_share": 10.834402566158781,
+        "cash_flow_proxy_definition": "Reported operating cash flow less the specified cash capital purchase line. Derived arithmetic proxy, not issuer-defined FCF, unlevered FCFF or an exact distributable equity cash flow. No financing, interest, tax or share dilution model is imposed.",
+        "cash_flow_proxy_is_unlevered_fcff": false
+      },
+      "guidance": {
+        "target_period_label": "FY2025_Q1",
+        "target_period_end": null,
+        "target_period_end_note": "Fiscal-quarter key is the prediction target; realized period end is kept only in outcomes.json.",
+        "revenue_low_usd_million": 23520,
+        "revenue_mid_usd_million": 24000,
+        "revenue_high_usd_million": 24480,
+        "revenue_basis": "GAAP_REVENUE_NO_NON_GAAP_ADJUSTMENT",
+        "gaap_gross_margin_mid_ratio": 0.763,
+        "non_gaap_gross_margin_mid_ratio": 0.77,
+        "gaap_gross_margin_low_ratio": 0.758,
+        "gaap_gross_margin_high_ratio": 0.768,
+        "non_gaap_gross_margin_low_ratio": 0.765,
+        "non_gaap_gross_margin_high_ratio": 0.775
+      },
+      "source_locators": {
+        "latest_quarter": "Q4 Fiscal 2024 Summary, GAAP and Non-GAAP tables",
+        "fiscal_year": "Fiscal 2024 Summary; Reconciliation of GAAP to Non-GAAP Financial Measures, FY24 column",
+        "guidance": "Outlook, first quarter of fiscal 2025; revenue +/-2%, gross margins +/-50 basis points",
+        "source_cash_flow_definition": "Non-GAAP Measures paragraph and FCF reconciliation rows",
+        "annual_diluted_weighted_average_shares": "Condensed Consolidated Statements of Income; Weighted average shares used in per share computation; Diluted; twelve months ended January 28, 2024 (annual current-period column). Original release share units."
+      },
+      "t0_risks_and_gaps": [
+        "Issuer demand outlook is a forward-looking statement, not an external estimate of attention or terminal market share.",
+        "Release EPS and weighted-average shares use the original release units; any price-based exercise must use matching units and distinguish annual weighted-average shares from current shares outstanding.",
+        "Fixed next-quarter guidance does not identify terminal revenue, sustainable margin, reinvestment or discount rate."
+      ],
+      "price_and_attention_features": {
+        "historical_price_snapshot": null,
+        "attention_series": null,
+        "note": "Not supplied by this official financial data subtask; no current value is used to fill history."
+      }
+    },
+    {
+      "ticker": "AMD",
+      "input_source_id": "amd_t0",
+      "source_sha256": "4590660edb41b5cd285684468e520d6f7ad84e4f045d3b60c8ecd67f303ce894",
+      "source_published_date": "2024-01-30",
+      "known_available_at": "2024-01-30T16:16:19-05:00",
+      "latest_quarter": {
+        "period_label": "FY2023_Q4",
+        "period_end": "2023-12-30",
+        "revenue_usd_million": 6168,
+        "gaap_gross_margin_ratio": 0.47,
+        "non_gaap_gross_margin_ratio": 0.51,
+        "gaap_net_income_attributable_usd_million": 667,
+        "margin_precision_ratio": 0.01
+      },
+      "fiscal_year": {
+        "period_label": "FY2023",
+        "period_end": "2023-12-30",
+        "revenue_usd_million": 22680,
+        "gaap_net_income_attributable_usd_million": 854,
+        "gaap_diluted_eps_usd": 0.53,
+        "ocf_usd_million": 1667,
+        "cash_purchases_ppe_usd_million": 546,
+        "issuer_fcf_usd_million": 1121,
+        "issuer_fcf_label": "Free cash flow (non-GAAP)",
+        "issuer_fcf_definition": "GAAP operating cash flow minus purchases of property and equipment.",
+        "equity_free_cash_flow_identity_asserted": false,
+        "diluted_weighted_average_shares_million": 1625,
+        "shares_basis": "ANNUAL_DILUTED_WEIGHTED_AVERAGE_NOT_T0_SHARES_OUTSTANDING",
+        "share_unit_note": "As reported in the historical release; no subsequent split normalization applied.",
+        "cash_capital_purchase_component_key": "cash_purchases_ppe_usd_million",
+        "ocf_minus_cash_capital_purchases_proxy_usd_million": 1121,
+        "ocf_minus_cash_capital_purchases_proxy_usd_per_annual_diluted_share": 0.6898461538461539,
+        "cash_flow_proxy_definition": "Reported operating cash flow less the specified cash capital purchase line. Derived arithmetic proxy, not issuer-defined FCF, unlevered FCFF or an exact distributable equity cash flow. No financing, interest, tax or share dilution model is imposed.",
+        "cash_flow_proxy_is_unlevered_fcff": false
+      },
+      "guidance": {
+        "target_period_label": "FY2024_Q1",
+        "target_period_end": null,
+        "target_period_end_note": "Fiscal-quarter key is the prediction target; realized period end is kept only in outcomes.json.",
+        "revenue_low_usd_million": 5100,
+        "revenue_mid_usd_million": 5400,
+        "revenue_high_usd_million": 5700,
+        "revenue_basis": "GAAP_REVENUE_NO_NON_GAAP_ADJUSTMENT",
+        "gaap_gross_margin_mid_ratio": null,
+        "non_gaap_gross_margin_mid_ratio": 0.52,
+        "gaap_gross_margin_low_ratio": null,
+        "gaap_gross_margin_high_ratio": null,
+        "non_gaap_gross_margin_low_ratio": null,
+        "non_gaap_gross_margin_high_ratio": null
+      },
+      "source_locators": {
+        "latest_quarter": "GAAP Quarterly Financial Results, Q4 2023; Non-GAAP Quarterly Financial Results",
+        "fiscal_year": "Annual Financial Results, FY2023; Reconciliation of GAAP Net Cash Provided by Operating Activities to Free Cash Flow, FY2023 column",
+        "guidance": "Current Outlook, first quarter of 2024; +/-USD300 million and approximately 52% non-GAAP gross margin",
+        "missing_gaap_guidance": "Forward-looking non-GAAP measures paragraph: equivalent GAAP reconciliation is not practicable because adjustments depend on uncertain future events",
+        "annual_diluted_weighted_average_shares": "Condensed Consolidated Statements of Operations; Shares used in per share calculation; Diluted; year ended December 30, 2023 (fourth numeric column)."
+      },
+      "t0_risks_and_gaps": [
+        "GAAP gross-margin guidance is unavailable: retain null. The approximately 52% outlook is non-GAAP and cannot be used as a GAAP forecast.",
+        "Issuer expects Data Center flat sequentially despite GPU ramp, while Client, Embedded and Gaming revenue decline sequentially.",
+        "Company-wide revenue is not a pure measure of AI GPU revenue."
+      ],
+      "price_and_attention_features": {
+        "historical_price_snapshot": null,
+        "attention_series": null,
+        "note": "Not supplied by this official financial data subtask; no current value is used to fill history."
+      }
+    },
+    {
+      "ticker": "INTC",
+      "input_source_id": "intc_t0",
+      "source_sha256": "a30dd440841917dea54cc5ad351e68c15b0809b0f232aef90addf5b19f352043",
+      "source_published_date": "2024-01-25",
+      "known_available_at": "2024-01-25T16:01:00-05:00",
+      "latest_quarter": {
+        "period_label": "FY2023_Q4",
+        "period_end": "2023-12-30",
+        "revenue_usd_million": 15406,
+        "gaap_gross_margin_ratio": 0.457,
+        "non_gaap_gross_margin_ratio": 0.488,
+        "gaap_net_income_attributable_usd_million": 2669,
+        "margin_precision_ratio": 0.001
+      },
+      "fiscal_year": {
+        "period_label": "FY2023",
+        "period_end": "2023-12-30",
+        "revenue_usd_million": 54228,
+        "gaap_net_income_attributable_usd_million": 1689,
+        "gaap_diluted_eps_usd": 0.4,
+        "ocf_usd_million": 11471,
+        "cash_additions_ppe_gross_usd_million": 25750,
+        "cash_additions_ppe_net_usd_million": 23228,
+        "finance_lease_payments_usd_million": 96,
+        "issuer_fcf_usd_million": -11853,
+        "issuer_fcf_label": "Adjusted free cash flow (non-GAAP)",
+        "issuer_fcf_definition": "Operating cash flow minus additions to PPE net of capital grants/partner contributions and finance lease payments; issuer reconciliation also adjusts McAfee equity sale proceeds, zero in FY2023.",
+        "derived_ocf_minus_gross_ppe_usd_million": -14279,
+        "equity_free_cash_flow_identity_asserted": false,
+        "diluted_weighted_average_shares_million": 4212,
+        "shares_basis": "ANNUAL_DILUTED_WEIGHTED_AVERAGE_NOT_T0_SHARES_OUTSTANDING",
+        "share_unit_note": "As reported in the historical release; no subsequent split normalization applied.",
+        "cash_capital_purchase_component_key": "cash_additions_ppe_gross_usd_million",
+        "ocf_minus_cash_capital_purchases_proxy_usd_million": -14279,
+        "ocf_minus_cash_capital_purchases_proxy_usd_per_annual_diluted_share": -3.390075973409307,
+        "cash_flow_proxy_definition": "Reported operating cash flow less the specified cash capital purchase line. Derived arithmetic proxy, not issuer-defined FCF, unlevered FCFF or an exact distributable equity cash flow. No financing, interest, tax or share dilution model is imposed.",
+        "cash_flow_proxy_is_unlevered_fcff": false,
+        "accounting_estimate_change": {
+          "effective_date": "2023-01",
+          "production_equipment_useful_life_years_before": 5,
+          "production_equipment_useful_life_years_after": 8,
+          "estimated_fy2023_depreciation_expense_reduction_usd_million": 4200,
+          "estimated_fy2023_gross_profit_increase_usd_million": 2500,
+          "source_description": "Issuer estimate relative to year-end 2022 useful-life assumptions; not a restatement performed by this experiment."
+        }
+      },
+      "guidance": {
+        "target_period_label": "FY2024_Q1",
+        "target_period_end": null,
+        "target_period_end_note": "Fiscal-quarter key is the prediction target; realized period end is kept only in outcomes.json.",
+        "revenue_low_usd_million": 12200,
+        "revenue_mid_usd_million": 12700,
+        "revenue_high_usd_million": 13200,
+        "revenue_basis": "GAAP_REVENUE_NO_NON_GAAP_ADJUSTMENT",
+        "gaap_gross_margin_mid_ratio": 0.407,
+        "non_gaap_gross_margin_mid_ratio": 0.445,
+        "gaap_gross_margin_low_ratio": null,
+        "gaap_gross_margin_high_ratio": null,
+        "non_gaap_gross_margin_low_ratio": null,
+        "non_gaap_gross_margin_high_ratio": null
+      },
+      "source_locators": {
+        "latest_quarter": "Q4 2023 Financial Results, GAAP/non-GAAP; Consolidated Statements of Income, three months ended Dec 30, 2023, for exact revenue and parent net income",
+        "fiscal_year": "Consolidated Statements of Income and Cash Flows, year ended Dec 30, 2023; adjusted FCF reconciliation",
+        "guidance": "Business Outlook, Q1 2024; gross margin and EPS based on revenue midpoint",
+        "fcf_definition": "Explanation of Non-GAAP Measures: Adjusted free cash flow",
+        "annual_diluted_weighted_average_shares": "Consolidated Statements of Income; Weighted average shares of common stock outstanding; Diluted; year ended December 30, 2023 (third numeric column). Not the separate quarterly diluted-share reconciliation.",
+        "accounting_estimate_change": "Consolidated Statements of Income, Other information, paragraph beginning Effective January 2023."
+      },
+      "t0_risks_and_gaps": [
+        "FY2023 cash additions to PPE exceed operating cash flow; net income cannot be substituted for distributable equity cash flow.",
+        "Adjusted FCF uses net capex and other adjustments; do not treat it as the same definition as NVDA or AMD FCF.",
+        "Intel is an integrated manufacturer with substantial foundry investment, unlike fabless peers.",
+        "No post-T0 restated segment history is imported.",
+        "The release discloses a January 2023 change in estimated production-equipment useful life from five to eight years; management estimates FY2023 depreciation fell by USD4,200 million and gross profit increased by USD2,500 million relative to the previous life estimate. Reported gross margin is affected by this accounting estimate, not solely economic improvement."
+      ],
+      "price_and_attention_features": {
+        "historical_price_snapshot": null,
+        "attention_series": null,
+        "note": "Not supplied by this official financial data subtask; no current value is used to fill history."
+      }
+    }
+  ],
+  "last_updated_at": "2026-10-12T09:22:16.392228+00:00",
+  "predictor_input_contract": "Only latest_quarter financial values and guidance fields are used by A0/G0. Schema, source and retrospective audit metadata are not predictors. No raw HTML is used.",
+  "source_packet_sha256": "2288a33595f5cae2d3e350e49f9d307472255bb5123e3e0ae5f23e98a47c050c",
+  "source_subtask_cutoff": "2024-02-23T00:00:00-05:00",
+  "normalization_note": "Common exchange-close cutoff; no added financial facts relative to the earlier source-subtask midnight cutoff."
+}

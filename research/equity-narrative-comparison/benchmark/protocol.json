@@ -1,0 +1,36 @@
+{
+  "protocol_id": "EN-COMPARE-20261012-v0.1",
+  "schema_version": "0.1.0",
+  "frozen_at": "2026-10-12T09:17:11Z",
+  "study_type": "retrospective_mechanism_replay",
+  "historically_preregistered": false,
+  "outcomes_already_public": true,
+  "selection_policy": "purposive_NVDA_AMD_INTC_positive_and_negative_mechanism_contrasts_not_representative_universe",
+  "universe": ["NVDA", "AMD", "INTC"],
+  "as_of": "2024-02-23T21:00:00Z",
+  "financial_settlement_deadline": "2024-05-31T23:59:59Z",
+  "market_benchmark": "SPY",
+  "market_horizons_sessions": [20, 60],
+  "momentum_lookback_sessions": 20,
+  "market_return_convention": "split_adjusted_close_price_return_excludes_dividends_and_costs",
+  "market_vintage_policy": "current_reconstruction_descriptive_only_not_strict_PIT_alpha",
+  "research_versions": {
+    "A": {"name": "lagged_financial_baseline", "revenue_rule": "previous_reported_quarter_unchanged", "margin_rule": "previous_reported_GAAP_gross_margin_unchanged"},
+    "B": {"name": "A_plus_simple_momentum", "revenue_rule": "same_as_A_no_fitted_price_to_revenue_coefficient", "market_rule": "positive_prior_20_session_excess_price_return_predicts_positive_next_20_and_60_session_excess_price_return"},
+    "C": {"name": "B_plus_forward_operating_scenarios", "revenue_rule": "issuer_guidance_midpoint", "margin_rule": "issuer_GAAP_guidance_only_never_substitute_nonGAAP", "valuation_rule": "CAP_V_conditional_FCF_growth_grid_no_target_price"},
+    "D": {"name": "C_plus_engine_specific_falsification", "revenue_rule": "same_as_C", "margin_rule": "same_as_C", "rule": "preserve_numeric_prediction_check_evidence_basis_and_settle_each_engine_separately"}
+  },
+  "strong_control": "issuer_guidance_alone_has_same_operating_prediction_as_C_and_D_therefore_operating_improvement_is_not_narrative_alpha",
+  "operating_metrics": ["absolute_percentage_revenue_error", "guidance_interval_hit", "GAAP_gross_margin_error_percentage_points", "comparable_sample_count"],
+  "market_metrics": ["split_adjusted_price_return", "SPY_excess_price_return", "momentum_direction_hit"],
+  "engine_rules": {
+    "C": {"horizon": "3_to_5_years", "required_evidence": ["positive_cashflow_proxy", "multi_period_ROIC_and_reinvestment", "durable_value_capture"], "single_quarter_can_qualify": false},
+    "R": {"horizon": "60_trading_sessions", "required_evidence": ["dated_expectation_change", "independent_diffusion_or_positioning", "price_confirmation", "issuer_forward_realization"], "price_alone_can_qualify": false},
+    "X": {"horizon": "instrument_specific", "required_evidence": ["instrument_identity", "payoff_geometry", "premium_and_expiry", "tail_condition"], "ordinary_equity_upside_can_qualify": false}
+  },
+  "missing_data_policy": "null_and_report_coverage_never_impute_future_or_nonGAAP",
+  "no_parameter_tuning_after_settlement": true,
+  "statistical_inference": "none_three_related_purposively_selected_cases",
+  "allowed_conclusions": ["implementation_fidelity", "descriptive_case_results", "financial_guidance_information", "research_gaps_and_failure_modes"],
+  "disallowed_conclusions": ["out_of_sample_alpha", "causal_narrative_effect", "calibrated_success_probability", "strategy_or_capital_qualification"]
+}
