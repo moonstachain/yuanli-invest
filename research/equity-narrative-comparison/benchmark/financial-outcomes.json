@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "experiment_id": "NARRATIVE-PILOT-2024Q1-3CO",
+  "created_at": "2026-10-12T09:18:55.894709+00:00",
+  "t0": "2024-02-23T21:00:00Z",
+  "units": {
+    "money": "USD_MILLION",
+    "margin": "RATIO_0_TO_1",
+    "eps": "USD_PER_SHARE_AS_REPORTED_AT_RELEASE"
+  },
+  "study_class": "RETROSPECTIVE_DIAGNOSTIC_REPLAY_NOT_PROSPECTIVE_ALPHA",
+  "sample_selection": "Researcher-selected NVDA, AMD and INTC as mechanism contrasts after outcomes were historically known; not a representative or survivorship-safe universe.",
+  "inputs_constructed_after_outcomes_were_public": true,
+  "live_trade_authority": false,
+  "records": [
+    {
+      "ticker": "NVDA",
+      "source_id": "nvda_t1",
+      "source_sha256": "70d27af03c7f6f5fd63ba776c78ac1aafb2a3e0189449f2e2c7e8d0c434c5bdb",
+      "published_date": "2024-05-22",
+      "published_at": null,
+      "published_at_precision": "DAY",
+      "target_period_label": "FY2025_Q1",
+      "period_end": "2024-04-28",
+      "revenue_usd_million": 26044,
+      "gaap_gross_margin_ratio": 0.784,
+      "non_gaap_gross_margin_ratio": 0.789,
+      "gaap_net_income_attributable_usd_million": 14881,
+      "margin_precision_ratio": 0.001,
+      "source_locator": "Quarterly financial results GAAP/non-GAAP summary; consolidated statements of income/operations; first current-period column",
+      "outcome_only": true
+    },
+    {
+      "ticker": "AMD",
+      "source_id": "amd_t1",
+      "source_sha256": "a735c06fd25fdd3847d6ac0a036df588b439ad56f78b1aa009533eaf012e7471",
+      "published_date": "2024-04-30",
+      "published_at": "2024-04-30T13:15:11-07:00",
+      "published_at_precision": "SECOND_FROM_CURRENT_PAGE_JSONLD",
+      "target_period_label": "FY2024_Q1",
+      "period_end": "2024-03-30",
+      "revenue_usd_million": 5473,
+      "gaap_gross_margin_ratio": 0.47,
+      "non_gaap_gross_margin_ratio": 0.52,
+      "gaap_net_income_attributable_usd_million": 123,
+      "margin_precision_ratio": 0.01,
+      "source_locator": "Quarterly financial results GAAP/non-GAAP summary; consolidated statements of income/operations; first current-period column",
+      "outcome_only": true
+    },
+    {
+      "ticker": "INTC",
+      "source_id": "intc_t1",
+      "source_sha256": "b7f9a2dae815428b21bda51835fe1f3d9a0a6195fa955edc022e19b7cb34cb81",
+      "published_date": "2024-04-25",
+      "published_at": "2024-04-25T16:01:00-04:00",
+      "published_at_precision": "MINUTE",
+      "target_period_label": "FY2024_Q1",
+      "period_end": "2024-03-30",
+      "revenue_usd_million": 12724,
+      "gaap_gross_margin_ratio": 0.41,
+      "non_gaap_gross_margin_ratio": 0.451,
+      "gaap_net_income_attributable_usd_million": -381,
+      "margin_precision_ratio": 0.001,
+      "source_locator": "Quarterly financial results GAAP/non-GAAP summary; consolidated statements of income/operations; first current-period column",
+      "outcome_only": true
+    }
+  ],
+  "source_packet_sha256": "723f0050fe55a5d3e10be4ab10877ee2ba8fdcb2986a1c4683bd494c12c35e96",
+  "source_subtask_cutoff": "2024-02-23T00:00:00-05:00",
+  "normalization_note": "Common exchange-close cutoff; no added financial facts relative to the earlier source-subtask midnight cutoff."
+}

@@ -1,0 +1,30 @@
+{
+  "frozen_at": "2026-10-12T09:40:13.013755+00:00",
+  "mode": "current_archives_reconstructed_after_historical_outcomes",
+  "strict_historical_vintage": false,
+  "files": [
+    {
+      "path": "benchmark/financial-inputs.json",
+      "sha256": "a3fe9edf6a8eace1c6cb388e670cb9f2bd1e32c6a896351486f12e9d53d6c487"
+    },
+    {
+      "path": "benchmark/financial-outcomes.json",
+      "sha256": "9272d9756859c2ffdf83c346c35f4638f3cfb51c14044fa6ab3c94e7d60e263a"
+    },
+    {
+      "path": "benchmark/market-inputs.json",
+      "sha256": "185ffab9bb92f4635773fe053f7af7868eb26363d28ce432bb844331ac109ba2"
+    },
+    {
+      "path": "benchmark/market-outcomes.json",
+      "sha256": "dd75997317b358242297718bb39f4bb7b57c186a3211f3257bb414eb917001d8"
+    },
+    {
+      "path": "benchmark/sources.json",
+      "sha256": "56324819d7e12f858de6366a3003d7f892c1d14adce176155fbf53148fcb2101"
+    }
+  ],
+  "revision": 2,
+  "supersedes_data_freeze_sha256": "54a46208d2b6ce2156e7d3879ae125664eebc359d6a05c75c23e05f12371f991",
+  "amendment_reason": "Remove ambiguous outcome-referencing prose from a T0 risk note; no numerical inputs or frozen research rules changed."
+}

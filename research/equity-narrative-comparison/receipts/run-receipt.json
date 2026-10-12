@@ -1,0 +1,16 @@
+{
+  "settled_at": "2026-10-12T09:44:11.899255+00:00",
+  "protocol_id": "EN-COMPARE-20261012-v0.1",
+  "candidate_status": "implemented_research_only",
+  "protocol_sha256": "10d70ddcbc5479e075c19e1e752788c9336003a3e4f73950526e717c9e7a6f70",
+  "settings_sha256": "ea0fb9caf4ab57b50022480bc3c410fb4f850347ad27f9b7f997afe3a2d65558",
+  "data_freeze_sha256": "4cfe240e4835d885f337e675ceea950ae500b99e654419fd4753df0a817ed26f",
+  "predictions_sha256": "4323c4238f8f5fb2c84262ab294f8397aa7fdbb8ff2ff06a3204f67c9c40d0c0",
+  "results_sha256": "6fa422741f18baabf09c25131ca1efa299f2b2eb0309ef47fb0b7b0058db7da7",
+  "generated_objects_sha256": "79a99faee26f075915603417d536d2f043c781bf449cadf4cac21d01765472c3",
+  "rule_and_data_hashes_verified": true,
+  "existing_contract_schemas_validated": true,
+  "positive_historical_alpha_claim": false,
+  "canon_or_registry_promotion": false,
+  "original_hypotheses_empirically_qualified": false
+}

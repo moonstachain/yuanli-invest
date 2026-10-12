@@ -1,0 +1,92 @@
+{
+  "as_of": "2024-02-23T21:00:00Z",
+  "source_kind": "vendor_current_historical_reconstruction",
+  "strict_historical_vintage": false,
+  "return_convention": "split_adjusted_close_excludes_dividends",
+  "observations": [
+    {
+      "symbol": "NVDA",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits",
+      "source_sha256": "7d5535e1b4882cbd565face72b58578b48f0a0c6726a27a63470071553fd108d",
+      "retrieved_at": "2026-10-12T09:17:11Z",
+      "historical_vintage_qualified": false,
+      "currency": "USD",
+      "price_basis": "split_adjusted_as_retrieved",
+      "quantity_or_action": false,
+      "lookback_sessions": 20,
+      "lookback": {
+        "date": "2024-01-25",
+        "close": 61.617000579833984
+      },
+      "t0": {
+        "date": "2024-02-23",
+        "close": 78.81700134277344
+      },
+      "reported_T0_price_unit_factor": 10,
+      "unit_conversion_caveat": "NVDA June 2024 ten-for-one split reversed for T0 cashflow/share comparison; vendor history remains provisional"
+    },
+    {
+      "symbol": "AMD",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/AMD?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits",
+      "source_sha256": "04b98ea3ea1519b38aba9923dab42d52b9d7336f204786d3b62646b6ed8ccb29",
+      "retrieved_at": "2026-10-12T09:17:11Z",
+      "historical_vintage_qualified": false,
+      "currency": "USD",
+      "price_basis": "split_adjusted_as_retrieved",
+      "quantity_or_action": false,
+      "lookback_sessions": 20,
+      "lookback": {
+        "date": "2024-01-25",
+        "close": 180.3300018310547
+      },
+      "t0": {
+        "date": "2024-02-23",
+        "close": 176.52000427246094
+      },
+      "reported_T0_price_unit_factor": 1,
+      "unit_conversion_caveat": "No explicit scale conversion"
+    },
+    {
+      "symbol": "INTC",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/INTC?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits",
+      "source_sha256": "93e39992499bd0e14225ddb60936d1f76d64b1db68393917faeb190fff13158e",
+      "retrieved_at": "2026-10-12T09:17:11Z",
+      "historical_vintage_qualified": false,
+      "currency": "USD",
+      "price_basis": "split_adjusted_as_retrieved",
+      "quantity_or_action": false,
+      "lookback_sessions": 20,
+      "lookback": {
+        "date": "2024-01-25",
+        "close": 49.54999923706055
+      },
+      "t0": {
+        "date": "2024-02-23",
+        "close": 42.9900016784668
+      },
+      "reported_T0_price_unit_factor": 1,
+      "unit_conversion_caveat": "No explicit scale conversion"
+    },
+    {
+      "symbol": "SPY",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits",
+      "source_sha256": "4b053bff17b528b0dc368aa88ad1e66fe54fb97abca60dbe2d0f8e2d6e096095",
+      "retrieved_at": "2026-10-12T09:17:11Z",
+      "historical_vintage_qualified": false,
+      "currency": "USD",
+      "price_basis": "split_adjusted_as_retrieved",
+      "quantity_or_action": false,
+      "lookback_sessions": 20,
+      "lookback": {
+        "date": "2024-01-25",
+        "close": 488.0299987792969
+      },
+      "t0": {
+        "date": "2024-02-23",
+        "close": 507.8500061035156
+      },
+      "reported_T0_price_unit_factor": 1,
+      "unit_conversion_caveat": "No explicit scale conversion"
+    }
+  ]
+}

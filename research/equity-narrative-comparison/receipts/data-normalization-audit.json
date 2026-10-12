@@ -1,0 +1,13 @@
+{
+  "recorded_at": "2026-10-12T09:40:13.013755+00:00",
+  "affected_file": "benchmark/financial-inputs.json",
+  "affected_field": "records[AMD].t0_risks_and_gaps[0]",
+  "previous_normalized_sha256": "66352280de497c3f7b3c45a4e5e50ae207d1e739d365b6914d0ea6ed85cea522",
+  "corrected_normalized_sha256": "a3fe9edf6a8eace1c6cb388e670cb9f2bd1e32c6a896351486f12e9d53d6c487",
+  "previous_text": "GAAP gross-margin guidance is unavailable: use null; do not compare 52% non-GAAP guidance with 47% GAAP actual.",
+  "corrected_text": "GAAP gross-margin guidance is unavailable: retain null. The approximately 52% outlook is non-GAAP and cannot be used as a GAAP forecast.",
+  "numeric_inputs_changed": false,
+  "forecast_or_scoring_rules_changed": false,
+  "reason": "Remove ambiguous outcome-referencing prose from a T0 risk note; no numerical inputs or frozen research rules changed.",
+  "consumed_by_prepare": false
+}

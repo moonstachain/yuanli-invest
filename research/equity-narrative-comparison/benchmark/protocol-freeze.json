@@ -1,0 +1,8 @@
+{
+  "protocol_sha256": "10d70ddcbc5479e075c19e1e752788c9336003a3e4f73950526e717c9e7a6f70",
+  "settings_sha256": "ea0fb9caf4ab57b50022480bc3c410fb4f850347ad27f9b7f997afe3a2d65558",
+  "frozen_at": "2026-10-12T09:21:54Z",
+  "mode": "retrospective_rule_freeze_not_historical_preregistration",
+  "protocol_declared_at": "2026-10-12T09:17:11Z",
+  "before_candidate_runner_execution": true
+}

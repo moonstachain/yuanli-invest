@@ -1,0 +1,2928 @@
+{
+  "targets": [
+    {
+      "target_id": "RT-EN-NVDA",
+      "schema_version": "2.0.0",
+      "target_type": "company",
+      "canonical_name": "NVIDIA Corporation",
+      "asset_form": "listed_common_equity",
+      "primary_market": "NASDAQ",
+      "currency": "USD",
+      "identifiers": {
+        "ticker": "NVDA"
+      },
+      "active_status": "candidate",
+      "created_at": "2026-10-12T09:17:11Z",
+      "authority": {
+        "thesis_authority": false,
+        "capital_authority": false,
+        "trading_authority": false
+      }
+    },
+    {
+      "target_id": "RT-EN-AMD",
+      "schema_version": "2.0.0",
+      "target_type": "company",
+      "canonical_name": "Advanced Micro Devices, Inc.",
+      "asset_form": "listed_common_equity",
+      "primary_market": "NASDAQ",
+      "currency": "USD",
+      "identifiers": {
+        "ticker": "AMD"
+      },
+      "active_status": "candidate",
+      "created_at": "2026-10-12T09:17:11Z",
+      "authority": {
+        "thesis_authority": false,
+        "capital_authority": false,
+        "trading_authority": false
+      }
+    },
+    {
+      "target_id": "RT-EN-INTC",
+      "schema_version": "2.0.0",
+      "target_type": "company",
+      "canonical_name": "Intel Corporation",
+      "asset_form": "listed_common_equity",
+      "primary_market": "NASDAQ",
+      "currency": "USD",
+      "identifiers": {
+        "ticker": "INTC"
+      },
+      "active_status": "candidate",
+      "created_at": "2026-10-12T09:17:11Z",
+      "authority": {
+        "thesis_authority": false,
+        "capital_authority": false,
+        "trading_authority": false
+      }
+    }
+  ],
+  "engine_theses": [
+    {
+      "engine_thesis_id": "ET-EN-NVDA-C",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-NVDA",
+      "identity_core": {
+        "primary_engine": "ENG-C",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "cash_flow_compounding_from_reinvestment_above_capital_cost"
+        ],
+        "time_horizon": "3_to_5_years",
+        "thesis_statement": "NVDA：若持续价值获取与增量资本回报得到验证，再投资可形成现金流复利。",
+        "causal_mechanism": "经营现金生成、必要再投资与单位股权现金流增长；本轮一季数据不证明长期复利。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [
+          "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+        ],
+        "counter_refs": [
+          "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-NVDA"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-NVDA-C-01",
+          "EN-FALSIFIER-NVDA-C-02",
+          "EN-FALSIFIER-NVDA-C-03"
+        ],
+        "challenge_conditions": [
+          "增量资本回报持续低于资本成本",
+          "增长依赖不可持续融资或股权稀释",
+          "原定价值获取机制被可核实的竞争证据推翻"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    },
+    {
+      "engine_thesis_id": "ET-EN-NVDA-R",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-NVDA",
+      "identity_core": {
+        "primary_engine": "ENG-R",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "repricing_from_independently_evidenced_expectation_revision"
+        ],
+        "time_horizon": "60_trading_sessions",
+        "thesis_statement": "NVDA：若有带时间戳的预期变化、独立扩散证据和相符的价格反应，可检验预期重估机制。",
+        "causal_mechanism": "经营信息改变市场预期，并通过独立可观测的传播或持仓渠道进入价格。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [
+          "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+        ],
+        "counter_refs": [
+          "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-NVDA"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-NVDA-R-01",
+          "EN-FALSIFIER-NVDA-R-02",
+          "EN-FALSIFIER-NVDA-R-03"
+        ],
+        "challenge_conditions": [
+          "60 个交易日内未补齐独立预期变化与扩散证据",
+          "价格变化可由共同市场因子或折现变化解释且无增量预期证据",
+          "经营兑现与原假说方向矛盾；缺失披露保留未知"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    },
+    {
+      "engine_thesis_id": "ET-EN-NVDA-X",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-NVDA",
+      "identity_core": {
+        "primary_engine": "ENG-X",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "instrument_specific_convex_payoff_under_declared_tail_condition"
+        ],
+        "time_horizon": "instrument_specific",
+        "thesis_statement": "NVDA：只有确定工具、成本、到期日和非线性收益结构后，才能研究凸性来源。",
+        "causal_mechanism": "工具的收益几何与尾部情景共同决定凸性；普通股票上涨潜力不构成工具证据。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [],
+        "counter_refs": [
+          "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-NVDA"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-NVDA-X-01",
+          "EN-FALSIFIER-NVDA-X-02",
+          "EN-FALSIFIER-NVDA-X-03"
+        ],
+        "challenge_conditions": [
+          "成本或融资要求破坏原收益不对称",
+          "到期前尾部条件未出现",
+          "实际工具收益结构不具备所声称的凸性"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    },
+    {
+      "engine_thesis_id": "ET-EN-AMD-C",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-AMD",
+      "identity_core": {
+        "primary_engine": "ENG-C",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "cash_flow_compounding_from_reinvestment_above_capital_cost"
+        ],
+        "time_horizon": "3_to_5_years",
+        "thesis_statement": "AMD：若持续价值获取与增量资本回报得到验证，再投资可形成现金流复利。",
+        "causal_mechanism": "经营现金生成、必要再投资与单位股权现金流增长；本轮一季数据不证明长期复利。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [
+          "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+        ],
+        "counter_refs": [
+          "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-AMD"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-AMD-C-01",
+          "EN-FALSIFIER-AMD-C-02",
+          "EN-FALSIFIER-AMD-C-03"
+        ],
+        "challenge_conditions": [
+          "增量资本回报持续低于资本成本",
+          "增长依赖不可持续融资或股权稀释",
+          "原定价值获取机制被可核实的竞争证据推翻"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    },
+    {
+      "engine_thesis_id": "ET-EN-AMD-R",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-AMD",
+      "identity_core": {
+        "primary_engine": "ENG-R",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "repricing_from_independently_evidenced_expectation_revision"
+        ],
+        "time_horizon": "60_trading_sessions",
+        "thesis_statement": "AMD：若有带时间戳的预期变化、独立扩散证据和相符的价格反应，可检验预期重估机制。",
+        "causal_mechanism": "经营信息改变市场预期，并通过独立可观测的传播或持仓渠道进入价格。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [
+          "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+        ],
+        "counter_refs": [
+          "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-AMD"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-AMD-R-01",
+          "EN-FALSIFIER-AMD-R-02",
+          "EN-FALSIFIER-AMD-R-03"
+        ],
+        "challenge_conditions": [
+          "60 个交易日内未补齐独立预期变化与扩散证据",
+          "价格变化可由共同市场因子或折现变化解释且无增量预期证据",
+          "经营兑现与原假说方向矛盾；缺失披露保留未知"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    },
+    {
+      "engine_thesis_id": "ET-EN-AMD-X",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-AMD",
+      "identity_core": {
+        "primary_engine": "ENG-X",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "instrument_specific_convex_payoff_under_declared_tail_condition"
+        ],
+        "time_horizon": "instrument_specific",
+        "thesis_statement": "AMD：只有确定工具、成本、到期日和非线性收益结构后，才能研究凸性来源。",
+        "causal_mechanism": "工具的收益几何与尾部情景共同决定凸性；普通股票上涨潜力不构成工具证据。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [],
+        "counter_refs": [
+          "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-AMD"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-AMD-X-01",
+          "EN-FALSIFIER-AMD-X-02",
+          "EN-FALSIFIER-AMD-X-03"
+        ],
+        "challenge_conditions": [
+          "成本或融资要求破坏原收益不对称",
+          "到期前尾部条件未出现",
+          "实际工具收益结构不具备所声称的凸性"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    },
+    {
+      "engine_thesis_id": "ET-EN-INTC-C",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-INTC",
+      "identity_core": {
+        "primary_engine": "ENG-C",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "cash_flow_compounding_from_reinvestment_above_capital_cost"
+        ],
+        "time_horizon": "3_to_5_years",
+        "thesis_statement": "INTC：若持续价值获取与增量资本回报得到验证，再投资可形成现金流复利。",
+        "causal_mechanism": "经营现金生成、必要再投资与单位股权现金流增长；本轮一季数据不证明长期复利。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [
+          "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+        ],
+        "counter_refs": [
+          "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-INTC"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-INTC-C-01",
+          "EN-FALSIFIER-INTC-C-02",
+          "EN-FALSIFIER-INTC-C-03"
+        ],
+        "challenge_conditions": [
+          "增量资本回报持续低于资本成本",
+          "增长依赖不可持续融资或股权稀释",
+          "原定价值获取机制被可核实的竞争证据推翻"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    },
+    {
+      "engine_thesis_id": "ET-EN-INTC-R",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-INTC",
+      "identity_core": {
+        "primary_engine": "ENG-R",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "repricing_from_independently_evidenced_expectation_revision"
+        ],
+        "time_horizon": "60_trading_sessions",
+        "thesis_statement": "INTC：若有带时间戳的预期变化、独立扩散证据和相符的价格反应，可检验预期重估机制。",
+        "causal_mechanism": "经营信息改变市场预期，并通过独立可观测的传播或持仓渠道进入价格。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [
+          "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+        ],
+        "counter_refs": [
+          "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-INTC"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-INTC-R-01",
+          "EN-FALSIFIER-INTC-R-02",
+          "EN-FALSIFIER-INTC-R-03"
+        ],
+        "challenge_conditions": [
+          "60 个交易日内未补齐独立预期变化与扩散证据",
+          "价格变化可由共同市场因子或折现变化解释且无增量预期证据",
+          "经营兑现与原假说方向矛盾；缺失披露保留未知"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    },
+    {
+      "engine_thesis_id": "ET-EN-INTC-X",
+      "schema_version": "1.0.0",
+      "target_id": "RT-EN-INTC",
+      "identity_core": {
+        "primary_engine": "ENG-X",
+        "thesis_origin": "2026_retrospective_candidate_not_a_2024_opened_thesis",
+        "opened_at": "2026-10-12T09:17:11Z"
+      },
+      "research_contract": {
+        "source_of_return": [
+          "instrument_specific_convex_payoff_under_declared_tail_condition"
+        ],
+        "time_horizon": "instrument_specific",
+        "thesis_statement": "INTC：只有确定工具、成本、到期日和非线性收益结构后，才能研究凸性来源。",
+        "causal_mechanism": "工具的收益几何与尾部情景共同决定凸性；普通股票上涨潜力不构成工具证据。",
+        "price_semantics": "conditional_implied_region_and_separate_observed_price_evidence"
+      },
+      "evidence": {
+        "supporting_refs": [],
+        "counter_refs": [
+          "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial"
+        ],
+        "capability_output_refs": [
+          "RESULT-EN-V-INTC"
+        ],
+        "primitive_state_refs": [],
+        "recorded_at": "2026-10-12T09:18:55.894709+00:00",
+        "known_as_of": "2024-02-23T21:00:00Z",
+        "knowledge_cutoff": "2024-02-23T21:00:00Z",
+        "replay_cutoff": "2024-02-23T21:00:00Z"
+      },
+      "falsification": {
+        "falsifier_refs": [
+          "EN-FALSIFIER-INTC-X-01",
+          "EN-FALSIFIER-INTC-X-02",
+          "EN-FALSIFIER-INTC-X-03"
+        ],
+        "challenge_conditions": [
+          "成本或融资要求破坏原收益不对称",
+          "到期前尾部条件未出现",
+          "实际工具收益结构不具备所声称的凸性"
+        ]
+      },
+      "lifecycle": {
+        "status": "draft",
+        "revision": 1,
+        "as_of": "2026-10-12T09:17:11Z",
+        "valid_from": "2026-10-12T09:17:11Z",
+        "revision_reason": "Initial retrospective evidence-gap candidate; no promotion."
+      },
+      "authority": {
+        "capital_authority": false,
+        "portfolio_weight_authority": false,
+        "trading_authority": false,
+        "live_execution_authority": false
+      }
+    }
+  ],
+  "invocations": [
+    {
+      "request_id": "RUN-EN-V-NVDA",
+      "capability_id": "CAP-V-01",
+      "capability_version": "0.1.0",
+      "target_id": "RT-EN-NVDA",
+      "as_of": "2024-02-23T21:00:00Z",
+      "runtime": "reference_quant",
+      "input_mode": "provided",
+      "strict_pit": true,
+      "parameters": {
+        "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+        "input_vintage_mode": "reconstructed",
+        "diagnostics_only_when_PIT_provisional": true
+      },
+      "requested_output_schema": "PriceImpliedExpectationState"
+    },
+    {
+      "request_id": "RUN-EN-V-AMD",
+      "capability_id": "CAP-V-01",
+      "capability_version": "0.1.0",
+      "target_id": "RT-EN-AMD",
+      "as_of": "2024-02-23T21:00:00Z",
+      "runtime": "reference_quant",
+      "input_mode": "provided",
+      "strict_pit": true,
+      "parameters": {
+        "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+        "input_vintage_mode": "reconstructed",
+        "diagnostics_only_when_PIT_provisional": true
+      },
+      "requested_output_schema": "PriceImpliedExpectationState"
+    },
+    {
+      "request_id": "RUN-EN-V-INTC",
+      "capability_id": "CAP-V-01",
+      "capability_version": "0.1.0",
+      "target_id": "RT-EN-INTC",
+      "as_of": "2024-02-23T21:00:00Z",
+      "runtime": "reference_quant",
+      "input_mode": "provided",
+      "strict_pit": true,
+      "parameters": {
+        "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+        "input_vintage_mode": "reconstructed",
+        "diagnostics_only_when_PIT_provisional": true
+      },
+      "requested_output_schema": "PriceImpliedExpectationState"
+    }
+  ],
+  "input_bundles": [
+    {
+      "bundle_id": "BUNDLE-EN-V-NVDA",
+      "request_id": "RUN-EN-V-NVDA",
+      "capability_id": "CAP-V-01",
+      "target_id": "RT-EN-NVDA",
+      "as_of": "2024-02-23T21:00:00Z",
+      "observations": [
+        {
+          "observation_type": "issuer_financials",
+          "record": {
+            "ticker": "NVDA",
+            "input_source_id": "nvda_t0",
+            "source_sha256": "00c198e3f22b5f1ea20b4adbb93d0d5aad05163b1e66c3b740606f40720145ab",
+            "source_published_date": "2024-02-21",
+            "known_available_at": "2024-02-21T16:22:09-05:00",
+            "latest_quarter": {
+              "period_label": "FY2024_Q4",
+              "period_end": "2024-01-28",
+              "revenue_usd_million": 22103,
+              "gaap_gross_margin_ratio": 0.76,
+              "non_gaap_gross_margin_ratio": 0.767,
+              "gaap_net_income_attributable_usd_million": 12285,
+              "margin_precision_ratio": 0.001
+            },
+            "fiscal_year": {
+              "period_label": "FY2024",
+              "period_end": "2024-01-28",
+              "revenue_usd_million": 60922,
+              "gaap_net_income_attributable_usd_million": 29760,
+              "gaap_diluted_eps_usd": 11.93,
+              "ocf_usd_million": 28090,
+              "cash_purchases_ppe_and_intangibles_usd_million": 1069,
+              "principal_ppe_and_intangibles_payments_usd_million": 74,
+              "issuer_fcf_usd_million": 26947,
+              "issuer_fcf_label": "Free cash flow (non-GAAP)",
+              "issuer_fcf_definition": "GAAP operating cash flow minus purchases related to property/equipment/intangible assets and principal payments on those assets.",
+              "equity_free_cash_flow_identity_asserted": false,
+              "diluted_weighted_average_shares_million": 2494,
+              "shares_basis": "ANNUAL_DILUTED_WEIGHTED_AVERAGE_NOT_T0_SHARES_OUTSTANDING",
+              "share_unit_note": "As reported in the historical release; no subsequent split normalization applied.",
+              "cash_capital_purchase_component_key": "cash_purchases_ppe_and_intangibles_usd_million",
+              "ocf_minus_cash_capital_purchases_proxy_usd_million": 27021,
+              "ocf_minus_cash_capital_purchases_proxy_usd_per_annual_diluted_share": 10.834402566158781,
+              "cash_flow_proxy_definition": "Reported operating cash flow less the specified cash capital purchase line. Derived arithmetic proxy, not issuer-defined FCF, unlevered FCFF or an exact distributable equity cash flow. No financing, interest, tax or share dilution model is imposed.",
+              "cash_flow_proxy_is_unlevered_fcff": false
+            },
+            "guidance": {
+              "target_period_label": "FY2025_Q1",
+              "target_period_end": null,
+              "target_period_end_note": "Fiscal-quarter key is the prediction target; realized period end is kept only in outcomes.json.",
+              "revenue_low_usd_million": 23520,
+              "revenue_mid_usd_million": 24000,
+              "revenue_high_usd_million": 24480,
+              "revenue_basis": "GAAP_REVENUE_NO_NON_GAAP_ADJUSTMENT",
+              "gaap_gross_margin_mid_ratio": 0.763,
+              "non_gaap_gross_margin_mid_ratio": 0.77,
+              "gaap_gross_margin_low_ratio": 0.758,
+              "gaap_gross_margin_high_ratio": 0.768,
+              "non_gaap_gross_margin_low_ratio": 0.765,
+              "non_gaap_gross_margin_high_ratio": 0.775
+            },
+            "source_locators": {
+              "latest_quarter": "Q4 Fiscal 2024 Summary, GAAP and Non-GAAP tables",
+              "fiscal_year": "Fiscal 2024 Summary; Reconciliation of GAAP to Non-GAAP Financial Measures, FY24 column",
+              "guidance": "Outlook, first quarter of fiscal 2025; revenue +/-2%, gross margins +/-50 basis points",
+              "source_cash_flow_definition": "Non-GAAP Measures paragraph and FCF reconciliation rows",
+              "annual_diluted_weighted_average_shares": "Condensed Consolidated Statements of Income; Weighted average shares used in per share computation; Diluted; twelve months ended January 28, 2024 (annual current-period column). Original release share units."
+            },
+            "t0_risks_and_gaps": [
+              "Issuer demand outlook is a forward-looking statement, not an external estimate of attention or terminal market share.",
+              "Release EPS and weighted-average shares use the original release units; any price-based exercise must use matching units and distinguish annual weighted-average shares from current shares outstanding.",
+              "Fixed next-quarter guidance does not identify terminal revenue, sustainable margin, reinvestment or discount rate."
+            ],
+            "price_and_attention_features": {
+              "historical_price_snapshot": null,
+              "attention_series": null,
+              "note": "Not supplied by this official financial data subtask; no current value is used to fill history."
+            }
+          }
+        },
+        {
+          "observation_type": "historical_price",
+          "record": {
+            "symbol": "NVDA",
+            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits",
+            "source_sha256": "7d5535e1b4882cbd565face72b58578b48f0a0c6726a27a63470071553fd108d",
+            "retrieved_at": "2026-10-12T09:17:11Z",
+            "historical_vintage_qualified": false,
+            "currency": "USD",
+            "price_basis": "split_adjusted_as_retrieved",
+            "quantity_or_action": false,
+            "lookback_sessions": 20,
+            "lookback": {
+              "date": "2024-01-25",
+              "close": 61.617000579833984
+            },
+            "t0": {
+              "date": "2024-02-23",
+              "close": 78.81700134277344
+            },
+            "reported_T0_price_unit_factor": 10,
+            "unit_conversion_caveat": "NVDA June 2024 ten-for-one split reversed for T0 cashflow/share comparison; vendor history remains provisional"
+          }
+        }
+      ],
+      "input_manifest_hash": "sha256:908ce34f5922390a190395ef8ac717d8c0c838150ec3bb3f59fb6604668d1cd8",
+      "pit_status": "provisional",
+      "warnings": [
+        "Current historical archives are not an original T0 vintage.",
+        "Price close publication latency and adjustment vintage are not historically attested."
+      ]
+    },
+    {
+      "bundle_id": "BUNDLE-EN-V-AMD",
+      "request_id": "RUN-EN-V-AMD",
+      "capability_id": "CAP-V-01",
+      "target_id": "RT-EN-AMD",
+      "as_of": "2024-02-23T21:00:00Z",
+      "observations": [
+        {
+          "observation_type": "issuer_financials",
+          "record": {
+            "ticker": "AMD",
+            "input_source_id": "amd_t0",
+            "source_sha256": "4590660edb41b5cd285684468e520d6f7ad84e4f045d3b60c8ecd67f303ce894",
+            "source_published_date": "2024-01-30",
+            "known_available_at": "2024-01-30T16:16:19-05:00",
+            "latest_quarter": {
+              "period_label": "FY2023_Q4",
+              "period_end": "2023-12-30",
+              "revenue_usd_million": 6168,
+              "gaap_gross_margin_ratio": 0.47,
+              "non_gaap_gross_margin_ratio": 0.51,
+              "gaap_net_income_attributable_usd_million": 667,
+              "margin_precision_ratio": 0.01
+            },
+            "fiscal_year": {
+              "period_label": "FY2023",
+              "period_end": "2023-12-30",
+              "revenue_usd_million": 22680,
+              "gaap_net_income_attributable_usd_million": 854,
+              "gaap_diluted_eps_usd": 0.53,
+              "ocf_usd_million": 1667,
+              "cash_purchases_ppe_usd_million": 546,
+              "issuer_fcf_usd_million": 1121,
+              "issuer_fcf_label": "Free cash flow (non-GAAP)",
+              "issuer_fcf_definition": "GAAP operating cash flow minus purchases of property and equipment.",
+              "equity_free_cash_flow_identity_asserted": false,
+              "diluted_weighted_average_shares_million": 1625,
+              "shares_basis": "ANNUAL_DILUTED_WEIGHTED_AVERAGE_NOT_T0_SHARES_OUTSTANDING",
+              "share_unit_note": "As reported in the historical release; no subsequent split normalization applied.",
+              "cash_capital_purchase_component_key": "cash_purchases_ppe_usd_million",
+              "ocf_minus_cash_capital_purchases_proxy_usd_million": 1121,
+              "ocf_minus_cash_capital_purchases_proxy_usd_per_annual_diluted_share": 0.6898461538461539,
+              "cash_flow_proxy_definition": "Reported operating cash flow less the specified cash capital purchase line. Derived arithmetic proxy, not issuer-defined FCF, unlevered FCFF or an exact distributable equity cash flow. No financing, interest, tax or share dilution model is imposed.",
+              "cash_flow_proxy_is_unlevered_fcff": false
+            },
+            "guidance": {
+              "target_period_label": "FY2024_Q1",
+              "target_period_end": null,
+              "target_period_end_note": "Fiscal-quarter key is the prediction target; realized period end is kept only in outcomes.json.",
+              "revenue_low_usd_million": 5100,
+              "revenue_mid_usd_million": 5400,
+              "revenue_high_usd_million": 5700,
+              "revenue_basis": "GAAP_REVENUE_NO_NON_GAAP_ADJUSTMENT",
+              "gaap_gross_margin_mid_ratio": null,
+              "non_gaap_gross_margin_mid_ratio": 0.52,
+              "gaap_gross_margin_low_ratio": null,
+              "gaap_gross_margin_high_ratio": null,
+              "non_gaap_gross_margin_low_ratio": null,
+              "non_gaap_gross_margin_high_ratio": null
+            },
+            "source_locators": {
+              "latest_quarter": "GAAP Quarterly Financial Results, Q4 2023; Non-GAAP Quarterly Financial Results",
+              "fiscal_year": "Annual Financial Results, FY2023; Reconciliation of GAAP Net Cash Provided by Operating Activities to Free Cash Flow, FY2023 column",
+              "guidance": "Current Outlook, first quarter of 2024; +/-USD300 million and approximately 52% non-GAAP gross margin",
+              "missing_gaap_guidance": "Forward-looking non-GAAP measures paragraph: equivalent GAAP reconciliation is not practicable because adjustments depend on uncertain future events",
+              "annual_diluted_weighted_average_shares": "Condensed Consolidated Statements of Operations; Shares used in per share calculation; Diluted; year ended December 30, 2023 (fourth numeric column)."
+            },
+            "t0_risks_and_gaps": [
+              "GAAP gross-margin guidance is unavailable: retain null. The approximately 52% outlook is non-GAAP and cannot be used as a GAAP forecast.",
+              "Issuer expects Data Center flat sequentially despite GPU ramp, while Client, Embedded and Gaming revenue decline sequentially.",
+              "Company-wide revenue is not a pure measure of AI GPU revenue."
+            ],
+            "price_and_attention_features": {
+              "historical_price_snapshot": null,
+              "attention_series": null,
+              "note": "Not supplied by this official financial data subtask; no current value is used to fill history."
+            }
+          }
+        },
+        {
+          "observation_type": "historical_price",
+          "record": {
+            "symbol": "AMD",
+            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/AMD?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits",
+            "source_sha256": "04b98ea3ea1519b38aba9923dab42d52b9d7336f204786d3b62646b6ed8ccb29",
+            "retrieved_at": "2026-10-12T09:17:11Z",
+            "historical_vintage_qualified": false,
+            "currency": "USD",
+            "price_basis": "split_adjusted_as_retrieved",
+            "quantity_or_action": false,
+            "lookback_sessions": 20,
+            "lookback": {
+              "date": "2024-01-25",
+              "close": 180.3300018310547
+            },
+            "t0": {
+              "date": "2024-02-23",
+              "close": 176.52000427246094
+            },
+            "reported_T0_price_unit_factor": 1,
+            "unit_conversion_caveat": "No explicit scale conversion"
+          }
+        }
+      ],
+      "input_manifest_hash": "sha256:1c9a32a73b42e6fd048dd3c43ca2ef066dd35d904c79a27d5de238ce89553f7e",
+      "pit_status": "provisional",
+      "warnings": [
+        "Current historical archives are not an original T0 vintage.",
+        "Price close publication latency and adjustment vintage are not historically attested."
+      ]
+    },
+    {
+      "bundle_id": "BUNDLE-EN-V-INTC",
+      "request_id": "RUN-EN-V-INTC",
+      "capability_id": "CAP-V-01",
+      "target_id": "RT-EN-INTC",
+      "as_of": "2024-02-23T21:00:00Z",
+      "observations": [
+        {
+          "observation_type": "issuer_financials",
+          "record": {
+            "ticker": "INTC",
+            "input_source_id": "intc_t0",
+            "source_sha256": "a30dd440841917dea54cc5ad351e68c15b0809b0f232aef90addf5b19f352043",
+            "source_published_date": "2024-01-25",
+            "known_available_at": "2024-01-25T16:01:00-05:00",
+            "latest_quarter": {
+              "period_label": "FY2023_Q4",
+              "period_end": "2023-12-30",
+              "revenue_usd_million": 15406,
+              "gaap_gross_margin_ratio": 0.457,
+              "non_gaap_gross_margin_ratio": 0.488,
+              "gaap_net_income_attributable_usd_million": 2669,
+              "margin_precision_ratio": 0.001
+            },
+            "fiscal_year": {
+              "period_label": "FY2023",
+              "period_end": "2023-12-30",
+              "revenue_usd_million": 54228,
+              "gaap_net_income_attributable_usd_million": 1689,
+              "gaap_diluted_eps_usd": 0.4,
+              "ocf_usd_million": 11471,
+              "cash_additions_ppe_gross_usd_million": 25750,
+              "cash_additions_ppe_net_usd_million": 23228,
+              "finance_lease_payments_usd_million": 96,
+              "issuer_fcf_usd_million": -11853,
+              "issuer_fcf_label": "Adjusted free cash flow (non-GAAP)",
+              "issuer_fcf_definition": "Operating cash flow minus additions to PPE net of capital grants/partner contributions and finance lease payments; issuer reconciliation also adjusts McAfee equity sale proceeds, zero in FY2023.",
+              "derived_ocf_minus_gross_ppe_usd_million": -14279,
+              "equity_free_cash_flow_identity_asserted": false,
+              "diluted_weighted_average_shares_million": 4212,
+              "shares_basis": "ANNUAL_DILUTED_WEIGHTED_AVERAGE_NOT_T0_SHARES_OUTSTANDING",
+              "share_unit_note": "As reported in the historical release; no subsequent split normalization applied.",
+              "cash_capital_purchase_component_key": "cash_additions_ppe_gross_usd_million",
+              "ocf_minus_cash_capital_purchases_proxy_usd_million": -14279,
+              "ocf_minus_cash_capital_purchases_proxy_usd_per_annual_diluted_share": -3.390075973409307,
+              "cash_flow_proxy_definition": "Reported operating cash flow less the specified cash capital purchase line. Derived arithmetic proxy, not issuer-defined FCF, unlevered FCFF or an exact distributable equity cash flow. No financing, interest, tax or share dilution model is imposed.",
+              "cash_flow_proxy_is_unlevered_fcff": false,
+              "accounting_estimate_change": {
+                "effective_date": "2023-01",
+                "production_equipment_useful_life_years_before": 5,
+                "production_equipment_useful_life_years_after": 8,
+                "estimated_fy2023_depreciation_expense_reduction_usd_million": 4200,
+                "estimated_fy2023_gross_profit_increase_usd_million": 2500,
+                "source_description": "Issuer estimate relative to year-end 2022 useful-life assumptions; not a restatement performed by this experiment."
+              }
+            },
+            "guidance": {
+              "target_period_label": "FY2024_Q1",
+              "target_period_end": null,
+              "target_period_end_note": "Fiscal-quarter key is the prediction target; realized period end is kept only in outcomes.json.",
+              "revenue_low_usd_million": 12200,
+              "revenue_mid_usd_million": 12700,
+              "revenue_high_usd_million": 13200,
+              "revenue_basis": "GAAP_REVENUE_NO_NON_GAAP_ADJUSTMENT",
+              "gaap_gross_margin_mid_ratio": 0.407,
+              "non_gaap_gross_margin_mid_ratio": 0.445,
+              "gaap_gross_margin_low_ratio": null,
+              "gaap_gross_margin_high_ratio": null,
+              "non_gaap_gross_margin_low_ratio": null,
+              "non_gaap_gross_margin_high_ratio": null
+            },
+            "source_locators": {
+              "latest_quarter": "Q4 2023 Financial Results, GAAP/non-GAAP; Consolidated Statements of Income, three months ended Dec 30, 2023, for exact revenue and parent net income",
+              "fiscal_year": "Consolidated Statements of Income and Cash Flows, year ended Dec 30, 2023; adjusted FCF reconciliation",
+              "guidance": "Business Outlook, Q1 2024; gross margin and EPS based on revenue midpoint",
+              "fcf_definition": "Explanation of Non-GAAP Measures: Adjusted free cash flow",
+              "annual_diluted_weighted_average_shares": "Consolidated Statements of Income; Weighted average shares of common stock outstanding; Diluted; year ended December 30, 2023 (third numeric column). Not the separate quarterly diluted-share reconciliation.",
+              "accounting_estimate_change": "Consolidated Statements of Income, Other information, paragraph beginning Effective January 2023."
+            },
+            "t0_risks_and_gaps": [
+              "FY2023 cash additions to PPE exceed operating cash flow; net income cannot be substituted for distributable equity cash flow.",
+              "Adjusted FCF uses net capex and other adjustments; do not treat it as the same definition as NVDA or AMD FCF.",
+              "Intel is an integrated manufacturer with substantial foundry investment, unlike fabless peers.",
+              "No post-T0 restated segment history is imported.",
+              "The release discloses a January 2023 change in estimated production-equipment useful life from five to eight years; management estimates FY2023 depreciation fell by USD4,200 million and gross profit increased by USD2,500 million relative to the previous life estimate. Reported gross margin is affected by this accounting estimate, not solely economic improvement."
+            ],
+            "price_and_attention_features": {
+              "historical_price_snapshot": null,
+              "attention_series": null,
+              "note": "Not supplied by this official financial data subtask; no current value is used to fill history."
+            }
+          }
+        },
+        {
+          "observation_type": "historical_price",
+          "record": {
+            "symbol": "INTC",
+            "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/INTC?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits",
+            "source_sha256": "93e39992499bd0e14225ddb60936d1f76d64b1db68393917faeb190fff13158e",
+            "retrieved_at": "2026-10-12T09:17:11Z",
+            "historical_vintage_qualified": false,
+            "currency": "USD",
+            "price_basis": "split_adjusted_as_retrieved",
+            "quantity_or_action": false,
+            "lookback_sessions": 20,
+            "lookback": {
+              "date": "2024-01-25",
+              "close": 49.54999923706055
+            },
+            "t0": {
+              "date": "2024-02-23",
+              "close": 42.9900016784668
+            },
+            "reported_T0_price_unit_factor": 1,
+            "unit_conversion_caveat": "No explicit scale conversion"
+          }
+        }
+      ],
+      "input_manifest_hash": "sha256:b8d5cb1a7efb1ecc22c50fadabceca880b7c86edec8926327faba11f0fac1df8",
+      "pit_status": "provisional",
+      "warnings": [
+        "Current historical archives are not an original T0 vintage.",
+        "Price close publication latency and adjustment vintage are not historically attested."
+      ]
+    }
+  ],
+  "capability_results": [
+    {
+      "result_id": "RESULT-EN-V-NVDA",
+      "request_id": "RUN-EN-V-NVDA",
+      "capability_id": "CAP-V-01",
+      "target_id": "RT-EN-NVDA",
+      "as_of": "2024-02-23T21:00:00Z",
+      "status": "partial",
+      "metrics": {
+        "conditional_grid_solutions": 54
+      },
+      "state": {
+        "state_type": "PriceImpliedExpectationState",
+        "model_family": "finite_equity_cashflow_inversion",
+        "identification_status": "underidentified",
+        "uncertainty_semantics": "joint_assumption_grid_not_probability_or_confidence_interval",
+        "assumption_regions": [
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5430720803056481,
+            "terminal_cashflow_multiple": 8.74844905153735,
+            "relative_identity_residual": 1.4424151615105784e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.4721983421389063,
+            "terminal_cashflow_multiple": 6.915627962621645,
+            "relative_identity_residual": 5.769660646042313e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.4163973467419523,
+            "terminal_cashflow_multiple": 5.700665030577926,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.46227834113947763,
+            "terminal_cashflow_multiple": 6.685751600446647,
+            "relative_identity_residual": 7.212075807552892e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.39552549912667,
+            "terminal_cashflow_multiple": 5.292841414746616,
+            "relative_identity_residual": 1.4424151615105784e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.34298307808632755,
+            "terminal_cashflow_multiple": 4.368704826857919,
+            "relative_identity_residual": 4.3272454845317356e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.27096855789340124,
+            "terminal_cashflow_multiple": 10.998869977012175,
+            "relative_identity_residual": 1.1539321292084627e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.23977882704663311,
+            "terminal_cashflow_multiple": 8.579108333199857,
+            "relative_identity_residual": 1.1539321292084627e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.2145577753932847,
+            "terminal_cashflow_multiple": 6.985247301207412,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.24023439038764305,
+            "terminal_cashflow_multiple": 8.610684902480001,
+            "relative_identity_residual": 1.1539321292084627e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.21014076006501348,
+            "terminal_cashflow_multiple": 6.735330190712801,
+            "relative_identity_residual": 1.4424151615105784e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.18582178252701775,
+            "terminal_cashflow_multiple": 5.4978670943900845,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.19190255922559685,
+            "terminal_cashflow_multiple": 13.919104142906175,
+            "relative_identity_residual": 1.4424151615105785e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.17131660104821822,
+            "terminal_cashflow_multiple": 10.71801791577315,
+            "relative_identity_residual": 1.7308981938126942e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.15445582768983768,
+            "terminal_cashflow_multiple": 8.623028192278342,
+            "relative_identity_residual": 2.3078642584169254e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.17430178955469955,
+            "terminal_cashflow_multiple": 11.135144077855136,
+            "relative_identity_residual": 1.009690613057405e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.15432290698424855,
+            "terminal_cashflow_multiple": 8.608147731059002,
+            "relative_identity_residual": 2.01938122611481e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.1379737156140547,
+            "terminal_cashflow_multiple": 6.949978573078864,
+            "relative_identity_residual": 4.3272454845317356e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.6322450507908897,
+            "terminal_cashflow_multiple": 11.585820673626401,
+            "relative_identity_residual": 1.4424151615105784e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5569053279993794,
+            "terminal_cashflow_multiple": 9.147681273691985,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.4975763578062372,
+            "terminal_cashflow_multiple": 7.532599485806207,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5662986998320199,
+            "terminal_cashflow_multiple": 9.426987628512979,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.49438817856491213,
+            "terminal_cashflow_multiple": 7.452759674139547,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.43777188343771833,
+            "terminal_cashflow_multiple": 6.143981965567169,
+            "relative_identity_residual": 4.3272454845317356e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3165890170107163,
+            "terminal_cashflow_multiple": 15.649565309290212,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.2839923853025438,
+            "terminal_cashflow_multiple": 12.179360392897713,
+            "relative_identity_residual": 5.769660646042313e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.2576214400199114,
+            "terminal_cashflow_multiple": 9.896903288761758,
+            "relative_identity_residual": 1.4424151615105784e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.29251633881599604,
+            "terminal_cashflow_multiple": 13.012490263625066,
+            "relative_identity_residual": 5.769660646042313e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.26082191805810806,
+            "terminal_cashflow_multiple": 10.15167018472081,
+            "relative_identity_residual": 1.1539321292084627e-15
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.23519382219735008,
+            "terminal_cashflow_multiple": 8.267060364979258,
+            "relative_identity_residual": 1.1539321292084627e-15
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.22631213734859357,
+            "terminal_cashflow_multiple": 21.331205533401924,
+            "relative_identity_residual": 1.8751397099637522e-15
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.20488695599404794,
+            "terminal_cashflow_multiple": 16.375498950771714,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.18732825115179785,
+            "terminal_cashflow_multiple": 13.138991212702715,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.2128508811833677,
+            "terminal_cashflow_multiple": 18.076365790994593,
+            "relative_identity_residual": 4.3272454845317356e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.19192403800760094,
+            "terminal_cashflow_multiple": 13.92286707365412,
+            "relative_identity_residual": 2.3078642584169254e-15
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.1747850104060028,
+            "terminal_cashflow_multiple": 11.204073469575373,
+            "relative_identity_residual": 8.654490969063471e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.7126017260025208,
+            "terminal_cashflow_multiple": 14.732684443899613,
+            "relative_identity_residual": 5.769660646042313e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.6332100222983124,
+            "terminal_cashflow_multiple": 11.620108459358406,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5706800051407683,
+            "terminal_cashflow_multiple": 9.559574803111737,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.6564272433220599,
+            "terminal_cashflow_multiple": 12.469867065787916,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5800060271749052,
+            "terminal_cashflow_multiple": 9.846768285393457,
+            "relative_identity_residual": 4.3272454845317356e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5198264598646787,
+            "terminal_cashflow_multiple": 8.109050519471502,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.35837182632007514,
+            "terminal_cashflow_multiple": 21.38881154235269,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.32448402424594447,
+            "terminal_cashflow_multiple": 16.61373361177932,
+            "relative_identity_residual": 1.4424151615105785e-15
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.29705840156964436,
+            "terminal_cashflow_multiple": 13.477064640891228,
+            "relative_identity_residual": 1.4424151615105784e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.33855828003471855,
+            "terminal_cashflow_multiple": 18.466000738421986,
+            "relative_identity_residual": 1.1539321292084627e-15
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3054444498011556,
+            "terminal_cashflow_multiple": 14.374209207611214,
+            "relative_identity_residual": 8.654490969063471e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.27865617720164815,
+            "terminal_cashflow_multiple": 11.68255436118149,
+            "relative_identity_residual": 7.212075807552892e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.25837742140860487,
+            "terminal_cashflow_multiple": 31.41693109688841,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.23617880479714637,
+            "terminal_cashflow_multiple": 24.055777339514815,
+            "relative_identity_residual": 1.1539321292084627e-15
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.21797787090192722,
+            "terminal_cashflow_multiple": 19.257103603011625,
+            "relative_identity_residual": 1.1539321292084627e-15
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.24751989611170744,
+            "terminal_cashflow_multiple": 27.587491391779533,
+            "relative_identity_residual": 5.769660646042313e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.22574675967027413,
+            "terminal_cashflow_multiple": 21.184162909859527,
+            "relative_identity_residual": 2.8848303230211567e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.20790381847943562,
+            "terminal_cashflow_multiple": 17.00142455979751,
+            "relative_identity_residual": 2.3078642584169254e-15
+          }
+        ],
+        "solution_count": 54,
+        "conditional_growth_range": [
+          0.1379737156140547,
+          0.7126017260025208
+        ],
+        "as_of": "2024-02-23T21:00:00Z",
+        "research_only": true,
+        "evidence_refs": [
+          "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/",
+          "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits"
+        ],
+        "cashflow_definition": "OCF_minus_cash_capex_is_not_normalized_FCFE_excludes_net_borrowing_dilution_and_normalization",
+        "share_basis": "annual_diluted_weighted_average_shares_are_a_proxy_not_point_date_market_cap_shares",
+        "price_unit_conversion": "NVDA June 2024 ten-for-one split reversed for T0 cashflow/share comparison; vendor history remains provisional",
+        "model_scope": "conditional_cashflow_growth_not_separately_identified_revenue_margin_or_duration",
+        "reinvestment_assumption": "cashflow_growth_is_after_all_required_reinvestment; proxy_does_not_establish_this",
+        "discount_semantics": "declared_equity_discount_sensitivity_not_estimated_cost_of_equity",
+        "next_evidence_date": "2024-05-31T23:59:59Z"
+      },
+      "uncertainty": {
+        "pit_status": "provisional",
+        "probabilities_calibrated": false,
+        "missing_normalized_cashflow_and_T0_share_count": true
+      },
+      "counterevidence": [
+        "Issuer demand outlook is a forward-looking statement, not an external estimate of attention or terminal market share.",
+        "Release EPS and weighted-average shares use the original release units; any price-based exercise must use matching units and distinguish annual weighted-average shares from current shares outstanding.",
+        "Fixed next-quarter guidance does not identify terminal revenue, sustainable margin, reinvestment or discount rate."
+      ],
+      "falsifiers": [
+        "pricing_identity_does_not_reconcile",
+        "cashflow_proxy_cannot_be_reconciled_to_equity_cashflows",
+        "input_unavailable_at_as_of"
+      ],
+      "warnings": [
+        "Research diagnostics only; strict-PIT qualification has not been met."
+      ],
+      "prohibited_action_fields_absent": true
+    },
+    {
+      "result_id": "RESULT-EN-V-AMD",
+      "request_id": "RUN-EN-V-AMD",
+      "capability_id": "CAP-V-01",
+      "target_id": "RT-EN-AMD",
+      "as_of": "2024-02-23T21:00:00Z",
+      "status": "partial",
+      "metrics": {
+        "conditional_grid_solutions": 54
+      },
+      "state": {
+        "state_type": "PriceImpliedExpectationState",
+        "model_family": "finite_equity_cashflow_inversion",
+        "identification_status": "underidentified",
+        "uncertainty_semantics": "joint_assumption_grid_not_probability_or_confidence_interval",
+        "assumption_regions": [
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.003161517963402,
+            "terminal_cashflow_multiple": 32.25372231773779,
+            "relative_identity_residual": 1.6101126638618663e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.9132806055652518,
+            "terminal_cashflow_multiple": 25.63854327993764,
+            "relative_identity_residual": 1.6101126638618663e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.8426521560391873,
+            "terminal_cashflow_multiple": 21.24304642671935,
+            "relative_identity_residual": 4.830337991585598e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.8959422308212017,
+            "terminal_cashflow_multiple": 24.49771069005197,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.8111910920497796,
+            "terminal_cashflow_multiple": 19.490427620358766,
+            "relative_identity_residual": 1.6101126638618663e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.7446026006742457,
+            "terminal_cashflow_multiple": 16.161533907009723,
+            "relative_identity_residual": 1.6101126638618663e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.4555309312141139,
+            "terminal_cashflow_multiple": 42.67901521216329,
+            "relative_identity_residual": 1.288090131089493e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.42152753111097174,
+            "terminal_cashflow_multiple": 33.69401400744151,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.39418166783405206,
+            "terminal_cashflow_multiple": 27.745571754806836,
+            "relative_identity_residual": 3.2202253277237325e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.41864113835924976,
+            "terminal_cashflow_multiple": 33.01607903600903,
+            "relative_identity_residual": 1.288090131089493e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3857380299788836,
+            "terminal_cashflow_multiple": 26.11026973660342,
+            "relative_identity_residual": 8.050563319309331e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3592864731607973,
+            "terminal_cashflow_multiple": 21.533268253282024,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.30887799329866794,
+            "terminal_cashflow_multiple": 56.68752382799572,
+            "relative_identity_residual": 1.4491013974756796e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.2878632063146255,
+            "terminal_cashflow_multiple": 44.467840230978574,
+            "relative_identity_residual": 6.440450655447465e-16
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.27080269659081957,
+            "terminal_cashflow_multiple": 36.405912057361405,
+            "relative_identity_residual": 1.288090131089493e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.2881197388217208,
+            "terminal_cashflow_multiple": 44.60089045891831,
+            "relative_identity_residual": 1.4491013974756796e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.2676418147754781,
+            "terminal_cashflow_multiple": 35.07101601302529,
+            "relative_identity_residual": 1.288090131089493e-15
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.25102571394358597,
+            "terminal_cashflow_multiple": 28.77355654297741,
+            "relative_identity_residual": 2.4151689957927992e-15
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.1210513961243174,
+            "terminal_cashflow_multiple": 42.929512933220174,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.0255881250577477,
+            "terminal_cashflow_multiple": 34.100104629300496,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.9505654110206538,
+            "terminal_cashflow_multiple": 28.235962306367387,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.033141632698888,
+            "terminal_cashflow_multiple": 34.74066821355961,
+            "relative_identity_residual": 4.830337991585598e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.9419390789044069,
+            "terminal_cashflow_multiple": 27.617095839917944,
+            "relative_identity_residual": 1.6101126638618663e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.8702727209312895,
+            "terminal_cashflow_multiple": 22.883618414977857,
+            "relative_identity_residual": 3.2202253277237325e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.50921651877857,
+            "terminal_cashflow_multiple": 61.307767288632405,
+            "relative_identity_residual": 6.440450655447465e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.47375407257170987,
+            "terminal_cashflow_multiple": 48.33371560212262,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.4452272833072196,
+            "terminal_cashflow_multiple": 39.75223185487776,
+            "relative_identity_residual": 6.440450655447465e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.4800876808573399,
+            "terminal_cashflow_multiple": 50.45154135365365,
+            "relative_identity_residual": 8.050563319309331e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.44552760005741165,
+            "terminal_cashflow_multiple": 39.83491387190544,
+            "relative_identity_residual": 4.830337991585598e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.41773469718422007,
+            "terminal_cashflow_multiple": 32.80572822675401,
+            "relative_identity_residual": 6.440450655447465e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.34783726979176277,
+            "terminal_cashflow_multiple": 88.01605860324541,
+            "relative_identity_residual": 2.2541577294066125e-15
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.32602820051809445,
+            "terminal_cashflow_multiple": 68.91145250576106,
+            "relative_identity_residual": 8.050563319309331e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3083163052657899,
+            "terminal_cashflow_multiple": 56.32371719319296,
+            "relative_identity_residual": 6.440450655447465e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.33178272695379396,
+            "terminal_cashflow_multiple": 73.53611261537684,
+            "relative_identity_residual": 8.050563319309331e-16
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3104144362898008,
+            "terminal_cashflow_multiple": 57.693918042148056,
+            "relative_identity_residual": 1.7711239302480527e-15
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.293067515705847,
+            "terminal_cashflow_multiple": 47.24088480950327,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.2274584719248138,
+            "terminal_cashflow_multiple": 54.833766662511266,
+            "relative_identity_residual": 8.050563319309331e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.1269317592250272,
+            "terminal_cashflow_multiple": 43.52790657958844,
+            "relative_identity_residual": 6.440450655447465e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.0479230763434084,
+            "terminal_cashflow_multiple": 36.022031250842815,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.1522752592481758,
+            "terminal_cashflow_multiple": 46.18373655354028,
+            "relative_identity_residual": 6.440450655447465e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 1.055434245817016,
+            "terminal_cashflow_multiple": 36.68748494720109,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.9793294874096088,
+            "terminal_cashflow_multiple": 30.380189146180754,
+            "relative_identity_residual": 3.2202253277237325e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5584119527684213,
+            "terminal_cashflow_multiple": 84.49338419461789,
+            "relative_identity_residual": 4.830337991585598e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5216075212323814,
+            "terminal_cashflow_multiple": 66.5313694659235,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.49199479982313943,
+            "terminal_cashflow_multiple": 54.66043638109378,
+            "relative_identity_residual": 1.6101126638618663e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.5342654524055825,
+            "terminal_cashflow_multiple": 72.27782245228519,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.4982336222096403,
+            "terminal_cashflow_multiple": 56.989571226892174,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.4692494902787262,
+            "terminal_cashflow_multiple": 46.87653337914323,
+            "relative_identity_residual": 3.2202253277237325e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.38411318953671925,
+            "terminal_cashflow_multiple": 131.09137157172034,
+            "relative_identity_residual": 9.660675983171197e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3615673020334168,
+            "terminal_cashflow_multiple": 102.46763193166697,
+            "relative_identity_residual": 0.0
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3432516137730869,
+            "terminal_cashflow_multiple": 83.62970503034381,
+            "relative_identity_residual": 1.9321351966342393e-15
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3710379782996752,
+            "terminal_cashflow_multiple": 113.69523830880927,
+            "relative_identity_residual": 1.9321351966342393e-15
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.34886920039615055,
+            "terminal_cashflow_multiple": 89.03229611460681,
+            "relative_identity_residual": 3.2202253277237325e-16
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "conditional_solution",
+            "annual_cashflow_growth": 0.3308657591845504,
+            "terminal_cashflow_multiple": 72.78028864905919,
+            "relative_identity_residual": 0.0
+          }
+        ],
+        "solution_count": 54,
+        "conditional_growth_range": [
+          0.25102571394358597,
+          1.2274584719248138
+        ],
+        "as_of": "2024-02-23T21:00:00Z",
+        "research_only": true,
+        "evidence_refs": [
+          "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm",
+          "https://query1.finance.yahoo.com/v8/finance/chart/AMD?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits"
+        ],
+        "cashflow_definition": "OCF_minus_cash_capex_is_not_normalized_FCFE_excludes_net_borrowing_dilution_and_normalization",
+        "share_basis": "annual_diluted_weighted_average_shares_are_a_proxy_not_point_date_market_cap_shares",
+        "price_unit_conversion": "No explicit scale conversion",
+        "model_scope": "conditional_cashflow_growth_not_separately_identified_revenue_margin_or_duration",
+        "reinvestment_assumption": "cashflow_growth_is_after_all_required_reinvestment; proxy_does_not_establish_this",
+        "discount_semantics": "declared_equity_discount_sensitivity_not_estimated_cost_of_equity",
+        "next_evidence_date": "2024-05-31T23:59:59Z"
+      },
+      "uncertainty": {
+        "pit_status": "provisional",
+        "probabilities_calibrated": false,
+        "missing_normalized_cashflow_and_T0_share_count": true
+      },
+      "counterevidence": [
+        "GAAP gross-margin guidance is unavailable: retain null. The approximately 52% outlook is non-GAAP and cannot be used as a GAAP forecast.",
+        "Issuer expects Data Center flat sequentially despite GPU ramp, while Client, Embedded and Gaming revenue decline sequentially.",
+        "Company-wide revenue is not a pure measure of AI GPU revenue."
+      ],
+      "falsifiers": [
+        "pricing_identity_does_not_reconcile",
+        "cashflow_proxy_cannot_be_reconciled_to_equity_cashflows",
+        "input_unavailable_at_as_of"
+      ],
+      "warnings": [
+        "Research diagnostics only; strict-PIT qualification has not been met."
+      ],
+      "prohibited_action_fields_absent": true
+    },
+    {
+      "result_id": "RESULT-EN-V-INTC",
+      "request_id": "RUN-EN-V-INTC",
+      "capability_id": "CAP-V-01",
+      "target_id": "RT-EN-INTC",
+      "as_of": "2024-02-23T21:00:00Z",
+      "status": "unknown",
+      "metrics": {
+        "conditional_grid_solutions": 0
+      },
+      "state": {
+        "state_type": "PriceImpliedExpectationState",
+        "model_family": "finite_equity_cashflow_inversion",
+        "identification_status": "unsupported",
+        "uncertainty_semantics": "joint_assumption_grid_not_probability_or_confidence_interval",
+        "assumption_regions": [
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.08,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.1,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 5,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 10,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.0,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 0.8,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.0,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          },
+          {
+            "discount_rate": 0.12,
+            "horizon_years": 15,
+            "terminal_growth": 0.02,
+            "cashflow_scale": 1.2,
+            "status": "unsupported",
+            "reason": "nonpositive_base_cashflow_requires_explicit_turnaround_path"
+          }
+        ],
+        "solution_count": 0,
+        "conditional_growth_range": null,
+        "as_of": "2024-02-23T21:00:00Z",
+        "research_only": true,
+        "evidence_refs": [
+          "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial",
+          "https://query1.finance.yahoo.com/v8/finance/chart/INTC?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits"
+        ],
+        "cashflow_definition": "OCF_minus_cash_capex_is_not_normalized_FCFE_excludes_net_borrowing_dilution_and_normalization",
+        "share_basis": "annual_diluted_weighted_average_shares_are_a_proxy_not_point_date_market_cap_shares",
+        "price_unit_conversion": "No explicit scale conversion",
+        "model_scope": "conditional_cashflow_growth_not_separately_identified_revenue_margin_or_duration",
+        "reinvestment_assumption": "cashflow_growth_is_after_all_required_reinvestment; proxy_does_not_establish_this",
+        "discount_semantics": "declared_equity_discount_sensitivity_not_estimated_cost_of_equity",
+        "next_evidence_date": "2024-05-31T23:59:59Z"
+      },
+      "uncertainty": {
+        "pit_status": "provisional",
+        "probabilities_calibrated": false,
+        "missing_normalized_cashflow_and_T0_share_count": true
+      },
+      "counterevidence": [
+        "FY2023 cash additions to PPE exceed operating cash flow; net income cannot be substituted for distributable equity cash flow.",
+        "Adjusted FCF uses net capex and other adjustments; do not treat it as the same definition as NVDA or AMD FCF.",
+        "Intel is an integrated manufacturer with substantial foundry investment, unlike fabless peers.",
+        "No post-T0 restated segment history is imported.",
+        "The release discloses a January 2023 change in estimated production-equipment useful life from five to eight years; management estimates FY2023 depreciation fell by USD4,200 million and gross profit increased by USD2,500 million relative to the previous life estimate. Reported gross margin is affected by this accounting estimate, not solely economic improvement."
+      ],
+      "falsifiers": [
+        "pricing_identity_does_not_reconcile",
+        "cashflow_proxy_cannot_be_reconciled_to_equity_cashflows",
+        "input_unavailable_at_as_of"
+      ],
+      "warnings": [
+        "Research diagnostics only; strict-PIT qualification has not been met."
+      ],
+      "prohibited_action_fields_absent": true
+    }
+  ],
+  "research_receipts": [
+    {
+      "request_id": "RUN-EN-V-NVDA",
+      "result_id": "RESULT-EN-V-NVDA",
+      "invocation_envelope": {
+        "canon_revision": "705dbedf8866453f12d42dde58dbd95dbc032ee7",
+        "canon_hash": "sha256:838c44125cc2e7b1206981ded5dae10dac027e7fad12a9593bacb2eb6674487a",
+        "capability_id": "CAP-V-01",
+        "capability_contract_version": "0.1.0",
+        "research_target": "RT-EN-NVDA",
+        "A0_asset_form": "listed_common_equity",
+        "A1_pricing_archetype": "corporate_equity_cashflow_claim",
+        "as_of": "2024-02-23T21:00:00Z",
+        "evidence_cutoff": "2024-02-23T21:00:00Z",
+        "provider_runtime": "reference_quant"
+      },
+      "canon_hash_basis": "docs/architecture/r2_3b1/CAP-V-01-SPEC-v0.1.json",
+      "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+      "profile_version": "0.1.0",
+      "engine_thesis_id": "ET-EN-NVDA-C",
+      "primary_engine": "ENG-C",
+      "consumer_thesis_refs": [
+        "ET-EN-NVDA-C",
+        "ET-EN-NVDA-R",
+        "ET-EN-NVDA-X"
+      ],
+      "model_version": "0.1.0",
+      "assumption_set_id": "EN-COMPARE-20261012-v0.1",
+      "price_snapshot_id": "RECONSTRUCTED-20240223-NVDA",
+      "algorithm_family": "finite_equity_cashflow_inversion",
+      "evidence_refs": [
+        "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024/",
+        "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits"
+      ],
+      "output_state_version": "0.1.0",
+      "degrade_state": [
+        "research_only",
+        "underidentified",
+        "insufficient_evidence"
+      ],
+      "input_snapshot_hash": "sha256:908ce34f5922390a190395ef8ac717d8c0c838150ec3bb3f59fb6604668d1cd8",
+      "assumption_version": "settings.json",
+      "identification_status": "underidentified",
+      "parameter_region_ref": "RESULT-EN-V-NVDA#state.assumption_regions",
+      "next_evidence_date": "2024-05-31T23:59:59Z",
+      "original_thesis_settlement_status": "draft_reconstructed_not_historical"
+    },
+    {
+      "request_id": "RUN-EN-V-AMD",
+      "result_id": "RESULT-EN-V-AMD",
+      "invocation_envelope": {
+        "canon_revision": "705dbedf8866453f12d42dde58dbd95dbc032ee7",
+        "canon_hash": "sha256:838c44125cc2e7b1206981ded5dae10dac027e7fad12a9593bacb2eb6674487a",
+        "capability_id": "CAP-V-01",
+        "capability_contract_version": "0.1.0",
+        "research_target": "RT-EN-AMD",
+        "A0_asset_form": "listed_common_equity",
+        "A1_pricing_archetype": "corporate_equity_cashflow_claim",
+        "as_of": "2024-02-23T21:00:00Z",
+        "evidence_cutoff": "2024-02-23T21:00:00Z",
+        "provider_runtime": "reference_quant"
+      },
+      "canon_hash_basis": "docs/architecture/r2_3b1/CAP-V-01-SPEC-v0.1.json",
+      "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+      "profile_version": "0.1.0",
+      "engine_thesis_id": "ET-EN-AMD-C",
+      "primary_engine": "ENG-C",
+      "consumer_thesis_refs": [
+        "ET-EN-AMD-C",
+        "ET-EN-AMD-R",
+        "ET-EN-AMD-X"
+      ],
+      "model_version": "0.1.0",
+      "assumption_set_id": "EN-COMPARE-20261012-v0.1",
+      "price_snapshot_id": "RECONSTRUCTED-20240223-AMD",
+      "algorithm_family": "finite_equity_cashflow_inversion",
+      "evidence_refs": [
+        "https://ir.amd.com/financial-information/sec-filings/content/0000002488-24-000009/q42023991final.htm",
+        "https://query1.finance.yahoo.com/v8/finance/chart/AMD?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits"
+      ],
+      "output_state_version": "0.1.0",
+      "degrade_state": [
+        "research_only",
+        "underidentified",
+        "insufficient_evidence"
+      ],
+      "input_snapshot_hash": "sha256:1c9a32a73b42e6fd048dd3c43ca2ef066dd35d904c79a27d5de238ce89553f7e",
+      "assumption_version": "settings.json",
+      "identification_status": "underidentified",
+      "parameter_region_ref": "RESULT-EN-V-AMD#state.assumption_regions",
+      "next_evidence_date": "2024-05-31T23:59:59Z",
+      "original_thesis_settlement_status": "draft_reconstructed_not_historical"
+    },
+    {
+      "request_id": "RUN-EN-V-INTC",
+      "result_id": "RESULT-EN-V-INTC",
+      "invocation_envelope": {
+        "canon_revision": "705dbedf8866453f12d42dde58dbd95dbc032ee7",
+        "canon_hash": "sha256:838c44125cc2e7b1206981ded5dae10dac027e7fad12a9593bacb2eb6674487a",
+        "capability_id": "CAP-V-01",
+        "capability_contract_version": "0.1.0",
+        "research_target": "RT-EN-INTC",
+        "A0_asset_form": "listed_common_equity",
+        "A1_pricing_archetype": "corporate_equity_cashflow_claim",
+        "as_of": "2024-02-23T21:00:00Z",
+        "evidence_cutoff": "2024-02-23T21:00:00Z",
+        "provider_runtime": "reference_quant"
+      },
+      "canon_hash_basis": "docs/architecture/r2_3b1/CAP-V-01-SPEC-v0.1.json",
+      "profile_id": "EQUITY-NARRATIVE-COMPARISON-v0.1",
+      "profile_version": "0.1.0",
+      "engine_thesis_id": "ET-EN-INTC-C",
+      "primary_engine": "ENG-C",
+      "consumer_thesis_refs": [
+        "ET-EN-INTC-C",
+        "ET-EN-INTC-R",
+        "ET-EN-INTC-X"
+      ],
+      "model_version": "0.1.0",
+      "assumption_set_id": "EN-COMPARE-20261012-v0.1",
+      "price_snapshot_id": "RECONSTRUCTED-20240223-INTC",
+      "algorithm_family": "finite_equity_cashflow_inversion",
+      "evidence_refs": [
+        "https://www.intc.com/news-events/press-releases/detail/1672/intel-reports-fourth-quarter-and-full-year-2023-financial",
+        "https://query1.finance.yahoo.com/v8/finance/chart/INTC?period1=1693526400&period2=1717286400&interval=1d&events=div%2Csplits"
+      ],
+      "output_state_version": "0.1.0",
+      "degrade_state": [
+        "research_only",
+        "unsupported",
+        "insufficient_evidence"
+      ],
+      "input_snapshot_hash": "sha256:b8d5cb1a7efb1ecc22c50fadabceca880b7c86edec8926327faba11f0fac1df8",
+      "assumption_version": "settings.json",
+      "identification_status": "unsupported",
+      "parameter_region_ref": "RESULT-EN-V-INTC#state.assumption_regions",
+      "next_evidence_date": "2024-05-31T23:59:59Z",
+      "original_thesis_settlement_status": "draft_reconstructed_not_historical"
+    }
+  ],
+  "falsifier_registry": [
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-C-01",
+      "condition": "增量资本回报持续低于资本成本"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-C-02",
+      "condition": "增长依赖不可持续融资或股权稀释"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-C-03",
+      "condition": "原定价值获取机制被可核实的竞争证据推翻"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-R-01",
+      "condition": "60 个交易日内未补齐独立预期变化与扩散证据"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-R-02",
+      "condition": "价格变化可由共同市场因子或折现变化解释且无增量预期证据"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-R-03",
+      "condition": "经营兑现与原假说方向矛盾；缺失披露保留未知"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-X-01",
+      "condition": "成本或融资要求破坏原收益不对称"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-X-02",
+      "condition": "到期前尾部条件未出现"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-NVDA-X-03",
+      "condition": "实际工具收益结构不具备所声称的凸性"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-C-01",
+      "condition": "增量资本回报持续低于资本成本"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-C-02",
+      "condition": "增长依赖不可持续融资或股权稀释"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-C-03",
+      "condition": "原定价值获取机制被可核实的竞争证据推翻"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-R-01",
+      "condition": "60 个交易日内未补齐独立预期变化与扩散证据"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-R-02",
+      "condition": "价格变化可由共同市场因子或折现变化解释且无增量预期证据"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-R-03",
+      "condition": "经营兑现与原假说方向矛盾；缺失披露保留未知"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-X-01",
+      "condition": "成本或融资要求破坏原收益不对称"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-X-02",
+      "condition": "到期前尾部条件未出现"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-AMD-X-03",
+      "condition": "实际工具收益结构不具备所声称的凸性"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-C-01",
+      "condition": "增量资本回报持续低于资本成本"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-C-02",
+      "condition": "增长依赖不可持续融资或股权稀释"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-C-03",
+      "condition": "原定价值获取机制被可核实的竞争证据推翻"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-R-01",
+      "condition": "60 个交易日内未补齐独立预期变化与扩散证据"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-R-02",
+      "condition": "价格变化可由共同市场因子或折现变化解释且无增量预期证据"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-R-03",
+      "condition": "经营兑现与原假说方向矛盾；缺失披露保留未知"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-X-01",
+      "condition": "成本或融资要求破坏原收益不对称"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-X-02",
+      "condition": "到期前尾部条件未出现"
+    },
+    {
+      "falsifier_id": "EN-FALSIFIER-INTC-X-03",
+      "condition": "实际工具收益结构不具备所声称的凸性"
+    }
+  ]
+}
