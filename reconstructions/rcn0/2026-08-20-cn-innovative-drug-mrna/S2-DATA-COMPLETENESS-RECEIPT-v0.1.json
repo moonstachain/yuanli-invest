@@ -1,0 +1,45 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "RCN0-S2",
+  "replay_id": "RCN-REPLAY-20260820-CN-INNOVATIVE-DRUG-MRNA",
+  "status": "data_blocked",
+  "source_scope": {
+    "declared_a_share_universe": 29,
+    "declared_near_vaccine_mrna": 7,
+    "declared_medium_innovative_drug": 17,
+    "declared_farther_cxo": 5
+  },
+  "recovery_state": {
+    "unambiguously_named_total": 24,
+    "near_recovered": 7,
+    "medium_recovered": 12,
+    "farther_recovered": 5,
+    "medium_unresolved": 5
+  },
+  "source_fact": "The T0 PDF explicitly declares 17 innovative-drug BD/pipeline names, but recoverable text enumerates only 12 by name before summarizing the chain. Missing names are not inferred.",
+  "full_b3_required_fields": [
+    "market_cap_t0",
+    "beta",
+    "momentum_5d",
+    "momentum_20d",
+    "momentum_60d",
+    "turnover_t0",
+    "turnover_20d",
+    "liquidity_proxy",
+    "board",
+    "price_limit_pct",
+    "one_price_limit_dummy",
+    "tradability_dummy",
+    "prior_theme_member",
+    "benchmark_return_t0",
+    "abnormal_return_t0"
+  ],
+  "currently_available_complete_matrix": false,
+  "prohibited_actions": [
+    "guess_missing_five_names",
+    "select_names_to_restore_monotonicity",
+    "backfill_controls_from post-T0 data without explicit as-of discipline",
+    "declare B3 pass from 11-name availability-selected stress test"
+  ],
+  "exit_state": "unresolved_due_to_data unless full T0 matrix is admitted"
+}

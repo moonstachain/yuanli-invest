@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1.0",
+  "decision": "ACCEPT_RCN0_SHADOW_REPLAY_READY",
+  "accepted_at": "2026-08-20",
+  "scope": "RCN0 semantic architecture and Point-in-Time Shadow Replay authorization only",
+  "authorized_transition": "candidate -> shadow_replay_ready",
+  "not_authorized": [
+    "canon_promotion",
+    "gold_replay_promotion",
+    "trading_action",
+    "target_price",
+    "position_sizing",
+    "automatic_execution"
+  ],
+  "required_next_work": [
+    "CAP-R-01 shadow output",
+    "CAP-P-01 shadow output",
+    "CAP-N-01 shadow output",
+    "CAP-V-01 shadow output",
+    "B0-B5 baseline comparison",
+    "independent evidence admission",
+    "T0 leakage audit",
+    "quant controls for size/beta/momentum/liquidity/price-limit microstructure",
+    "future settlement kept separate from T0"
+  ]
+}

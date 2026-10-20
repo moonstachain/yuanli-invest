@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1.0",
+  "stage": "RCN0-S2",
+  "status": "external_runtime_handoff_ready",
+  "runtime": "Wind AI / Wind professional data runtime",
+  "execution_in_this_chat": "not_connected",
+  "prepared_assets": [
+    "runtime/wind/RCN0-S2-WIND-DATA-EXTRACTION-TASK-v0.1.md",
+    "runtime/wind/rcn0_s2_wind_t0_matrix_template.csv",
+    "scripts/rcn0_full_b3_quant.py"
+  ],
+  "blocking_inputs": [
+    "five unresolved innovative-drug universe members from T0 source/classification evidence",
+    "complete T0 29-name factor matrix from Wind"
+  ],
+  "next_transition": "wind_matrix_returned -> run_full_b3 -> falsifier_update -> human_review",
+  "non_authorization": "research_only"
+}
